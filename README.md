@@ -1,5 +1,3 @@
-
-
 ## Modules
 
 ### This template comes with the following modules:
