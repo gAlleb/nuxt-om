@@ -1,0 +1,35 @@
+@tailwind base;
+
+@layer base {
+
+  html {
+    font-family: "UNSCII";
+  }
+
+  @font-face  {
+    font-family: "Tenor Sans";
+    src: local(''),
+    url('../font/TenorSans-Regular.ttf');
+  }
+
+  @font-face {
+    font-family: "UNSCII";
+    src: local(''), 
+    url('../font/unscii-16.woff');
+  }
+  
+/*  :root {
+    font-family: Inter, sans-serif;
+    font-feature-settings:
+      'liga' 1,
+      'calt' 1;  
+  }
+  @supports (font-variation-settings: normal) {
+    :root {
+      font-family: InterVariable, sans-serif;
+    }
+  }*/
+}
+
+@tailwind components;
+@tailwind utilities;
