@@ -1,7 +1,7 @@
 <template>
 
   <section class="">
-  <div class="relative mx-auto max-w-7xl pt-8 bg-sxvx-light dark:bg-sxvx-dark" style="margin-top:-20px;">
+  <div class="relative mx-auto max-w-7xl pt-8 bg-sxvx-light dark:bg-sxvx-dark" style="margin-top:-40px;">
       <div class="text-center">
         <NuxtLink :to="localePath('/blog')"><h2 class="text-h text-3xl font-extrabold tracking-tight sm:text-4xl">{{ $t('blog') }}</h2></NuxtLink>
         <h3 class="text-h text-xl font-extrabold tracking-tight sm:text-2xl" sty>

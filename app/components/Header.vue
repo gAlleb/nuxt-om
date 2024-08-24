@@ -9,7 +9,7 @@
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center text-zinc-900 dark:text-zinc-50">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
-        <span class="ml-1 text-2xl font-tenor ">FM</span>
+        <span class="ml-1 text-2xl">omFM</span>
       </NuxtLink>
       
       <!-- Mobile nav -->
