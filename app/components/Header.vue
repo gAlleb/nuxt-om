@@ -43,7 +43,7 @@
     </div>
     <ClientOnly>
         <Dialog as="div" class="md:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
-          <div class="fixed inset-0 z-10" />
+          <div class="fixed inset-0 z-10"  @click="mobileMenuOpen = false" />
           <DialogPanel class="fixed drop-shadow-2xl inset-y-0 right-0 z-10 w-full overflow-y-auto dark:text-zinc-200 text-zinc-600 bg-zinc-50 dark:bg-zinc-800 px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-beetween">
               <button type="button" class="-m-2.5 rounded-md p-2.5" @click="mobileMenuOpen = false">
@@ -53,7 +53,7 @@
             </div>
             <div class="mt-6 flow-root">
               <div class="-my-6 divide-y divide-zinc-500/10">
-                <div class="space-y-2 py-6"  @click="mobileMenuOpen = false">
+                <div class="space-y-2 py-6">
                   <NuxtLink :to="localePath('/')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
                   <NuxtLink :to="localePath('/about')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
                   <NuxtLink :to="localePath('/services')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('services') }}</NuxtLink>
@@ -62,7 +62,7 @@
                   <NuxtLink :to="localePath('/articles')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('articles') }}</NuxtLink>
 
                 </div>
-                <div class="flex justify-center space-x-3 py-6">
+                <div class="flex justify-end space-x-3 py-6">
                   <LocaleSwitch />
                   <ToggleColorMode />
                   <Effects />

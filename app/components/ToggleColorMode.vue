@@ -1,7 +1,7 @@
 <template>
   <Menu as="div" class="relative ml-4">
     <div>
-      <MenuButton class="flex rounded-full bg-slate-100 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2">
+      <MenuButton class="flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2">
         <span class="sr-only">Theme Mode</span>
         <Icon v-if="$colorMode.value === 'light'" name="heroicons:sun" class="h-7 w-7 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
         <Icon v-if="$colorMode.value === 'dark'" name="heroicons:moon" class="h-7 w-7 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
