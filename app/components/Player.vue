@@ -1,7 +1,7 @@
 <template>
     
 
-    <div  class="icecast_player" id="ice-player" style="z-index:999; display: flex; "></div>
+    <div  class="icecast_player " id="ice-player" style="z-index:999; display: flex; transform: translateY(100%); "></div>
     
 
 </template>
@@ -26,7 +26,8 @@ class IcePlayer {
         this.server_address = 'https://omfm.ru:8443/' // Default address:port
         this.stream_mount = 'stream' // Default mount
         this.style = 'fixed' // Player style (fixed or inline)
-        this.template = '<div class="ice-player-el"><i class="ice-play"  ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><input class="ice-volume" type="range" min="0" max="100" value="50" step="1">&nbsp;&nbsp;<img id="live" src="https://omfm.ru/extplayer/live.gif" style=" opacity:0;display:none;"><span class="ice-track" id="trackname" style="opacity:1;"></span></div>'
+        this.template = '<div class="ice-player-el "><div><i class="ice-play"  ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i></div><input class="ice-volume" type="range" min="0" max="100" value="50" step="1"><img class="ms-2" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
+        
         // Informer Params
         this.mounts_list = ['stream', 'nonstop'] // Mount point list
         this.info_link = 'current_track.xsl' // Info file

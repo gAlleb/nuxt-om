@@ -21,7 +21,7 @@
     <div class="footercurves_ hidden dark:block"></div>
     <div class="footercurves_light_ block dark:hidden"></div>
     <Footer />
-    
+    <Player />
 
     
 

@@ -14,6 +14,9 @@
       
       <!-- Mobile nav -->
       <div class="flex md:hidden">
+        <ClientOnly>
+          <ShowHidePlayerBtn />
+        </ClientOnly>
         <button type="button" class="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5" @click="mobileMenuOpen = true">
           <span class="sr-only">Open main menu</span>
           <Icon name="heroicons:bars-3" class="w-7 h-7" />
@@ -28,16 +31,14 @@
         <NuxtLink :to="localePath('/contact')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
         <NuxtLink :to="localePath('/blog')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
         <NuxtLink :to="localePath('/blog/articles')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('articles') }}</NuxtLink>
-        <NuxtLink :to="localePath('/123')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">123</NuxtLink>
 
       </nav>
       <div class="hidden md:flex flex-wrap">
         <ClientOnly>
-
+        <ShowHidePlayerBtn />
         <LocaleSwitch />
         <ToggleColorMode />
         <Effects />
-
         </ClientOnly>
       </div>
     </div>

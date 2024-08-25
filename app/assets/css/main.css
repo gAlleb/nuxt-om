@@ -1,6 +1,29 @@
 .margin-top-s {
   margin-top: 2rem;
 }
+
+.ellipsify {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+
+}
+.ellipsify:hover {
+   text-overflow:clip;
+white-space: normal;
+word-break: break-all;
+}
+.ellipsify2 {
+  text-overflow: ellipsis;
+  overflow: clip;
+  white-space: nowrap;
+
+}
+.ellipsify2:hover {
+   text-overflow:clip;
+white-space: normal;
+word-break: break-all;
+}
 .footercurves  {
   content: "";
   position: inherit;
@@ -313,7 +336,7 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
 :root {
   --ice-player-primary-color:  #ddd ;  
   --ice-player-secondary-color: rgba(0,0,0,0.65);
-  --ice-player-border-color: 555;
+  --ice-player-border-color: #2f2f2f87;
   --iceplayer-track-height: 4px;
   --iceplayer-track-border-radius: calc(var(--iceplayer-track-height) / 2);
   --iceplayer-thumb-size: 16px;
@@ -330,24 +353,26 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
 box-shadow: 0 0 10px #FFFFFF;
 border-radius:7px; }
 .ice-player.fixed {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0,0,0,0.7);
- /* background:  linear-gradient(180deg, rgba(0,0,0,0) 10%, rgba(0,0,0,0.6936974618949142) 100%);*/ 
-  border-top: 1px solid var(--ice-player-border-color);
-  height: 10vh  ;
-   z-index: 999;
+  font-size: 1rem;
+ position: fixed;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+ /*background-color: rgba(58, 103, 148, 0.638); */
+  background:  linear-gradient(180deg, rgba(0, 0, 0, 0.694) 10%, rgba(0,0,0,0.6936974618949142) 100%);
+ border-top: 1px solid var(--ice-player-border-color);
+min-height: 11vh  ;
 }
 
 .ice-player.fixed .ice-track {
-  margin-left: 2em;
-  font-size: 1.3rem;
-  color:  #ddd ;  
-  text-shadow: 0 0 10px #FFFFFF;
+  display: block;
+      font-size: 1.3rem;
+      color:  #ffffff ;  
+      text-shadow: 0 0 10px #ffffff;
+      
+  
+  }
 
-}
 @media screen and (max-width: 500px) {
 .ice-player.fixed {height: 12vh ;}
 .ice-player.fixed .ice-track {
@@ -374,6 +399,9 @@ border-radius:7px; }
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  flex-wrap: wrap;
+  display: flex;
+  min-width: 0;
 }
 
 [class*="ice-"] {
