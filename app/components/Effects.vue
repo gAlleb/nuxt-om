@@ -30,11 +30,11 @@
         <MenuItem as="div" class="">
           <button type="button" @click="toggleEffect('overlay3_5')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay3_5') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
             <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-            <span class="text-zinc-700 dark:text-zinc-300">Scanliines</span>
+            <span class="text-zinc-700 dark:text-zinc-300">Scanlines</span>
           </button>
         </MenuItem>
         <MenuItem as="div" class="">
-          <button type="button" id="allEffectsBtn" @click="toggleAllEffects" :class="{ 'bg-red-400 dark:bg-red-400': !anyEffectOn() }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+          <button type="button" id="allEffectsBtn" @click="toggleAllEffects" :class="{ 'bg-red-400 dark:bg-red-400': areAllFalse() }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
             <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
             <span class="text-zinc-700 dark:text-zinc-300">Toggle Effects</span>
           </button>
@@ -109,7 +109,30 @@ const effectStates = ref({
   "overlay2": true,
   "overlay3_5": true // Use a single key to control overlays 3, 4, and 5
 });
+// Function to check if all values are true
+function areAllTrue() {
+  for (const value of Object.values(effectStates.value)) {
+    if (!value) {
+      return false; // If any value is false, return false immediately
+    }
+  }
+  return true; // If all values are true, return true
+}
 
+// Function to check if all values are false
+// This with @click="toggleAllEffects" :class="{ 'bg-red-400 dark:bg-red-400': areAllFalse() }"
+// Make toggle button red only if all effects are true!
+// If you want to make it red if any effect is true then change to 
+// @click="toggleAllEffects" :class="{ 'bg-red-400 dark:bg-red-400': !areAllTrue() }"
+// and throw away this function
+function areAllFalse() {
+  for (const value of Object.values(effectStates.value)) {
+    if (value) {
+      return false; // If any value is true, return false immediately
+    }  
+  }
+  return true; // If all values aren't true, return true
+}
 function toggleEffect(overlayId) {
   if (overlayId === 'overlay3_5') {
     // Toggle overlays 3, 4, and 5
@@ -154,7 +177,7 @@ function toggleAllEffects() {
   allEffectsOn.value = !allEffectsOn.value;
 
   // Turn off all effects if allEffectsOn is false
-  if (!allEffectsOn.value) {
+  if (!areAllTrue()) {
     Object.keys(effectStates.value).forEach(overlayId => {
       effectStates.value[overlayId] = false;
       toggleEffect(overlayId);
