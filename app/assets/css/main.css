@@ -123,7 +123,7 @@ word-break: break-all;
   top:-150%;
   width:300%;
   background-size:auto;
-  opacity:.3
+  opacity:.2
 }
 .overlay.scanlines {
   z-index:900;
@@ -353,7 +353,7 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
 box-shadow: 0 0 10px #FFFFFF;
 border-radius:7px; }
 .ice-player.fixed {
-  font-size: 1rem;
+  font-size: 1.3rem;
  position: fixed;
  bottom: 0;
  left: 0;

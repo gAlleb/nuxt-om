@@ -10,8 +10,8 @@
         </h3>
               </div>
       <ContentList :path="localePath('/blog/articles')" v-slot="{ list }">
-        <div class="mx-auto lg:mx-10 mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
-          <div v-for="articles in list" :key="articles.title" class="flex flex-col overflow-hidden rounded-lg shadow-lg hover:shadow-2xl">
+        <div class="mx-auto lg:mx-20 mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-3">
+          <div v-for="articles in list" :key="articles.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl">
             <NuxtLink :to="articles._path">
             <div class="flex-shrink-0">
               <img class="h-full w-full object-cover" :src="articles.img" :alt="articles.title" />
