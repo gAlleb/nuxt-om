@@ -1,10 +1,10 @@
 <template>
   <Menu as="div" class="relative ml-4">
     <div>
-      <MenuButton class="flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2">
+      <MenuButton class="flex rounded-xl bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2">
         <span class="sr-only">Theme Mode</span>
-        <Icon v-if="$colorMode.value === 'light'" name="heroicons:sun" class="h-7 w-7 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
-        <Icon v-if="$colorMode.value === 'dark'" name="heroicons:moon" class="h-7 w-7 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
+        <Icon v-if="$colorMode.value === 'light'" name="heroicons:sun" class="h-6 w-6 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
+        <Icon v-if="$colorMode.value === 'dark'" name="heroicons:moon" class="h-6 w-6 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
       </MenuButton>
     </div>
     <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">

@@ -1,5 +1,5 @@
 <template>
-  <header style="z-index:2" class="dark:text-zinc-200 text-zinc-600  ">
+  <header style="z-index:2" class="dark:text-zinc-200 text-zinc-600 ">
     <div
       ref="header"
       class="header dark:text-zinc-200 text-zinc-600 
@@ -180,9 +180,10 @@ onBeforeUnmount(() => {
 }
 
 .header.is-scroll {
-  padding-top: 2px!important;
-  padding-bottom: 2px!important;
-  opacity: 0.8;
+  padding-top: 5px!important;
+  padding-bottom: 5px!important;
+  opacity: 0.9;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  
 }
 </style>
