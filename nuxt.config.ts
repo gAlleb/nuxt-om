@@ -1,6 +1,12 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-
+  ssr: true,
+  // nitro: { 
+  //   prerender: {
+  //     routes: ["/blog", "/blog/articles","/","/es/blog"],
+  //     ignore: ["/dynamic"],
+  //   },
+  // },
   future: {
     compatibilityVersion: 4,
   },
@@ -39,7 +45,7 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore'],
     },
-  ], '@pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image"],
+  ], '@pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos'],
 
   i18n: {
     // compilation: {
