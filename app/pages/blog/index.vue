@@ -11,8 +11,8 @@
         <!-- <p class="text-p mx-auto mt-3 max-w-2xl text-xl font-semibold sm:mt-4">Latest guides and how to do's for Developers.</p> -->
       </div>
       <ContentList :path="localePath('/blog')" v-slot="{ list }">
-        <div class="mx-auto lg:mx-20 mt-12 grid max-w-lg gap-10 lg:max-w-none md:grid-cols-2 lg:grid-cols-3">
-          <div v-for="blog in list" :key="blog.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl">
+        <div class="mx-auto lg:mx-20 md:mx-20 sm:mx-20 mt-12 grid max-w-none gap-10 lg:max-w-none md:grid-cols-2 lg:grid-cols-3">
+          <div v-for="blog in list" :key="blog.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
             <NuxtLink :to="blog._path">
             <div class="flex-shrink-0">
               <img class="h-full w-full object-cover" :src="blog.img" :alt="blog.title" />

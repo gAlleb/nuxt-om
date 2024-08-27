@@ -40,8 +40,9 @@
       <ClientOnly> 
         <BtnLocaleSwitch />
         <BtnToggleColorMode />
+        <BtnEffects />
       </ClientOnly> 
-      <BtnEffects />
+     
      </div>
      <div class="flex md:hidden">
       <!-- <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
@@ -55,17 +56,18 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <DialogPanel  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed md:hidden drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-zinc-50 dark:bg-zinc-800 px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div class="flex items-center justify-beetween">
+          <DialogPanel  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed md:hidden drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-between">
               
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
                 <span class="sr-only">Close menu</span>
                 <Icon name="heroicons:x-mark" class="w-7 h-7" />
               </button>
+              <h1 class="text-xl">Menu</h1>
             </div>
           <hr class="mt-5"/>
             <div class="flex my-2 justify-center">
-                  <BtnShowHidePlayer />  
+                   
                   <BtnLocaleSwitch />
                   <BtnToggleColorMode />
                   <!-- <BtnEffects /> -->
@@ -84,6 +86,22 @@
                 </div>
               </div>
             </div>
+            <hr />
+            <span class="flex   my-4 justify-center">
+        <a class="text-gray-500">
+          <Icon name="bxl:discord" class="h-6 w-6 text-zinc-500" aria-hidden="true" />
+        </a>
+        <a class="ml-3 text-gray-500">
+          <Icon name="bxl:telegram" class="h-6 w-6 text-zinc-500" aria-hidden="true" />
+        </a>
+        <a class="ml-3 text-gray-500">
+          <Icon name="bxl:vk" class="h-6 w-6 text-zinc-500" aria-hidden="true" />
+        </a>
+        <a class="ml-3 text-gray-500">
+          <Icon name="bxl:apple" class="h-6 w-6 text-zinc-500" aria-hidden="true" />
+        </a>
+      </span>
+      <hr/>
           </DialogPanel>
       </ClientOnly>
 

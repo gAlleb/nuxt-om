@@ -1,7 +1,13 @@
 <template>
   <Menu as="div" class="relative ml-1 sm:ml-4">
     <div>
-      <MenuButton @click.stop="toggle_effects_block" class="flex rounded-xl bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" 
+      <MenuButton @click.stop="toggle_effects_block" 
+      :class="[ 
+          areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
+          anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
+          'bg-slate-50 dark:bg-zinc-800' 
+        ]"
+      class="flex rounded-xl  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" 
                  > 
         <span class="sr-only">Effects On/Off</span>
         <Icon name="heroicons:sparkles" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
@@ -46,7 +52,11 @@
           </button>
         </MenuItem>
         <MenuItem as="div" class="">
-          <button type="button" id="allEffectsBtn" @click="toggleAllEffects" :class="{ 'bg-red-400 dark:bg-red-400': !areAllTrue() }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+          <button type="button" id="allEffectsBtn" @click="toggleAllEffects" 
+          :class="[areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
+          anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
+          'bg-slate-50 dark:bg-zinc-800' ]" 
+          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
             <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
             <span class="text-zinc-700 dark:text-zinc-300">Toggle Effects</span>
           </button>
@@ -179,6 +189,11 @@ function effectOn(overlayId) {
 function anyEffectOn() {
   return Object.values(effectStates.value).some(state => state);
 }
+// New function to check if any effect is off
+function anyEffectOff() {
+  return Object.values(effectStates.value).some(state => !state);
+}
+
 
 function toggleAllEffects() {
   allEffectsOn.value = !allEffectsOn.value;
