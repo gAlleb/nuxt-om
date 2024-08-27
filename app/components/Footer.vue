@@ -3,7 +3,7 @@
   <footer class="text-gray-600 body-font bg-sxvx-light dark:bg-sxvx-dark">
     
     <div class="container px-5 pb-5 pt-0 mx-auto flex items-center md:flex-row flex-col">
-      <NuxtLink :to="localePath('/')" class="flex font-medium items-center text-zinc-900 dark:text-zinc-50 mb-4 md:mb-0">
+      <NuxtLink :to="localePath('/')" class="flex font-medium items-center text-zinc-700 dark:text-zinc-50 mb-4 md:mb-0">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
         <span class="ml-1 text-xl">omFM</span>

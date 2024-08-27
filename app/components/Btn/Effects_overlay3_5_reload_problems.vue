@@ -133,6 +133,13 @@ function areAllFalse() {
   }
   return true; // If all values aren't true, return true
 }
+// function areAllFalse() {
+//      if (areAllTrue()) {
+//       return false; // If any value is true, return false immediately
+//     }  
+  
+//   return true; // If all values aren't true, return true
+// }
 function toggleEffect(overlayId) {
   if (overlayId === 'overlay3_5') {
     // Toggle overlays 3, 4, and 5

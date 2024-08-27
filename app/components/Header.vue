@@ -6,22 +6,13 @@
      container-fluid 
      mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex  bg-sxvx-light dark:bg-sxvx-dark justify-between p-4  lg:px-20"
     >
-      <NuxtLink :to="localePath('/')" class="flex font-medium items-center text-zinc-900 dark:text-zinc-50">
+      <NuxtLink :to="localePath('/')" class="flex font-medium items-center text-zinc-700 dark:text-zinc-50">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
         <span class="ml-1 text-2xl">omFM</span>
       </NuxtLink>
       
-      <!-- Mobile nav -->
-      <div class="flex md:hidden">
-     
-          <ShowHidePlayerBtn />
-        
-        <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true">
-          <span class="sr-only">Open main menu</span>
-          <Icon name="heroicons:bars-3" class="w-7 h-7" />
-        </button>
-      </div>
+
 
       <!-- Desktop nav -->
       <nav class="hidden md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 md:flex flex-wrap items-center text-base justify-center">
@@ -33,18 +24,73 @@
         <NuxtLink :to="localePath('/blog/articles')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('articles') }}</NuxtLink>
 
       </nav>
-      <div class="hidden md:flex flex-wrap">
+      <div class="hidden md:flex">
+     
         
-        <ShowHidePlayerBtn />
-        <ClientOnly> 
-        <LocaleSwitch />
-        <ToggleColorMode />
-        <Effects />
-        </ClientOnly> 
+        
+
        <!--  <ClientOnly> Without this block apps show Hydration error but works ok. TODO </ClientOnly>  -->
       </div>
+
+    <!-- Mobile nav -->
+    <div class="flex">
+     <div class="flex">
+      <BtnShowHidePlayer />
+      
+      <ClientOnly> 
+        <BtnLocaleSwitch />
+        <BtnToggleColorMode />
+      </ClientOnly> 
+      <BtnEffects />
+     </div>
+     <div class="flex md:hidden">
+      <!-- <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
+     <button type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuToggle()" >
+     <span class="sr-only">Open main menu</span>
+     <Icon name="heroicons:bars-3" class="w-6 h-6" />
+     </button>
+     </div>
     </div>
+
+  </div> 
     <ClientOnly>
+          <div class="fixed inset-0 z-10" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
+          <DialogPanel  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed md:hidden drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-zinc-50 dark:bg-zinc-800 px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-beetween">
+              
+              <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
+                <span class="sr-only">Close menu</span>
+                <Icon name="heroicons:x-mark" class="w-7 h-7" />
+              </button>
+            </div>
+          <hr class="mt-5"/>
+            <div class="flex my-2 justify-center">
+                  <BtnShowHidePlayer />  
+                  <BtnLocaleSwitch />
+                  <BtnToggleColorMode />
+                  <!-- <BtnEffects /> -->
+                </div>
+            <hr/>
+            <div class="mt-6 flow-root" >
+              <div class="-my-6 divide-y divide-zinc-500/10">
+                <div class="space-y-2 py-6" >
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/services')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('services') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog/articles')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('articles') }}</NuxtLink>
+
+                </div>
+              </div>
+            </div>
+          </DialogPanel>
+      </ClientOnly>
+
+      <!-- Old menu compatible with at thhe top
+      <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
+
+      <!-- <ClientOnly>
         <Dialog as="div" class="md:hidden" @close="mobileMenuOpen = false" :open="mobileMenuOpen">
           <div class="fixed inset-0 z-10"  @click="mobileMenuOpen = false" />
           <DialogPanel class="fixed drop-shadow-2xl inset-y-0 right-0 z-10 w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-zinc-50 dark:bg-zinc-800 px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
@@ -78,7 +124,8 @@
             </div>
           </DialogPanel>
         </Dialog>
-      </ClientOnly>
+      </ClientOnly> -->
+
   </header>
 </template>
 
@@ -88,7 +135,11 @@ const mobileMenuOpen = ref(false)
 
 
 import { ref, onMounted, onBeforeUnmount } from 'vue';
+ 
 
+function mobileMenuToggle() {
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+}
 // Initialize refs and variables
 const header = ref(null);
 const lastScrollTop = ref(0);
