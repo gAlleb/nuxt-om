@@ -12,8 +12,8 @@
         <!-- <p class="text-p mx-auto mt-3 max-w-2xl text-xl font-semibold sm:mt-4">Latest guides and how to do's for Developers.</p> -->
     </div>
     </div>
-  <div class="footercurves hidden dark:block"></div>
-  <div class="footercurves_light block dark:hidden"></div>
+  <div class="footercurves_sxvx_style hidden dark:block"></div>
+  <div class="footercurves_sxvx_style_light block dark:hidden"></div>
     <!-- Article content -->
     <article v-if="data" class="prose mx-auto max-sm:mx-5 max-md:mx-10 max-lg:mx-10 max-w-4xl dark:prose-invert">
       <ContentDoc :path="$route.path">

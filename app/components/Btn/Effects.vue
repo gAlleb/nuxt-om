@@ -5,7 +5,7 @@
       :class="[ 
           areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
           anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
-          'bg-slate-50 dark:bg-zinc-800' 
+          'bg-sxvx-light-bg dark:bg-sxvx-dark-bg' 
         ]"
       class="flex rounded-xl  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" 
                  > 

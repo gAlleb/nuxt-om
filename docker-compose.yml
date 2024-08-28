@@ -1,6 +1,9 @@
 services:
-  test_app_v01:
+  nuxt-om-v01:
     build:
       context: .
+      # args:
+      #   - VERSION=NODE_VERSION
+      #   - PORT=3500
     ports:
       - "3000:3000"

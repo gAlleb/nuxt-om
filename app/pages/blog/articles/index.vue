@@ -1,5 +1,5 @@
 <template>
-  <section class="relative px-4"  >
+  <section class="relative px-4 dark:text-zinc-200 text-zinc-700"  >
     <div class="relative mx-auto max-w-7xl">
       <div class="text-center">
         <h2 class="text-h text-3xl font-extrabold tracking-tight sm:text-4xl"><NuxtLink :to="localePath('/blog')">{{ $t('blog') }}</NuxtLink> / <NuxtLink :to="localePath('/blog/articles')">{{ $t('articles') }}</NuxtLink></h2>
@@ -21,7 +21,7 @@
             <div class="bg-accent dark:bg-gradient-to-r from-gray-800 flex flex-1 flex-col justify-between p-6">
               <div class="flex-1">
                 <div class="flex flex-row gap-2">
-                  <p v-for="tag in articles.tags" class="bg-gray-200 dark:bg-gray-500 text-p rounded-full px-4 py-1 text-xs font-semibold tracking-wide">
+                  <p v-for="tag in articles.tags" class="bg-sxvx-light dark:bg-sxvx-dark text-p rounded-full px-4 py-1 text-xs font-semibold tracking-wide">
                     {{ tag }}
                   </p>
                 </div>

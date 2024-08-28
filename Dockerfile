@@ -1,6 +1,6 @@
-ARG NODE_VERSION=20.16.0
+ARG NODE_VERSION=20.17.0
 
-FROM node:${NODE_VERSION}-slim as base
+FROM node:${NODE_VERSION}-slim AS base
 
 ARG PORT=3000
 
@@ -9,12 +9,12 @@ ENV NODE_ENV=production
 WORKDIR /src
 
 # Build
-FROM base as build
+FROM base AS build
 
 # Option if your running into OOM
 # ENV NODE_OPTIONS=--max_old_space_size=2048
 
-COPY --link package.json package-lock.json .
+COPY --link package.json package-lock.json /src/
 RUN npm install --production=false
 
 COPY --link . /src
@@ -27,7 +27,7 @@ RUN npm prune
 FROM base
 
 ENV PORT=$PORT
-EXPOSE 3000
+EXPOSE $PORT
 COPY --from=build /src/.output /src/.output
 # Optional, only needed if you rely on unbundled dependencies
 # COPY --from=build /src/node_modules /src/node_modules

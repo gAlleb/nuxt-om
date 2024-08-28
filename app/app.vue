@@ -1,5 +1,5 @@
 <template>
-  <div class="flex min-h-screen flex-col overflow-hidden bg-slate-50 font-UNSCII dark:bg-zinc-900">
+  <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg font-UNSCII text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg">
 <div id="overlay0" class="overlay radial" 
              style="display: flex;"></div>
 <div id="overlay1" class="overlay flicker" style="display: flex;"></div>
@@ -18,8 +18,8 @@
     <!-- Site footer -->
     <BuyMeCoffee />
     
-    <div class="footercurves_ hidden dark:block"></div>
-    <div class="footercurves_light_ block dark:hidden"></div>
+    <div class="footercurves_sxvx_style_ hidden dark:block"></div>
+    <div class="footercurves_sxvx_style_light_ block dark:hidden"></div>
     <Footer />
     <Player />
 

@@ -11,6 +11,8 @@ module.exports = {
         'gradient-dark-1': 'rgba(52, 220, 173, 0.15)', // Dark mode gradient
         'sxvx-dark': 'rgba(43, 48, 53, 1)', 
         'sxvx-light': 'rgba(242, 238, 230, 1)', 
+        'sxvx-dark-bg': 'rgba(33, 37, 41, 1)',
+        'sxvx-light-bg': 'rgba(250,249,247, 1)',
       },
       backgroundImage: {
         'gradient-conic': 'conic-gradient(var(--tw-gradient-stops))',

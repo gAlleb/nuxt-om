@@ -1,12 +1,12 @@
 <template>
-  <header style="z-index:2" class="dark:text-zinc-200 text-zinc-600 ">
+  <header style="z-index:2" class="dark:text-zinc-200 text-zinc-700 ">
     <div
       ref="header"
       class="header dark:text-zinc-200 text-zinc-600 
      container-fluid 
      mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex  bg-sxvx-light dark:bg-sxvx-dark justify-between p-4  lg:px-20"
     >
-      <NuxtLink :to="localePath('/')" class="flex font-medium items-center text-zinc-700 dark:text-zinc-50">
+      <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
         <span class="ml-1 text-2xl">omFM</span>
@@ -251,7 +251,7 @@ onBeforeUnmount(() => {
 .header.is-scroll {
   padding-top: 5px!important;
   padding-bottom: 5px!important;
-  opacity: 0.9;
+  opacity: 0.96;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   
 }
