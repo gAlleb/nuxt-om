@@ -12,8 +12,12 @@ export default defineNuxtConfig({
   },
 
   css: ['~/assets/css/main.css'],
- 
-
+  
+  // mdc: { 
+  //   highlight: {
+  //     langs: ['ruby'],
+  //   },
+  // },
   runtimeConfig: {
     public: {
       siteUrl: process.env.SITE_URL, // change this to your site URL
