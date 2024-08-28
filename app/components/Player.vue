@@ -35,7 +35,8 @@ class IcePlayer {
 
         // System Params
         this.audio_object = new Audio()
-        this.audio_object.volume = 0.5
+        //this.audio_object.volume = 0.5
+        this.audio_object.volume = (localStorage.getItem("vol") !== null) ? parseFloat(localStorage.getItem("vol")) : 0.7       
         this.current_state = 0
 
         //State const
@@ -69,8 +70,9 @@ class IcePlayer {
             this.play_pause_toggle();
         });
 
-        // show current playable track
-        this.showinfo();
+      // Set the volume when the player is initialized
+      this.get_element('.ice-volume').value = this.audio_object.volume * 100; // Update the volume slider
+      this.hide('#live')
     }
 
     // Functions
@@ -78,18 +80,27 @@ class IcePlayer {
         if (this.current_state === this.STOPPED)
             this.audio_object.setAttribute('src', this.server_address + this.stream_mount + '?cache-ignore=' + Date.now());
         this.audio_object.play();
+          // show current playable track
+        this.showinfo();
     }
     pause() {
         this.audio_object.pause();
+        clearTimeout(this.timer);
+        document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+
     }
     stop() {
         this.audio_object.pause();
         this.audio_object.setAttribute('src', '');
         this.current_state = this.STOPPED;
+        clearTimeout(this.timer);
+        document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+        document.querySelector(".ice-track").innerHTML =  "";
         this.play_pause_toggle();
     }
     change_volume() {
         this.audio_object.volume = this.get_element('.ice-volume').value / 100;
+        localStorage.setItem("vol", this.audio_object.volume);
     }
 
     showinfo() {
@@ -109,25 +120,32 @@ class IcePlayer {
             var data = JSON.parse(this.responseText);
 
             let title = data.icestats.source.title;
-
+    document.title = title + "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
     document.querySelector(".ice-track").innerHTML =  title;
-    document.title = title + " | omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
 
+    
         }
     }
     var d = new Date();
     xhttp.open('GET', 'https://omfm.ru:8443/status-json.xsl?mount=/stream&' + d.getTime(), true);
     xhttp.send();
-    this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
+    if (this.audio_object.paused === false) { // Check if playing
+        this.timer = setTimeout(() => {
+            this.showinfo()
+        }, this.time_update * 1000);
+    }
+    //this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
     }
 
     play_pause_toggle() {
         if (this.current_state === this.PLAYING) {
             this.hide('.ice-play');
             this.show('.ice-pause');
+            this.show('#live')
         } else {
             this.hide('.ice-pause');
             this.show('.ice-play');
+            this.hide('#live')
         }
     }
 
