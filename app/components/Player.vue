@@ -74,19 +74,25 @@ class IcePlayer {
       this.get_element('.ice-volume').value = this.audio_object.volume * 100; // Update the volume slider
       this.hide('#live')
     }
-
+     
     // Functions
+    
     play() {
         if (this.current_state === this.STOPPED)
             this.audio_object.setAttribute('src', this.server_address + this.stream_mount + '?cache-ignore=' + Date.now());
         this.audio_object.play();
           // show current playable track
         this.showinfo();
+        const player_button = document.getElementById("menu_button");
+        player_button.style.backgroundColor = "#18a310";
+        
     }
     pause() {
         this.audio_object.pause();
         clearTimeout(this.timer);
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+        const player_button = document.getElementById("menu_button");
+        player_button.style.backgroundColor = "";
 
     }
     stop() {
@@ -97,6 +103,8 @@ class IcePlayer {
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
         document.querySelector(".ice-track").innerHTML =  "";
         this.play_pause_toggle();
+        const player_button = document.getElementById("menu_button");
+        player_button.style.backgroundColor = "";
     }
     change_volume() {
         this.audio_object.volume = this.get_element('.ice-volume').value / 100;

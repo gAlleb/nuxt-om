@@ -13,9 +13,6 @@ Let's connect!  Whether you have a question, a collaboration proposal, or just w
 
 **Here's how you can reach me:**
 
-```
 * **Email:** [your_email@example.com](mailto:your_email@example.com)
 * **LinkedIn:** [your_linkedin_profile_url](https://www.linkedin.com/in/your_linkedin_profile_url)
 * **Twitter:** [your_twitter_handle](https://twitter.com/your_twitter_handle)
-
-```
