@@ -5,7 +5,7 @@
 
 
       <MenuButton @click="radioshow();" 
-      id="menu_button" class="flex rounded-xl   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset-1 focus:ring-offset-gray-800 p-2"
+      id="menu_button" class="flex rounded-xl   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset-2 focus:ring-offset-gray-800 p-2"
      :class="[isPlayerVisible ? 'scale-110' : 'scale-100']"  >
         <span class="sr-only">Effects On/Off</span>
         <Icon name="heroicons:radio" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
