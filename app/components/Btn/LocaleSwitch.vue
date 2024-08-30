@@ -6,7 +6,7 @@ const switchLocalePath = useSwitchLocalePath()
 <template>
   <Menu as="div" class="relative ml-1 sm:ml-4">
     <div>
-      <MenuButton class="flex rounded-xl bg-sxvx-light-bg dark:bg-sxvx-dark-bg text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2">
+      <MenuButton class="flex rounded-xl bg-sxvx-light-bg dark:bg-sxvx-dark-bg text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2">
         <span class="sr-only">Language</span>
         <Icon name="heroicons:language" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
       </MenuButton>

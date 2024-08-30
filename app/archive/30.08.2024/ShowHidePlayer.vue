@@ -5,8 +5,8 @@
 
 
       <MenuButton @click="radioshow();" 
-      id="menu_button" class="flex rounded-xl   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-       >
+      id="menu_button" class="flex rounded-xl   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset-2 focus:ring-offset-gray-800 p-2"
+     :class="[isPlayerVisible ? 'scale-110' : 'scale-100']"  >
         <span class="sr-only">Effects On/Off</span>
         <Icon name="heroicons:radio" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
       
@@ -14,14 +14,6 @@
      
     
       </UTooltip>
-      <div class="inline-flex">
-      <button @click="playPlayer1" :class="[isPlayerVisible ? 'visible-flex ml-1 sm:ml-4' : 'hidden']" class="mr-0 sm:mr-2" >     
-        <Icon name="heroicons:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
-      </button>
-      <button @click="stopPlayer1" :class="[isPlayerVisible ? 'inline-flex' : 'hidden']" >
-        <Icon name="heroicons:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
-      </button>
-      </div>
       </div>
   </Menu>
  
@@ -30,10 +22,7 @@
 
 <script setup>
 import { Menu, MenuButton } from '@headlessui/vue'
-import { ref } from 'vue';
-import { usePlayer } from '../../composables/player'; // Create this composable
-
-const { player, isPlaying, togglePlay, playPlayer1, stopPlayer1 } = usePlayer(); // Get player instance and state
+import { ref } from 'vue'
 
 const isPlayerVisible = ref(false); // Assuming player is initially visible
 

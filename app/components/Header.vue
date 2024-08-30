@@ -15,7 +15,7 @@
 
 
       <!-- Desktop nav -->
-      <nav class="hidden md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 md:flex flex-wrap items-center text-base justify-center">
+      <nav class="hidden md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 lg:flex flex-wrap items-center text-base justify-center">
         <NuxtLink :to="localePath('/')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
         <NuxtLink :to="localePath('/about')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
         <NuxtLink :to="localePath('/services')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('services') }}</NuxtLink>
@@ -44,7 +44,7 @@
       </ClientOnly> 
      
      </div>
-     <div class="flex md:hidden">
+     <div class="flex lg:hidden">
       <!-- <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
      <button type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuToggle()" >
      <span class="sr-only">Open main menu</span>
@@ -56,7 +56,7 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed md:hidden drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed lg:hidden drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
               
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
