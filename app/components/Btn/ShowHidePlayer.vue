@@ -5,7 +5,7 @@
 
 
       <MenuButton @click="radioshow();" 
-      id="menu_button" class="flex rounded-xl   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+      id="menu_button" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
        >
         <span class="sr-only">Effects On/Off</span>
         <Icon name="heroicons:radio" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
@@ -14,12 +14,10 @@
      
     
       </UTooltip>
-      <div class="inline-flex">
-      <button @click="playPlayer1" :class="[isPlayerVisible ? 'visible-flex ml-1 sm:ml-4' : 'hidden']" class="mr-0 sm:mr-2" >     
-        <Icon name="heroicons:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
-      </button>
-      <button @click="stopPlayer1" :class="[isPlayerVisible ? 'inline-flex' : 'hidden']" >
-        <Icon name="heroicons:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
+      <div class="transition-all  duration-500 ease-in-out ml-1 sm:ml-4" :class="[isPlayerVisible ? 'inline-flex' : 'hidden']">
+      <button class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="togglePlay"  >     
+       <Icon id="playBtnPlayer1" name="heroicons:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
+       <Icon id="stopBtnPlayer1" name="heroicons:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
       </button>
       </div>
       </div>

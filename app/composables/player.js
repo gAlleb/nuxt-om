@@ -7,7 +7,7 @@ export const usePlayer = () => {
   onMounted(() => {
     // Create the IcePlayer instance
     player.value = new IcePlayer('#ice-player',  isPlaying); 
-
+    player.value.hide_stop_button();
     // Handle play/pause events from IcePlayer
     player.value.audio_object.addEventListener('play', () => {
       isPlaying.value = true;

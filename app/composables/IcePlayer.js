@@ -68,6 +68,11 @@ class IcePlayer {
         this.showinfo();
         const player_button = document.getElementById("menu_button");
         player_button.style.backgroundColor = "#18a310";
+        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        playBtnPlayer1.style.display = "none";
+        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        stopBtnPlayer1.style.display = "inline-flex";
+
         
     }
     pause() {
@@ -76,7 +81,10 @@ class IcePlayer {
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
         const player_button = document.getElementById("menu_button");
         player_button.style.backgroundColor = "";
-
+        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        playBtnPlayer1.style.display = "inline-flex";
+        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        stopBtnPlayer1.style.display = "none";
     }
     stop() {
         this.audio_object.pause();
@@ -88,6 +96,16 @@ class IcePlayer {
         this.play_pause_toggle();
         const player_button = document.getElementById("menu_button");
         player_button.style.backgroundColor = "";
+        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        playBtnPlayer1.style.display = "inline-flex";
+        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        stopBtnPlayer1.style.display = "none";
+    }
+    hide_stop_button() {
+        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        playBtnPlayer1.style.display = "inline-flex";
+        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        stopBtnPlayer1.style.display = "none"; 
     }
     change_volume() {
         this.audio_object.volume = this.get_element('.ice-volume').value / 100;
