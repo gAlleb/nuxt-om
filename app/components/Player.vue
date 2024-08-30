@@ -8,7 +8,7 @@
 
 <script setup>
 
-import IcePlayer from '../composables/IcePlayer.js'; // Import the class
+//import IcePlayer from '../composables/IcePlayer.js'; // Import the class
 // onMounted(() => {
 // /*
 //  IcePlayer v.3.0.0 - Player for Site (Icecast2 Online Radio)
