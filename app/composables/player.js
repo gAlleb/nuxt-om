@@ -42,7 +42,6 @@ export const usePlayer = () => {
      player.value.change_volume3();
     
   };
-  const showVol3Open = ref(false);
   const showVol3 = () => {
     player.value.vol_btn_main();
    
