@@ -1,9 +1,10 @@
 // store/player.js
 import { defineStore } from 'pinia';
-//import persistedstate from 'pinia-plugin-persistedstate';
+import persistedstate from 'pinia-plugin-persistedstate';
 
 export const usePlayerStore = defineStore('player', {
     state: () => ({
+       
         currentStream: 'omFM Main', // Default stream
     }),
     actions: {
@@ -31,6 +32,9 @@ export const usePlayerStore = defineStore('player', {
         sameSite: 'lax',
       }),
     },
-    
+    // persist: {
+    //     storage: persistedState.localStorage,
+    //   },
+   
  
 });
