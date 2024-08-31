@@ -43,7 +43,24 @@ class IcePlayer {
         this.get_element('.ice-play').addEventListener('click', () => {this.play()});
         this.get_element('.ice-pause').addEventListener('click', () => {this.pause()});
         this.get_element('.ice-stop').addEventListener('click', () => {this.stop()});
+
         this.get_element('.ice-volume').addEventListener('mousemove', () => {this.change_volume()});
+        this.get_element('.ice-volume').addEventListener('click', () => {this.change_volume()});
+        this.get_element('.ice-volume').addEventListener('touchmove', () => {this.change_volume()});
+        this.get_element('.ice-volume').addEventListener('touchstart', () => {this.change_volume()});
+        this.get_element('.ice-volume').addEventListener('touchend', () => {this.change_volume()});
+        this.get_element('.ice-volume').addEventListener('touchcancel', () => {this.change_volume()});
+       
+        
+        // Hide Header Vertical Vol if cliked outside
+        document.addEventListener('click', e => {
+            const vertical_player_header = document.getElementById("ice-volume3");
+            const vertical_player_header_Btn = document.getElementById("ice-volume3_Btn");
+            if (!vertical_player_header.contains(e.target) && !vertical_player_header_Btn.contains(e.target) ) {
+                vertical_player_header.classList.remove('open_volume');
+           
+            }
+             });
         this.audio_object.addEventListener('play', () => {
             this.current_state = this.PLAYING;
             this.play_pause_toggle();
@@ -110,8 +127,21 @@ class IcePlayer {
     change_volume() {
         this.audio_object.volume = this.get_element('.ice-volume').value / 100;
         this.localStorage.setItem("vol", this.audio_object.volume);
+        document.getElementById("ice-volume3").value = this.audio_object.volume * 100;
     }
-
+    change_volume3() {
+        this.audio_object.volume = document.getElementById("ice-volume3").value / 100;
+        this.localStorage.setItem("vol", this.audio_object.volume);
+        this.get_element('.ice-volume').value = this.audio_object.volume * 100;
+    }
+    vol_btn_main() {
+        document.getElementById("ice-volume3").classList.toggle("open_volume");
+        //this.get_element(".speaker").classList.toggle('open_volume');
+    }
+    vol_btn_main_just_hide() {
+        document.getElementById("ice-volume3").classList.remove("open_volume");
+        //this.get_element(".speaker").classList.toggle('open_volume');
+    }
     showinfo() {
         // this.request(this.server_address + this.info_link, (data) => {
         //     for (let mount_name of this.mounts_list) {

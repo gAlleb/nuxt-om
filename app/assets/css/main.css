@@ -670,5 +670,20 @@ min-height: 11vh  ;
 
 }
 
-
-
+.ice-volume3 {
+  top: 110px;
+  left: -13px;
+  appearance: none;
+  width: 156px;
+  height: 30px;
+  border-radius: 15px;
+  box-shadow: 0 2px 10px 3px #00000078;
+  transition: 0.4s;
+  background: rgb(76, 76, 76);
+}
+.ice-volume3:not(.open_volume){
+  transform: scale(0);
+  transition: 0.4s;
+   
+  rotate: -270deg;
+}

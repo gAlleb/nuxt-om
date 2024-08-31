@@ -37,12 +37,25 @@ export const usePlayer = () => {
       player.value.stop();
     } 
   };
+  const changeVol3 = () => {
+     
+     player.value.change_volume3();
+    
+  };
+  const showVol3Open = ref(false);
+  const showVol3 = () => {
+    player.value.vol_btn_main();
+   
+ };
+ 
 
   return {
     player,
     isPlaying,
     togglePlay,
     playPlayer1,
-    stopPlayer1
+    stopPlayer1,
+    changeVol3,
+    showVol3
   };
 };
