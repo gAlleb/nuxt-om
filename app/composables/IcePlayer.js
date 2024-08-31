@@ -72,6 +72,7 @@ class IcePlayer {
 
       // Set the volume when the player is initialized
       this.get_element('.ice-volume').value = this.audio_object.volume * 100; // Update the volume slider
+      document.getElementById("ice-volume3").value = this.audio_object.volume * 100;
       this.hide('#live')
     }
      
