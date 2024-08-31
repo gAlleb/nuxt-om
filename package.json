@@ -32,6 +32,7 @@
     "prettier-plugin-tailwindcss": "^0.6.6"
   },
   "dependencies": {
+    "pinia-plugin-persistedstate": "^3.2.3",
     "three": "^0.167.1"
   }
 }

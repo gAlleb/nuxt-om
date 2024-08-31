@@ -4,11 +4,13 @@ class IcePlayer {
     constructor(el, init_params) {
         if (el.length === 0) throw new Error('Player element not found!');
 
+        this.localStorage = window.localStorage;
+
         // Player Params
         this.server_address = 'https://omfm.ru:8443/' // Default address:port
-        this.stream_mount = 'stream' // Default mount
+        this.stream_mount = (this.localStorage.getItem("stream_name") !== null) ? this.localStorage.getItem("stream_name") : 'stream'
         this.style = 'fixed' // Player style (fixed or inline)
-        this.template = '<div class="ice-player-el "><div><i class="ice-play"  ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i></div><input class="ice-volume" type="range" min="0" max="100" value="50" step="1"><img class="ms-2" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
+        this.template = '<div class="ice-player-el "><div><i class="ice-play"  ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><button id="show_volume_xs" class="inline-flex sm:hidden"><span class="iconify i-heroicons-solid:volume-up" style="color: white;text-shadow: 0 0 10px #fff;"></span></button></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
         
         // Informer Params
         this.mounts_list = ['stream', 'nonstop'] // Mount point list
@@ -50,15 +52,51 @@ class IcePlayer {
         this.get_element('.ice-volume').addEventListener('touchstart', () => {this.change_volume()});
         this.get_element('.ice-volume').addEventListener('touchend', () => {this.change_volume()});
         this.get_element('.ice-volume').addEventListener('touchcancel', () => {this.change_volume()});
+
+        this.get_element('.volume-vertical').addEventListener('click', () => {this.change_volume2()});
+        this.get_element('.volume-vertical').addEventListener('mousemove', () => {this.change_volume2()});
+        this.get_element('.volume-vertical').addEventListener('touchmove', () => {this.change_volume2()});
+        this.get_element('.volume-vertical').addEventListener('touchstart', () => {this.change_volume2()});
+        this.get_element('.volume-vertical').addEventListener('touchend', () => {this.change_volume2()});
+        this.get_element('.volume-vertical').addEventListener('touchcancel', () => {this.change_volume2()});
        
-        
+        this.get_element('.ice-volume').addEventListener('input', (event) => {this.change_volume_text()});
+        this.get_element('.volume-vertical').addEventListener('input', (event) => {this.change_volume_text()});
+
+       
+        this.get_element('.mute').addEventListener('click', () => {this.mute()});
+        this.get_element('#show_volume_xs').addEventListener('click', () => {this.vol_btn_main()});
+        //this.get_element('#show_volume_xs').addEventListener('mouseenter', () => {this.vol_btn_main_hover()});
+
+        this.get_element('.ice-volume').addEventListener('click', () => {this.unmute_onclick()});
+        this.get_element('.volume-vertical').addEventListener('click', () => {this.unmute_onclick2()});
+
+        this.get_element('.volume-vertical').addEventListener('touchstart', () => {this.unmute_onclick2()});
+        this.get_element('.ice-volume').addEventListener('touchstart', () => {this.unmute_onclick()});
+
+        document.getElementById("ice-volume3").addEventListener('click', () => {this.unmute_onclick3()});
+        document.getElementById("ice-volume3").addEventListener('touchstart', () => {this.unmute_onclick3()});
+
+
+
+        window.addEventListener('load', () => {this.change_volume_bar()});
+        window.addEventListener('load', () => {this.change_volume_bar2()});
+
+        document.addEventListener('click', e => {
+        if (!this.get_element("#ice_volume_vertical").contains(e.target) && !this.get_element(".speaker").contains(e.target) && ! this.get_element('#show_volume_xs').contains(e.target) ) {
+             this.get_element("#ice_volume_vertical").classList.remove('open_volume');
+        this.get_element(".speaker").classList.remove('open_volume');
+        }
+
+         });
         // Hide Header Vertical Vol if cliked outside
         document.addEventListener('click', e => {
-            const vertical_player_header = document.getElementById("ice-volume3");
+            const vertical_player_header = document.getElementById("ice-volume3")
             const vertical_player_header_Btn = document.getElementById("ice-volume3_Btn");
-            if (!vertical_player_header.contains(e.target) && !vertical_player_header_Btn.contains(e.target) ) {
+            const vertical_player_header_Btn_Mute = document.getElementById("ice-volume3_Mute");
+            if (!vertical_player_header.contains(e.target) && !vertical_player_header_Btn.contains(e.target) && !vertical_player_header_Btn_Mute.contains(e.target) ) {
                 vertical_player_header.classList.remove('open_volume');
-           
+                vertical_player_header_Btn_Mute.classList.remove('open_volume');
             }
              });
         this.audio_object.addEventListener('play', () => {
@@ -71,8 +109,20 @@ class IcePlayer {
         });
 
       // Set the volume when the player is initialized
-      this.get_element('.ice-volume').value = this.audio_object.volume * 100; // Update the volume slider
+      const volValue = this.audio_object.volume * 100;
+      this.get_element(".ice-volume").value = volValue;
+      this.get_element(".volume-vertical").value = volValue;
       document.getElementById("ice-volume3").value = this.audio_object.volume * 100;
+
+      this.get_element(".ice-volume").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${volValue}%,  rgba(75, 75, 75, 1) ${volValue}%)`;
+      this.get_element(".volume-vertical").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${volValue}%,  rgba(75, 75, 75, 1) ${volValue}%)`;
+      document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${volValue}%,  rgba(75, 75, 75, 1) ${volValue}%)`;
+
+      this.get_element(".vol_value").textContent = Math.round(volValue) + "%";
+      this.get_element(".vol_value2").textContent = Math.round(volValue) + "%";
+      if (this.audio_object.volume === 0) {
+         this.get_element('.speaker').classList.add("muted");
+      }
       this.hide('#live')
     }
      
@@ -119,29 +169,138 @@ class IcePlayer {
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "none";
     }
-    hide_stop_button() {
-        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        playBtnPlayer1.style.display = "inline-flex";
+    change_stream_rock() {
+    if (this.stream_mount !== 'rock') {
+    this.stream_mount = 'rock';
+    this.stop();
+    this.play();
+    this.localStorage.setItem("stream_name", this.stream_mount);
+    }
+    }
+    change_stream_coma() {
+    if (this.stream_mount !== 'coma') {
+    this.stream_mount = 'coma';
+    this.stop();
+    this.play();
+    this.localStorage.setItem("stream_name", this.stream_mount);
+    }
+    }
+    change_stream_omfm() {
+    if (this.stream_mount !== 'stream') {
+    this.stream_mount = 'stream';
+    this.stop();
+    this.play();
+    this.localStorage.setItem("stream_name", this.stream_mount);
+    }
+    }
+    hide_stop_and_mute_button() {
+        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        // playBtnPlayer1.style.display = "inline-flex";
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "none"; 
+        const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
+        mute_btn_header_Muted.style.display = "none";
     }
+
     change_volume() {
+        if (this.audio_object.muted === false)  {
         this.audio_object.volume = this.get_element('.ice-volume').value / 100;
-        this.localStorage.setItem("vol", this.audio_object.volume);
+        this.get_element('.volume-vertical').value  = this.get_element('.ice-volume').value;
         document.getElementById("ice-volume3").value = this.audio_object.volume * 100;
+
+      }
+        if (this.audio_object.volume === 0. || this.audio_object.muted === true) {
+       
+         this.get_element('.speaker').classList.add("muted");
+         } else if (this.audio_object.volume > 0.0 && this.audio_object.muted === false)   {
+         
+         this.get_element('.speaker').classList.remove("muted");
+         }   
+         
+        
+        this.localStorage.setItem("vol", this.audio_object.volume);
+        this.change_volume_bar();
+        this.change_volume_bar2();
+        this.change_volume_bar3();
+        this.change_volume_text();     
+    }
+    change_volume2() {
+        if (this.audio_object.muted === false)  {
+        this.audio_object.volume = this.get_element('.volume-vertical').value / 100;
+        this.get_element('.ice-volume').value = this.get_element('.volume-vertical').value;
+        document.getElementById("ice-volume3").value = this.audio_object.volume * 100;
+
+
+    }
+        if (this.audio_object.volume === 0. || this.audio_object.muted === true) {
+         this.get_element('.speaker').classList.add("muted");
+         } else if (this.audio_object.volume > 0.0 && this.audio_object.muted === false)   {
+         this.get_element('.speaker').classList.remove("muted");
+         }  
+
+        this.localStorage.setItem("vol", this.audio_object.volume);
+        this.change_volume_bar();
+        this.change_volume_text();
+        this.change_volume_bar2();
+        this.change_volume_bar3();
+        
     }
     change_volume3() {
         this.audio_object.volume = document.getElementById("ice-volume3").value / 100;
         this.localStorage.setItem("vol", this.audio_object.volume);
         this.get_element('.ice-volume').value = this.audio_object.volume * 100;
+        this.get_element('.volume-vertical').value  = this.get_element('.ice-volume').value;
+
+        if (this.audio_object.muted === false)  {
+            this.audio_object.volume = document.getElementById("ice-volume3").value / 100;
+            this.get_element('.ice-volume').value = this.audio_object.volume * 100;
+            this.get_element('.volume-vertical').value  = this.get_element('.ice-volume').value;
+    
+    
+        }
+            if (this.audio_object.volume === 0. || this.audio_object.muted === true) {
+             this.get_element('.speaker').classList.add("muted");
+             } else if (this.audio_object.volume > 0.0 && this.audio_object.muted === false)   {
+             this.get_element('.speaker').classList.remove("muted");
+             }  
+    
+            this.localStorage.setItem("vol", this.audio_object.volume);
+            this.change_volume_bar();
+            this.change_volume_text();
+            this.change_volume_bar2();
+            this.change_volume_bar3();
     }
-    vol_btn_main() {
+    vol_btn_main_3() {
         document.getElementById("ice-volume3").classList.toggle("open_volume");
-        //this.get_element(".speaker").classList.toggle('open_volume');
+        document.getElementById("ice-volume3_Mute").classList.toggle("open_volume");
     }
-    vol_btn_main_just_hide() {
-        document.getElementById("ice-volume3").classList.remove("open_volume");
-        //this.get_element(".speaker").classList.toggle('open_volume');
+    unmute_onclick(){
+        if (this.audio_object.volume >= 0. && this.audio_object.muted === true) {
+        this.audio_object.volume = this.get_element('.ice-volume').value / 100;
+    
+        this.localStorage.setItem("vol", this.audio_object.volume);
+
+        this.mute();
+        }
+    }
+     unmute_onclick2(){
+        if (this.audio_object.volume >= 0. && this.audio_object.muted === true) {
+        this.audio_object.volume = this.get_element('.volume-vertical').value / 100;
+    
+        this.localStorage.setItem("vol", this.audio_object.volume);
+
+        this.mute();
+        }
+    }
+    unmute_onclick3(){
+        if (this.audio_object.volume >= 0. && this.audio_object.muted === true) {
+        this.audio_object.volume = document.getElementById("ice-volume3").value / 100;
+
+    
+        this.localStorage.setItem("vol", this.audio_object.volume);
+
+        this.mute();
+        }
     }
     showinfo() {
         // this.request(this.server_address + this.info_link, (data) => {
@@ -167,7 +326,7 @@ class IcePlayer {
         }
     }
     var d = new Date();
-    xhttp.open('GET', 'https://omfm.ru:8443/status-json.xsl?mount=/stream&' + d.getTime(), true);
+    xhttp.open('GET', 'https://stream.omfm.ru/status-json.xsl?mount=/' + this.stream_mount + '&' + d.getTime(), true);
     xhttp.send();
     if (this.audio_object.paused === false) { // Check if playing
         this.timer = setTimeout(() => {
@@ -213,10 +372,134 @@ class IcePlayer {
         this.get_element(el).style.display = 'none';
     }
     show(el) {
-        this.get_element(el).style.display = 'inline-flex';
+        this.get_element(el).style.display = 'inline-block';
     }
 
-    
+    change_volume_bar() {
+        if (this.audio_object.muted === false)  {
+        const sliderValue = document.querySelector(".ice-volume").value;
+        document.querySelector(".ice-volume").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
+        document.querySelector(".volume-vertical").style.background = `linear-gradient(to right,rgba(230, 230, 230, 1) ${sliderValue}%, rgba(75, 75, 75, 1) ${sliderValue}%)`;
+        document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
+        }
+         // this.change_volume_text();
+   }
+   change_volume_bar2() {
+       if (this.audio_object.muted === false)  {
+       const sliderValue = document.querySelector(".volume-vertical").value;
+       document.querySelector(".volume-vertical").style.background = `linear-gradient(to right,rgba(230, 230, 230, 1) ${sliderValue}%, rgba(75, 75, 75, 1) ${sliderValue}%)`;
+       document.querySelector(".ice-volume").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
+       document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
+
+    }
+   }
+   change_volume_bar3() {
+    if (this.audio_object.muted === false)  {
+    const sliderValue = document.getElementById("ice-volume3");
+    document.querySelector(".volume-vertical").style.background = `linear-gradient(to right,rgba(230, 230, 230, 1) ${sliderValue}%, rgba(75, 75, 75, 1) ${sliderValue}%)`;
+    document.querySelector(".ice-volume").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
+    document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
+
+ }
+}
+   change_volume_text() {
+
+       const sliderEl = document.querySelector(".ice-volume");
+       const sliderEl_2 = document.querySelector(".volume-vertical");
+       const sliderEl_3 = document.getElementById("ice-volume3")
+       const volValue = document.querySelector(".vol_value");
+       const volValue2 = document.querySelector(".vol_value2");
+
+
+       const tempSliderValue = event.target.value;
+       if (this.audio_object.muted === false)  {
+       volValue.textContent = tempSliderValue + "%";
+       volValue2.textContent = tempSliderValue + "%";
+   }
+
+       const progress = (tempSliderValue / sliderEl.max) * 100;
+
+if (this.audio_object.muted === false)  {
+       sliderEl.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%,  rgba(75, 75, 75, 1) ${progress}%)`;
+       sliderEl_2.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%, rgba(75, 75, 75, 1) ${progress}%)`;
+       sliderEl_3.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%, rgba(75, 75, 75, 1) ${progress}%)`;
+
+
+}
+
+    }
+
+    mute() {
+        
+        this.audio_object.muted = !this.audio_object.muted;
+        
+
+
+         if (this.audio_object.muted === true)  {
+        const sliderEl = document.querySelector(".ice-volume");
+        const sliderEl_2 = document.querySelector(".volume-vertical");
+        const sliderEl_3 = document.getElementById("ice-volume3")
+        const volValue = document.querySelector(".vol_value");
+        const volValue2 = document.querySelector(".vol_value2");
+        const tempSliderValue = document.querySelector(".ice-volume").value;
+        volValue.textContent = "";
+        volValue2.textContent = "";
+
+        const progress = (tempSliderValue / sliderEl.max) * 100;
+        sliderEl.value = 0;
+        sliderEl_2.value = 0;
+        sliderEl_3.value = 0;
+        sliderEl.style.background = `linear-gradient(to right, rgba(75, 75, 75, 1) 0%,  rgba(75, 75, 75, 1) 100%)`;
+        sliderEl_2.style.background = `linear-gradient(to right, rgba(75, 75, 75, 1) 0%, rgba(75, 75, 75, 1) 100%)`;
+        sliderEl_3.style.background = `linear-gradient(to right, rgba(75, 75, 75, 1) 0%, rgba(75, 75, 75, 1) 100%)`;
+
+         this.get_element('.speaker').classList.add("muted");
+
+         const mute_btn_header_Unmuted = document.getElementById("ice-volume3_Unmuted");
+         mute_btn_header_Unmuted.style.display = "none";
+         const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
+         mute_btn_header_Muted.style.display = "inline-flex";
+
+         } else  {
+         this.get_element('.speaker').classList.remove("muted");
+        const sliderEl = document.querySelector(".ice-volume");
+        const sliderEl_2 = document.querySelector(".volume-vertical");
+        const sliderEl_3 = document.getElementById("ice-volume3")
+        const volValue = document.querySelector(".vol_value");
+        const volValue2 = document.querySelector(".vol_value2");
+        sliderEl.value = this.audio_object.volume * 100;
+        sliderEl_2.value = this.audio_object.volume * 100;
+        sliderEl_3.value = this.audio_object.volume * 100;
+
+
+        const tempSliderValue = document.querySelector(".ice-volume").value;
+        volValue.textContent = tempSliderValue + "%";
+        volValue2.textContent = tempSliderValue + "%";
+
+        const progress = (tempSliderValue / sliderEl.max) * 100;
+
+        sliderEl.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%,  rgba(75, 75, 75, 1) ${progress}%)`;
+        sliderEl_2.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%, rgba(75, 75, 75, 1) ${progress}%)`;
+        sliderEl_3.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%, rgba(75, 75, 75, 1) ${progress}%)`;
+        
+        const mute_btn_header_Unmuted = document.getElementById("ice-volume3_Unmuted");
+        mute_btn_header_Unmuted.style.display = "inline-flex";
+        const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
+        mute_btn_header_Muted.style.display = "none";
+
+        }
+
+    }
+
+   vol_btn_main() {
+       this.get_element("#ice_volume_vertical").classList.toggle("open_volume");
+       this.get_element(".speaker").classList.toggle('open_volume');
+   }
+   vol_btn_main_hover() {
+      
+       this.get_element("#ice_volume_vertical").classList.add('open_volume');
+       this.get_element(".speaker").classList.add('open_volume');
+   }
 };
 
 export default IcePlayer;
