@@ -1,6 +1,6 @@
 // store/player.js
 import { defineStore } from 'pinia';
-import persistedstate from 'pinia-plugin-persistedstate';
+//import persistedstate from 'pinia-plugin-persistedstate';
 
 // export const usePlayerStore = defineStore('player', {
 //     state: () => ({
@@ -26,12 +26,14 @@ import persistedstate from 'pinia-plugin-persistedstate';
 //     //     },
 //     //   ],
 //     // },
+//     // // this below works great with run build
 //     // persist: {
 //     //   storage: persistedState.cookiesWithOptions({
 //     //     // sameSite: 'strict',
 //     //     sameSite: 'lax',
 //     //   }),
 //     // },
+//     // // this below works greate with run generate and ssr:false but Content becomes unavailable
 //     // persist: {
 //     //     storage: persistedState.localStorage,
 //     //   },

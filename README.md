@@ -1,3 +1,6 @@
+## TODO
+- Pinia logic for SSR Overlays & export to composable
+
 ## Modules
 
 ### This template comes with the following modules:
