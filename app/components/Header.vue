@@ -36,11 +36,11 @@
     <div class="flex">
      <div class="flex">
       <BtnShowHidePlayer />
-      
+      <!-- <BtnSetStream /> -->
+      <BtnEffects />
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />
         <BtnToggleColorMode /> -->
-        <BtnEffects />
       </ClientOnly> 
      
      </div>
