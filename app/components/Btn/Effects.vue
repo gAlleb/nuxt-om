@@ -1,5 +1,5 @@
 <template>
-  <Menu as="div" class="relative ml-1 sm:ml-4">
+  <!-- <Menu as="div" class="relative ml-1 sm:ml-4">
     <div>
       <UTooltip text="Special Effects" :popper="{ offsetDistance: 5 }"  class="">
       <MenuButton @click.stop="toggle_effects_block" 
@@ -71,13 +71,91 @@
         </MenuItem>
       </div>
     </transition>
-  </Menu>
+  </Menu> -->
+<div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
+
+<UTooltip text="Special Effects" :popper="{ offsetDistance: 5 }"  class="">
+<div
+:class="[ 
+    areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
+    anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
+    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg' 
+  ]"
+class="hover:cursor-pointer flex rounded-xl  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
+@click="isOpen = !isOpen"> 
+  <span class="sr-only">Effects On/Off</span>
+  <Icon name="heroicons:sparkles" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
+
+
+</div>
+</UTooltip>
+<transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95"  v-if="isOpen">
+<div id="Effects_block"   @click.stop.prevent class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl outline ring-1 ring-black ring-opacity-5 focus:outline-none">
+
+    <button type="button" @click="toggleEffect('overlay0')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay0') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Radial</span>
+    </button>
+
+    <button type="button" @click="toggleEffect('overlay1')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay1') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Flicker</span>
+    </button>
+
+
+    <button type="button" @click="toggleEffect('overlay2')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay2') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Noise</span>
+    </button>
+
+
+    <button type="button" @click="toggleEffect('overlay3')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay3') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Scanlines</span>
+    </button>
+
+
+    <button type="button" @click="toggleEffect('overlay4')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay4') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Scanline Black</span>
+    </button>
+
+
+    <button type="button" @click="toggleEffect('overlay5')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay5') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Scanline Green</span>
+    </button>
+
+
+    <button type="button" id="allEffectsBtn" @click="toggleAllEffects" 
+    :class="[areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
+    anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
+    'bg-slate-50 dark:bg-zinc-800' ]" 
+    class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Toggle Effects</span>
+    </button>
+
+    <button type="button" id="clearCacheBtn" @click="clearCache" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:trash" class="h-6 w-6" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300">Clear Cache</span>
+    </button>
+
+</div>
+</transition>
+</div>
 </template>
 
 <script setup>
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ref, onMounted } from 'vue';
 
+const isOpen = ref(false)
+const dropdownContainer = ref(null);
+const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};
+onMounted(() => {
+  window.addEventListener('click', handleOutsideClick);
+});
 // Функции для работы с localStorage
 function getItem(item) {
   if (import.meta.client) {
