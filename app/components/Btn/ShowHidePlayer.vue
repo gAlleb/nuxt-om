@@ -19,10 +19,11 @@
       <button id="ice-volume3_Btn" class="ml-1 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="showVol3"  >     
        <Icon name="heroicons-solid:volume-up" class="h-6 w-6 bg-yellow-500" aria-hidden="true" />
       </button>
-      <button id="ice-volume3_Mute" class="ice-volume3_Mute flex transition-all duration-500 ease-in-out rounded-full shadow-lg bg-slate-50 focus:outline-none  focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800" @click="muteVol3"  >     
+      <!-- <button id="ice-volume3_Mute" class="ice-volume3_Mute flex transition-all duration-500 ease-in-out rounded-full shadow-lg bg-slate-50 focus:outline-none  focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800" @click="muteVol3"  >     
        <Icon id="ice-volume3_Unmuted"  name="heroicons-outline:speaker-x-mark" class="h-6 w-6 bg-gray-700" aria-hidden="true" />
        <Icon id="ice-volume3_Muted" name="heroicons-outline:speaker-wave" class="h-6 w-6 bg-gray-700" aria-hidden="true" />
-      </button>
+      </button> -->
+      <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a>
       <input id="ice-volume3" type="range" min="0" max="100" value="70" class="ice-volume3 -rotate-90 absolute " @input="changeVol3">
       </div>
       </div>
@@ -96,23 +97,29 @@ function radioshow() {
   }
 }
 
-function getItem(item) {
-  if (import.meta.client) {
-    return localStorage.getItem(item);
-  } else {
-    return undefined;
-  }
-}
-onMounted(() => {
-const currentStreamState = getItem("stream_name");
+// function getItem(item) {
+//   if (import.meta.client) {
+//     if (!getItem.cache) {
+//       getItem.cache = {};
+//     }
+//     if (!(item in getItem.cache)) {
+//       getItem.cache[item] = localStorage.getItem(item);
+//     }
+//     return getItem.cache[item];
+//   } else {
+//     return undefined;
+//   }
+// }
+// onMounted(() => {
+// const currentStreamState = getItem("stream_name");
 
-      if (currentStreamState === 'stream' || currentStreamState === null) {
-        setStream1();
-      } else if (currentStreamState === 'rock') {
-        setStream2();
-      }else if (currentStreamState === 'coma') {
-        setStream3();
-     }
-});
+//       if (currentStreamState === 'stream' || currentStreamState === null) {
+//         setStream1();
+//       } else if (currentStreamState === 'rock') {
+//         setStream2();
+//       }else if (currentStreamState === 'coma') {
+//         setStream3();
+//      }
+// });
 </script>
 

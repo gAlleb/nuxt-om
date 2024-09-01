@@ -51,8 +51,10 @@ import { usePlayerStore } from '@/stores/player'; // Import the store
 const playerStore = usePlayerStore(); // Get the store instance
 const currentStream = computed(() => playerStore.currentStream); // Reactive stream
 
+onMounted(() => {
+playerStore.loadStreamName();
+});
 
-const colorMode = useColorMode()
 </script>
 
 <style>

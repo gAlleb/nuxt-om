@@ -602,6 +602,10 @@ max-height: 15vh;
 .ice-play:before { content: '\f00f'; } /* '' */
 .ice-stop:before { content: '\f080'; } /* '' */
  
+.ice-pause,.ice-play,.ice-stop {
+  margin-top: 3px;
+ }
+ 
 /* Player Icons End */
 .vol_value {
   font-size: 13px;
@@ -823,7 +827,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
      /* bottom: 79px;
       left: Calc(0% + 15px);*/
       bottom: 160px;
-      left: 5px;
+      left: 11px;
       appearance: none;
       width: 156px;
       height: 30px;
@@ -945,7 +949,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     margin-right: -30px!important;
     transition: 0.4s;
     bottom: 35px;
-    left: -28px;
+    left: -30px;
     height: 30px;
     width: 30px;
     position: absolute;
@@ -991,10 +995,52 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     transform: scale(.5) translate(-15px,0) rotate(36deg);
     opacity: 0;
   }
+
+
+  .speaker_as_icon {
+    cursor: pointer;
+    margin-left: 4px;
+    height: 23px;
+    width: 26px;
+    display: inline-block;
+    position: relative;
+    overflow: visible;
   }
-  
-  
-  
+  .speaker_as_icon span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: rgba(230, 230, 230, 1);
+    margin: 11px 0 0 2px;
+  }
+  .speaker_as_icon  span:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent rgba(230, 230, 230, 1) transparent transparent;
+    border-width: 10px 14px 10px 15px;
+    left: -13px;
+    top: 5px;
+  }
+  .speaker_as_icon span:before {
+    transform: rotate(45deg);
+    border-radius: 0 50px 0 0;
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-style: double;
+    border-color: rgba(230, 230, 230, 1);
+    border-width: 7px 7px 0 0;
+    left: 18px;
+    top: 9px;
+    transition: all 0.2s ease-out;
+  }
+
+
+  }
   
   
   .speaker {
@@ -1056,3 +1102,64 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
      
     rotate: -270deg;
   }
+
+  .speaker3 {
+    cursor: pointer;
+    margin-right: 5px;
+    height: 30px;
+    width: 30px;
+    position: absolute;
+    overflow: hidden;
+    display: inline-block;
+    right: -2px;
+    top: 43px;
+  }
+  .speaker3 span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: rgba(230, 230, 230, 1);
+    margin: 11px 0 0 2px;
+  }
+  .speaker3 span:after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent rgba(230, 230, 230, 1) transparent transparent;
+    border-width: 10px 14px 10px 15px;
+    left: -13px;
+    top: 5px;
+  }
+  .speaker3 span:before {
+    transform: rotate(45deg);
+    border-radius: 0 50px 0 0;
+    content: '';
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-style: double;
+    border-color: rgba(230, 230, 230, 1);
+    border-width: 7px 7px 0 0;
+    left: 18px;
+    top: 9px;
+    transition: all 0.2s ease-out;
+  }
+  .speaker3:hover span:before {
+    transform: scale(.8) translate(-3px,0) rotate(42deg);
+  }
+  .speaker3.muted span:before {
+    transform: scale(.5) translate(-15px,0) rotate(36deg);
+    opacity: 0;
+  }
+  .speaker3:not(.open_volume){
+    transform: scale(0);
+    transition: 0.4s;
+     
+    rotate: -270deg;
+  
+  }
+
+  
+

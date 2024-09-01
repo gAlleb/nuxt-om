@@ -10,7 +10,7 @@ class IcePlayer {
         this.server_address = 'https://omfm.ru:8443/' // Default address:port
         this.stream_mount = (this.localStorage.getItem("stream_name") !== null) ? this.localStorage.getItem("stream_name") : 'stream'
         this.style = 'fixed' // Player style (fixed or inline)
-        this.template = '<div class="ice-player-el "><div><i class="ice-play"  ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><button id="show_volume_xs" class="inline-flex sm:hidden"><span class="iconify i-heroicons-solid:volume-up" style="color: white;text-shadow: 0 0 10px #fff;"></span></button></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
+        this.template = '<div class="ice-player-el "><div><i class="ice-play" style="display: inline-block;font-size:1.6rem !important" ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
         
         // Informer Params
         this.mounts_list = ['stream', 'nonstop'] // Mount point list
@@ -122,6 +122,7 @@ class IcePlayer {
       this.get_element(".vol_value2").textContent = Math.round(volValue) + "%";
       if (this.audio_object.volume === 0) {
          this.get_element('.speaker').classList.add("muted");
+         document.getElementById("ice-volume3_Mute").classList.add("muted");
       }
       this.hide('#live')
     }
@@ -170,36 +171,56 @@ class IcePlayer {
         stopBtnPlayer1.style.display = "none";
     }
     change_stream_rock() {
+
     if (this.stream_mount !== 'rock') {
-    this.stream_mount = 'rock';
-    this.stop();
-    this.play();
-    this.localStorage.setItem("stream_name", this.stream_mount);
+        if (this.current_state === this.PLAYING) {
+        this.stream_mount = 'rock';
+        this.stop();
+        this.play();
+        this.localStorage.setItem("stream_name", this.stream_mount);
+        } else {
+        this.stream_mount = 'rock';
+        this.stop();
+        this.localStorage.setItem("stream_name", this.stream_mount);
+        }
     }
+
     }
     change_stream_coma() {
     if (this.stream_mount !== 'coma') {
-    this.stream_mount = 'coma';
-    this.stop();
-    this.play();
-    this.localStorage.setItem("stream_name", this.stream_mount);
+        if (this.current_state === this.PLAYING) {
+        this.stream_mount = 'coma';
+        this.stop();
+        this.play();
+        this.localStorage.setItem("stream_name", this.stream_mount);
+        } else {
+        this.stream_mount = 'coma';
+        this.stop();
+        this.localStorage.setItem("stream_name", this.stream_mount);
+        }
     }
     }
     change_stream_omfm() {
-    if (this.stream_mount !== 'stream') {
-    this.stream_mount = 'stream';
-    this.stop();
-    this.play();
-    this.localStorage.setItem("stream_name", this.stream_mount);
-    }
+        if (this.stream_mount !== 'stream') {
+            if (this.current_state === this.PLAYING) {
+            this.stream_mount = 'stream';
+            this.stop();
+            this.play();
+            this.localStorage.setItem("stream_name", this.stream_mount);
+            } else {
+            this.stream_mount = 'stream';
+            this.stop();
+            this.localStorage.setItem("stream_name", this.stream_mount);
+            }
+        }
     }
     hide_stop_and_mute_button() {
         // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
         // playBtnPlayer1.style.display = "inline-flex";
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "none"; 
-        const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
-        mute_btn_header_Muted.style.display = "none";
+        // const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
+        // mute_btn_header_Muted.style.display = "none";
     }
 
     change_volume() {
@@ -212,9 +233,11 @@ class IcePlayer {
         if (this.audio_object.volume === 0. || this.audio_object.muted === true) {
        
          this.get_element('.speaker').classList.add("muted");
+         document.getElementById("ice-volume3_Mute").classList.add("muted");
          } else if (this.audio_object.volume > 0.0 && this.audio_object.muted === false)   {
          
          this.get_element('.speaker').classList.remove("muted");
+         document.getElementById("ice-volume3_Mute").classList.remove("muted");
          }   
          
         
@@ -234,8 +257,10 @@ class IcePlayer {
     }
         if (this.audio_object.volume === 0. || this.audio_object.muted === true) {
          this.get_element('.speaker').classList.add("muted");
+         document.getElementById("ice-volume3_Mute").classList.add("muted");
          } else if (this.audio_object.volume > 0.0 && this.audio_object.muted === false)   {
          this.get_element('.speaker').classList.remove("muted");
+         document.getElementById("ice-volume3_Mute").classList.remove("muted");
          }  
 
         this.localStorage.setItem("vol", this.audio_object.volume);
@@ -260,8 +285,10 @@ class IcePlayer {
         }
             if (this.audio_object.volume === 0. || this.audio_object.muted === true) {
              this.get_element('.speaker').classList.add("muted");
+             document.getElementById("ice-volume3_Mute").classList.add("muted");
              } else if (this.audio_object.volume > 0.0 && this.audio_object.muted === false)   {
              this.get_element('.speaker').classList.remove("muted");
+             document.getElementById("ice-volume3_Mute").classList.remove("muted");
              }  
     
             this.localStorage.setItem("vol", this.audio_object.volume);
@@ -454,14 +481,16 @@ if (this.audio_object.muted === false)  {
         sliderEl_3.style.background = `linear-gradient(to right, rgba(75, 75, 75, 1) 0%, rgba(75, 75, 75, 1) 100%)`;
 
          this.get_element('.speaker').classList.add("muted");
+         document.getElementById("ice-volume3_Mute").classList.add("muted");
 
-         const mute_btn_header_Unmuted = document.getElementById("ice-volume3_Unmuted");
-         mute_btn_header_Unmuted.style.display = "none";
-         const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
-         mute_btn_header_Muted.style.display = "inline-flex";
+        //  const mute_btn_header_Unmuted = document.getElementById("ice-volume3_Unmuted");
+        //  mute_btn_header_Unmuted.style.display = "none";
+        //  const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
+        //  mute_btn_header_Muted.style.display = "inline-flex";
 
          } else  {
          this.get_element('.speaker').classList.remove("muted");
+         document.getElementById("ice-volume3_Mute").classList.remove("muted");
         const sliderEl = document.querySelector(".ice-volume");
         const sliderEl_2 = document.querySelector(".volume-vertical");
         const sliderEl_3 = document.getElementById("ice-volume3")
@@ -482,10 +511,10 @@ if (this.audio_object.muted === false)  {
         sliderEl_2.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%, rgba(75, 75, 75, 1) ${progress}%)`;
         sliderEl_3.style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${progress}%, rgba(75, 75, 75, 1) ${progress}%)`;
         
-        const mute_btn_header_Unmuted = document.getElementById("ice-volume3_Unmuted");
-        mute_btn_header_Unmuted.style.display = "inline-flex";
-        const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
-        mute_btn_header_Muted.style.display = "none";
+        // const mute_btn_header_Unmuted = document.getElementById("ice-volume3_Unmuted");
+        // mute_btn_header_Unmuted.style.display = "inline-flex";
+        // const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
+        // mute_btn_header_Muted.style.display = "none";
 
         }
 
