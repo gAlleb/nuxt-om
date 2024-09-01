@@ -17,7 +17,16 @@
     src: local(''), 
     url('../font/unscii-16.woff');
   }
-  
+  @font-face {
+    font-family: "RocknRoll One";
+    src: local(''), 
+    url('../font/RocknRollOne-Regular.ttf');
+  }
+  @font-face {
+    font-family: "Metal Mania";
+    src: local(''), 
+    url('../font/MetalMania-Regular.ttf');
+  }
 /*  :root {
     font-family: Inter, sans-serif;
     font-feature-settings:

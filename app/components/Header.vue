@@ -1,15 +1,15 @@
 <template>
   <header style="z-index:2" class="dark:text-zinc-200 text-zinc-700 ">
     <div
-      ref="header"
-      class="header dark:text-zinc-200 text-zinc-600 
+    ref="header"
+    class="header dark:text-zinc-200 text-zinc-600 
      container-fluid 
-     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex  bg-sxvx-light dark:bg-sxvx-dark justify-between p-4  lg:px-20"
+     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between p-4  bg-sxvx-light dark:bg-sxvx-dark lg:px-20"
     >
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
-        <span class="ml-1 text-2xl">omFM</span>
+        <span class="ml-1 text-2xl"> omFM <sup>{{ logoText }}</sup></span>
       </NuxtLink>
       
 
@@ -38,13 +38,13 @@
       <BtnShowHidePlayer />
       
       <ClientOnly> 
-        <BtnLocaleSwitch />
-        <BtnToggleColorMode />
+        <!-- <BtnLocaleSwitch />
+        <BtnToggleColorMode /> -->
         <BtnEffects />
       </ClientOnly> 
      
      </div>
-     <div class="flex lg:hidden">
+     <div class="flex">
       <!-- <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
      <button type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuToggle()" >
      <span class="sr-only">Open main menu</span>
@@ -56,7 +56,7 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed lg:hidden drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
               
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
@@ -148,12 +148,27 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { usePlayerStore } from '../stores/player'; // Import the store
+
+const playerStore = usePlayerStore(); // Get the store instance
+const currentStream = computed(() => playerStore.currentStream); // Reactive stream
+const logoText = computed(() => {
+  switch (currentStream.value) {
+    case 'omFM Main':
+      return '';
+    case 'Rock @ omFM':
+      return 'Rock';
+    case 'Coma @ omFM':
+      return 'Coma';
+    default:
+      return ''; // Default text
+  }
+});
+
+
 const localePath = useLocalePath()
 const mobileMenuOpen = ref(false)
-
-
-import { ref, onMounted, onBeforeUnmount } from 'vue';
- 
 
 function mobileMenuToggle() {
   mobileMenuOpen.value = !mobileMenuOpen.value;

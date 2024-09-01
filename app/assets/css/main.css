@@ -1,3 +1,32 @@
+@font-face  {
+  font-family: "Tenor Sans";
+  src: local(''),
+  url('../font/TenorSans-Regular.ttf');
+
+  }
+@font-face {
+  font-family: "UNSCII";
+  src: local(''), 
+  url('../font/unscii-16.woff');
+}
+@font-face {
+  font-family: "RocknRoll One";
+  src: local(''), 
+  url('../font/RocknRollOne-Regular.ttf');
+}
+@font-face {
+  font-family: "Metal Mania";
+  src: local(''), 
+  url('../font/MetalMania-Regular.ttf');
+}
+
+.glowing-text {
+  animation: textShadow 1.033s infinite;
+}
+.text-shadow-animation {
+  animation: textShadow 1.033s infinite;
+}
+
 .margin-top-s {
   margin-top: 2rem;
 }
@@ -216,24 +245,7 @@ transform: scaley(1);
   -webkit-transform: scaley(-1);
   transform: scaley(-1);
 }
-@font-face  {
-  font-family: "Tenor Sans";
-  src: local(''),
-  url('../font/TenorSans-Regular.ttf');
 
-  }
-@font-face {
-  font-family: "UNSCII";
-  src: local(''), 
-  url('../font/unscii-16.woff');
-}
-
-.glowing-text {
-  animation: textShadow 1.033s infinite;
-}
-.text-shadow-animation {
-  animation: textShadow 1.033s infinite;
-}
 .overlay {
   top:0;
   left:0;
@@ -319,6 +331,16 @@ background: rgba(24, 8, 37, 0.08);
 /*  background-image: radial-gradient(var(--gradient-radial),rgba(0,0,0,0.3) 100%)*/
 background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.15) 100%);
   }
+  .overlay.radial2 {
+    z-index: 1000;
+  /*  background-image: radial-gradient(var(--gradient-radial),rgba(0,0,0,0.3) 100%)*/
+  background-image: radial-gradient(rgba(229, 23, 30, 0.25),rgba(220, 52, 189, 0.1) 100%);
+    }
+    .overlay.radial3 {
+      z-index: 1000;
+    /*  background-image: radial-gradient(var(--gradient-radial),rgba(0,0,0,0.3) 100%)*/
+    background-image: radial-gradient(rgba(23, 229, 50, 0.25),rgba(13, 164, 122, 0.1) 100%);
+      }
 @keyframes scanline {
   0% {
     transform:translateY(100%)

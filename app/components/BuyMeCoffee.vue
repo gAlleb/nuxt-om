@@ -11,7 +11,7 @@
                 'from-red-800 via-red-600 to-red-500': currentStream === 'Rock @ omFM',
                 'from-blue-800 via-blue-600 to-blue-500': currentStream === 'Coma @ omFM',
             }">
-      <Icon name="heroicons:link" class="h-6 w-6" aria-hidden="true" /> Magic Link
+      <Icon name="heroicons:link" class="h-6 w-6" aria-hidden="true" /> &nbsp; {{ linkText }} 
     </NuxtLink>
   </div>
 </template>
@@ -22,4 +22,17 @@ import { usePlayerStore } from '../stores/player'; // Import the store
 const playerStore = usePlayerStore(); // Get the store instance
 const currentStream = computed(() => playerStore.currentStream); // Reactive stream
 
+// Computed property for the link text
+const linkText = computed(() => {
+  switch (currentStream.value) {
+    case 'omFM Main':
+      return 'Magic Link Main';
+    case 'Rock @ omFM':
+      return 'Magic Link Rock';
+    case 'Coma @ omFM':
+      return 'Magic Link Coma';
+    default:
+      return 'Magic Link'; // Default text
+  }
+});
 </script>

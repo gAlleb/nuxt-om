@@ -26,15 +26,15 @@ export const usePlayerStore = defineStore('player', {
     //     },
     //   ],
     // },
-    persist: {
-      storage: persistedState.cookiesWithOptions({
-        // sameSite: 'strict',
-        sameSite: 'lax',
-      }),
-    },
+    // persist: {
+    //   storage: persistedState.cookiesWithOptions({
+    //     // sameSite: 'strict',
+    //     sameSite: 'lax',
+    //   }),
+    // },
     // persist: {
     //     storage: persistedState.localStorage,
     //   },
    
  
-});
+}); 

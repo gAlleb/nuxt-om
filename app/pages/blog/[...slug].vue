@@ -1,7 +1,7 @@
 <template>
 
   <section class="">
-  <div class="relative mx-auto pt-8 bg-sxvx-light dark:bg-sxvx-dark" style="margin-top:-40px;">
+  <div class="relative mx-auto pt-8 pb-5 bg-sxvx-light dark:bg-sxvx-dark" style="margin-top:-40px;">
       <div class="text-center">
         <NuxtLink :to="localePath('/blog')"><h2 class="text-h text-3xl font-extrabold tracking-tight sm:text-4xl">{{ $t('blog') }}</h2></NuxtLink>
         <h3 class="text-h text-xl font-extrabold tracking-tight sm:text-2xl">
@@ -12,10 +12,10 @@
         <!-- <p class="text-p mx-auto mt-3 max-w-2xl text-xl font-semibold sm:mt-4">Latest guides and how to do's for Developers.</p> -->
     </div>
     </div>
-  <div class="footercurves_sxvx_style hidden dark:block"></div>
-  <div class="footercurves_sxvx_style_light block dark:hidden"></div>
+  <!-- <div class="footercurves_sxvx_style hidden dark:block"></div>
+  <div class="footercurves_sxvx_style_light block dark:hidden"></div> -->
     <!-- Article content -->
-    <article v-if="data" class="prose mx-auto max-sm:mx-5 max-md:mx-10 max-lg:mx-10 max-w-4xl dark:prose-invert">
+    <article v-if="data" class="prose pt-5 mx-auto max-sm:mx-5 max-md:mx-10 max-lg:mx-10 max-w-4xl dark:prose-invert">
       <ContentDoc :path="$route.path">
         <template #not-found>
           <NotFound />

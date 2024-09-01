@@ -1,6 +1,16 @@
 <template>
-  <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg font-UNSCII text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg">
-<div id="overlay0" class="overlay radial" 
+  <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
+  :class="{
+                'font-tenor': currentStream === 'omFM Main',
+                'font-metal': currentStream === 'Rock @ omFM',
+                'font-UNSCII': currentStream === 'Coma @ omFM',
+            }"
+    >
+<div id="overlay0" class="overlay  "  :class="{
+                'radial': currentStream === 'omFM Main',
+                'radial2': currentStream === 'Rock @ omFM',
+                'radial3': currentStream === 'Coma @ omFM',
+            }"
              style="display: flex;"></div>
 <div id="overlay1" class="overlay flicker" style="display: flex;"></div>
 <div id="overlay2" class="overlay noise" style="display: flex;"></div>
@@ -8,7 +18,7 @@
 <div id="overlay4" class="overlay scanline" style="display: flex;"></div>
 <div id="overlay5" class="overlay scanline2" style="display: flex;"></div>
 
-    <!-- Site header -->
+    <!-- Site header --> 
     <Header />
     
     <!-- Page content -->
@@ -37,6 +47,12 @@
 </template>
 
 <script setup defer>
+import { usePlayerStore } from '@/stores/player'; // Import the store
+const playerStore = usePlayerStore(); // Get the store instance
+const currentStream = computed(() => playerStore.currentStream); // Reactive stream
+
+
+const colorMode = useColorMode()
 </script>
 
 <style>

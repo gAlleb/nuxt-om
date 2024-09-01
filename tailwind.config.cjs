@@ -21,6 +21,8 @@ module.exports = {
         inter: ['Inter var', 'sans-serif'], 
         tenor: ['Tenor Sans', 'sans-serif'],
         UNSCII: ['UNSCII', 'sans-serif'],
+        rock: ['RocknRoll One', 'sans-serif'],
+        metal: ['Metal Mania', 'sans-serif']
       },
       screens: {
         '3xl': '2000px',
