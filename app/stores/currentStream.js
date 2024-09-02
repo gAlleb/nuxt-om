@@ -1,8 +1,8 @@
-// store/player.js
+// store/currentStream.js
 import { defineStore } from 'pinia';
 //import persistedstate from 'pinia-plugin-persistedstate';
 
-// export const usePlayerStore = defineStore('player', {
+// export const currentStreamStore = defineStore('playerCurrentStream', {
 //     state: () => ({
        
 //         currentStream: 'omFM Main', // Default stream
@@ -76,7 +76,7 @@ import { defineStore } from 'pinia';
 //     playerStore.loadStreamName();
 //     });
 
-export const usePlayerStore = defineStore('player', {
+export const currentStreamStore = defineStore('playerCurrentStream', {
     state: () => ({
        
         currentStream: 'omFM Main', // Default stream

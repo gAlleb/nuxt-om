@@ -28,8 +28,8 @@ export default defineNuxtConfig({
     head: {
       link: [
         { rel: 'icon', href: '/favicon.ico' },
-        { rel: 'preconnect', href: 'https://rsms.me/' },
-        { rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' },
+        // { rel: 'preconnect', href: 'https://rsms.me/' },
+        // { rel: 'stylesheet', href: 'https://rsms.me/inter/inter.css' },
         // { rel: 'stylesheet', href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css' },
       ],
       // script: [
@@ -101,7 +101,7 @@ export default defineNuxtConfig({
 
   colorMode: {
     classSuffix: '',
-    fallback: 'light',
+    fallback: 'dark',
     storageKey: 'color-mode',
   },
 

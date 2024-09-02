@@ -47,12 +47,12 @@
 </template>
 
 <script setup defer>
-import { usePlayerStore } from '@/stores/player'; // Import the store
-const playerStore = usePlayerStore(); // Get the store instance
-const currentStream = computed(() => playerStore.currentStream); // Reactive stream
+import { currentStreamStore } from '@/stores/currentStream'; // Import the store
+const useCurrentStreamStore = currentStreamStore(); // Get the store instance
+const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
 onMounted(() => {
-playerStore.loadStreamName();
+useCurrentStreamStore.loadStreamName();
 });
 
 </script>

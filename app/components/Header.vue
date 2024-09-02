@@ -19,10 +19,9 @@
         <NuxtLink :to="localePath('/')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
         <NuxtLink :to="localePath('/about')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
         <NuxtLink :to="localePath('/services')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('services') }}</NuxtLink>
-        <NuxtLink :to="localePath('/contact')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
         <NuxtLink :to="localePath('/blog')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
         <NuxtLink :to="localePath('/blog/articles')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('articles') }}</NuxtLink>
-
+        <NuxtLink :to="localePath('/contact')" class="mr-5 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
       </nav>
       <div class="hidden md:flex">
      
@@ -36,7 +35,7 @@
     <div class="flex">
      <div class="flex">
       <BtnShowHidePlayer />
-      <!-- <BtnSetStream /> -->
+      <BtnSetStream /> 
       <BtnEffects />
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />
@@ -58,12 +57,12 @@
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
           <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-              
+              <h1 class="text-xl">Menu</h1>
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
                 <span class="sr-only">Close menu</span>
                 <Icon name="heroicons:x-mark" class="w-7 h-7" />
               </button>
-              <h1 class="text-xl">Menu</h1>
+             
             </div>
           <hr class="mt-5"/>
             <div class="flex my-2 justify-center">
@@ -149,10 +148,10 @@
 
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
-import { usePlayerStore } from '../stores/player'; // Import the store
+import { currentStreamStore } from '../stores/currentStream'; // Import the store
 
-const playerStore = usePlayerStore(); // Get the store instance
-const currentStream = computed(() => playerStore.currentStream); // Reactive stream
+const useCurrentStreamStore = currentStreamStore(); // Get the store instance
+const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 const logoText = computed(() => {
   switch (currentStream.value) {
     case 'omFM Main':

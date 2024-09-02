@@ -84,7 +84,7 @@
 class="hover:cursor-pointer flex rounded-xl  text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
 @click="isOpen = !isOpen"> 
   <span class="sr-only">Effects On/Off</span>
-  <Icon name="heroicons:sparkles" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
+  <Icon name="heroicons:cog-6-tooth" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
 
 
 </div>
