@@ -3,7 +3,7 @@
     <div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
       <UTooltip text="Pick your Stream" :popper="{ offsetDistance: 5 }"  class="">
       <div 
-        class="flex hover:cursor-pointer rounded-xl bg-sxvx-light-bg dark:bg-sxvx-dark-bg text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
+        class="flex hover:cursor-pointer rounded-xl bg-sxvx-light-bg dark:bg-sxvx-dark-bg text-sm   active:ring-2 active:ring-gray-300 focus:ring-offset focus:ring-offset-gray-800 p-2" 
         @click="isOpen = !isOpen"
       >
         <span class="sr-only">Select streams</span>

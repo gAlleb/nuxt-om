@@ -9,7 +9,7 @@
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
-        <span class="ml-1 text-2xl"> omFM <sup>{{ logoText }}</sup></span>
+        <span class="ml-1 text-2xl hidden sm:block"> omFM <sup>{{ logoText }}</sup></span>
       </NuxtLink>
       
 
