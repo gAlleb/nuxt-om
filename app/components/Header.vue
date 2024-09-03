@@ -36,7 +36,7 @@
      <div class="flex">
       <BtnShowHidePlayer />
       <BtnSetStream /> 
-      <BtnEffects />
+      <BtnEffects_with_pinia />
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />
         <BtnToggleColorMode /> -->
