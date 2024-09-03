@@ -6,4 +6,4 @@ services:
       #   - VERSION=NODE_VERSION
       #   - PORT=3500
     ports:
-      - "3000:3000"
+      - "3333:3000"
