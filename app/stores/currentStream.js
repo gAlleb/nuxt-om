@@ -115,11 +115,11 @@ export const currentStreamStore = defineStore('playerCurrentStream', {
           }
     },
      // // this below works great with run build
-    persist: {
-      storage: persistedState.cookiesWithOptions({
-        // sameSite: 'strict',
-        sameSite: 'lax',
-      }),
-    },
+    // persist: {
+    //   storage: persistedState.cookiesWithOptions({
+    //     // sameSite: 'strict',
+    //     sameSite: 'lax',
+    //   }),
+    // },
 
 }); 

@@ -14,11 +14,11 @@ export const useEffectsStore = defineStore('effectsOverlay', {
    
        
  //     // // this below works great with run build
-    // persist: {
-    //   storage: persistedState.cookiesWithOptions({
-    //     // sameSite: 'strict',
-    //     sameSite: 'lax',
-    //   }),
-    // },
+    persist: {
+      storage: persistedState.cookiesWithOptions({
+        // sameSite: 'strict',
+        sameSite: 'lax',
+      }),
+    },
 
 }); 

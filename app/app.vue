@@ -74,9 +74,9 @@ import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 // Uncomment if not using pinia Coockie storage
-// onMounted(() => {
-// useCurrentStreamStore.loadStreamName();
-// });
+onMounted(() => {
+useCurrentStreamStore.loadStreamName();
+});
 </script>
 
 <style>
