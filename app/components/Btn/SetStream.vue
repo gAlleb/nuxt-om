@@ -15,17 +15,26 @@
           class="absolute right-0 z-10 mt-2 w-48 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline" 
           @click.stop.prevent
         >
-          <button class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full" @click="setStream1">
+          <button :class="{
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'omFM Main',
+            }"
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full" @click="setStream1">
             <NuxtLink class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">omFM Main</span>
             </NuxtLink>
           </button>
-          <button class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream2">
+          <button :class="{
+            'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Rock @ omFM', 
+            }"
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream2">
             <NuxtLink class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
             </NuxtLink>
           </button>
-          <button class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream3">
+          <button :class="{
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Coma @ omFM',
+            }"
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream3">
             <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
             </NuxtLink>
@@ -72,6 +81,10 @@
   import { usePlayer } from '../../composables/player'; // Create this composable
 
   const { setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+
+import { currentStreamStore } from '@/stores/currentStream'; // Import the store
+const useCurrentStreamStore = currentStreamStore(); // Get the store instance
+const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
 // const showStreamBlock = ref(false);
 

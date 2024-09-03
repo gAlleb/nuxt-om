@@ -5,7 +5,9 @@
     </div>
     <div class="flex flex-col gap-2  max-w-md mx-auto">
     <div class="flex flex-col gap-2">
-      <button
+      <button  :class="{
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'omFM Main',
+            }" 
         class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"
         @click="setStream1"
       >
@@ -15,7 +17,9 @@
           <span class="text-zinc-600 dark:text-zinc-100">omFM Main</span>
         </NuxtLink>
       </button>
-      <button
+      <button :class="{
+            'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Rock @ omFM', 
+            }"
         class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"
         @click="setStream2"
       >
@@ -25,7 +29,9 @@
           <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
         </NuxtLink>
       </button>
-      <button
+      <button :class="{
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Coma @ omFM',
+            }" 
         class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"
         @click="setStream3"
       >
@@ -37,7 +43,7 @@
       </button>
     </div>
     <div class="flex justify-between">
-      <button
+      <button 
         class="flex rounded-xl transition-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2 focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="playPlayer1"
       >
@@ -47,7 +53,7 @@
           aria-hidden="true"
         />
       </button>
-      <button
+      <button 
         class="flex rounded-xl transition-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2 focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="stopPlayer1"
       >
@@ -66,6 +72,10 @@
 import { usePlayer } from '../composables/player'; // Create this composable
 
 const { player, isPlaying, togglePlay, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+
+import { currentStreamStore } from '@/stores/currentStream'; // Import the store
+const useCurrentStreamStore = currentStreamStore(); // Get the store instance
+const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
 </script>
   
