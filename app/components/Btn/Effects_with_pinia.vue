@@ -77,8 +77,8 @@
 <UTooltip text="Special Effects" :popper="{ offsetDistance: 5 }"  class="">
 <div
 :class="[ 
-    areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
-    anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
+    (areAllFalse() ||  (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5)) ? 'bg-red-400 dark:bg-red-400' : 
+    (anyEffectOff() || hasFalseOverlayInPinia()) ? 'bg-red-200 dark:bg-pink-400' :
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg' 
   ]"
 class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
@@ -151,7 +151,10 @@ class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-
 import { ref, onMounted } from 'vue';
 import { useEffectsStore } from '../../stores/effects';
 const effectsStore = useEffectsStore();
-
+function hasFalseOverlayInPinia() {
+  return !(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && 
+           effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5);
+}
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};
