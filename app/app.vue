@@ -14,7 +14,7 @@
             }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
              ></div>
 <div id="overlay1" class="overlay flicker" :style="{ display: overlay1 ? 'flex' : 'none' }"></div>
-<div id="overlay2" class="overlay noise" :style="{ display: overlay2 ? 'flex' : 'none' }""></div>
+<div id="overlay2" class="overlay noise" :style="{ display: overlay2 ? 'flex' : 'none' }"></div>
 <div id="overlay3" class="overlay scanlines" :style="{ display: overlay3 ? 'flex' : 'none' }"></div>
 <div id="overlay4" class="overlay scanline" :style="{ display: overlay4 ? 'flex' : 'none' }"></div>
 <div id="overlay5" class="overlay scanline2" :style="{ display: overlay5 ? 'flex' : 'none' }"></div>
@@ -39,7 +39,7 @@
       <NuxtPage />
     </main>
     <!-- Site footer -->
-    <BuyMeCoffee />
+    <BtnBuyMeCoffee />
     
     <div class="footercurves_sxvx_style_ hidden dark:block"></div>
     <div class="footercurves_sxvx_style_light_ block dark:hidden"></div>

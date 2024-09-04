@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { currentStreamStore } from '../stores/currentStream'; // Import the store
+import { currentStreamStore } from '../../stores/currentStream'; // Import the store
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
