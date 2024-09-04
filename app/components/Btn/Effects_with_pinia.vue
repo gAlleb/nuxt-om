@@ -152,6 +152,7 @@ import { ref, onMounted } from 'vue';
 import { useEffectsStore } from '../../stores/effects';
 const effectsStore = useEffectsStore();
 function hasFalseOverlayInPinia() {
+  const effectsStore = useEffectsStore();
   return !(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && 
            effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5);
 }
