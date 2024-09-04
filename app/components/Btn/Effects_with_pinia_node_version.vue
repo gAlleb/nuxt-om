@@ -75,7 +75,7 @@
 <div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
 
 <UTooltip text="Special Effects" :popper="{ offsetDistance: 5 }"  class="">
-<!-- npm build variant
+<!-- npm build variant-->
 <div
 :class="[ 
     (areAllFalse() ||  (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5)) ? 'bg-red-400 dark:bg-red-400' : 
@@ -85,15 +85,16 @@
   ]"
 class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
 @click="isOpen = !isOpen">  
--->
-<div
+
+
+<!-- <div
 :class="[ 
     areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
     anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg' 
   ]"
 class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
-@click="isOpen = !isOpen">
+@click="isOpen = !isOpen">  -->
   <span class="sr-only">Effects On/Off</span>
   <Icon name="heroicons:cog-6-tooth" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
 
@@ -360,11 +361,11 @@ onMounted(() => {
       if (overlayState === 'true' || overlayState === null) {
         overlay.style.display = 'flex';
         effectStates.value[overlayId] = true;
-        effectsStore.setOverlayState(overlayId, true);
+       // effectsStore.setOverlayState(overlayId, true);
       } else {
         overlay.style.display = 'none';
         effectStates.value[overlayId] = false;
-        effectsStore.setOverlayState(overlayId, false);
+       // effectsStore.setOverlayState(overlayId, false);
       }
     }
   }

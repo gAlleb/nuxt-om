@@ -11,6 +11,11 @@ export const useEffectsStore = defineStore('effectsOverlay', {
         overlay4: true,
         overlay5: true,
     }),
+    actions: {
+      setOverlayState(overlayIndex, isOverlayActive) {
+        this[overlayIndex] = isOverlayActive; // Dynamically access overlay properties
+      }
+    },
    
        
  //     // // this below works great with run build
