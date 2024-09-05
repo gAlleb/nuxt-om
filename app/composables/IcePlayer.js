@@ -13,8 +13,7 @@ class IcePlayer {
         this.template = '<div class="ice-player-el "><div><i class="ice-play" style="display: inline-block;font-size:1.6rem !important" ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
         
         // Informer Params
-        this.mounts_list = ['stream', 'nonstop'] // Mount point list
-        this.info_link = 'current_track.xsl' // Info file
+        // this.mounts_list = ['stream', 'nonstop'] // Mount point list
         this.time_update = 10 // Time to update information (in seconds)
 
         // System Params
@@ -30,16 +29,16 @@ class IcePlayer {
         this.PAUSED  = 2
 
         // Setting transmitted parameters
-        if (typeof init_params === 'object') {
-            const init_params_list = Object.keys(init_params).filter(param => ['server_address', 'stream_mount', 'style', 'template', 'mounts_list', 'info_link', 'time_update'].includes(param));
-            for (let parameter of init_params_list) {
-                this[parameter] = init_params[parameter];
-            }
-        }
+        // if (typeof init_params === 'object') {
+        //     const init_params_list = Object.keys(init_params).filter(param => ['server_address', 'stream_mount', 'style', 'template', 'mounts_list', 'info_link', 'time_update'].includes(param));
+        //     for (let parameter of init_params_list) {
+        //         this[parameter] = init_params[parameter];
+        //     }
+        // }
 
         this.player_el = document.querySelector(el);
         this.player_el.classList.add('ice-player', this.style);
-        this.set_content(this.player_el, this.template);
+        // this.set_content(this.player_el, this.template);
 
         // Events
         this.get_element('.ice-play').addEventListener('click', () => {this.play()});
@@ -124,7 +123,8 @@ class IcePlayer {
          this.get_element('.speaker').classList.add("muted");
          document.getElementById("ice-volume3_Mute").classList.add("muted");
       }
-      this.hide('#live')
+      this.hide_opacity('#live')
+      this.hide_opacity('#vl')
     }
      
     // Functions
@@ -367,12 +367,14 @@ class IcePlayer {
         if (this.current_state === this.PLAYING) {
             this.hide('.ice-play');
             this.show('.ice-pause');
-            this.show('#live')
+            this.show_opacity('#live')
+            this.show_opacity('#vl')
             document.querySelector(".ice-track").style.visibility = "visible"
         } else {
             this.hide('.ice-pause');
             this.show('.ice-play');
-            this.hide('#live')
+            this.hide_opacity('#live')
+            this.hide_opacity('#vl')
             document.querySelector(".ice-track").style.visibility = "hidden"
         }
     }
@@ -397,6 +399,12 @@ class IcePlayer {
     }
     hide(el) {
         this.get_element(el).style.display = 'none';
+    }
+    hide_opacity(el) {
+        this.get_element(el).style.opacity = '0';
+    }
+    show_opacity(el) {
+        this.get_element(el).style.opacity = '1';
     }
     show(el) {
         this.get_element(el).style.display = 'inline-block';
