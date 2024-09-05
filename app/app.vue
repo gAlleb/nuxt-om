@@ -40,13 +40,14 @@
     </main>
     <!-- Site footer -->
     <BtnBuyMeCoffee />
-    
+
     <div class="footercurves_sxvx_style_ hidden dark:block"></div>
     <div class="footercurves_sxvx_style_light_ block dark:hidden"></div>
     <Footer />
-    <Player />
 
-    
+    <div class="hidden playerContainer">
+      <Player />
+    </div>
 
   </div>
   <!-- <iframe
@@ -57,6 +58,7 @@
       frameborder="0"
       scrolling="no"
     ></iframe> -->
+
 </template>
 
 <script setup defer>
@@ -69,6 +71,10 @@ const overlay3 = computed(() => effectsStore.overlay3);
 const overlay4 = computed(() => effectsStore.overlay4); 
 const overlay5 = computed(() => effectsStore.overlay5); 
 
+onMounted(() => {
+  const playerContainer = document.querySelector('.playerContainer');
+  playerContainer.classList.remove('hidden');
+});
 
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
