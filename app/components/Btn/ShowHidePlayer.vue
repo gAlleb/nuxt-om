@@ -13,18 +13,19 @@
       </UTooltip>
       <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex" :class="[isPlayerVisible ? 'scale-100 relative' : 'scale-0 absolute']"> 
       <button class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="togglePlayAll"  >     
-       <Icon id="playBtnPlayer1" name="heroicons:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
-       <Icon id="stopBtnPlayer1" name="heroicons:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
+       <Icon id="playBtnPlayer1" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
+       <Icon id="stopBtnPlayer1" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
       </button>
-      <button id="ice-volume3_Btn" class="ml-1 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="showVol3"  >     
-       <Icon name="heroicons-solid:volume-up" class="h-6 w-6 bg-yellow-500" aria-hidden="true" />
+      <button id="ice-volume3_Btn" style="padding: 5px;"  class="ml-1 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"   >     
+       <!-- <Icon name="heroicons-solid:volume-up" class="h-6 w-6 bg-yellow-500" aria-hidden="true" /> -->
+       <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a>
       </button>
       <!-- <button id="ice-volume3_Mute" class="ice-volume3_Mute flex transition-all duration-500 ease-in-out rounded-full shadow-lg bg-slate-50 focus:outline-none  focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800" @click="muteVol3"  >     
        <Icon id="ice-volume3_Unmuted"  name="heroicons-outline:speaker-x-mark" class="h-6 w-6 bg-gray-700" aria-hidden="true" />
        <Icon id="ice-volume3_Muted" name="heroicons-outline:speaker-wave" class="h-6 w-6 bg-gray-700" aria-hidden="true" />
       </button> -->
-      <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a>
-      <input id="ice-volume3" type="range" min="0" max="100" value="70" class="ice-volume3 -rotate-90 absolute " @input="changeVol3">
+      <!-- <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a> -->
+      <input id="ice-volume3" type="range" min="0" max="100" value="70" class="ice-volume3 hidden sm:block -rotate-90 absolute " @input="changeVol3">
       </div>
       </div>
   </Menu>

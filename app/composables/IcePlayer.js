@@ -64,8 +64,61 @@ class IcePlayer {
 
        
         this.get_element('.mute').addEventListener('click', () => {this.mute()});
+        //this.get_element('#show_volume_xs').addEventListener('click', () => {this.vol_btn_main()});
         this.get_element('#show_volume_xs').addEventListener('click', () => {this.vol_btn_main()});
-        //this.get_element('#show_volume_xs').addEventListener('mouseenter', () => {this.vol_btn_main_hover()});
+        this.get_element('#show_volume_xs').addEventListener('mouseenter', () => {this.vol_btn_main_hover()});
+
+        //document.getElementById('ice-volume3_Btn').addEventListener('hover', () => { this.vol_btn_main_3()});
+        //document.getElementById('ice-volume3_Btn').addEventListener('mouseenter', () => { this.vol_btn_main_3()});
+        const vertical_player_header = document.getElementById("ice-volume3");
+        const vol_3_button = document.getElementById("ice-volume3_Btn");
+        let timeoutId;
+
+        // Feature detection for touch
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+        if (isTouchDevice) {
+        // Show header on touchstart
+        vol_3_button.addEventListener('touchstart', () => {
+        vertical_player_header.classList.add('open_volume');
+        clearTimeout(timeoutId);
+        });
+        vertical_player_header.addEventListener('touchstart', () => {
+            clearTimeout(timeoutId);
+        });
+        // Handle touchend for hiding (with delay)
+        vol_3_button.addEventListener('touchend', () => {
+        timeoutId = setTimeout(() => {
+        vertical_player_header.classList.remove('open_volume'); 
+        }, 2000); 
+        }); 
+        vertical_player_header.addEventListener('touchend', () => {
+            timeoutId = setTimeout(() => {
+            vertical_player_header.classList.remove('open_volume'); 
+            }, 2000);
+        }); // Add once: true to prevent multiple listeners
+        
+
+        } else {
+        vol_3_button.addEventListener('mouseenter', () => {
+            vertical_player_header.classList.add("open_volume");
+            clearTimeout(timeoutId);
+          });
+        //document.getElementById("ice-volume3_Mute").classList.toggle("open_volume");
+        vertical_player_header.addEventListener('mouseleave', e => {
+            timeoutId = setTimeout(() => {
+                    vertical_player_header.classList.remove('open_volume');
+                }, 1200); 
+         });
+        vertical_player_header.addEventListener('mouseenter', () => {
+            clearTimeout(timeoutId);
+        });
+        // Mouseleave on button
+        vol_3_button.addEventListener('mouseleave', () => {
+            timeoutId = setTimeout(() => {
+            vertical_player_header.classList.remove('open_volume');
+            }, 1200); // 2000 milliseconds = 2 seconds
+        });
+        }
 
         this.get_element('.ice-volume').addEventListener('click', () => {this.unmute_onclick()});
         this.get_element('.volume-vertical').addEventListener('click', () => {this.unmute_onclick2()});
@@ -89,15 +142,16 @@ class IcePlayer {
 
          });
         // Hide Header Vertical Vol if cliked outside
-        document.addEventListener('click', e => {
-            const vertical_player_header = document.getElementById("ice-volume3")
-            const vertical_player_header_Btn = document.getElementById("ice-volume3_Btn");
-            const vertical_player_header_Btn_Mute = document.getElementById("ice-volume3_Mute");
-            if (!vertical_player_header.contains(e.target) && !vertical_player_header_Btn.contains(e.target) && !vertical_player_header_Btn_Mute.contains(e.target) ) {
-                vertical_player_header.classList.remove('open_volume');
-                vertical_player_header_Btn_Mute.classList.remove('open_volume');
-            }
-             });
+        // document.addEventListener('click', e => {
+        //     const vertical_player_header = document.getElementById("ice-volume3")
+        //     const vertical_player_header_Btn = document.getElementById("ice-volume3_Btn");
+        //     const vertical_player_header_Btn_Mute = document.getElementById("ice-volume3_Mute");
+        //     if (!vertical_player_header.contains(e.target) && !vertical_player_header_Btn.contains(e.target) && !vertical_player_header_Btn_Mute.contains(e.target) ) {
+        //         vertical_player_header.classList.remove('open_volume');
+        //         //vertical_player_header_Btn_Mute.classList.remove('open_volume');
+        //     }
+        //      });
+
         this.audio_object.addEventListener('play', () => {
             this.current_state = this.PLAYING;
             this.play_pause_toggle();
@@ -141,6 +195,10 @@ class IcePlayer {
         playBtnPlayer1.style.display = "none";
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "inline-flex";
+        const playBtnPlayer = document.getElementById("playBtnPlayer");
+        playBtnPlayer.style.display = "none";
+        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        stopBtnPlayer.style.display = "inline-flex";
 
         
     }
@@ -154,6 +212,10 @@ class IcePlayer {
         playBtnPlayer1.style.display = "inline-flex";
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "none";
+        const playBtnPlayer = document.getElementById("playBtnPlayer");
+        playBtnPlayer.style.display = "inline-flex";
+        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        stopBtnPlayer.style.display = "none";
     }
     stop() {
         this.audio_object.pause();
@@ -169,6 +231,10 @@ class IcePlayer {
         playBtnPlayer1.style.display = "inline-flex";
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "none";
+        const playBtnPlayer = document.getElementById("playBtnPlayer");
+        playBtnPlayer.style.display = "inline-flex";
+        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        stopBtnPlayer.style.display = "none";
     }
     change_stream_rock() {
 
@@ -219,6 +285,8 @@ class IcePlayer {
         // playBtnPlayer1.style.display = "inline-flex";
         const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
         stopBtnPlayer1.style.display = "none"; 
+        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        stopBtnPlayer.style.display = "none";
         // const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
         // mute_btn_header_Muted.style.display = "none";
     }
@@ -298,8 +366,35 @@ class IcePlayer {
             this.change_volume_bar3();
     }
     vol_btn_main_3() {
-        document.getElementById("ice-volume3").classList.toggle("open_volume");
-        document.getElementById("ice-volume3_Mute").classList.toggle("open_volume");
+        document.getElementById("ice-volume3").classList.add("open_volume");
+        const button = document.getElementById("ice-volume3_Btn");
+        let timeoutId;
+
+        // Feature detection for touch
+        const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+        
+        //document.getElementById("ice-volume3_Mute").classList.toggle("open_volume");
+        const vertical_player_header = document.getElementById("ice-volume3")
+        vertical_player_header.addEventListener('mouseleave', e => {
+            timeoutId = setTimeout(() => {
+                    vertical_player_header.classList.remove('open_volume');
+                }, 1200); 
+         });
+        vertical_player_header.addEventListener('mouseenter', () => {
+            clearTimeout(timeoutId);
+           });
+           // Mouseenter on button
+        button.addEventListener('mouseenter', () => {
+         clearTimeout(timeoutId);
+        });
+
+         // Mouseleave on button
+         button.addEventListener('mouseleave', () => {
+         timeoutId = setTimeout(() => {
+        vertical_player_header.classList.remove('open_volume');
+        }, 1200); // 2000 milliseconds = 2 seconds
+         });
     }
     unmute_onclick(){
         if (this.audio_object.volume >= 0. && this.audio_object.muted === true) {
@@ -365,14 +460,14 @@ class IcePlayer {
 
     play_pause_toggle() {
         if (this.current_state === this.PLAYING) {
-            this.hide('.ice-play');
-            this.show('.ice-pause');
+            // this.hide('.ice-play');
+            // this.show('.ice-pause');
             this.show_opacity('#live')
             this.show_opacity('#vl')
             document.querySelector(".ice-track").style.visibility = "visible"
         } else {
-            this.hide('.ice-pause');
-            this.show('.ice-play');
+            // this.hide('.ice-pause');
+            // this.show('.ice-play');
             this.hide_opacity('#live')
             this.hide_opacity('#vl')
             document.querySelector(".ice-track").style.visibility = "hidden"

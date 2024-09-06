@@ -1,5 +1,5 @@
 <template>
-  <header style="z-index:2" class="dark:text-zinc-200 text-zinc-700 ">
+  <header style="z-index:31" class="dark:text-zinc-200 text-zinc-700 ">
     <div
     ref="header"
     class="header dark:text-zinc-200 text-zinc-600 

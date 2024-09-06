@@ -480,8 +480,6 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
   }
 }
 /*
- IcePlayer v.3.0.0 - Player for Site (Icecast2 Online Radio)
- Copyright (c) 2016-2020 Andrew Molchanov
  https://github.com/JoCat/IcePlayer
 */
 
@@ -502,8 +500,8 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
 
 }
 #live  {height: 4vh ; 
-box-shadow: 0 0 10px #FFFFFF;
-border-radius:7px; }
+/* box-shadow: 0 0 10px #FFFFFF; */
+border-radius:5px; }
 .ice-player.fixed {
   font-size: 1.5rem;
  position: fixed;
@@ -511,7 +509,7 @@ border-radius:7px; }
  left: 0;
  width: 100%;
  /*background-color: rgba(58, 103, 148, 0.638); */
-  background:  linear-gradient(180deg, rgba(0, 0, 0, 0.694) 10%, rgba(0,0,0,0.6936974618949142) 100%);
+  /* background:  linear-gradient(180deg, rgba(0, 0, 0, 0.694) 10%, rgba(0,0,0,0.6936974618949142) 100%); */
  border-top: 1px solid var(--ice-player-border-color);
 min-height: 11vh  ;
 
@@ -521,7 +519,7 @@ min-height: 11vh  ;
   display: block;
       font-size: 1.5rem;
       color:  #ffffff ;  
-      text-shadow: 0 0 10px #ffffff;
+     
       
   
   }
@@ -727,7 +725,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
 
 
 .ice-volume3 {
-  top: 135px;  
+  top: 100px;  
   left: -6px;
   appearance: none;
   width: 141px;
@@ -855,13 +853,13 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
    
   
   }
-  .speaker:not(.open_volume){
+  /* .speaker:not(.open_volume){
     transform: scale(0);
     transition: 0.4s;
      
     rotate: -270deg;
   
-  }
+  } */
   
   
    .volume-vertical:focus {outline: none;}
@@ -944,7 +942,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
   .volume-vertical:focus::-moz-range-thumb {
     box-shadow: 0 0 0 10px rgba(255,255,255, .2)
   }
-  .speaker {
+  /* .speaker {
     cursor: pointer;
     margin-right: -30px!important;
     transition: 0.4s;
@@ -994,7 +992,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
   .speaker.muted span:before {
     transform: scale(.5) translate(-15px,0) rotate(36deg);
     opacity: 0;
-  }
+  } */
 
 
   .speaker_as_icon {
@@ -1045,7 +1043,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
   
   .speaker {
     cursor: pointer;
-    margin-right: 5px;
+    /* margin-right: 5px; */
     height: 30px;
     width: 30px;
     position: relative;
@@ -1056,7 +1054,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     display: block;
     width: 8px;
     height: 8px;
-    background: rgba(230, 230, 230, 1);
+    background: rgba(239, 68, 68, 1);
     margin: 11px 0 0 2px;
   }
   .speaker span:after {
@@ -1065,7 +1063,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     width: 0;
     height: 0;
     border-style: solid;
-    border-color: transparent rgba(230, 230, 230, 1) transparent transparent;
+    border-color: transparent rgba(239, 68, 68, 1) transparent transparent;
     border-width: 10px 14px 10px 15px;
     left: -13px;
     top: 5px;
@@ -1078,7 +1076,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     width: 10px;
     height: 10px;
     border-style: double;
-    border-color: rgba(230, 230, 230, 1);
+    border-color: rgba(239, 68, 68, 1);
     border-width: 7px 7px 0 0;
     left: 18px;
     top: 9px;
@@ -1091,34 +1089,35 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     transform: scale(.5) translate(-15px,0) rotate(36deg);
     opacity: 0;
   }
-  .ice-volume3_Mute {
+  /* .ice-volume3_Mute {
     position: absolute;
     left: 53px;
     top: 48px;
-  }
-  .ice-volume3_Mute:not(.open_volume){
+  } */
+
+  /* .ice-volume3_Mute:not(.open_volume){
     transform: scale(0);
     transition: 0.4s;
      
     rotate: -270deg;
-  }
+  } */
 
   .speaker3 {
     cursor: pointer;
-    margin-right: 5px;
+    /* margin-right: 5px; */
     height: 30px;
     width: 30px;
-    position: absolute;
+    position: relative;
     overflow: hidden;
     display: inline-block;
-    right: -2px;
-    top: 43px;
+    /* right: -2px;
+    top: 43px; */
   }
   .speaker3 span {
     display: block;
     width: 8px;
     height: 8px;
-    background: rgba(230, 230, 230, 1);
+    background:rgba(239, 68, 68, 1);
     margin: 11px 0 0 2px;
   }
   .speaker3 span:after {
@@ -1127,7 +1126,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     width: 0;
     height: 0;
     border-style: solid;
-    border-color: transparent rgba(230, 230, 230, 1) transparent transparent;
+    border-color: transparent rgba(239, 68, 68, 1) transparent transparent;
     border-width: 10px 14px 10px 15px;
     left: -13px;
     top: 5px;
@@ -1140,7 +1139,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     width: 10px;
     height: 10px;
     border-style: double;
-    border-color: rgba(230, 230, 230, 1);
+    border-color: rgba(239, 68, 68, 1);
     border-width: 7px 7px 0 0;
     left: 18px;
     top: 9px;
@@ -1153,13 +1152,13 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     transform: scale(.5) translate(-15px,0) rotate(36deg);
     opacity: 0;
   }
-  .speaker3:not(.open_volume){
+  /* .speaker3:not(.open_volume){
     transform: scale(0);
     transition: 0.4s;
      
     rotate: -270deg;
   
-  }
+  } */
 
   
 
