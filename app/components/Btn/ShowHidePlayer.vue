@@ -6,17 +6,19 @@
 
       <MenuButton @click="radioshow();" 
       id="menu_button" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-       >
+      :class="[isPlayerVisible ? 'scale-100' : 'scale-75']"
+      >
         <span class="sr-only">Effects On/Off</span>
         <Icon name="heroicons:radio" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" /> 
       </MenuButton>
       </UTooltip>
-      <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex" :class="[isPlayerVisible ? 'scale-100 relative' : 'scale-0 absolute']"> 
+      <!-- <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex" :class="[isPlayerVisible ? 'scale-100 relative' : 'scale-0 absolute']">  -->
+      <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex"> 
       <button class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="togglePlayAll"  >     
-       <Icon id="playBtnPlayer1" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
-       <Icon id="stopBtnPlayer1" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
+       <Icon id="playBtnPlayer1" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[isPlaying ? 'hidden' : '']" />
+       <Icon id="stopBtnPlayer1" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[isPlaying ? '' : 'hidden']" />
       </button>
-      <button id="ice-volume3_Btn" style="padding: 5px;"  class="ml-1 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"   >     
+      <button id="ice-volume3_Btn" style="padding: 5px;"  class="ml-1 sm:ml-4 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"   >     
        <!-- <Icon name="heroicons-solid:volume-up" class="h-6 w-6 bg-yellow-500" aria-hidden="true" /> -->
        <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a>
       </button>
@@ -75,7 +77,22 @@ onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
 });
 const { player, isPlaying, togglePlay, togglePlayAll, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+function getItem(item) {
+  if (import.meta.client) {
+    return localStorage.getItem(item);
+  } else {
+    return undefined;
+  }
+}
 
+function setItem(item, value) {
+  if (import.meta.client) {
+    localStorage.setItem(item, value);
+    return true;
+  } else {
+    return false;
+  }
+}
 const isPlayerVisible = ref(false); // Assuming player is initially visible
 
 function radioshow() {
@@ -85,14 +102,27 @@ function radioshow() {
       player.style.transform = "translateY(0%)";
       player.style.transition = "transform 300ms linear ";
       isPlayerVisible.value = true;
+      setItem('isPlayerVisible', true);
     } else {
       player.style.transform = "translateY(100%)";
       player.style.transition = "transform 300ms linear";
       isPlayerVisible.value = false;
+      setItem('isPlayerVisible', false);
     }
   }
 }
+onMounted(() => {
 
+const playerVisibilityState = getItem('isPlayerVisible');
+if (playerVisibilityState === 'true') {
+  setTimeout(() => {
+  const player = document.getElementById("ice-player");
+  player.style.transform = "translateY(0%)";
+  player.style.transition = "transform 300ms linear ";
+  }, 500); // Delay the animation by 100 milliseconds
+  isPlayerVisible.value = true;
+}
+});
 // function getItem(item) {
 //   if (import.meta.client) {
 //     if (!getItem.cache) {

@@ -15,17 +15,19 @@
                 </button>
                 <!-- <a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a> -->
             </div>
-            <button style="padding: 5px;" class="ml-2 inline-flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"  >     
+            <div class="relative">
+            <button id="mainVolumeBtn" style="padding: 5px;top: -20px;" class="absolute ml-2 inline-flex  items-center  rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"  >     
                     <a id="show_volume_xs" class=" mute  speaker  " title="mute/unmute"  ><span></span></a>
+                    <input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1">
+                    <div id="vol_value" class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 92px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div>
             </button>
-            <input class="ice-volume ml-2 hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1">
+            </div>
 
-            <div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 103px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div>
             <div class="vol_value2 hidden ">70%</div>
             <input id="ice_volume_vertical" class="volume-vertical inline-flex  hidden" type="range" min="0" max="100" value="70" step="1">
             
-            <img class="ms-3 ml-3 hidden sm:inline-flex" id="live" src="/live.gif">
-            <div id="vl" class="me-3 ms-3 sm:ms-3" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
+            <img class="ms-14 ml-3 hidden sm:inline-flex" id="live" src="/live.gif">
+            <div id="vl" class="me-3 ms-14 sm:ms-3" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;">
                 <span class="ice-track ellipsify" id="trackname" style="opacity:1;"></span>
             </div>
@@ -42,7 +44,7 @@ const useInitPlayerStore = initPlayerStore(); // Get the store instance
  
 
 import { usePlayer } from '../composables/player'; // Create this composable
-const { player, togglePlayAll, playStatus, playPlayer1, stopPlayer1, pausePlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+const { player, isPlaying, togglePlayAll, playStatus, playPlayer1, stopPlayer1, pausePlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
 
 
 //import IcePlayer from '../composables/IcePlayer.js'; // Import the class

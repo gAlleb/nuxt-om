@@ -608,6 +608,13 @@ min-height: 11vh  ;
 .vol_value {
   font-size: 13px;
 }
+
+.vol_value:not(.open_volume){
+  transform: scale(0);
+  display: none;
+  transition: 0.4s;
+ 
+}
 .ice-volume {
   width: 160px;
   -webkit-appearance: none;
@@ -726,7 +733,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
 
 .ice-volume3 {
   top: 100px;  
-  left: -6px;
+  left: 63px;
   appearance: none;
   width: 141px;
   height: 30px;
@@ -744,6 +751,12 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
   transition: 0.4s;
    
   rotate: -270deg;
+}
+.ice-volume:not(.open_volume){
+  transform: scale(0);
+  display: none;
+  transition: 0.4s;
+  
 }
 
 

@@ -68,6 +68,26 @@ class IcePlayer {
         this.get_element('#show_volume_xs').addEventListener('click', () => {this.vol_btn_main()});
         this.get_element('#show_volume_xs').addEventListener('mouseenter', () => {this.vol_btn_main_hover()});
 
+
+            const mainVolumeBtn = document.getElementById("mainVolumeBtn");
+            let mainVolTimeoutId;
+            const mainVolumeInput = this.get_element('.ice-volume');
+            const vol_value = document.getElementById('vol_value');
+            mainVolumeBtn.addEventListener('mouseenter', () => {
+                mainVolumeInput.classList.add('open_volume');
+                vol_value.classList.add('open_volume');
+                clearInterval(mainVolTimeoutId);
+            });
+            mainVolumeBtn.addEventListener('mouseleave', e => {
+                mainVolTimeoutId = setTimeout(() => {
+                        mainVolumeInput.classList.remove('open_volume');
+                        vol_value.classList.remove('open_volume');
+                    }, 1200); 
+             });
+            
+        
+       
+
         //document.getElementById('ice-volume3_Btn').addEventListener('hover', () => { this.vol_btn_main_3()});
         //document.getElementById('ice-volume3_Btn').addEventListener('mouseenter', () => { this.vol_btn_main_3()});
         const vertical_player_header = document.getElementById("ice-volume3");
