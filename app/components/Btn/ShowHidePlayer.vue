@@ -27,7 +27,7 @@
        <Icon id="ice-volume3_Muted" name="heroicons-outline:speaker-wave" class="h-6 w-6 bg-gray-700" aria-hidden="true" />
       </button> -->
       <!-- <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a> -->
-      <input id="ice-volume3" type="range" min="0" max="100" value="70" class="ice-volume3 hidden sm:block -rotate-90 absolute " @input="changeVol3">
+      <input id="ice-volume3" type="range" min="0" max="100" value="100" class="ice-volume3 hidden sm:block -rotate-90 absolute " @input="changeVol3">
       </div>
       </div>
   </Menu>

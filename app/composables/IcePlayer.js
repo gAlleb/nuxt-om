@@ -20,7 +20,7 @@ class IcePlayer {
         this.audio_object = new Audio()
         //this.audio_object.volume = 0.5
         this.localStorage = window.localStorage;
-        this.audio_object.volume = (this.localStorage.getItem("vol") !== null) ? parseFloat(this.localStorage.getItem("vol")) : 0.7       
+        this.audio_object.volume = (this.localStorage.getItem("vol") !== null) ? parseFloat(this.localStorage.getItem("vol")) : 1.0       
         this.current_state = 0
 
         //State const
