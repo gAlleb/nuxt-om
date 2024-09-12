@@ -49,7 +49,7 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore'],
     },
-  ], '@pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos'],
+  ], '@pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos', "nuxt-easy-lightbox", 'nuxt-swiper'],
 
   i18n: {
     // compilation: {

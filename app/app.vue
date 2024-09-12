@@ -40,7 +40,9 @@
     </main>
     <!-- Site footer -->
     <BtnBuyMeCoffee />
-
+    <div>
+   
+  </div>
     <div class="footercurves_sxvx_style_ hidden dark:block"></div>
     <div class="footercurves_sxvx_style_light_ block dark:hidden"></div>
     <Footer />
@@ -62,6 +64,17 @@
 </template>
 
 <script setup defer>
+import { useAzuracastData } from '@/stores/stationData';
+import { useOmfmData } from '@/stores/stationData_omfm';
+
+const np_ac = useAzuracastData();
+const np_omfm = useOmfmData();
+
+onMounted(() => {
+  np_ac.connectToSSE(); 
+  np_omfm.connectToSSE();
+});
+
 import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
 const overlay0 = computed(() => effectsStore.overlay0); 

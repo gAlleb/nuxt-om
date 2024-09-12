@@ -1,8 +1,8 @@
 <template>
     
 
-    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; display: flex; transform: translateY(100%); ">
-        <div class="ice-player-el ">
+    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(100%); ">
+        <div class="ice-player-el mb-4">
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
                 <i class="ice-play hidden" @click="playStatus" style="font-size:1.6rem !important" ></i>
@@ -10,10 +10,11 @@
                 <i class="ice-stop hidden"  @click="stopPlayer1"></i>
 
                 <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="togglePlayAll"  >     
-                    <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" />
-                    <Icon id="stopBtnPlayer" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" />
+                    <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
+                    <Icon id="stopBtnPlayer" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
                 </button>
                 <!-- <a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a> -->
+              
             </div>
             <div class="relative">
             <button id="mainVolumeBtn" style="padding: 5px;top: -20px;" class="absolute ml-2 inline-flex  items-center  rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"  >     
@@ -22,20 +23,105 @@
                     <div id="vol_value" class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 92px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div>
             </button>
             </div>
-
+            
             <div class="vol_value2 hidden ">70%</div>
             <input id="ice_volume_vertical" class="volume-vertical inline-flex  hidden" type="range" min="0" max="100" value="100" step="1">
-            
             <img class="ms-14 ml-3 hidden sm:inline-flex" id="live" src="/live.gif">
             <div id="vl" class="me-3 ms-14 sm:ms-3" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
-            <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;">
-                <span class="ice-track ellipsify" id="trackname" style="opacity:1;"></span>
+            
+            <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
+
+                <div v-if="currentStream === 'Rock @ omFM'" class="ellipsify">
+                {{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.text }}
+                </div>
+                <div v-else-if="currentStream === 'Coma @ omFM'" class="ellipsify">
+                {{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.text }}
+                </div>
+                <div v-else-if="currentStream === 'omFM Main'" class="ellipsify">
+                {{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.text }}
+                </div>
+            </div>
+            
+
+           
+            <div class="ms-2 shadow-lg" v-if="currentStream === 'Rock @ omFM'">
+                <div v-if="radioData" >  
+                <img class="rounded-lg pointer" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
+                </div>
+                <div v-else>
+                <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                </div> 
+            </div>
+            <div class="ms-2 shadow-lg" v-else-if="currentStream === 'Coma @ omFM'">
+                <div v-if="comaData" >  
+                <img class="rounded-lg pointer" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
+                </div>
+                <div v-else>
+                <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                </div> 
+            </div>
+            <div class="ms-2 shadow-lg" v-else-if="currentStream === 'omFM Main'">
+                <div v-if="omfmData" >  
+                <img class="rounded-lg  pointer" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
+                </div>
+                <div v-else>
+                <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                </div> 
+            </div>
+      
+
+
+
+            <div v-if="useInitPlayerStore.isPlaying">
+                
+            <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
+            v-if="currentStream === 'Rock @ omFM' && radioData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].elapsed) }}</div>
+            <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
+            v-if="currentStream === 'Coma @ omFM' && comaData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].elapsed) }}</div>
+            <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
+            v-if="currentStream === 'omFM Main' && omfmData"
+            >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
+   
+            <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
+            v-if="currentStream === 'Rock @ omFM' && radioData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].duration) }}</div>
+            <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
+            v-if="currentStream === 'Coma @ omFM' && comaData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].duration) }}</div>
+            <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
+            v-if="currentStream === 'omFM Main' && omfmData"
+            >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
+
+            </div>       
+
+            <div class="progress_bar_div_wrapper"> 
+
+            <div v-if="useInitPlayerStore.isPlaying">
+            <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
+            v-if="currentStream === 'Rock @ omFM' && radioData"
+            :style="{ width: `${( np_ac.progress['station:radio'].elapsed /  np_ac.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
+            <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
+            v-if="currentStream === 'Coma @ omFM' && comaData"
+            :style="{ width: `${( np_ac.progress['station:coma'].elapsed /  np_ac.progress['station:coma'].duration * 100).toFixed(2)}%` }"></div>
+            <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
+            v-if="currentStream === 'omFM Main' && omfmData"
+            :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
+            </div>
+
             </div>
         </div>
-        
+
     </div>
     
-
+    <VueEasyLightbox
+    ref="lightbox"
+    :visible="lightboxVisible"
+    :imgs="lightboxImages"
+    :index="lightboxIndex"
+    @hide="lightboxVisible = false"
+    />
 </template>
 
 <script setup>
@@ -46,7 +132,39 @@ const useInitPlayerStore = initPlayerStore(); // Get the store instance
 import { usePlayer } from '../composables/player'; // Create this composable
 const { player, isPlaying, togglePlayAll, playStatus, playPlayer1, stopPlayer1, pausePlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
 
+import { useAzuracastData } from '../stores/stationData';
+const np_ac = useAzuracastData();
+import { useOmfmData } from '../stores/stationData_omfm';
+const np_omfm = useOmfmData();
+const omfmData = computed(() => np_omfm.stations['station:radio']);
 
+
+const radioData = computed(() => np_ac.stations['station:radio']);
+const comaData = computed(() => np_ac.stations['station:coma']);
+
+
+function minSec(duration) {
+      const minutes = Math.trunc(duration / 60);
+      const seconds = Math.trunc(duration % 60);
+      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+}
+
+
+
+import { currentStreamStore } from '../stores/currentStream'; // Import the store
+
+const useCurrentStreamStore = currentStreamStore(); // Get the store instance
+const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
+
+const lightboxVisible = ref(false);
+const lightboxIndex = ref(0);
+const lightboxImages = ref([]);
+
+const openLightbox = (imageUrl,   index) => {
+  lightboxImages.value =  imageUrl; 
+  lightboxIndex.value = index;
+  lightboxVisible.value = true;
+};
 //import IcePlayer from '../composables/IcePlayer.js'; // Import the class
 // onMounted(() => {
 // /*
@@ -59,5 +177,79 @@ const { player, isPlaying, togglePlayAll, playStatus, playPlayer1, stopPlayer1, 
 // })
 
 
+const isPlayingComputed = computed(() => useInitPlayerStore.isPlaying);
 
+// Watch the computed property
+watch(isPlayingComputed, (isPlaying) => {
+  if ('mediaSession' in navigator) {
+    if (isPlaying) {
+      navigator.mediaSession.playbackState = 'playing';
+      updateMediaSession();
+    } else {
+      navigator.mediaSession.playbackState = 'paused';
+    }
+  }
+});
+// Update Media Session on Mount and when Stream Changes
+onMounted(() => {
+  updateMediaSession();
+});
+
+watch(currentStream, () => {
+  updateMediaSession();
+});
+
+// Helper Function to Update Media Session Data
+function updateMediaSession() {
+  if ('mediaSession' in navigator) {
+    const trackData = getTrackData(currentStream.value);
+
+    navigator.mediaSession.metadata = new MediaMetadata({
+      title: trackData.title,
+      artist: trackData.artist,
+      album: trackData.album,
+      artwork: [{
+        src: trackData.artwork,
+        sizes: '96x96',
+        type: 'image/jpg'
+      }],
+    });
+  }
+}
+// Helper Function to Get Track Data
+function getTrackData(stream) {
+  let title = 'Unknown';
+  let artist = 'Unknown';
+  let album = 'Unknown';
+  let artwork = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg';
+
+  switch (stream) {
+    case 'Rock @ omFM':
+      if (radioData.value) {
+        title = radioData.value.np.now_playing.song.text;
+        artist = radioData.value.np.now_playing.song.artist;
+        album = radioData.value.np.now_playing.song.album;
+        artwork = np_ac.coverArtUrls['station:radio'];
+      }
+      break;
+    case 'Coma @ omFM':
+      if (comaData.value) {
+        title = comaData.value.np.now_playing.song.text;
+        artist = comaData.value.np.now_playing.song.artist;
+        album = comaData.value.np.now_playing.song.album;
+        artwork = comaData.value.np.now_playing.song.art;
+      }
+      break;
+    case 'omFM Main':
+      if (omfmData.value) {
+        title = omfmData.value.np.now_playing.song.text;
+        artist = omfmData.value.np.now_playing.song.artist;
+        album = omfmData.value.np.now_playing.song.album;
+        artwork = np_omfm.coverArtUrls['station:radio'];
+      }
+      break;
+  }
+
+  return { title, artist, album, artwork };
+}
 </script>

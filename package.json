@@ -28,12 +28,14 @@
     "@types/node": "^20",
     "nuxt": "^3.12.4",
     "nuxt-aos": "^1.2.5",
+    "nuxt-easy-lightbox": "^1.0.2",
     "nuxt-gtag": "^2.1.0",
     "pinia": "^2.2.1",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6"
   },
   "dependencies": {
+    "nuxt-swiper": "^1.2.2",
     "pinia-plugin-persistedstate": "^3.2.3",
     "three": "^0.167.1"
   }

@@ -5,8 +5,8 @@
 
 
       <MenuButton @click="radioshow();" 
-      id="menu_button" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-      :class="[isPlayerVisible ? 'scale-100' : 'scale-75']"
+      id="menu_button" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+      :class="[isPlayerVisible ? 'scale-100' : 'scale-75'], [useInitPlayerStore.isPlaying ? 'bg-green-600 dark:bg-green-bg' : 'bg-sxvx-light-bg dark:bg-sxvx-dark-bg']" 
       >
         <span class="sr-only">Effects On/Off</span>
         <Icon name="heroicons:radio" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" /> 
@@ -15,8 +15,8 @@
       <!-- <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex" :class="[isPlayerVisible ? 'scale-100 relative' : 'scale-0 absolute']">  -->
       <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex"> 
       <button class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="togglePlayAll"  >     
-       <Icon id="playBtnPlayer1" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[isPlaying ? 'hidden' : '']" />
-       <Icon id="stopBtnPlayer1" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[isPlaying ? '' : 'hidden']" />
+       <Icon id="playBtnPlayer1" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
+       <Icon id="stopBtnPlayer1" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
       </button>
       <button id="ice-volume3_Btn" style="padding: 5px;"  class="ml-1 sm:ml-4 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"   >     
        <!-- <Icon name="heroicons-solid:volume-up" class="h-6 w-6 bg-yellow-500" aria-hidden="true" /> -->
@@ -70,6 +70,10 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ref } from 'vue';
 import { usePlayer } from '../../composables/player'; // Create this composable
+import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
+const useInitPlayerStore = initPlayerStore(); // Get the store instance
+
+
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};

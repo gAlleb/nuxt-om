@@ -14,7 +14,7 @@ export const initPlayerStore = defineStore('player', {
     initPlayer() {
       if (!this.player) {
         this.player = new IcePlayer('#ice-player');
-        this.player.hide_stop_and_mute_button();
+        // this.player.hide_stop_and_mute_button();
 
         //  this.player.audio_object.addEventListener('play', () => {
         //    this.isPlaying = true;
@@ -30,8 +30,10 @@ export const initPlayerStore = defineStore('player', {
         this.isPlayingStream = false;
         this.isPlayingRock = false;
         this.isPlayingComa = false;
+        this.isPlaying = false;
       } else {
         this.player.play();
+        this.isPlaying = true;
         if (this.player.stream_mount === 'stream') {
           this.isPlayingStream = true;
         }  
@@ -50,14 +52,14 @@ export const initPlayerStore = defineStore('player', {
         
         if (this.player.current_state === this.player.PLAYING) {
           this.player.stop();
-         
+          this.isPlaying = false;
           this.isPlayingStream = false;
           this.isPlayingRock = false;
           this.isPlayingComa = false;
         } else {
          
           this.player.play();
-
+          this.isPlaying = true;
           
           if (this.player.stream_mount === 'stream') {
             this.isPlayingStream = true;
@@ -83,14 +85,17 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingStream = false;
           this.isPlayingRock = false;
           this.isPlayingComa = false;
+          this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
-           
+            this.isPlaying = false;
             this.isPlayingStream = false;
             this.isPlayingRock = false;
             this.isPlayingComa = false;
           } else {
             this.player.play();
+            this.isPlaying = true;
+
             if (this.player.stream_mount === 'stream') {
               this.isPlayingStream = true;
             }  
@@ -110,14 +115,19 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingStream = false;
           this.isPlayingRock = false;
           this.isPlayingComa = false;
+          this.isPlaying = false;
+
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
-           
+            this.isPlaying = false;
+
             this.isPlayingStream = false;
             this.isPlayingRock = false;
             this.isPlayingComa = false;
           } else {
             this.player.play();
+            this.isPlaying = true;
+
             if (this.player.stream_mount === 'stream') {
               this.isPlayingStream = true;
             }  
@@ -137,14 +147,19 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingStream = false;
           this.isPlayingRock = false;
           this.isPlayingComa = false;
+          this.isPlaying = false;
+
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
-           
+            this.isPlaying = false;
+
             this.isPlayingStream = false;
             this.isPlayingRock = false;
             this.isPlayingComa = false;
           } else {
             this.player.play();
+            this.isPlaying = true;
+
             if (this.player.stream_mount === 'stream') {
               this.isPlayingStream = true;
             }  
@@ -164,6 +179,8 @@ export const initPlayerStore = defineStore('player', {
     playPlayer1() {
       if (this.player.current_state !== this.player.PLAYING) {
         this.player.play();
+        this.isPlaying = true;
+
       }
     },
     playStatus() {
@@ -181,6 +198,8 @@ export const initPlayerStore = defineStore('player', {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();
       } 
+      this.isPlaying = false;
+
       this.isPlayingStream = false;
       this.isPlayingRock = false;
       this.isPlayingComa = false;
@@ -189,6 +208,8 @@ export const initPlayerStore = defineStore('player', {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.pause();
       } 
+      this.isPlaying = false;
+
       this.isPlayingStream = false;
       this.isPlayingRock = false;
       this.isPlayingComa = false;

@@ -208,17 +208,18 @@ class IcePlayer {
             this.audio_object.setAttribute('src', this.server_address + this.stream_mount + '?cache-ignore=' + Date.now());
         this.audio_object.play();
           // show current playable track
-        this.showinfo();
-        const player_button = document.getElementById("menu_button");
-        player_button.style.backgroundColor = "#18a310";
-        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        playBtnPlayer1.style.display = "none";
-        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        stopBtnPlayer1.style.display = "inline-flex";
-        const playBtnPlayer = document.getElementById("playBtnPlayer");
-        playBtnPlayer.style.display = "none";
-        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        stopBtnPlayer.style.display = "inline-flex";
+        //this.showinfo();
+        document.querySelector(".ice-track").style.opacity = "1";
+        // const player_button = document.getElementById("menu_button");
+        // player_button.style.backgroundColor = "#18a310";
+        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        // playBtnPlayer1.style.display = "none";
+        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        // stopBtnPlayer1.style.display = "inline-flex";
+        // const playBtnPlayer = document.getElementById("playBtnPlayer");
+        // playBtnPlayer.style.display = "none";
+        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        // stopBtnPlayer.style.display = "inline-flex";
 
         
     }
@@ -226,16 +227,16 @@ class IcePlayer {
         this.audio_object.pause();
         clearTimeout(this.timer);
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
-        const player_button = document.getElementById("menu_button");
-        player_button.style.backgroundColor = "";
-        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        playBtnPlayer1.style.display = "inline-flex";
-        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        stopBtnPlayer1.style.display = "none";
-        const playBtnPlayer = document.getElementById("playBtnPlayer");
-        playBtnPlayer.style.display = "inline-flex";
-        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        stopBtnPlayer.style.display = "none";
+        // const player_button = document.getElementById("menu_button");
+        // player_button.style.backgroundColor = "";
+        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        // playBtnPlayer1.style.display = "inline-flex";
+        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        // stopBtnPlayer1.style.display = "none";
+        // const playBtnPlayer = document.getElementById("playBtnPlayer");
+        // playBtnPlayer.style.display = "inline-flex";
+        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        // stopBtnPlayer.style.display = "none";
     }
     stop() {
         this.audio_object.pause();
@@ -243,18 +244,18 @@ class IcePlayer {
         this.current_state = this.STOPPED;
         clearTimeout(this.timer);
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
-        document.querySelector(".ice-track").innerHTML =  "";
+        document.querySelector(".ice-track").style.opacity = "0";
         this.play_pause_toggle();
-        const player_button = document.getElementById("menu_button");
-        player_button.style.backgroundColor = "";
-        const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        playBtnPlayer1.style.display = "inline-flex";
-        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        stopBtnPlayer1.style.display = "none";
-        const playBtnPlayer = document.getElementById("playBtnPlayer");
-        playBtnPlayer.style.display = "inline-flex";
-        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        stopBtnPlayer.style.display = "none";
+        // const player_button = document.getElementById("menu_button");
+        // player_button.style.backgroundColor = "";
+        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
+        // playBtnPlayer1.style.display = "inline-flex";
+        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        // stopBtnPlayer1.style.display = "none";
+        // const playBtnPlayer = document.getElementById("playBtnPlayer");
+        // playBtnPlayer.style.display = "inline-flex";
+        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        // stopBtnPlayer.style.display = "none";
     }
     change_stream_rock() {
 
@@ -303,10 +304,10 @@ class IcePlayer {
     hide_stop_and_mute_button() {
         // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
         // playBtnPlayer1.style.display = "inline-flex";
-        const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        stopBtnPlayer1.style.display = "none"; 
-        const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        stopBtnPlayer.style.display = "none";
+        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
+        // stopBtnPlayer1.style.display = "none"; 
+        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
+        // stopBtnPlayer.style.display = "none";
         // const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
         // mute_btn_header_Muted.style.display = "none";
     }
