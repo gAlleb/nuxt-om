@@ -193,10 +193,12 @@ export const useAzuracastData = defineStore({
         });
 
         const data = await response.json();
-        if (data.albums.items.length !== 0) {
+        if (data.albums && data.albums.items.length !== 0) {
           const artworkUrl100 = data.albums.items[0].images[0].url;
           const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
           return artworkUrl512;
+        } else {
+          return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg';
         }
         
       } catch (error) {

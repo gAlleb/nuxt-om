@@ -1,9 +1,111 @@
 <template>
-  <section>
+  <section class="mx-5">
   <div class="mx-auto flex max-w-8xl justify-center rounded-full bg-primary-600 py-2">
     <h1 class="text-7xl font-extrabold dark:text-zinc-200 text-zinc-700">{{ $t('home') }}</h1>
   </div>
+  <div class="rounded-3xl">
+  <swiper
 
+
+    :modules="[SwiperNavigation,SwiperEffectCoverflow,SwiperPagination]"
+    :slides-per-view="1"
+    :navigation="true"
+    :loop="true"
+    :space-between="80"
+    :effect="'coverflow'"
+    :pagination="{ clickable: true }"
+
+    
+
+  >
+    <swiper-slide>
+      <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <div class="flex-shrink-0 overflow-hidden">
+     <img class="h-full w-full rounded-3xl object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+    </div>
+    <button 
+        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+
+        @click="togglePlay('stream')"
+      >
+        <Icon
+          name="heroicons-solid:play"
+          class="h-6 w-6 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingStream,
+                'hidden': useInitPlayerStore.isPlayingStream,
+            }" 
+          aria-hidden="true"
+        />
+        <Icon
+          name="heroicons-solid:stop"
+          class="h-6 w-6 bg-white"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingStream,
+                '': useInitPlayerStore.isPlayingStream,
+            }" 
+          aria-hidden="true"
+        />
+      </button>
+  </div>
+    </swiper-slide>
+    <swiper-slide> <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <div class="flex-shrink-0 overflow-hidden">
+     <img class="h-full w-full rounded-3xl object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/800x400" />
+    </div>
+    <button 
+        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+
+        @click="togglePlay('stream')"
+      >
+        <Icon
+          name="heroicons-solid:play"
+          class="h-6 w-6 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingStream,
+                'hidden': useInitPlayerStore.isPlayingStream,
+            }" 
+          aria-hidden="true"
+        />
+        <Icon
+          name="heroicons-solid:stop"
+          class="h-6 w-6 bg-white"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingStream,
+                '': useInitPlayerStore.isPlayingStream,
+            }" 
+          aria-hidden="true"
+        />
+      </button>
+  </div>
+</swiper-slide>
+    <swiper-slide> <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <div class="flex-shrink-0 overflow-hidden">
+     <img class="h-full w-full rounded-3xl object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+    </div>
+    <button 
+        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+
+        @click="togglePlay('stream')"
+      >
+        <Icon
+          name="heroicons-solid:play"
+          class="h-6 w-6 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingStream,
+                'hidden': useInitPlayerStore.isPlayingStream,
+            }" 
+          aria-hidden="true"
+        />
+        <Icon
+          name="heroicons-solid:stop"
+          class="h-6 w-6 bg-white"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingStream,
+                '': useInitPlayerStore.isPlayingStream,
+            }" 
+          aria-hidden="true"
+        />
+      </button>
+  </div>
+</swiper-slide>
+
+  </swiper>
+</div>
   <div class="mx-auto lg:mx-20 md:mx-20 sm:mx-20 mt-12 grid max-w-none gap-10 lg:max-w-none md:grid-cols-3 lg:grid-cols-3">
   <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
@@ -59,3 +161,7 @@ const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
 </script>
+<style scoped>
+.swiper-button-prev, .swiper-button-next {
+  color:red!important}
+</style>

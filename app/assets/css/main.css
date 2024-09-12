@@ -494,7 +494,10 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
 }
 
 .ice-player {
-  padding: 10px;
+  padding-bottom: 10px;
+  padding-right: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
   font-size: 1.7rem;
   color: var(--ice-player-primary-color);
 
