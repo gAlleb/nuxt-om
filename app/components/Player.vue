@@ -31,48 +31,48 @@
             
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
 
-                <div v-if="currentStream === 'Rock @ omFM'" class="ellipsify">
+                <div v-if="currentStream === 'Rock @ omFM'" class="">
                 <span class="text-xs text-zinc-500">Rock @ omFM</span> <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
+                <span class="ellipsify" style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.artist }}</span>
                 </div>
-                <div v-else-if="currentStream === 'Coma @ omFM'" class="ellipsify">
+                <div v-else-if="currentStream === 'Coma @ omFM'" class="">
                 <span class="text-xs text-zinc-500">Coma @ omFM</span> <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span><br/>
+                <span class="ellipsify" style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span><br/>
                  <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
-                <div v-else-if="currentStream === 'omFM Main'" class="ellipsify">
+                <div v-else-if="currentStream === 'omFM Main'" class="">
                 <span class="text-xs text-zinc-500">omFM</span> <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span><br/>
+                <span class="ellipsify" style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span><br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : omfmData.np.now_playing.song.artist }}</span>
                 </div>
             </div>
             
 
            
-            <div class="cursor-pointer ms-3 shadow-lg" v-if="currentStream === 'Rock @ omFM'">
+            <div class="ms-3 cursor-pointer shadow-lg" v-if="currentStream === 'Rock @ omFM'">
                 <div v-if="radioData" >  
-                <img class="rounded-lg pointer" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
+                <img class="rounded-lg" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
-            <div class="cursor-pointer ms-3 shadow-lg" v-else-if="currentStream === 'Coma @ omFM'">
+            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'Coma @ omFM'">
                 <div v-if="comaData" >  
-                <img class="rounded-lg pointer" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
+                <img class="rounded-lg" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
-            <div class="cursor-pointer ms-3 shadow-lg" v-else-if="currentStream === 'omFM Main'">
+            <div class="ms-2 cursor-pointer  shadow-lg" v-else-if="currentStream === 'omFM Main'">
                 <div v-if="omfmData" >  
-                <img class="rounded-lg  pointer" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
+                <img class="rounded-lg" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
       
