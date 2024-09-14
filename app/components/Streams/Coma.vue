@@ -33,7 +33,7 @@
     />
 
 
-    <StreamsRock />
+ 
       </div>
   
     </template>
@@ -50,8 +50,8 @@
   const useCurrentStreamStore = currentStreamStore(); // Get the store instance
   const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
   
-  import { useOmfmData } from '../../stores/stationData_omfm';
-  import { useAzuracastData } from '../../stores/stationData';
+  import { useOmfmData } from '../../stores/stationData_omfm'
+  import { useAzuracastData } from '../../stores/stationData'
   const np_omfm = useOmfmData();
   const np_ac = useAzuracastData();
   

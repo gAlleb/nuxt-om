@@ -520,18 +520,17 @@ min-height: 12vh  ;
 
 .ice-player.fixed .ice-track {
   display: block;
-      font-size: 1.5rem;
+     
       color:  #ffffff ;  
      
       
   
   }
-
+  .ice-player.fixed .ice-track {
+    font-size: 14px;
+  }
 @media screen and (max-width: 500px) {
  
-.ice-player.fixed .ice-track {
-  font-size: 14px;
-}
  .ice-player.fixed i {
   font-size: 1.5rem;
 }
@@ -541,7 +540,7 @@ min-height: 12vh  ;
 @media (max-width: 1000px) and (min-width: 500px) {
  
 .ice-player.fixed .ice-track {
-  font-size: 15px;
+  font-size: 14px;
 }
  .ice-player.fixed i {
   font-size: 1.5rem;
@@ -627,6 +626,7 @@ min-height: 12vh  ;
   background: rgba(75, 75, 75, 1);
   cursor: pointer;
   transition: 0.2s;
+  
 
 
 }
@@ -755,9 +755,11 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
   rotate: -270deg;
 }
 .ice-volume:not(.open_volume){
-  transform: scale(0);
-  display: none;
-  transition: 0.4s;
+  transform: scale(0%);
+  position: absolute;
+  visibility: hidden;
+  margin-left: -50px;
+  transition: 0.3s;
   
 }
 
@@ -1312,4 +1314,21 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
       margin-right: -0.5px; */
       
     }
-    
+
+    #indexSlider .swiper-button-prev,
+    #indexSlider .swiper-button-next {
+      color:rgba(227, 227, 227, 0.825);
+      padding: 24px;
+      background-color: rgba(68, 68, 68, 0.519);
+      border-radius: 100%;
+    }
+    #indexSlider .swiper-pagination-bullet-active {
+      
+      background: white;
+    }
+    #indexSlider .swiper-button-prev::after,   #indexSlider .swiper-button-next::after {
+      font-size: 20px;
+    }
+    :root {
+    --tw-ring-color: red;
+    }

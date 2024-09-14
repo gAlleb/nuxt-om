@@ -26,25 +26,32 @@
             
             <div class="vol_value2 hidden ">70%</div>
             <input id="ice_volume_vertical" class="volume-vertical inline-flex  hidden" type="range" min="0" max="100" value="100" step="1">
-            <img class="ms-14 ml-3 hidden sm:inline-flex" id="live" src="/live.gif">
+            <img class="ms-14 ml-3 hidden sm:inline-flex" id="live" src="/equalizer.gif">
             <div id="vl" class="me-3 ms-14 sm:ms-3" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
             
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
 
                 <div v-if="currentStream === 'Rock @ omFM'" class="ellipsify">
-                {{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.text }}
+                <span class="text-xs text-zinc-500">Rock @ omFM</span> <br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
+                <br/>
+                <span class="text-xs">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'Coma @ omFM'" class="ellipsify">
-                {{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.text }}
+                <span class="text-xs text-zinc-500">Coma @ omFM</span> <br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span><br/>
+                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'omFM Main'" class="ellipsify">
-                {{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.text }}
+                <span class="text-xs text-zinc-500">omFM</span> <br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span><br/>
+                <span class="text-xs">{{ np_ac.isLoading ? 'loading' : omfmData.np.now_playing.song.artist }}</span>
                 </div>
             </div>
             
 
            
-            <div class="ms-2 shadow-lg" v-if="currentStream === 'Rock @ omFM'">
+            <div class="cursor-pointer ms-3 shadow-lg" v-if="currentStream === 'Rock @ omFM'">
                 <div v-if="radioData" >  
                 <img class="rounded-lg pointer" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
                 </div>
@@ -52,7 +59,7 @@
                 <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-2 shadow-lg" v-else-if="currentStream === 'Coma @ omFM'">
+            <div class="cursor-pointer ms-3 shadow-lg" v-else-if="currentStream === 'Coma @ omFM'">
                 <div v-if="comaData" >  
                 <img class="rounded-lg pointer" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
                 </div>
@@ -60,7 +67,7 @@
                 <img class="rounded-lg pointer" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-2 shadow-lg" v-else-if="currentStream === 'omFM Main'">
+            <div class="cursor-pointer ms-3 shadow-lg" v-else-if="currentStream === 'omFM Main'">
                 <div v-if="omfmData" >  
                 <img class="rounded-lg  pointer" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
                 </div>

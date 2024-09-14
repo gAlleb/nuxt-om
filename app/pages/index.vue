@@ -1,9 +1,6 @@
 <template>
-  <section class="mx-5">
-  <div class="mx-auto flex max-w-8xl justify-center rounded-full bg-primary-600 py-2">
-    <h1 class="text-7xl font-extrabold dark:text-zinc-200 text-zinc-700">{{ $t('home') }}</h1>
-  </div>
-  <div class="rounded-3xl">
+<section>
+  <div  data-aos="fade-down"  class="md:hidden">
   <swiper
 
 
@@ -13,24 +10,28 @@
     :loop="true"
     :space-between="80"
     :effect="'coverflow'"
-    :pagination="{ clickable: true }"
+  
+    id="indexSlider"
+    
 
     
 
   >
     <swiper-slide>
-      <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+      <div class="flex  relative flex-col overflow-hidden  shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full rounded-3xl object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+     <img class="h-full w-full  object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/omfm.jpg" />
     </div>
     <button 
-        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-
-        @click="togglePlay('stream')"
+        class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        @click="useInitPlayerStore.togglePlay('stream')"
+        :class="{
+                'glowing-text': currentStream === 'omFM Main',
+            }" 
       >
         <Icon
           name="heroicons-solid:play"
-          class="h-6 w-6 bg-white"            :class="{
+          class="h-7 w-7 bg-white"            :class="{
                 '': !useInitPlayerStore.isPlayingStream,
                 'hidden': useInitPlayerStore.isPlayingStream,
             }" 
@@ -38,87 +39,117 @@
         />
         <Icon
           name="heroicons-solid:stop"
-          class="h-6 w-6 bg-white"            :class="{
+          class="h-7 w-7 bg-red-500"            :class="{
                 'hidden': !useInitPlayerStore.isPlayingStream,
                 '': useInitPlayerStore.isPlayingStream,
             }" 
           aria-hidden="true"
         />
+        <span class="content-center text-zinc-100">&nbsp;omFM Main</span>
       </button>
+      <NuxtLink  :to="localePath('/omfm')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+        <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        omFM
+        </span>
+        <br/>
+        <span class="text-sm text-zinc-300 drop-shadow-lg">meditative, mantras, instrumental</span>
+      </NuxtLink>
   </div>
     </swiper-slide>
-    <swiper-slide> <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <swiper-slide> <div class="flex relative flex-col overflow-hidden shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full rounded-3xl object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/800x400" />
+     <img class="h-full w-full  object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/rock.webp" />
     </div>
     <button 
-        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-
-        @click="togglePlay('stream')"
+        class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        @click="useInitPlayerStore.togglePlay('rock')"
+        :class="{
+                'glowing-text': currentStream === 'Rock @ omFM',
+            }" 
       >
         <Icon
           name="heroicons-solid:play"
-          class="h-6 w-6 bg-white"            :class="{
-                '': !useInitPlayerStore.isPlayingStream,
-                'hidden': useInitPlayerStore.isPlayingStream,
+          class="h-7 w-7 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingRock,
+                'hidden': useInitPlayerStore.isPlayingRock,
             }" 
           aria-hidden="true"
         />
         <Icon
           name="heroicons-solid:stop"
-          class="h-6 w-6 bg-white"            :class="{
-                'hidden': !useInitPlayerStore.isPlayingStream,
-                '': useInitPlayerStore.isPlayingStream,
+          class="h-7 w-7 bg-red-500"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingRock,
+                '': useInitPlayerStore.isPlayingRock,
             }" 
           aria-hidden="true"
         />
+        <span class="content-center text-zinc-100">&nbsp;Rock @ omFM</span>
       </button>
+      <NuxtLink  :to="localePath('/rock')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+        <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        Rock
+        </span>
+        <br/>
+        <span class="text-sm text-zinc-300">heavy stuff and more</span>
+      </NuxtLink>
   </div>
 </swiper-slide>
-    <swiper-slide> <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <swiper-slide> <div class="flex relative flex-col overflow-hidden shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full rounded-3xl object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/coma.jpg" />
     </div>
     <button 
-        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-
-        @click="togglePlay('stream')"
+        class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        @click="useInitPlayerStore.togglePlay('coma')"
+        :class="{
+                'glowing-text': currentStream === 'Coma @ omFM',
+            }" 
       >
         <Icon
           name="heroicons-solid:play"
-          class="h-6 w-6 bg-white"            :class="{
-                '': !useInitPlayerStore.isPlayingStream,
-                'hidden': useInitPlayerStore.isPlayingStream,
+          class="h-7 w-7 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingComa,
+                'hidden': useInitPlayerStore.isPlayingComa,
             }" 
           aria-hidden="true"
         />
         <Icon
           name="heroicons-solid:stop"
-          class="h-6 w-6 bg-white"            :class="{
-                'hidden': !useInitPlayerStore.isPlayingStream,
-                '': useInitPlayerStore.isPlayingStream,
+          class="h-7 w-7 bg-red-500"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingComa,
+                '': useInitPlayerStore.isPlayingComa,
             }" 
           aria-hidden="true"
         />
+        <span class="content-center text-zinc-100">&nbsp;Coma @ omFM</span>
       </button>
+      <NuxtLink  :to="localePath('/coma')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+        <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        Coma
+        </span>
+        <br/>
+        <span class="text-sm text-zinc-300">ambient, drone, field recordings</span>
+      </NuxtLink>
   </div>
 </swiper-slide>
 
   </swiper>
 </div>
-  <div class="mx-auto lg:mx-20 md:mx-20 sm:mx-20 mt-12 grid max-w-none gap-10 lg:max-w-none md:grid-cols-3 lg:grid-cols-3">
+  <div  data-aos="fade-down" class="hidden md:flex mx-auto lg:mx-10 md:mx-5 sm:mx-3 mt-5 grid max-w-none gap-5 lg:max-w-none sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
   <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/omfm.jpg" />
     </div>
     <button 
-        class="flex absolute right-10 rounded-full my-5 transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
-
-        @click="togglePlay('stream')"
+        class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        @click="useInitPlayerStore.togglePlay('stream')"
+        :class="{
+                'glowing-text': currentStream === 'omFM Main',
+            }" 
       >
         <Icon
           name="heroicons-solid:play"
-          class="h-6 w-6 bg-white"            :class="{
+          class="h-7 w-7 bg-white"            :class="{
                 '': !useInitPlayerStore.isPlayingStream,
                 'hidden': useInitPlayerStore.isPlayingStream,
             }" 
@@ -126,25 +157,98 @@
         />
         <Icon
           name="heroicons-solid:stop"
-          class="h-6 w-6 bg-white"            :class="{
+          class="h-7 w-7 bg-red-500"            :class="{
                 'hidden': !useInitPlayerStore.isPlayingStream,
                 '': useInitPlayerStore.isPlayingStream,
             }" 
           aria-hidden="true"
         />
+        <span class="content-center text-zinc-100">&nbsp;omFM Main</span>
       </button>
+      <NuxtLink  :to="localePath('/omfm')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+        <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        omFM
+        </span>
+        <br/>
+        <span class="text-sm text-zinc-300 drop-shadow-lg">meditative, mantras, instrumental</span>
+      </NuxtLink>
   </div>
-  <div class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+  <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/rock.webp" />
     </div>
+    <button 
+        class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        @click="useInitPlayerStore.togglePlay('rock')"
+        :class="{
+                'glowing-text': currentStream === 'Rock @ omFM',
+            }" 
+      >
+        <Icon
+          name="heroicons-solid:play"
+          class="h-7 w-7 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingRock,
+                'hidden': useInitPlayerStore.isPlayingRock,
+            }" 
+          aria-hidden="true"
+        />
+        <Icon
+          name="heroicons-solid:stop"
+          class="h-7 w-7 bg-red-500"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingRock,
+                '': useInitPlayerStore.isPlayingRock,
+            }" 
+          aria-hidden="true"
+        />
+        <span class="content-center text-zinc-100">&nbsp;Rock @ omFM</span>
+      </button>
+      <NuxtLink  :to="localePath('/rock')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+        <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        Rock
+        </span>
+        <br/>
+        <span class="text-sm text-zinc-300">heavy stuff and more</span>
+      </NuxtLink>
   </div>
-  <div class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+  <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" src="https://fakeimg.pl/600x400" />
+     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/coma.jpg" />
     </div>
+    <button 
+        class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        @click="useInitPlayerStore.togglePlay('coma')"
+        :class="{
+                'glowing-text': currentStream === 'Coma @ omFM',
+            }" 
+      >
+        <Icon
+          name="heroicons-solid:play"
+          class="h-7 w-7 bg-white"            :class="{
+                '': !useInitPlayerStore.isPlayingComa,
+                'hidden': useInitPlayerStore.isPlayingComa,
+            }" 
+          aria-hidden="true"
+        />
+        <Icon
+          name="heroicons-solid:stop"
+          class="h-7 w-7 bg-red-500"            :class="{
+                'hidden': !useInitPlayerStore.isPlayingComa,
+                '': useInitPlayerStore.isPlayingComa,
+            }" 
+          aria-hidden="true"
+        />
+        <span class="content-center text-zinc-100">&nbsp;Coma @ omFM</span>
+      </button>
+      <NuxtLink  :to="localePath('/coma')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+        <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        Coma
+        </span>
+        <br/>
+        <span class="text-sm text-zinc-300">ambient, drone, field recordings</span>
+      </NuxtLink>
   </div>
 </div>
+
 </section>
 </template>
 
@@ -152,16 +256,11 @@
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
  
-
-import { usePlayer } from '../composables/player'; // Create this composable
-const { player, togglePlay, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
-
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
 </script>
 <style scoped>
-.swiper-button-prev, .swiper-button-next {
-  color:red!important}
+
 </style>

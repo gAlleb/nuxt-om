@@ -35,7 +35,7 @@
     <Header />
     
     <!-- Page content -->
-    <main class="my-24 grow">
+    <main class="my-20 grow">
       <NuxtPage />
     </main>
     <!-- Site footer -->

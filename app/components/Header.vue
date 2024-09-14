@@ -4,7 +4,7 @@
     ref="header"
     class="header dark:text-zinc-200 text-zinc-600 
      container-fluid 
-     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between p-4  bg-sxvx-light dark:bg-sxvx-dark lg:px-20"
+     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between p-5  bg-sxvx-light dark:bg-sxvx-dark lg:px-20"
     >
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
@@ -26,11 +26,45 @@
           {{ $t('about') }}
         </span>
         </NuxtLink>
-        <NuxtLink :to="localePath('/streams')" class="mr-5 group transition-all duration-300 ease-in-out">
-        <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
-          {{ $t('streams') }}
+        <div class="relative" ref="dropdownContainer">
+        <div  class="mr-5 group transition-all duration-300 ease-in-out cursor-pointer">
+        <span @click="isOpen = !isOpen"  @mouseover="isOpen = true" 
+        class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+        Streams
+        </span>
+
+        </div>
+      <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" v-if="isOpen">
+        <div 
+          class="absolute  z-10 mt-2 w-48 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline" 
+           @click="isOpen = !isOpen"   @mouseleave="isOpen = false"
+          style="left:-105%"
+        >
+        <button 
+        class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+        <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
+        <span class="text-zinc-600 dark:text-zinc-100">
+          omFM Main
         </span>
         </NuxtLink>
+        </button>
+        <hr/>
+          <button 
+            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+            <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
+              <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
+            </NuxtLink>
+          </button>
+          <hr/>
+          <button
+            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+            <NuxtLink  :to="localePath('/coma')" class="text-sm text-zinc-600 dark:text-zinc-100">
+              <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
+            </NuxtLink>
+          </button>
+        </div>
+      </transition>
+    </div> 
         <NuxtLink :to="localePath('/blog')" class="mr-5 group transition-all duration-300 ease-in-out">
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
           {{ $t('blog') }}
@@ -97,11 +131,32 @@
                 <div class="space-y-2 py-6" >
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
+                  <NuxtLink  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
+                  <button 
+        class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+        <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
+        <span class=" text-zinc-600 dark:text-zinc-100">
+          omFM Main
+        </span>
+        </NuxtLink>
+        </button>
+        <hr/>
+          <button 
+            class="my-3 ms-2  flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+            <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
+              <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
+            </NuxtLink>
+          </button>
+          <hr/>
+          <button
+            class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+            <NuxtLink  :to="localePath('/coma')" class="text-sm text-zinc-600 dark:text-zinc-100">
+              <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
+            </NuxtLink>
+          </button>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog/articles')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('articles') }}</NuxtLink>
-
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
+                
                 </div>
               </div>
             </div>
@@ -169,6 +224,13 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { currentStreamStore } from '../stores/currentStream'; // Import the store
+
+const isOpen = ref(false)
+const dropdownContainer = ref(null);
+const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};
+onMounted(() => {
+  window.addEventListener('click', handleOutsideClick);
+});
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
