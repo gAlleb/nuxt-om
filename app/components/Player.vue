@@ -32,19 +32,24 @@
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
 
                 <div v-if="currentStream === 'Rock @ omFM'" class="ellipsify">
-                <span class="text-xs text-zinc-500">Rock @ omFM</span> <br/>
+                <span class="text-xs text-zinc-500">Rock @ omFM</span> 
+                <br/>
                 <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'Coma @ omFM'" class="ellipsify">
-                <span class="text-xs text-zinc-500">Coma @ omFM</span> <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span><br/>
-                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
+                <span class="text-xs text-zinc-500">Coma @ omFM</span> 
+                <br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span>
+                <br/>
+                <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'omFM Main'" class="ellipsify">
-                <span class="text-xs text-zinc-500">omFM</span> 
+                <span class="text-xs text-zinc-500">omFM</span>
+                <br/>
                 <span style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span>
+                <br/>
                 <span class="text-xs">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.artist }}</span>
                 </div>
             </div>
