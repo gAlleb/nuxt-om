@@ -29,22 +29,22 @@
             <img class="ms-14 ml-3 hidden sm:inline-flex" id="live" src="/equalizer.gif">
             <div id="vl" class="me-3 ms-14 sm:ms-3" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
             
-            <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
+            <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track  " id="trackname">
 
                 <div v-if="currentStream === 'Rock @ omFM'" class="">
                 <span class="text-xs text-zinc-500">Rock @ omFM</span> <br/>
-                <span class="ellipsify" style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'Coma @ omFM'" class="">
                 <span class="text-xs text-zinc-500">Coma @ omFM</span> <br/>
-                <span class="ellipsify" style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span><br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span><br/>
                  <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'omFM Main'" class="">
                 <span class="text-xs text-zinc-500">omFM</span> <br/>
-                <span class="ellipsify" style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span><br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span><br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : omfmData.np.now_playing.song.artist }}</span>
                 </div>
             </div>
