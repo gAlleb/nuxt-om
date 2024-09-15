@@ -52,7 +52,7 @@
                   'grayscale': currentStream !== 'omFM Main',
                   }" 
                    class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
-            <img v-if="useInitPlayerStore.isPlayingStream" class="absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+            <img v-if="useInitPlayerStore.isPlayingStream" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
             <span :class="{
                   'glowing-text': currentStream === 'omFM Main',
                   }" 
