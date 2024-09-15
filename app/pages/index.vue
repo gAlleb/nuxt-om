@@ -136,7 +136,10 @@
   </swiper>
 </div>
   <div  data-aos="fade-down" class="hidden md:flex mx-auto lg:mx-10 md:mx-5 sm:mx-3 mt-5 grid max-w-none gap-5 lg:max-w-none sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
-  <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+  <div  :class="{
+                'border border-indigo-500/50': currentStream === 'omFM Main',
+            }" 
+  class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
      <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/omfm.jpg" />
     </div>
@@ -173,7 +176,11 @@
         <span class="text-sm text-zinc-300 drop-shadow-lg">meditative, mantras, instrumental</span>
       </NuxtLink>
   </div>
-  <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <div 
+    :class="{
+                'border border-red-500/50': currentStream === 'Rock @ omFM',
+            }" 
+    class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
      <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/rock.webp" />
     </div>
@@ -210,7 +217,10 @@
         <span class="text-sm text-zinc-300">heavy stuff and more</span>
       </NuxtLink>
   </div>
-  <div class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+  <div :class="{
+                'border border-green-500/50': currentStream === 'Coma @ omFM',
+               }" 
+  class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
      <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/coma.jpg" />
     </div>

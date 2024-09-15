@@ -63,14 +63,25 @@ export const useAzuracastData = defineStore({
       // sanitize station shortcode for use in a CSS class name
       ch = toKebabCase(ch);
       //const np = this.stations[station].np || null;
+      this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
+ 
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.sh_id;
       if (this.lastFetchedShIds[station] !== currentShId) {
         this.lastFetchedShIds[station] = currentShId; // Update the last fetched sh_id
 
       
-        this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
         setElement("np-" + ch + "-song-text", npData.np.now_playing.song.text);
+        setElement("np-" + ch + "-song-art",  "", {
+          style: {
+          "background-image": "url("+npData.np.now_playing.song.art+")"},
+          addClasses: ["animated","bounceInLeft"],
+        });
+        setTimeout(function () {
+        setElement("np-" + ch + "-song-art", "", {
+          removeClasses: ["animated","bounceInLeft"],
+        });
+        }, 2000);
         // this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
         // .then(coverArtUrl => {
         //   this.coverArtUrls[station] = coverArtUrl;
@@ -95,14 +106,15 @@ export const useAzuracastData = defineStore({
               }
           })
         } else {
-
+              if (station === "station:radio") {
                 this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
                 .then(coverArtUrl => {
                 this.coverArtUrls[station] = coverArtUrl;
                 });
           
                 this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
-                this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist, station);
+                this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist,  station);
+              }    
         }
      } else {
         
@@ -111,7 +123,7 @@ export const useAzuracastData = defineStore({
     startProgressBar(station, elapsed, duration) {
     // Dynamically initialize progress data for each station
       if (!this.progress[station]) {
-        this.progress[station] = { elapsed: 0, duration: 0, lastUpdate: Date.now(), intervalId: 0 };
+        this.progress[station] = { elapsed: 0, duration: 0, lastUpdate: Date.now(), intervalId: 0, width: 0 };
       }
 
       this.progress[station].elapsed = elapsed;
@@ -133,6 +145,9 @@ export const useAzuracastData = defineStore({
       let now = Date.now();
       this.progress[station].elapsed += (now - this.progress[station].lastUpdate) / 1000;
       this.progress[station].lastUpdate = now;
+      this.progress[station].width = this.progress[station].elapsed / this.progress[station].duration * 100.0;
+      this.progress[station].width = this.progress[station].width > 100 ? 100 : this.progress[station].width;
+
       if (this.progress[station].duration > 0 && this.progress[station].elapsed > this.progress[station].duration) {
         this.progress[station].elapsed = this.progress[station].duration;
         this.stopProgressBar(station);
@@ -178,7 +193,7 @@ export const useAzuracastData = defineStore({
         await this.fetchSpotifyToken();
       }
     },
-    async fetchCoverArtSpotify(album, artist,  station) {
+    async fetchCoverArtSpotify(album, artist, station) {
       try {
 
         // if (!this.spotifyToken) {
@@ -209,7 +224,7 @@ export const useAzuracastData = defineStore({
     async fetchCoverArtForSongHistory(songHistory, station) {
       const historyToFetch = songHistory.slice(0, 5); 
       historyToFetch.forEach((song, index) => {
-        this.fetchCoverArt(song.song.artist, song.song.title, station)
+        this.fetchCoverArt(song.song.album, song.song.artist, station)
           .then(coverArtUrl => {
             if (!this.songHistoryCoverArt[station]) {
               this.songHistoryCoverArt[station] = {};

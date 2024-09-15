@@ -17,18 +17,83 @@
               
             </div>
             <div class="relative">
-            <button id="mainVolumeBtn" style="padding: 5px;top: -20px;" class="absolute ml-2 inline-flex  items-center  rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"  >     
+            <button id="mainVolumeBtn" style="padding: 5px;top: -20px;" class="absolute z-10 ml-2 inline-flex  items-center  rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"  >     
                     <a id="show_volume_xs" class=" mute  speaker  " title="mute/unmute"  ><span></span></a>
-                    <input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="100" step="1">
-                    <div id="vol_value" class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 92px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div>
-            </button>
+                     </button>
             </div>
-            
+            <input class="ice-volume hidden sm:inline-flex -rotate-90" type="range" min="0" max="100" value="100" step="1">
+            <div id="vol_value" class="vol_value hidden  ms-2" style="font-family: monospace;position: fixed;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div>
+           
             <div class="vol_value2 hidden ">70%</div>
             <input id="ice_volume_vertical" class="volume-vertical inline-flex  hidden" type="range" min="0" max="100" value="100" step="1">
-            <img class="ms-14 ml-3 hidden sm:inline-flex" id="live" src="/equalizer.gif">
-            <div id="vl" class="me-3 ms-14 sm:ms-3" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
-            
+
+            <!-- streams -->
+             
+            <div style="width:120px;" class="ms-14 hidden sm:block"> 
+            <swiper
+            id="playerSwiper"
+            class="bg-sxvx-dark-bg"
+            style="padding-top:2px;
+                   padding-bottom:2px;
+                   border-radius:20px;
+                   border: gray 1px solid;"
+            :modules="[  SwiperPagination, SwiperScrollbar, SwiperMousewheel]"
+            :slides-per-view="2"
+
+             
+ 
+           
+            :mousewheel="true"
+            :space-between="10"
+            >
+            <swiper-slide>
+            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream1();">
+            <img :class="{
+                  'grayscale': currentStream !== 'omFM Main',
+                  }" 
+                   class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
+            <img v-if="useInitPlayerStore.isPlayingStream" class="absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+            <span :class="{
+                  'glowing-text': currentStream === 'omFM Main',
+                  }" 
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">omFM</span>
+            </div>
+            </swiper-slide>
+            <swiper-slide>
+            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream2();">
+              <img :class="{
+                  'grayscale': currentStream !== 'Rock @ omFM',
+                  }" 
+                   class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-90-thumb.jpg">
+              <img v-if="useInitPlayerStore.isPlayingRock" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+              <span :class="{
+                  'glowing-text': currentStream === 'Rock @ omFM',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Rock</span>
+            </div>
+            </swiper-slide>
+            <swiper-slide class="me-2">
+            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream3();">
+            <img :class="{
+                  'grayscale': currentStream !== 'Coma @ omFM',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
+            <img v-if="useInitPlayerStore.isPlayingComa" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'Coma @ omFM',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Coma</span>
+            </div>
+            </swiper-slide>
+
+          </swiper>
+        </div>
+ 
+            <img class=" sm:hidden ms-14 sm:ms-2 ml-0" id="live" src="/equalizer.gif">            
+
+            <div id="vl" class="me-2  ms-2" style="border-left: 0.5px solid white;height:40px;box-shadow:0 0 10px #ff9d41; "></div>
+
+
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
 
                 <div v-if="currentStream === 'Rock @ omFM'" class="ellipsify">
@@ -113,16 +178,19 @@
             <div v-if="useInitPlayerStore.isPlaying">
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'Rock @ omFM' && radioData"
-            :style="{ width: `${( np_ac.progress['station:radio'].elapsed /  np_ac.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
+            :style="{ width: `${( np_ac.progress['station:radio'].width)}%` }"></div>
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'Coma @ omFM' && comaData"
-            :style="{ width: `${( np_ac.progress['station:coma'].elapsed /  np_ac.progress['station:coma'].duration * 100).toFixed(2)}%` }"></div>
+            :style="{ width: `${( np_ac.progress['station:coma'].width)}%` }"></div>
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'omFM Main' && omfmData"
             :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
             </div>
 
             </div>
+
+
+          
         </div>
 
     </div>

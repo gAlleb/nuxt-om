@@ -11,7 +11,7 @@
                 'from-red-800 via-red-600 to-red-500': currentStream === 'Rock @ omFM',
                 'from-blue-800 via-blue-600 to-blue-500': currentStream === 'Coma @ omFM',
             }">
-      <Icon name="heroicons:link text-zinc-200" class="h-6 w-6" aria-hidden="true" /><span class="text-zinc-200"> &nbsp; {{ linkText }} </span>
+      <Icon name="heroicons:link" class="h-6 w-6" aria-hidden="true" /><span class="text-zinc-200"> &nbsp; {{ linkText }} </span>
     </NuxtLink>
   </div>
 </template>

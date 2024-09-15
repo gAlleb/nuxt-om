@@ -607,7 +607,10 @@ min-height: 12vh  ;
  
 /* Player Icons End */
 .vol_value {
-  font-size: 13px;
+  font-size: 10px;
+  position: absolute;
+  top: -8px;
+  left: 61px;
 }
 
 .vol_value:not(.open_volume){
@@ -621,21 +624,33 @@ min-height: 12vh  ;
   -webkit-appearance: none;
   background-color: transparent;
   border-radius: 16px ;
-  height: 13px;
+  height: 20px;
   transition: .5s ease-in-out;
   background: rgba(75, 75, 75, 1);
   cursor: pointer;
   transition: 0.2s;
-  
 
+  position: absolute;
+  left: -2px;
+  top: -80px;
 
 }
+.ice-volume:not(.open_volume){
+  transform: scale(0%);
+ 
+
+  transition: 0.5s;
+ 
+  top: -40px;
+}
+  
+
 .ice-volume:hover {
   width: 160px;
   -webkit-appearance: none;
   background-color: transparent;
   border-radius: 16px ;
-  height: 20px;
+  height: 25px;
   transition: .5s ease-in-out;
   background: rgba(75, 75, 75, 1);
   cursor: pointer;
@@ -754,14 +769,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
    
   rotate: -270deg;
 }
-.ice-volume:not(.open_volume){
-  transform: scale(0%);
-  position: absolute;
-  visibility: hidden;
-  margin-left: -50px;
-  transition: 0.3s;
-  
-}
+
 
 
 .ice-volume3:focus {outline: none;}
@@ -1332,3 +1340,4 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     :root {
     --tw-ring-color: red;
     }
+    

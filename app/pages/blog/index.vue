@@ -16,7 +16,7 @@
           <div v-for="blog in list" :key="blog.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
             <NuxtLink :to="blog._path">
             <div class="flex-shrink-0 overflow-hidden">
-              <img class="h-full w-full object-cover transition-all brightness-75 hover:brightness-100  hover:scale-110" :src="blog.img" :alt="blog.title" />
+              <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" :src="blog.img" :alt="blog.title" />
             </div>
             </NuxtLink>
             <div class="bg-accent dark:bg-gradient-to-r from-gray-800 flex flex-1 flex-col justify-between p-6">

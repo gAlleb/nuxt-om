@@ -1,6 +1,11 @@
 <template>
-    <div>
-
+  <section class="mx-2">
+    <div class="container justify-center flex mx-auto lg:mx-20">
+ 
+      <div class="npArtWrapper flex cover-album">
+        <div class="np-coma-song-art npArt" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art, 0)" ></div>
+     
+    </div>
       <div v-if="comaData">  
           <img height="200" width="200" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art, 0)" >
           {{ comaData.np.now_playing.song.artist }} - {{ comaData.np.now_playing.song.title }}
@@ -10,6 +15,7 @@
           <h4>Recent Songs:</h4>      
           <ul>
           <li v-for="(historyItem, index) in comaData.np.song_history.slice(0, 5)" :key="index">
+            <div>
             <img 
               v-if="comaData.np.song_history[index].song.art" 
               :src="comaData.np.song_history[index].song.art" 
@@ -18,12 +24,13 @@
                      width="60"
               height="60"
               @click="openLightbox(comaData.np.song_history[index].song.art, index)" 
-            >
-            <div v-else class="placeholder-cover"></div> <!-- Placeholder if no cover art -->
+            ></div>
+            
             {{ historyItem.song.title }} - {{ historyItem.song.artist }} - {{ getTimeFromTimestamp(historyItem.played_at) }} 
           </li>
         </ul>
       </div>
+      <div v-else class="placeholder-cover h-100 w-100"></div> <!-- Placeholder if no cover art -->
       <VueEasyLightbox
       ref="lightbox"
       :visible="lightboxVisible"
@@ -35,7 +42,7 @@
 
  
       </div>
-  
+    </section>
     </template>
     
     <script setup>
@@ -75,7 +82,12 @@
     lightboxVisible.value = true;
   };
   
-   
+//   onMounted(() => {
+//     var coverArt = document.getElementsByClassName('cover-album')[0];
+//     coverArt.style.height = coverArt.offsetWidth + 'px';
+
+// });
+
   
   
   function getTimeFromTimestamp(timestamp) {

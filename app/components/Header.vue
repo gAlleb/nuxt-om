@@ -26,7 +26,7 @@
           {{ $t('about') }}
         </span>
         </NuxtLink>
-        <div class="relative" ref="dropdownContainer">
+        <div class="relative" ref="dropdownContainer" @mouseleave="isOpen = false">
         <div  class="mr-5 group transition-all duration-300 ease-in-out cursor-pointer">
         <span @click="isOpen = !isOpen"  @mouseover="isOpen = true" 
         class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
@@ -36,9 +36,9 @@
         </div>
       <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" v-if="isOpen">
         <div 
-          class="absolute  z-10 mt-2 w-48 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline" 
-           @click="isOpen = !isOpen"   @mouseleave="isOpen = false"
-          style="left:-105%"
+          class="absolute  z-10 mt-0 w-48 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline" 
+           @click="isOpen = !isOpen"  
+          style="left: 50%; transform: translate(-50%);"
         >
         <button 
         class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
@@ -109,7 +109,7 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-visible dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-y-auto dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
               <h1 class="text-xl">Menu</h1>
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">

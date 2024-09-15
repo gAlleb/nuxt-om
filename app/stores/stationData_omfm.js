@@ -60,13 +60,13 @@ export const useOmfmData = defineStore({
       // sanitize station shortcode for use in a CSS class name
       ch = toKebabCase(ch);
       //const np = this.stations[station].np || null;
+      this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.song.text;
       if (this.lastFetchedShIds[station] !== currentShId) {
         this.lastFetchedShIds[station] = currentShId; // Update the last fetched sh_id
 
       
-        this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
         
         // this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
         // .then(coverArtUrl => {

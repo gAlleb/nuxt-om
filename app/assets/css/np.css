@@ -1,0 +1,21 @@
+.npArtWrapper {
+    background: url('https://coma.omfm.ru/assets/img/bg-capa.jpg') no-repeat; 
+    width: 300px;
+    height: 300px;
+    /* margin: auto; */
+    background-size: cover;
+    border: 1px solid #383838;
+    box-shadow: 0px 5px 10px 3px rgba(0, 0, 0, 0.4);
+    transition: background-image 1s;
+    margin-bottom: 15px;
+    border-radius: 0.5rem;
+}
+.npArt {
+    height:100%; 
+    width:100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    transition: background-image 1s;
+    border-radius: 0.4rem;
+}

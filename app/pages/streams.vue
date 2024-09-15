@@ -198,7 +198,6 @@
         </li>
       </ul>
     </div>
-    <div v-if="comaData">  
     <div style="background: url('https://coma.omfm.ru/assets/img/bg-capa.jpg') no-repeat; height:200px; width:200px;    background-size: auto;
   background-size: cover;
   border: 1px solid #383838;
@@ -211,7 +210,11 @@
     transition-behavior: normal;
   margin-bottom: 15px;
   border-radius: 0.5rem;">
-        <div style="height:100%; width:100%;background-size: contain;" :style="{ backgroundImage: `url(${comaData.np.now_playing.song.art})`}" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art, 0)" ></div></div>
+        <div style="height:100%; width:100%;background-size: contain;"  class="np-coma-song-art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art, 0)" ></div>
+      
+      </div>
+    <div v-if="comaData">  
+   
         {{ comaData.np.now_playing.song.artist }} - {{ comaData.np.now_playing.song.title }}
         <h4>Next Songs</h4>
         <img height="200" width="200" :src="comaData.np.playing_next.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.playing_next.song.art, 0)" >
