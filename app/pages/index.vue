@@ -137,7 +137,7 @@
 </div>
   <div  data-aos="fade-down" class="hidden md:flex mx-auto lg:mx-10 md:mx-5 sm:mx-3 mt-5 grid max-w-none gap-5 lg:max-w-none sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
   <div  :class="{
-                'border border-indigo-500/50': currentStream === 'omFM Main',
+                'border border-orange-500/50': currentStream === 'omFM Main',
             }" 
   class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
