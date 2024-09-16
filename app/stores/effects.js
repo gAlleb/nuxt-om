@@ -23,6 +23,7 @@ export const useEffectsStore = defineStore('effectsOverlay', {
       storage: persistedState.cookiesWithOptions({
         // sameSite: 'strict',
         sameSite: 'lax',
+        maxAge: 798131659,
       }),
     },
 

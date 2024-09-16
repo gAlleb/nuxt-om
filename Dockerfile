@@ -12,7 +12,7 @@ WORKDIR /src
 FROM base AS build
 
 # Option if your running into OOM
-# ENV NODE_OPTIONS=--max_old_space_size=2048
+# ENV NODE_OPTIONS=--max_old_space_size=1536
 
 COPY --link package.json package-lock.json /src/
 RUN npm install --production=false

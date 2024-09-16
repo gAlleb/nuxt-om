@@ -89,7 +89,7 @@
      <div class="flex">
       <BtnShowHidePlayer />
       <BtnSetStream /> 
-      <BtnEffects_with_pinia />
+      <BtnEffects_with_pinia_node_version />
       <!-- <BtnEffects_with_pinia_node_version /> -->
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />
