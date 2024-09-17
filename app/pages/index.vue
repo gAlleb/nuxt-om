@@ -26,7 +26,7 @@
         class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('stream')"
         :class="{
-                'glowing-text': currentStream === 'omFM Main',
+                'glowing-text': currentStream === 'stream',
             }" 
       >
         <Icon
@@ -64,7 +64,7 @@
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('rock')"
         :class="{
-                'glowing-text': currentStream === 'Rock @ omFM',
+                'glowing-text': currentStream === 'rock',
             }" 
       >
         <Icon
@@ -102,7 +102,7 @@
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('coma')"
         :class="{
-                'glowing-text': currentStream === 'Coma @ omFM',
+                'glowing-text': currentStream === 'coma',
             }" 
       >
         <Icon
@@ -137,7 +137,7 @@
 </div>
   <div  data-aos="fade-down" class="hidden md:flex mx-auto lg:mx-10 md:mx-5 sm:mx-3 mt-5 grid max-w-none gap-5 lg:max-w-none sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-3">
   <div  :class="{
-                'border border-orange-500/50': currentStream === 'omFM Main',
+                'border border-indigo-500/50': currentStream === 'stream',
             }" 
   class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
@@ -147,7 +147,7 @@
         class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('stream')"
         :class="{
-                'glowing-text': currentStream === 'omFM Main',
+                'glowing-text': currentStream === 'stream',
             }" 
       >
         <Icon
@@ -178,7 +178,7 @@
   </div>
     <div 
     :class="{
-                'border border-red-500/50': currentStream === 'Rock @ omFM',
+                'border border-red-500/50': currentStream === 'rock',
             }" 
     class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
@@ -188,7 +188,7 @@
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('rock')"
         :class="{
-                'glowing-text': currentStream === 'Rock @ omFM',
+                'glowing-text': currentStream === 'rock',
             }" 
       >
         <Icon
@@ -218,7 +218,7 @@
       </NuxtLink>
   </div>
   <div :class="{
-                'border border-green-500/50': currentStream === 'Coma @ omFM',
+                'border border-green-500/50': currentStream === 'coma',
                }" 
   class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
@@ -228,7 +228,7 @@
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('coma')"
         :class="{
-                'glowing-text': currentStream === 'Coma @ omFM',
+                'glowing-text': currentStream === 'coma',
             }" 
       >
         <Icon

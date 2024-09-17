@@ -33,10 +33,10 @@
         />
       </button>
        <button  :class="{
-                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'omFM Main',
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'stream',
             }" 
         class=" flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full"
-        @click="setStream1"
+        @click="setStream('stream')"
       >
         <NuxtLink
           class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100"
@@ -72,10 +72,10 @@
         />
       </button>
       <button :class="{
-            'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Rock @ omFM', 
+            'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'rock', 
             }"
         class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"
-        @click="setStream2"
+        @click="setStream('rock')"
       >
         <NuxtLink
           class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100"
@@ -113,10 +113,10 @@
         />
       </button>
       <button :class="{
-                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Coma @ omFM',
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'coma',
             }" 
         class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"
-        @click="setStream3"
+        @click="setStream('coma')"
       >
         <NuxtLink
           class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100"
@@ -134,7 +134,7 @@
 
       <button 
         class="flex rounded-xl transition-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2 focus:ring-offset focus:ring-offset-gray-800 p-2"
-        @click="stopPlayer1"
+        @click="stopPlayer"
       >
         <Icon
           name="heroicons:stop"
@@ -253,7 +253,7 @@ const useInitPlayerStore = initPlayerStore(); // Get the store instance
  
 
 import { usePlayer } from '../composables/player'; // Create this composable
-const { player, togglePlay, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+const { player, togglePlay, playPlayer, stopPlayer, changeVol3, showVol3, muteVol3, setStream} = usePlayer(); // Get player instance and state
 
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance

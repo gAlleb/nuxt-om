@@ -329,8 +329,8 @@ background: rgba(24, 8, 37, 0.08);
 .overlay.radial {
   z-index: 1000;
 /*  background-image: radial-gradient(var(--gradient-radial),rgba(0,0,0,0.3) 100%)*/
-/* background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.15) 100%); */
-background-image: radial-gradient(rgba(223, 187, 49, 0.25),rgba(185, 98, 35, 0.15) 100%);
+background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.15) 100%);
+/* background-image: radial-gradient(rgba(223, 187, 49, 0.25),rgba(185, 98, 35, 0.15) 100%); */
   }
   .overlay.radial2 {
     z-index: 1000;

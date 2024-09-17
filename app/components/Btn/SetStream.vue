@@ -16,25 +16,25 @@
           @click.stop.prevent
         >
           <button :class="{
-                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'omFM Main',
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'stream',
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full" @click="setStream1">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full" @click="setStream('stream')">
             <NuxtLink class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">omFM Main</span>
             </NuxtLink>
           </button>
           <button :class="{
-            'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Rock @ omFM', 
+            'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'rock', 
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream2">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream('rock')">
             <NuxtLink class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
             </NuxtLink>
           </button>
           <button :class="{
-                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'Coma @ omFM',
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'coma',
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream3">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream('coma')">
             <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
             </NuxtLink>
@@ -76,11 +76,13 @@
    </template>
   
 <script setup>
+import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
+const useInitPlayerStore = initPlayerStore(); // Get the store instance
 //  import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
   import { ref } from 'vue';
   import { usePlayer } from '../../composables/player'; // Create this composable
 
-  const { setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+  const { setStream, setStream2, setStream3 } = usePlayer(); // Get player instance and state
 
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance

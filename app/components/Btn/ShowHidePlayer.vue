@@ -15,12 +15,12 @@
       <!-- <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex" :class="[isPlayerVisible ? 'scale-100 relative' : 'scale-0 absolute']">  -->
       <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex"> 
       <button class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2" @click="togglePlayAll"  >     
-       <Icon id="playBtnPlayer1" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
-       <Icon id="stopBtnPlayer1" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
+       <Icon name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
+       <Icon name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
       </button>
       <button id="ice-volume3_Btn" style="padding: 5px;"  class="ml-1 sm:ml-4 flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-light-bg dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"   >     
        <!-- <Icon name="heroicons-solid:volume-up" class="h-6 w-6 bg-yellow-500" aria-hidden="true" /> -->
-       <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol3"><span></span></a>
+       <a  id="ice-volume3_Mute" class="mute speaker3" title="mute/unmute"  @click="muteVol"><span></span></a>
       </button>
       <!-- <button id="ice-volume3_Mute" class="ice-volume3_Mute flex transition-all duration-500 ease-in-out rounded-full shadow-lg bg-slate-50 focus:outline-none  focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800" @click="muteVol3"  >     
        <Icon id="ice-volume3_Unmuted"  name="heroicons-outline:speaker-x-mark" class="h-6 w-6 bg-gray-700" aria-hidden="true" />
@@ -80,7 +80,7 @@ const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownC
 onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
 });
-const { player, isPlaying, togglePlay, togglePlayAll, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+const { player, isPlaying, togglePlayAll, changeVol3, showVol3, muteVol} = usePlayer(); // Get player instance and state
 function getItem(item) {
   if (import.meta.client) {
     return localStorage.getItem(item);

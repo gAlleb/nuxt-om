@@ -231,36 +231,13 @@ class IcePlayer {
         if (this.current_state === this.STOPPED)
             this.audio_object.setAttribute('src', this.server_address + this.stream_mount + '?cache-ignore=' + Date.now());
         this.audio_object.play();
-          // show current playable track
         //this.showinfo();
         document.querySelector(".ice-track").style.opacity = "1";
-        // const player_button = document.getElementById("menu_button");
-        // player_button.style.backgroundColor = "#18a310";
-        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        // playBtnPlayer1.style.display = "none";
-        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        // stopBtnPlayer1.style.display = "inline-flex";
-        // const playBtnPlayer = document.getElementById("playBtnPlayer");
-        // playBtnPlayer.style.display = "none";
-        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        // stopBtnPlayer.style.display = "inline-flex";
-
-        
     }
     pause() {
         this.audio_object.pause();
         clearTimeout(this.timer);
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
-        // const player_button = document.getElementById("menu_button");
-        // player_button.style.backgroundColor = "";
-        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        // playBtnPlayer1.style.display = "inline-flex";
-        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        // stopBtnPlayer1.style.display = "none";
-        // const playBtnPlayer = document.getElementById("playBtnPlayer");
-        // playBtnPlayer.style.display = "inline-flex";
-        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        // stopBtnPlayer.style.display = "none";
     }
     stop() {
         this.audio_object.pause();
@@ -270,56 +247,16 @@ class IcePlayer {
         document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
         document.querySelector(".ice-track").style.opacity = "0";
         this.play_pause_toggle();
-        // const player_button = document.getElementById("menu_button");
-        // player_button.style.backgroundColor = "";
-        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        // playBtnPlayer1.style.display = "inline-flex";
-        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        // stopBtnPlayer1.style.display = "none";
-        // const playBtnPlayer = document.getElementById("playBtnPlayer");
-        // playBtnPlayer.style.display = "inline-flex";
-        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        // stopBtnPlayer.style.display = "none";
     }
-    change_stream_rock() {
-
-    if (this.stream_mount !== 'rock') {
-        if (this.current_state === this.PLAYING) {
-        this.stream_mount = 'rock';
-        this.stop();
-        this.play();
-        this.localStorage.setItem("stream_name", this.stream_mount);
-        } else {
-        this.stream_mount = 'rock';
-        this.stop();
-        this.localStorage.setItem("stream_name", this.stream_mount);
-        }
-    }
-
-    }
-    change_stream_coma() {
-    if (this.stream_mount !== 'coma') {
-        if (this.current_state === this.PLAYING) {
-        this.stream_mount = 'coma';
-        this.stop();
-        this.play();
-        this.localStorage.setItem("stream_name", this.stream_mount);
-        } else {
-        this.stream_mount = 'coma';
-        this.stop();
-        this.localStorage.setItem("stream_name", this.stream_mount);
-        }
-    }
-    }
-    change_stream_omfm() {
-        if (this.stream_mount !== 'stream') {
+    change_stream(name) {
+        if (this.stream_mount !== name) {
             if (this.current_state === this.PLAYING) {
-            this.stream_mount = 'stream';
+            this.stream_mount = name;
             this.stop();
             this.play();
             this.localStorage.setItem("stream_name", this.stream_mount);
             } else {
-            this.stream_mount = 'stream';
+            this.stream_mount = name;
             this.stop();
             this.localStorage.setItem("stream_name", this.stream_mount);
             }
@@ -557,7 +494,6 @@ class IcePlayer {
         document.querySelector(".volume-vertical").style.background = `linear-gradient(to right,rgba(230, 230, 230, 1) ${sliderValue}%, rgba(75, 75, 75, 1) ${sliderValue}%)`;
         document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
         }
-         // this.change_volume_text();
    }
    change_volume_bar2() {
        if (this.audio_object.muted === false)  {
@@ -565,7 +501,6 @@ class IcePlayer {
        document.querySelector(".volume-vertical").style.background = `linear-gradient(to right,rgba(230, 230, 230, 1) ${sliderValue}%, rgba(75, 75, 75, 1) ${sliderValue}%)`;
        document.querySelector(".ice-volume").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
        document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
-
     }
    }
    change_volume_bar3() {
@@ -574,7 +509,6 @@ class IcePlayer {
     document.querySelector(".volume-vertical").style.background = `linear-gradient(to right,rgba(230, 230, 230, 1) ${sliderValue}%, rgba(75, 75, 75, 1) ${sliderValue}%)`;
     document.querySelector(".ice-volume").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
     document.getElementById("ice-volume3").style.background = `linear-gradient(to right, rgba(230, 230, 230, 1) ${sliderValue}%,  rgba(75, 75, 75, 1) ${sliderValue}%)`;
-
  }
 }
    change_volume_text() {

@@ -6,8 +6,8 @@
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
                 <i class="ice-play hidden" @click="playStatus" style="font-size:1.6rem !important" ></i>
-                <i class="ice-pause hidden"  @click="pausePlayer1" ></i>
-                <i class="ice-stop hidden"  @click="stopPlayer1"></i>
+                <i class="ice-pause hidden"  @click="pausePlayer" ></i>
+                <i class="ice-stop hidden"  @click="stopPlayer"></i>
 
                 <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="togglePlayAll"  >     
                     <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
@@ -47,40 +47,43 @@
             :space-between="10"
             >
             <swiper-slide>
-            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream1();">
+            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('stream');">
             <img :class="{
-                  'grayscale': currentStream !== 'omFM Main',
+                  'grayscale opacity-75': currentStream !== 'stream',
                   }" 
                    class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
             <img v-if="useInitPlayerStore.isPlayingStream" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
             <span :class="{
-                  'glowing-text': currentStream === 'omFM Main',
+                  'glowing-text': currentStream === 'stream',
+                  'opacity-75': currentStream !== 'stream',
                   }" 
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">omFM</span>
             </div>
             </swiper-slide>
             <swiper-slide>
-            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream2();">
+            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
               <img :class="{
-                  'grayscale': currentStream !== 'Rock @ omFM',
+                  'grayscale opacity-50': currentStream !== 'rock',
                   }" 
                    class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-90-thumb.jpg">
               <img v-if="useInitPlayerStore.isPlayingRock" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
               <span :class="{
-                  'glowing-text': currentStream === 'Rock @ omFM',
+                  'glowing-text': currentStream === 'rock',
+                  'opacity-75': currentStream !== 'rock',
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Rock</span>
             </div>
             </swiper-slide>
             <swiper-slide class="me-2">
-            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream3();">
+            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('coma');">
             <img :class="{
-                  'grayscale': currentStream !== 'Coma @ omFM',
+                  'grayscale opacity-50': currentStream !== 'coma',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
             <img v-if="useInitPlayerStore.isPlayingComa" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
                   
               <span :class="{
-                  'glowing-text': currentStream === 'Coma @ omFM',
+                  'glowing-text': currentStream === 'coma',
+                  'opacity-75': currentStream !== 'coma',
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Coma</span>
             </div>
@@ -96,21 +99,21 @@
 
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
 
-                <div v-if="currentStream === 'Rock @ omFM'" class="ellipsify">
+                <div v-if="currentStream === 'rock'" class="ellipsify">
                 <span class="text-xs text-zinc-500">Rock @ omFM</span> 
                 <br/>
                 <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.artist }}</span>
                 </div>
-                <div v-else-if="currentStream === 'Coma @ omFM'" class="ellipsify">
+                <div v-else-if="currentStream === 'coma'" class="ellipsify">
                 <span class="text-xs text-zinc-500">Coma @ omFM</span> 
                 <br/>
                 <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
-                <div v-else-if="currentStream === 'omFM Main'" class="ellipsify">
+                <div v-else-if="currentStream === 'stream'" class="ellipsify">
                 <span class="text-xs text-zinc-500">omFM</span>
                 <br/>
                 <span style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span>
@@ -121,7 +124,7 @@
             
 
            
-            <div class="ms-3 cursor-pointer shadow-lg" v-if="currentStream === 'Rock @ omFM'">
+            <div class="ms-3 cursor-pointer shadow-lg" v-if="currentStream === 'rock'">
                 <div v-if="radioData" >  
                 <img class="rounded-lg" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
                 </div>
@@ -129,7 +132,7 @@
                 <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'Coma @ omFM'">
+            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'coma'">
                 <div v-if="comaData" >  
                 <img class="rounded-lg" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
                 </div>
@@ -137,7 +140,7 @@
                 <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-2 cursor-pointer  shadow-lg" v-else-if="currentStream === 'omFM Main'">
+            <div class="ms-2 cursor-pointer  shadow-lg" v-else-if="currentStream === 'stream'">
                 <div v-if="omfmData" >  
                 <img class="rounded-lg" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
                 </div>
@@ -152,23 +155,23 @@
             <div v-if="useInitPlayerStore.isPlaying">
                 
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
-            v-if="currentStream === 'Rock @ omFM' && radioData"
+            v-if="currentStream === 'rock' && radioData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
-            v-if="currentStream === 'Coma @ omFM' && comaData"
+            v-if="currentStream === 'coma' && comaData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
-            v-if="currentStream === 'omFM Main' && omfmData"
+            v-if="currentStream === 'stream' && omfmData"
             >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
    
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
-            v-if="currentStream === 'Rock @ omFM' && radioData"
+            v-if="currentStream === 'rock' && radioData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].duration) }}</div>
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
-            v-if="currentStream === 'Coma @ omFM' && comaData"
+            v-if="currentStream === 'coma' && comaData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].duration) }}</div>
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
-            v-if="currentStream === 'omFM Main' && omfmData"
+            v-if="currentStream === 'stream' && omfmData"
             >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
 
             </div>       
@@ -177,13 +180,13 @@
 
             <div v-if="useInitPlayerStore.isPlaying">
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
-            v-if="currentStream === 'Rock @ omFM' && radioData"
+            v-if="currentStream === 'rock' && radioData"
             :style="{ width: `${( np_ac.progress['station:radio'].width)}%` }"></div>
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
-            v-if="currentStream === 'Coma @ omFM' && comaData"
+            v-if="currentStream === 'coma' && comaData"
             :style="{ width: `${( np_ac.progress['station:coma'].width)}%` }"></div>
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
-            v-if="currentStream === 'omFM Main' && omfmData"
+            v-if="currentStream === 'stream' && omfmData"
             :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
             </div>
 
@@ -210,7 +213,7 @@ const useInitPlayerStore = initPlayerStore(); // Get the store instance
  
 
 import { usePlayer } from '../composables/player'; // Create this composable
-const { player, isPlaying, togglePlayAll, playStatus, playPlayer1, stopPlayer1, pausePlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
+const { player, isPlaying, togglePlayAll, playStatus, changeVol3, showVol3, muteVol, setStream} = usePlayer(); // Get player instance and state
 
 import { useAzuracastData } from '../stores/stationData';
 const np_ac = useAzuracastData();
@@ -304,7 +307,7 @@ function getTrackData(stream) {
   let artwork = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg';
 
   switch (stream) {
-    case 'Rock @ omFM':
+    case 'rock':
       if (radioData.value) {
         title = radioData.value.np.now_playing.song.text;
         artist = radioData.value.np.now_playing.song.artist;
@@ -312,7 +315,7 @@ function getTrackData(stream) {
         artwork = np_ac.coverArtUrls['station:radio'];
       }
       break;
-    case 'Coma @ omFM':
+    case 'coma':
       if (comaData.value) {
         title = comaData.value.np.now_playing.song.text;
         artist = comaData.value.np.now_playing.song.artist;
@@ -320,7 +323,7 @@ function getTrackData(stream) {
         artwork = comaData.value.np.now_playing.song.art;
       }
       break;
-    case 'omFM Main':
+    case 'stream':
       if (omfmData.value) {
         title = omfmData.value.np.now_playing.song.text;
         artist = omfmData.value.np.now_playing.song.artist;

@@ -1,15 +1,15 @@
 <template>
   <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
   :class="{
-                'font-tenor': currentStream === 'omFM Main',
-                'font-metal': currentStream === 'Rock @ omFM',
-                'font-UNSCII': currentStream === 'Coma @ omFM',
+                'font-tenor': currentStream === 'stream',
+                'font-metal': currentStream === 'rock',
+                'font-UNSCII': currentStream === 'cooma',
             }"
     >
 <div id="overlay0" class="overlay  "  :class="{
-                'radial': currentStream === 'omFM Main',
-                'radial2': currentStream === 'Rock @ omFM',
-                'radial3': currentStream === 'Coma @ omFM',
+                'radial': currentStream === 'stream',
+                'radial2': currentStream === 'rock',
+                'radial3': currentStream === 'coma',
                  
             }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
              ></div>

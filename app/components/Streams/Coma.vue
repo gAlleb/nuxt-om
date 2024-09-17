@@ -49,10 +49,7 @@
   import { initPlayerStore } from '../../stores/initPlayer'; // Import the store
   const useInitPlayerStore = initPlayerStore(); // Get the store instance
    
-  
-  import { usePlayer } from '../../composables/player'; // Create this composable
-  const { player, togglePlay, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream1, setStream2, setStream3 } = usePlayer(); // Get player instance and state
-  
+
   import { currentStreamStore } from '../../stores/currentStream'; // Import the store
   const useCurrentStreamStore = currentStreamStore(); // Get the store instance
   const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream

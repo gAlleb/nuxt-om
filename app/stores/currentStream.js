@@ -79,26 +79,14 @@ import { defineStore } from 'pinia';
 export const currentStreamStore = defineStore('playerCurrentStream', {
     state: () => ({
        
-        currentStream: 'omFM Main', // Default stream
+        currentStream: 'stream', // Default stream
     }),
     actions: {
-        setStream1() {
-            this.currentStream = 'omFM Main';
-            if (import.meta.client) {
-                localStorage.setItem('stream_name_pinia', 'omFM Main');
-              }
-        },
-        setStream2() {
-            this.currentStream = 'Rock @ omFM';
-            if (import.meta.client) {
-                localStorage.setItem('stream_name_pinia', 'Rock @ omFM');
-              }
-        },
-        setStream3() {
-            this.currentStream = 'Coma @ omFM';
-            if (import.meta.client) {
-                localStorage.setItem('stream_name_pinia', 'Coma @ omFM');
-              }
+        setStream(streamName) {
+          this.currentStream = streamName;
+          if (import.meta.client) {
+              localStorage.setItem('stream_name_pinia', streamName);
+            }
         },
         loadStreamName() {
             if (import.meta.client) {
@@ -108,11 +96,6 @@ export const currentStreamStore = defineStore('playerCurrentStream', {
               }
             }
           },
-          saveStreamName(name) {
-            if (import.meta.client) {
-              localStorage.setItem('stream_name_pinia', name);
-            }
-          }
     },
      // // this below works great with run build
     // persist: {
