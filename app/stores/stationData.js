@@ -7,20 +7,19 @@ export const useAzuracastData = defineStore({
     eventSource: null,
     isLoading: true,
     stationNames: ['radio', 'coma'],
-    progress: {
-      
-    },
+    progress: {},
     coverArtUrls: {},
     nextCoverArtUrls: {},  
     lastFetchedShIds: {},
     songHistoryCoverArt: {},
     spotifyToken: '',
+    documentTitle: {},
   }),
   actions: {
     connectToSSE() {
       const baseUri = "https://radio.omfm.ru";
-      const subs = this.stationNames.reduce((acc, station) => {
-        acc[`station:${station}`] = { "recover": true };
+      const subs = this.stationNames.reduce((acc, stationName) => {
+        acc[`station:${stationName}`] = { "recover": true };
         return acc;
       }, {});
 
@@ -29,6 +28,7 @@ export const useAzuracastData = defineStore({
       });
 
       this.eventSource = new EventSource(sseUri);
+
       this.eventSource.addEventListener('message', (event) => {
         const data = JSON.parse(event.data);
         this.isLoading = false; // Set loading to false when connected
@@ -38,13 +38,10 @@ export const useAzuracastData = defineStore({
             if (publications && publications.length > 0) {
               const npData = publications[0].data;
               this.updateStationData(station, npData);
-              
-              
             }
           }
         } else if (data.pub) {
           this.updateStationData(data.channel, data.pub.data);
-           
         }
       });
 
@@ -55,6 +52,7 @@ export const useAzuracastData = defineStore({
           this.connectToSSE();
         }, 5000);
       };
+
     },
     updateStationData(station, npData) {
      
@@ -64,7 +62,7 @@ export const useAzuracastData = defineStore({
       ch = toKebabCase(ch);
       //const np = this.stations[station].np || null;
       this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
- 
+      this.documentTitle[station] = npData.np.now_playing.song.text;
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.sh_id;
       if (this.lastFetchedShIds[station] !== currentShId) {
@@ -260,7 +258,7 @@ export const useAzuracastData = defineStore({
       //   this.stations[station] = { lastShId: null }; 
       // }
       this.stationNames.forEach((stationName) => {
-        this.stations[`station:${stationName}`] = { lastShId: null }; 
+        //this.stations[`station:${stationName}`] = { lastShId: null }; 
         this.lastFetchedShIds[`station:${stationName}`] = null; // Initialize lastFetchedShIds
       });
     },

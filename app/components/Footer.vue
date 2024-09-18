@@ -8,24 +8,33 @@
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-8 h-8  " />
         <span class="ml-1 text-lg">omFM</span>
       </NuxtLink>
-      <p class="order-1 md:order-none text-sm dark:text-zinc-200 text-zinc-700 md:ml-4 md:pl-4 md:border-l-2 md:border-gray-200 md:py-2 md:mt-0 mt-4">
+      <p class="order-1 md:order-none text-sm dark:text-zinc-200 text-zinc-700 md:ml-4 md:pl-4 md:border-l-2 md:border-gray-500 md:py-2 md:mt-0 mt-4">
         © {{ currentYear }} omFM | To be continued... 
         <!-- <a href="https://twitter.com/KSalout" class="text-gray-600 ml-1" rel="noopener noreferrer" target="_blank">@KSalout</a> -->
       </p>
-      <span class="inline-flex md:ml-auto md:mt-0 mt-4 justify-center md:justify-start">
+      <span class="inline-flex md:ml-auto md:mt-0 mt-2 justify-center items-center md:justify-start">
         <a class="text-gray-500">
-          <Icon name="bxl:discord" class="h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
+          <Icon name="bxl:discord" class="flex  h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
         </a>
         <a class="ml-3 text-gray-500">
-          <Icon name="bxl:telegram" class="h-6 w-6 text-zinc-500  hover:text-gray-900" aria-hidden="true" />
+          <Icon name="bxl:telegram" class="flex h-6 w-6 text-zinc-500  hover:text-gray-900" aria-hidden="true" />
         </a>
         <a class="ml-3 text-gray-500">
-          <Icon name="bxl:vk" class="h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
+          <Icon name="bxl:vk" class="flex h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
         </a>
         <a class="ml-3 text-gray-500">
-          <Icon name="bxl:apple" class="h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
+          <Icon name="bxl:apple" class="flex h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
         </a>
+     
+
       </span>
+      <span class="justify-end md:ms-5 md:mt-0 mt-5  md:justify-start">
+          <span class="text-xs    flex items-center">Powered by&nbsp;</span>
+          <a href="https://liquidsoap.info">
+          <img   src="~/assets/img/ls_white.png" alt="logo" class="dark:block hidden w-auto h-8  " />
+          <img   src="~/assets/img/ls_black.png" alt="logo" class="dark:hidden w-auto h-8  " />
+          </a>
+         </span>
     </div>
   </footer>
 </template>

@@ -272,21 +272,39 @@ watch(isPlayingComputed, (isPlaying) => {
       navigator.mediaSession.playbackState = 'paused';
     }
   }
+
+    updateTitle();
+
 });
 // Update Media Session on Mount and when Stream Changes
 onMounted(() => {
   updateMediaSession();
+  document.title = 'omFM.ru Radio '
 });
 
-watch(currentStream, () => {
+function updateMediaAndTitle() {
   updateMediaSession();
-});
+  updateTitle();
+}
+
+watch(currentStream, () => {updateMediaAndTitle()});
+watch(radioData, () => {updateMediaAndTitle()});
+watch(comaData, () => {updateMediaAndTitle()});
+watch(omfmData, () => { updateMediaAndTitle()});
+
+function updateTitle() {
+  const trackData = getTrackData(currentStream.value);
+  if (useInitPlayerStore.isPlaying === true) {
+  document.title = trackData.artist + ' - ' + trackData.title + ' | omFM.ru Radio';
+  } else {
+  document.title = 'omFM.ru Radio';
+  }
+}
 
 // Helper Function to Update Media Session Data
 function updateMediaSession() {
   if ('mediaSession' in navigator) {
     const trackData = getTrackData(currentStream.value);
-
     navigator.mediaSession.metadata = new MediaMetadata({
       title: trackData.title,
       artist: trackData.artist,
@@ -309,7 +327,7 @@ function getTrackData(stream) {
   switch (stream) {
     case 'rock':
       if (radioData.value) {
-        title = radioData.value.np.now_playing.song.text;
+        title = radioData.value.np.now_playing.song.title;
         artist = radioData.value.np.now_playing.song.artist;
         album = radioData.value.np.now_playing.song.album;
         artwork = np_ac.coverArtUrls['station:radio'];
@@ -317,7 +335,7 @@ function getTrackData(stream) {
       break;
     case 'coma':
       if (comaData.value) {
-        title = comaData.value.np.now_playing.song.text;
+        title = comaData.value.np.now_playing.song.title;
         artist = comaData.value.np.now_playing.song.artist;
         album = comaData.value.np.now_playing.song.album;
         artwork = comaData.value.np.now_playing.song.art;
@@ -325,7 +343,7 @@ function getTrackData(stream) {
       break;
     case 'stream':
       if (omfmData.value) {
-        title = omfmData.value.np.now_playing.song.text;
+        title = omfmData.value.np.now_playing.song.title;
         artist = omfmData.value.np.now_playing.song.artist;
         album = omfmData.value.np.now_playing.song.album;
         artwork = np_omfm.coverArtUrls['station:radio'];

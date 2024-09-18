@@ -2,28 +2,24 @@
 <section>
   <div  data-aos="fade-down"  class="md:hidden">
   <swiper
-
-
-    :modules="[SwiperNavigation,SwiperEffectCoverflow,SwiperPagination]"
+    :modules="[SwiperNavigation,SwiperEffectCoverflow,SwiperPagination, SwiperMousewheel]"
     :slides-per-view="1"
     :navigation="true"
     :loop="true"
-    :space-between="80"
+    :space-between="5"
     :effect="'coverflow'"
-  
+    :mousewheel="false"
+   
     id="indexSlider"
-    
-
-    
-
   >
     <swiper-slide>
-      <div class="flex  relative flex-col overflow-hidden  shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
-    <div class="flex-shrink-0 overflow-hidden">
+    <div class="flex relative flex-col overflow-hidden  shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+    <div class="indexSliderImg"></div>
+    <div class="flex-shrink-0 overflow-hidden ">
      <img class="h-full w-full  object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/omfm.jpg" />
     </div>
     <button 
-        class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        class="flex z-10 absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('stream')"
         :class="{
                 'glowing-text': currentStream === 'stream',
@@ -47,7 +43,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;omFM Main</span>
       </button>
-      <NuxtLink  :to="localePath('/omfm')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/omfm')" class="absolute bottom-3 z-10 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         omFM
         </span>
@@ -57,11 +53,12 @@
   </div>
     </swiper-slide>
     <swiper-slide> <div class="flex relative flex-col overflow-hidden shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
-    <div class="flex-shrink-0 overflow-hidden">
+      <div class="indexSliderImg"></div>
+      <div class="flex-shrink-0 overflow-hidden">
      <img class="h-full w-full  object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/rock.webp" />
     </div>
     <button 
-        class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        class="flex  z-10 right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('rock')"
         :class="{
                 'glowing-text': currentStream === 'rock',
@@ -85,7 +82,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;Rock @ omFM</span>
       </button>
-      <NuxtLink  :to="localePath('/rock')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/rock')" class="absolute z-10 bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Rock
         </span>
@@ -95,11 +92,12 @@
   </div>
 </swiper-slide>
     <swiper-slide> <div class="flex relative flex-col overflow-hidden shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
-    <div class="flex-shrink-0 overflow-hidden">
+      <div class="indexSliderImg"></div>
+      <div class="flex-shrink-0 overflow-hidden">
      <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/coma.jpg" />
     </div>
     <button 
-        class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+        class="flex right-4 z-10 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="useInitPlayerStore.togglePlay('coma')"
         :class="{
                 'glowing-text': currentStream === 'coma',
@@ -123,7 +121,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;Coma @ omFM</span>
       </button>
-      <NuxtLink  :to="localePath('/coma')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/coma')" class="absolute z-10 bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Coma
         </span>

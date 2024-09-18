@@ -237,14 +237,14 @@ class IcePlayer {
     pause() {
         this.audio_object.pause();
         clearTimeout(this.timer);
-        document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+        //document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
     }
     stop() {
         this.audio_object.pause();
         this.audio_object.setAttribute('src', '');
         this.current_state = this.STOPPED;
         clearTimeout(this.timer);
-        document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+        //document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
         document.querySelector(".ice-track").style.opacity = "0";
         this.play_pause_toggle();
     }

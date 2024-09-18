@@ -1326,7 +1326,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
 
     #indexSlider .swiper-button-prev,
     #indexSlider .swiper-button-next {
-      color:rgba(227, 227, 227, 0.825);
+      color:rgba(180, 180, 180, 0.82);
       padding: 24px;
       background-color: rgba(68, 68, 68, 0.519);
       border-radius: 100%;
@@ -1341,4 +1341,10 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     :root {
     --tw-ring-color: red;
     }
-    
+    .indexSliderImg {
+    background: linear-gradient(0deg, rgb(33, 37, 41) 4%, rgba(97, 85, 41, 0.38) 25%, rgba(145, 131, 90, 0.17) 50%, rgba(97, 85, 41, 0.38) 71%, rgb(43, 48, 53) 100%);
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    z-index: 1;
+    } 

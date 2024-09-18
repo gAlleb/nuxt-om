@@ -69,6 +69,8 @@ export const useAzuracastData_another = defineStore({
       // sanitize station shortcode for use in a CSS class name
       ch = toKebabCase(ch);
       const npData = this.stations[station] || null;
+      // This below doesn't work because of Pinia reactivity. Working scheme is in stationData.js
+      // Where we define this.lastFetchedShIds[station] first as null and coompare to const currentShId = npData.np.now_playing.sh_id;
       if (npData.np.now_playing.sh_id !== this.stations[station].lastShId) {
 
         this.stations[station].lastShId = npData.np.now_playing.sh_id; 
