@@ -286,25 +286,20 @@ watch(currentStream, () => {
   updateMediaSession();
   updateTitle();
 });
+
  watch(radioData, () => {
-  if (useInitPlayerStore.isLoading === false) {
-  updateMediaSession();
+ 
   updateTitle();
-  }
  });
  watch(comaData, () => {
-  if (useInitPlayerStore.isLoading === false) {
-  updateMediaSession();
+ 
   updateTitle();
-  }
  });
  watch(omfmData, () => {
-  if (useInitPlayerStore.isLoading === false) {
-  updateMediaSession();
-  updateTitle();
-  }
- });
  
+  updateTitle();
+ });
+
 function updateTitle() {
   const trackData = getTrackData(currentStream.value);
   if (useInitPlayerStore.isPlaying === true) {
