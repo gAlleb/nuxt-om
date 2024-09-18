@@ -278,7 +278,6 @@ onMounted(() => {
   updateMediaSession();
   document.title = 'omFM.ru Radio '
 });
-
  watch(currentStream, () => {updateTitleAndMediaSession()});
  watch(radioData, () => {updateTitleAndMediaSession()});
  watch(comaData, () => {updateTitleAndMediaSession()});
@@ -317,15 +316,15 @@ function getTrackData(stream) {
   let title = 'Unknown';
   let artist = 'Unknown';
   let album = 'Unknown';
-  let artwork = { src: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg' }; 
+  let artwork = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'; 
 
   switch (stream) {
     case 'rock':
-      if (radioData.value) {
+      if (np_ac.coverArtUrls['station:radio']) {
         title = radioData.value.np.now_playing.song.title;
         artist = radioData.value.np.now_playing.song.artist;
         album = radioData.value.np.now_playing.song.album;
-        artwork = { src: np_ac.coverArtUrls['station:radio'] };
+        artwork = np_ac.coverArtUrls['station:radio'];
       }
       break;
     case 'coma':
@@ -333,15 +332,15 @@ function getTrackData(stream) {
         title = comaData.value.np.now_playing.song.title;
         artist = comaData.value.np.now_playing.song.artist;
         album = comaData.value.np.now_playing.song.album;
-        artwork = { src: comaData.value.np.now_playing.song.art };
+        artwork = comaData.value.np.now_playing.song.art;
       }
       break;
     case 'stream':
-      if (omfmData.value) {
+      if (np_omfm.coverArtUrls['station:radio']) {
         title = omfmData.value.np.now_playing.song.title;
         artist = omfmData.value.np.now_playing.song.artist;
         album = omfmData.value.np.now_playing.song.album;
-        artwork = { src: np_omfm.coverArtUrls['station:radio'] };
+        artwork = np_omfm.coverArtUrls['station:radio'];
       }
       break;
   }
