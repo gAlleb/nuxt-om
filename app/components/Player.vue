@@ -272,29 +272,26 @@ watch(isPlayingComputed, (isPlaying) => {
       navigator.mediaSession.playbackState = 'paused';
     }
   }
+      updateTitle();
 });
-// Update Media Session on Mount and when Stream Changes
-onMounted(() => {
-  updateMediaSession();
-  document.title = 'omFM.ru Radio '
-});
+
  watch(currentStream, () => {updateTitleAndMediaSession()});
  watch(radioData, () => {updateTitleAndMediaSession()});
  watch(comaData, () => {updateTitleAndMediaSession()});
  watch(omfmData, () => {updateTitleAndMediaSession()});
+
 function updateTitleAndMediaSession() {
-  updateMediaSession();
   updateTitle();
+  updateMediaSession();
 }
 function updateTitle() {
-  const trackData = getTrackData(currentStream.value);
   if (useInitPlayerStore.isPlaying === true) {
+  const trackData = getTrackData(currentStream.value);
   document.title = trackData.artist + ' - ' + trackData.title + ' | omFM.ru Radio';
   } else {
   document.title = 'omFM.ru Radio';
   }
 }
-
 // Helper Function to Update Media Session Data
 function updateMediaSession() {
   if ('mediaSession' in navigator) {
@@ -320,7 +317,7 @@ function getTrackData(stream) {
 
   switch (stream) {
     case 'rock':
-      if (np_ac.coverArtUrls['station:radio']) {
+      if (radioData.value && np_ac.coverArtUrls['station:radio']) {
         title = radioData.value.np.now_playing.song.title;
         artist = radioData.value.np.now_playing.song.artist;
         album = radioData.value.np.now_playing.song.album;
@@ -336,7 +333,7 @@ function getTrackData(stream) {
       }
       break;
     case 'stream':
-      if (np_omfm.coverArtUrls['station:radio']) {
+      if (omfmData.value && np_omfm.coverArtUrls['station:radio']) {
         title = omfmData.value.np.now_playing.song.title;
         artist = omfmData.value.np.now_playing.song.artist;
         album = omfmData.value.np.now_playing.song.album;
