@@ -282,16 +282,29 @@ onMounted(() => {
   document.title = 'omFM.ru Radio '
 });
 
-function updateMediaAndTitle() {
+watch(currentStream, () => {
   updateMediaSession();
   updateTitle();
-}
-
-watch(currentStream, () => {updateMediaAndTitle()});
-watch(radioData, () => {updateMediaAndTitle()});
-watch(comaData, () => {updateMediaAndTitle()});
-watch(omfmData, () => { updateMediaAndTitle()});
-
+});
+ watch(radioData, () => {
+  if (useInitPlayerStore.isLoading === false) {
+  updateMediaSession();
+  updateTitle();
+  }
+ });
+ watch(comaData, () => {
+  if (useInitPlayerStore.isLoading === false) {
+  updateMediaSession();
+  updateTitle();
+  }
+ });
+ watch(omfmData, () => {
+  if (useInitPlayerStore.isLoading === false) {
+  updateMediaSession();
+  updateTitle();
+  }
+ });
+ 
 function updateTitle() {
   const trackData = getTrackData(currentStream.value);
   if (useInitPlayerStore.isPlaying === true) {
