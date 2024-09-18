@@ -272,9 +272,6 @@ watch(isPlayingComputed, (isPlaying) => {
       navigator.mediaSession.playbackState = 'paused';
     }
   }
-
-    updateTitle();
-
 });
 // Update Media Session on Mount and when Stream Changes
 onMounted(() => {
@@ -282,24 +279,14 @@ onMounted(() => {
   document.title = 'omFM.ru Radio '
 });
 
-watch(currentStream, () => {
+ watch(currentStream, () => {updateTitleAndMediaSession()});
+ watch(radioData, () => {updateTitleAndMediaSession()});
+ watch(comaData, () => {updateTitleAndMediaSession()});
+ watch(omfmData, () => {updateTitleAndMediaSession()});
+function updateTitleAndMediaSession() {
   updateMediaSession();
   updateTitle();
-});
-
- watch(radioData, () => {
- 
-  updateTitle();
- });
- watch(comaData, () => {
- 
-  updateTitle();
- });
- watch(omfmData, () => {
- 
-  updateTitle();
- });
-
+}
 function updateTitle() {
   const trackData = getTrackData(currentStream.value);
   if (useInitPlayerStore.isPlaying === true) {
@@ -330,7 +317,7 @@ function getTrackData(stream) {
   let title = 'Unknown';
   let artist = 'Unknown';
   let album = 'Unknown';
-  let artwork = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg';
+  let artwork = { src: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg' }; 
 
   switch (stream) {
     case 'rock':
@@ -338,7 +325,7 @@ function getTrackData(stream) {
         title = radioData.value.np.now_playing.song.title;
         artist = radioData.value.np.now_playing.song.artist;
         album = radioData.value.np.now_playing.song.album;
-        artwork = np_ac.coverArtUrls['station:radio'];
+        artwork = { src: np_ac.coverArtUrls['station:radio'] };
       }
       break;
     case 'coma':
@@ -346,7 +333,7 @@ function getTrackData(stream) {
         title = comaData.value.np.now_playing.song.title;
         artist = comaData.value.np.now_playing.song.artist;
         album = comaData.value.np.now_playing.song.album;
-        artwork = comaData.value.np.now_playing.song.art;
+        artwork = { src: comaData.value.np.now_playing.song.art };
       }
       break;
     case 'stream':
@@ -354,7 +341,7 @@ function getTrackData(stream) {
         title = omfmData.value.np.now_playing.song.title;
         artist = omfmData.value.np.now_playing.song.artist;
         album = omfmData.value.np.now_playing.song.album;
-        artwork = np_omfm.coverArtUrls['station:radio'];
+        artwork = { src: np_omfm.coverArtUrls['station:radio'] };
       }
       break;
   }
