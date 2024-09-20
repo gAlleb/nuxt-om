@@ -132,7 +132,7 @@
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
                   <NuxtLink  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
-                  <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
                      class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
                      <span class="text-zinc-600 dark:text-zinc-100">
@@ -141,7 +141,7 @@
                      </button>
                   </NuxtLink>
                   <hr/>
-                  <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
                      class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
                      <span class=" text-zinc-600 dark:text-zinc-100">
@@ -150,7 +150,7 @@
                      </button>
                   </NuxtLink>
                   <hr/>
-                  <NuxtLink :to="localePath('/coma')" class="text-zinc-600 dark:text-zinc-100">
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/coma')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
                      class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
                      <span class=" text-zinc-600 dark:text-zinc-100">
