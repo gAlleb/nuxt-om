@@ -40,28 +40,28 @@
            @click="isOpen = !isOpen"  
           style="left: 50%; transform: translate(-50%);"
         >
+        <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
         <button 
         class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-        <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
         <span class="text-zinc-600 dark:text-zinc-100">
           omFM Main
         </span>
-        </NuxtLink>
         </button>
+        </NuxtLink>
         <hr/>
+        <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
           <button 
             class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-            <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
-            </NuxtLink>
           </button>
+        </NuxtLink>
           <hr/>
+          <NuxtLink :to="localePath('/coma')" class="text-zinc-600 dark:text-zinc-100">
           <button
             class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
-            <NuxtLink  :to="localePath('/coma')" class="text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
-            </NuxtLink>
           </button>
+        </NuxtLink>
         </div>
       </transition>
     </div> 
@@ -109,7 +109,7 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10  w-2/3 sm:w-full overflow-y-auto dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10 w-11/12 sm:w-full overflow-y-auto dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
               <h1 class="text-xl">Menu</h1>
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
@@ -132,28 +132,32 @@
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
                   <NuxtLink  class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
-                  <button 
-        class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-        <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
-        <span class=" text-zinc-600 dark:text-zinc-100">
-          omFM Main
-        </span>
-        </NuxtLink>
-        </button>
-        <hr/>
-          <button 
-            class="my-3 ms-2  flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-            <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
-              <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
-            </NuxtLink>
-          </button>
-          <hr/>
-          <button
-            class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
-            <NuxtLink  :to="localePath('/coma')" class="text-sm text-zinc-600 dark:text-zinc-100">
-              <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
-            </NuxtLink>
-          </button>
+                  <NuxtLink :to="localePath('/omfm')" class="text-zinc-600 dark:text-zinc-100">
+                     <button 
+                     class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+                     <span class="text-zinc-600 dark:text-zinc-100">
+                     omFM Main
+                     </span>
+                     </button>
+                  </NuxtLink>
+                  <hr/>
+                  <NuxtLink :to="localePath('/rock')" class="text-zinc-600 dark:text-zinc-100">
+                     <button 
+                     class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+                     <span class=" text-zinc-600 dark:text-zinc-100">
+                     Rock @ omFM
+                     </span>
+                     </button>
+                  </NuxtLink>
+                  <hr/>
+                  <NuxtLink :to="localePath('/coma')" class="text-zinc-600 dark:text-zinc-100">
+                     <button 
+                     class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+                     <span class=" text-zinc-600 dark:text-zinc-100">
+                     Coma @ omFM
+                     </span>
+                     </button>
+                  </NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
                 

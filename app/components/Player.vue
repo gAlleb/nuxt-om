@@ -29,25 +29,21 @@
 
             <!-- streams -->
              
-            <div style="width:120px;" class="ms-14 hidden sm:block"> 
+            <div style="width:114px;" class="ms-14 hidden sm:block"> 
             <swiper
             id="playerSwiper"
             class="bg-sxvx-dark-bg"
             style="padding-top:2px;
                    padding-bottom:2px;
-                   border-radius:20px;
+                   border-radius:30px;
                    border: gray 1px solid;"
             :modules="[  SwiperPagination, SwiperScrollbar, SwiperMousewheel]"
-            :slides-per-view="2"
-
-             
- 
-           
+            :slides-per-view="2.3"
             :mousewheel="true"
-            :space-between="10"
+            :space-between="1"
             >
-            <swiper-slide>
-            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('stream');">
+            <swiper-slide class="ms-1">
+            <div class="relative cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('stream');">
             <img :class="{
                   'grayscale opacity-75': currentStream !== 'stream',
                   }" 
@@ -61,7 +57,7 @@
             </div>
             </swiper-slide>
             <swiper-slide>
-            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
+            <div class="relative cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
               <img :class="{
                   'grayscale opacity-50': currentStream !== 'rock',
                   }" 
@@ -75,7 +71,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2">
-            <div class="relative mx-2 cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('coma');">
+            <div class="relative  cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('coma');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'coma',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
