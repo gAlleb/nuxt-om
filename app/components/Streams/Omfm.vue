@@ -40,7 +40,7 @@
            
             <h2 class="my-5 text-2xl">Recent Songs:</h2>      
             <ul>
-            <li v-for="(historyItem, index) in omfmData.np.song_history.slice(0, 5)" :key="index">
+            <li v-for="(historyItem, index) in omfmData.np.song_history.slice(1, 6)" :key="index">
   
               <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200" >
                 <div class=" relative">
