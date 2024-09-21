@@ -93,7 +93,7 @@ const handleEndScroll = () => {
   if (scrollTop + clientHeight >= scrollHeight) {
     if (streams_header.value.classList.contains('hide')) {
       streams_header.value.classList.remove('hide');
-      streams_header.value.classList.remove('hide_a_little');
+      streams_header.value.classList.add('hide_a_little');
     } 
   }
 };
