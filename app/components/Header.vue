@@ -27,12 +27,17 @@
         </span>
         </NuxtLink>
         <div class="relative" ref="dropdownContainer" @mouseleave="isOpen = false">
-        <div  class="mr-5 group transition-all duration-300 ease-in-out cursor-pointer">
-        <span @click="isOpen = !isOpen"  @mouseover="isOpen = true" 
+        <div  @click="isOpen = !isOpen"  @mouseover="isOpen = true" class="mr-5 group transition-all duration-300 ease-in-out cursor-pointer">
+        <span 
         class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Streams
+        <sub>
+        <Icon
+        name="heroicons:chevron-down"
+        class="h-4 w-4"         
+        aria-hidden="true"
+        /></sub>
         </span>
-
         </div>
       <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" v-if="isOpen">
         <div 
@@ -40,15 +45,6 @@
            @click="isOpen = !isOpen"  
           style="left: 50%; transform: translate(-50%);"
         >
-        <NuxtLink :to="localePath('/streams')" class="text-zinc-600 dark:text-zinc-100">
-        <button 
-        class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-        <span class="text-zinc-600 dark:text-zinc-100">
-          All Streams NP
-        </span>
-        </button>
-        </NuxtLink>
-        <hr/>
         <NuxtLink :to="localePath('/streams/omfm')" class="text-zinc-600 dark:text-zinc-100">
         <button 
         class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
@@ -70,6 +66,15 @@
             class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
               <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
           </button>
+        </NuxtLink>
+        <hr/>
+        <NuxtLink :to="localePath('/streams')" class="text-zinc-600 dark:text-zinc-100">
+        <button 
+        class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+        <span class="text-zinc-600 dark:text-zinc-100">
+          All Streams NP
+        </span>
+        </button>
         </NuxtLink>
         </div>
       </transition>

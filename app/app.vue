@@ -36,7 +36,6 @@
 
     <!-- Site header --> 
     <Header />
-        <NuxtLoadingIndicator />
     <!-- Page content -->
     <main class="my-20 grow">
       <NuxtPage />
