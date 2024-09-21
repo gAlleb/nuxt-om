@@ -130,19 +130,12 @@ onBeforeUnmount(() => {
   transform: translateY(-143%);
 }
 .streams_header.hide_a_little_initial {
-  transform: translateY(-53%);
+  transform: translateY(-54%);
   opacity: 0.96;
-
 }
 .streams_header.hide_a_little {
-  transform: translateY(-53%);
+  transform: translateY(-54%);
   opacity: 0.96;
-
 }
 
-/* 
-.streams_header.is-scroll {
-
-transform: translateY(-140%);
-} */
 </style>
