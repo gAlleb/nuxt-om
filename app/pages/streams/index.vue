@@ -21,6 +21,7 @@
     }"
     >ComaFM</button>
     </div>
+    <div class="h-14"></div>
     <div v-if="activeDiv === 1">
       <StreamsOmfm/>
     </div>
