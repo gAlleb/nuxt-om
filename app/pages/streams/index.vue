@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="flex bg-sxvx-light dark:bg-sxvx-dark">
+    <div ref="streams_header" class="streams_header fixed w-full z-10 flex bg-sxvx-light dark:bg-sxvx-dark">
     <button @click="showDiv(1)" class="w-full rounded-t-lg inline-flex justify-center py-3 font-tenor text-xl" 
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 1,
@@ -12,7 +12,8 @@
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 2,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 2,
     }"
-    >RockFM</button>
+    >RockFM
+    </button>
     <button @click="showDiv(3)" class="w-full rounded-t-lg inline-flex justify-center py-3 font-UNSCII text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 3,
@@ -38,58 +39,109 @@ const activeDiv = ref(1) // Default to showing div 1
 const showDiv = (divNumber) => {
   activeDiv.value = divNumber
 }
-import { initPlayerStore } from '../../stores/initPlayer'; // Import the store
-const useInitPlayerStore = initPlayerStore(); // Get the store instance
-
-import { usePlayer } from '../../composables/player'; // Create this composable
-const { player, togglePlay, playPlayer1, stopPlayer1, changeVol3, showVol3, muteVol3, setStream } = usePlayer(); // Get player instance and state
-
-import { currentStreamStore } from '@/stores/currentStream'; // Import the store
-const useCurrentStreamStore = currentStreamStore(); // Get the store instance
-const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-
-import { useOmfmData } from '../../stores/stationData_omfm';
-import { useAzuracastData } from '../../stores/stationData';
-const np_omfm = useOmfmData();
-const np_ac = useAzuracastData();
-
-// Example access for "station:radio"
-const omfmData = computed(() => np_omfm.stations['station:radio']);
-const radioData = computed(() => np_ac.stations['station:radio']);
-const comaData = computed(() => np_ac.stations['station:coma']);
-
-
-const lightboxVisible = ref(false);
-const lightboxIndex = ref(0);
-const lightboxImages = ref([]);
-
-const openLightboxMainCover = (imageUrl) => {
-  lightboxImages.value = imageUrl;
-  lightboxVisible.value = true;
-};
-const openLightbox = (imageUrl,   index) => {
-  lightboxImages.value =  imageUrl; 
-  lightboxIndex.value = index;
-  lightboxVisible.value = true;
-};
+// Initialize refs and variables
+const streams_header = ref(null);
+const lastScrollTop = ref(0);
+const threshold = 300;
+const hidePoint = 30;
 
  
+// Function to handle scroll
+const handleScroll = () => {
+  const scrollTop = window.scrollY;
+  const initial_scrollY = window.scrollY;
+  
+ if (lastScrollTop.value > scrollTop) {
+    if (streams_header.value.classList.contains('hide')) {
+      streams_header.value.classList.remove('hide');
+      streams_header.value.classList.add('hide_a_little');
+
+    }
+  } else if (scrollTop > threshold) {
+    if (!streams_header.value.classList.contains('hide')) {
+      streams_header.value.classList.add('hide');
+      streams_header.value.classList.remove('hide_a_little');
+    } 
+    
+  }   
+  lastScrollTop.value = scrollTop;
+
+  if ( scrollTop > hidePoint && scrollTop < threshold) {
+    streams_header.value.classList.add('hide_a_little_initial');
+   } else {
+    streams_header.value.classList.remove('hide_a_little_initial');
+   }
+  if (initial_scrollY < threshold) {
+    streams_header.value.classList.remove('hide_a_little');
+   }
 
 
-function getTimeFromTimestamp(timestamp) {
-  if (timestamp == "") {
-    return ""
-  }  else {
-  let tmp = new Date(timestamp * 1000);
-  return tmp.getHours().toString().padStart(2,'0') + ":"
-    + tmp.getMinutes().toString().padStart(2,'0');
+
+
+  
+
+
+};
+
+// Function to handle reaching the end of the page
+const handleEndScroll = () => {
+  const scrollTop = window.scrollY;
+  const scrollHeight = document.documentElement.scrollHeight;
+  const clientHeight = document.documentElement.clientHeight;
+
+  // Check if we've reached the end of the page
+  if (scrollTop + clientHeight >= scrollHeight) {
+    if (streams_header.value.classList.contains('hide')) {
+      streams_header.value.classList.remove('hide');
+    } 
   }
-}  
-function minSec(duration) {
-      const minutes = Math.trunc(duration / 60);
-      const seconds = Math.trunc(duration % 60);
-      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+};
+
+// Lifecycle hooks to add/remove the scroll event listener
+onMounted(() => {
+  if (typeof window !== 'undefined') {
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleEndScroll);
+    lastScrollTop.value = window.scrollY; // Initialize scroll position
+  }
+});
+
+onBeforeUnmount(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', handleScroll);
+    window.removeEventListener('scroll', handleEndScroll);
+  }
+});
+</script>
+
+
+<style scoped>
+/* Add styles here */
+.streams_header {
+  transition: all 0.5s;
+  opacity: 1;
+  transform: translateY(0%);
+
+  
 }
 
-</script>
-  
+.streams_header.hide {
+  transform: translateY(-143%);
+}
+.streams_header.hide_a_little_initial {
+  transform: translateY(-53%);
+  opacity: 0.96;
+
+}
+.streams_header.hide_a_little {
+  transform: translateY(-53%);
+  opacity: 0.96;
+
+}
+
+/* 
+.streams_header.is-scroll {
+
+transform: translateY(-140%);
+} */
+</style>
