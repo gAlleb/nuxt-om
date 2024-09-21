@@ -44,7 +44,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;omFM Main</span>
       </button>
-      <NuxtLink  :to="localePath('/omfm')" class="absolute bottom-3 z-10 left-5 text-4xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/streams/omfm')" class="absolute bottom-3 z-10 left-5 text-4xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-800 dark:text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         omFM
         </span>
@@ -84,7 +84,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;Rock @ omFM</span>
       </button>
-      <NuxtLink  :to="localePath('/rock')" class="absolute z-10 bottom-3 left-5 text-4xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/streams/rock')" class="absolute z-10 bottom-3 left-5 text-4xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-800 dark:text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Rock
         </span>
@@ -124,7 +124,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;Coma @ omFM</span>
       </button>
-      <NuxtLink  :to="localePath('/coma')" class="absolute z-10 bottom-3 left-5 text-4xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/streams/coma')" class="absolute z-10 bottom-3 left-5 text-4xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-800 dark:text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Coma
         </span>
@@ -169,7 +169,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;omFM Main</span>
       </button>
-      <NuxtLink  :to="localePath('/omfm')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/streams/omfm')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         omFM
         </span>
@@ -210,7 +210,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;Rock @ omFM</span>
       </button>
-      <NuxtLink  :to="localePath('/rock')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/streams/rock')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Rock
         </span>
@@ -250,7 +250,7 @@
         />
         <span class="content-center text-zinc-100">&nbsp;Coma @ omFM</span>
       </button>
-      <NuxtLink  :to="localePath('/coma')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+      <NuxtLink  :to="localePath('/streams/coma')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
         <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
         Coma
         </span>

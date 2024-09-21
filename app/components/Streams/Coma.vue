@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-2 sm:mx-5">
+  <section class="mx-2 sm:mx-5 font-UNSCII">
     <div class="  justify-center flex mx-auto lg:mx-20 ">
  
       <!-- <div class="npArtWrapper flex cover-album">
@@ -56,6 +56,7 @@
                 </div>
                <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
                 <div class="px-3 py-4 sm:py-4 rounded-xl w-full  text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "> 
+                  <span class="text-sm sm:text-md">Show: {{ comaData.np.playing_next.playlist }}</span><hr/>
                   <span class="text-xl sm:text-2xl">{{ comaData.np.playing_next.song.title  }}</span><br/>
                   <span class="text-lg sm:text-xl">{{ comaData.np.playing_next.song.artist  }}</span>
                 </div>
