@@ -74,7 +74,7 @@
   </Menu> -->
 <div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
 
-<UTooltip text="Special Effects" :popper="{ offsetDistance: 5 }"  class="">
+<UTooltip text="UI Settings" :popper="{ offsetDistance: 5 }"  class="">
 <!-- npm build variant
 <div
 :class="[ 
@@ -104,37 +104,37 @@ class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-
 <div id="Effects_block"   @click.stop.prevent class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl outline ring-1 ring-black ring-opacity-5 focus:outline-none">
 
     <button type="button" @click="toggleEffect('overlay0')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay0') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Radial</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300  text-xs ">Radial</span>
     </button>
 
     <button type="button" @click="toggleEffect('overlay1')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay1') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Flicker</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Flicker</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay2')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay2') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Noise</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Noise</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay3')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay3') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Scanlines</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Scanlines</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay4')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay4') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Scanline Black</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Scanline Black</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay5')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay5') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Scanline Green</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Scanline Green</span>
     </button>
 
 
@@ -143,21 +143,31 @@ class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-
     anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
     'bg-slate-50 dark:bg-zinc-800' ]" 
     class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:sparkles" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Toggle Effects</span>
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300 text-xs">Toggle Effects</span>
     </button>
 
     <button type="button" id="clearCacheBtn" @click="clearCache" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-      <Icon name="heroicons:trash" class="h-6 w-6" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300">Clear Cache</span>
+      <Icon name="heroicons:trash" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-300 text-xs">Clear Effects Cache</span>
     </button>
-
+    <hr/>
+    <hr/>
+          <button @click="colorMode.preference = 'light'" type="button" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+            <Icon name="heroicons:sun" class="h-4 w-4" aria-hidden="true" />
+            <span class="text-zinc-700 dark:text-zinc-300 text-xs">Light Mode</span>
+          </button>
+          <button @click="colorMode.preference = 'dark'" type="button" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+            <Icon name="heroicons:moon" class="h-4 w-4" aria-hidden="true" />
+            <span class="text-zinc-700 dark:text-zinc-300 text-xs">Dark Mode</span>
+          </button>
 </div>
 </transition>
 </div>
 </template>
 
 <script setup>
+const colorMode = useColorMode()
 //import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ref, onMounted } from 'vue';
 import { useEffectsStore } from '../../stores/effects';
@@ -382,5 +392,8 @@ onMounted(() => {
     allEffectsOn.value = false;
   }
 });
+
+
+
 
 </script>

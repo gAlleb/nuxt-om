@@ -55,7 +55,7 @@
                  </div>
                 </div>
                <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
-                <div class="px-3 py-4 sm:py-4 rounded-xl w-full  text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "> 
+                <div class="px-3 py-2 sm:py-2 rounded-xl w-full  text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "> 
                   <span class="text-sm sm:text-md">Show: {{ comaData.np.playing_next.playlist }}</span><hr/>
                   <span class="text-xl sm:text-2xl">{{ comaData.np.playing_next.song.title  }}</span><br/>
                   <span class="text-lg sm:text-xl">{{ comaData.np.playing_next.song.artist  }}</span>
