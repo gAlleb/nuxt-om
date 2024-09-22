@@ -1,5 +1,11 @@
 ## About
-This is an omFM Radio website project. It offers 100% code customizability. No Customizer or Backend settings are available. Basic JS, Vue.js, HTML, CSS, and possibly some other skills are required for customization. There’s no drag-and-drop; only simple code. Centrifugo SSE events ready (channel suffix: "station:radio"), iTunes, Spotify coverart.
+This is an omFM Radio website project. It offers 100% code customizability. No Customizer or Backend settings are available. Basic JS, Vue.js, HTML, CSS, and possibly some other skills are required for customization. There’s no drag-and-drop; only simple code. Centrifugo SSE events ready (channel suffix: "station:radio"), iTunes, Spotify coverart. 
+
+### Available setups:
+- traditional hosting (SSG/npm generate)
+- node hosting (SSR/ npm run build)
+- Netlify, Vercel
+- Docker (Dockerimage + docker-compose.yaml included)
 
 <img src="https://omfm.ru/assets/img/git/1.png" alt="1" width="300"/>
 <img src="https://omfm.ru/assets/img/git/2.png" alt="2" width="300"/>
