@@ -1,12 +1,8 @@
 <template>
-    <section class="mx-2 sm:mx-5 font-tenor">
+    <section class="mx-2 sm:mx-5 lg:mx-20 font-tenor">
       <div class="justify-center flex mx-auto lg:mx-20">
-   
-        <!-- <div class="npArtWrapper flex cover-album">
-          <div class="np-coma-song-art npArt" alt="Album Cover"  @click="openLightbox(omfmData.np.now_playing.song.art, 0)" ></div>
-       
-      </div> -->
-        <div v-if="omfmData" class="container mx-1 sm:mx-auto lg:mx-20">  
+
+        <div v-if="omfmData" class="container">  
           <h2 class="my-5 text-2xl">Now playing:</h2>      
   
               <div class="ice-player-el" >

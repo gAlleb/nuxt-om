@@ -1,12 +1,8 @@
 <template>
-  <section class="mx-2 sm:mx-5 font-UNSCII">
+  <section class="mx-2 sm:mx-5 lg:mx-20 font-UNSCII">
     <div class="  justify-center flex mx-auto lg:mx-20 ">
- 
-      <!-- <div class="npArtWrapper flex cover-album">
-        <div class="np-coma-song-art npArt" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art, 0)" ></div>
-     
-    </div> -->
-      <div v-if="comaData" class="container mx-1 sm:mx-auto lg:mx-20">  
+
+      <div v-if="comaData" class="container">  
         <h2 class="my-5 text-2xl">Now playing:</h2>      
 
             <div class="ice-player-el" >
