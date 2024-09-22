@@ -1,9 +1,14 @@
-## TODO
-- Pinia logic for SSR Overlays & export to composable
+## About
+This is an omFM Radio website project. It offers 100% code customizability. No Customizer or Backend settings are available. Basic JS, Vue.js, HTML, CSS, and possibly some other skills are required for customization. There’s no drag-and-drop; only simple code. Centrifugo SSE events ready (channel suffix: "station:radio"), iTunes, Spotify coverart.
+
+<img src="https://omfm.ru/assets/img/git/1.png" alt="1" width="300"/>
+<img src="https://omfm.ru/assets/img/git/2.png" alt="2" width="300"/>
+<img src="https://omfm.ru/assets/img/git/3.png" alt="3" width="300"/>
+<img src="https://omfm.ru/assets/img/git/4.png" alt="4" width="300"/>
 
 ## Modules
 
-### This template comes with the following modules:
+### Following modules are installed:
 
 - nuxt-headlessui - [Documentation](https://github.com/P4sca1/nuxt-headlessui)
 - @nuxt/ui - [Documentation](https://ui.nuxt.com/)
@@ -13,14 +18,10 @@
 - nuxt-gtag - [Documentation](hattps://github.com/johannschopplich/nuxt-gtag)
 - @nuxt/content - [Documentation](https://content.nuxt.com/)
 - @nuxtjs/seo - [Documentation](https://nuxtseo.com/nuxt-seo/getting-started/installation)
-
-### Latest Changes
-- nuxt-icon - [Documentation](https://github.com/nuxt-modules/icon#readme) (removed! now includes in @nuxt/ui)
-- @nuxtjs/tailwindcss - [Documentation](https://tailwindcss.nuxtjs.org/) (removed! now includes in @nuxt/ui)
-- @nuxtjs/color-mode - [Documentation](https://color-mode.nuxtjs.org/) (removed! now includes in @nuxt/ui)
-- @heroicons/vue - [Documentation](https://heroicons.com/) (removed! now includes in @nuxt/ui)
-- nuxt-simple-sitemap - [Documentation](https://github.com/harlan-zw/nuxt-simple-sitemap)(removed! now includes in @nuxtjs/seo
-- nuxt-simple-robots - [Documentation](https://github.com/harlan-zw/nuxt-simple-robots)(removed! now includes in @nuxtjs/seo)
+- @nuxt/image 
+- nuxt-aos 
+- nuxt-easy-lightbox
+- nuxt-swiper 
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more about Nuxt 3.
 
