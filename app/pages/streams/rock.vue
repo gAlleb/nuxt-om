@@ -2,7 +2,9 @@
   <div>
  
   <div class="flex relative overflow-hidden dark:hidden font-metal" style="background: url('/metal.webp') center 40% no-repeat; background-size: cover; height: 45vh;  ">
-  <div class="indexSliderImg-light"></div>
+    <!-- <div class="flex relative overflow-hidden dark:hidden font-metal" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`, backgroundPosition: 'center 70%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover',  height: '45vh' }"> -->
+
+    <div class="indexSliderImg-light"></div>
   <button 
       class="flex z-10 right-7 top-7 sm:top-10 sm:right-20 absolute bg-zinc-400 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
       @click="useInitPlayerStore.togglePlay('rock')"
@@ -87,12 +89,12 @@ heavy stuff and more
 </template>
   
 <script setup>
-
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
-
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-
+import { useAzuracastData } from '../../stores/stationData'
+  const np_omfm = useOmfmData();
+  const np_ac = useAzuracastData();
 </script>

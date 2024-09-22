@@ -1,20 +1,20 @@
 <template>
   <div>
     <div ref="streams_header" class="streams_header fixed w-full z-10 flex bg-sxvx-light dark:bg-sxvx-dark">
-    <button @click="showDiv(1)" class="w-full rounded-t-lg inline-flex justify-center py-3 font-tenor text-xl" 
+    <button @click="showDiv(1)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl" 
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 1,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 1,
     }"
     >omFM</button>
-    <button @click="showDiv(2)" class="w-full rounded-t-lg inline-flex justify-center py-3 font-metal text-xl"
+    <button @click="showDiv(2)" class="w-full rounded-t-lg inline-flex justify-center  font-metal text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 2,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 2,
     }"
     >RockFM
     </button>
-    <button @click="showDiv(3)" class="w-full rounded-t-lg inline-flex justify-center py-3 font-UNSCII text-xl"
+    <button @click="showDiv(3)" class="w-full rounded-t-lg inline-flex justify-center  font-UNSCII text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 3,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 3,
@@ -128,14 +128,14 @@ onBeforeUnmount(() => {
 }
 
 .streams_header.hide {
-  transform: translateY(-143%);
+  transform: translateY(-250%);
 }
 .streams_header.hide_a_little_initial {
-  transform: translateY(-54%);
+  transform: translateY(-94%);
   opacity: 0.96;
 }
 .streams_header.hide_a_little {
-  transform: translateY(-54%);
+  transform: translateY(-94%);
   opacity: 0.96;
 }
 
