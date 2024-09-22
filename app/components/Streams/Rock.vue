@@ -36,9 +36,9 @@
 
          
           
-          <h2 class="my-5 text-2xl">Next Song:</h2>
+          <h2 v-if="radioData.np.now_playing.playlist !== ''" class="my-5 text-2xl">Next Song:</h2>
 
-          <div class="mt-2 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-300" >
+          <div v-if="radioData.np.now_playing.playlist !== ''" class="mt-2 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-300" >
               <div class=" relative">
                 <img 
               v-if="np_ac.nextCoverArtUrls['station:radio']" 
