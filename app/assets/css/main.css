@@ -1350,7 +1350,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     } 
     .indexSliderImg-light {
       /* background: linear-gradient(0deg, rgb(250, 249, 247) 4%, rgba(250, 249, 247, 0.74) 28%, rgba(233, 233, 233, 0.2) 50%, rgba(242, 238, 230, 0.38) 71%, rgb(242, 238, 230) 100%);      position: absolute; */
-      background: linear-gradient(0deg, rgb(250, 249, 247) 0%,  rgba(250, 249, 247, 0.8) 15% , rgba(250, 249, 247, 0.55) 28%, rgba(250, 249, 247, 0.4) 50%, rgba(242, 238, 230, 0.38) 71%, rgb(242, 238, 230) 100%);      position: absolute;
+      background: linear-gradient(0deg,#faf9f7,hsla(40,23%,97%,.8) 15%,hsla(40,23%,97%,.55) 28%,hsla(40,23%,97%,.4) 50%,hsla(40,32%,93%,0.555) 71%,#f2eee6);
       height: 100%;
       width: 100%;
       z-index: 1;
