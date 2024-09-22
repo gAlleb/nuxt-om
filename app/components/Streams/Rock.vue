@@ -22,7 +22,7 @@
                 <div class="mt-2 sm:mt-5 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 "
                > 
                 <div class="text-sm sm:text-lg"> 
-                 Show: {{ radioData.np.now_playing.playlist }}
+                 Show: {{ (radioData.np.now_playing.playlist !== '') ? radioData.np.now_playing.playlist : 'Relaying UltraFM' }}
                 </div>
                 
                 </div>
@@ -31,7 +31,7 @@
 
             </div>
             <div class="bg-sxvx-light dark:bg-sxvx-dark  my-2 rounded-xl relative w-full h-5 overflow-hidden">
-            <div class="absolute bg-muddy-waters-300 dark:bg-muddy-waters-400 " style="height:30px;  transition: width 1s linear" :style="{ width: `${( np_ac.progress['station:radio'].elapsed /  np_ac.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
+            <div class="absolute bg-muddy-waters-300 dark:bg-muddy-waters-400 " style="height:30px;  transition: width 1s linear" :style="{ width: `${( np_ac.progress['station:radio'].width)}%` }"></div>
             </div>
 
          
