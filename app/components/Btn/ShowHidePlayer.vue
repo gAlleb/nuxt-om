@@ -102,13 +102,13 @@ const isPlayerVisible = ref(false); // Assuming player is initially visible
 function radioshow() {
   const player = document.getElementById("ice-player");
   if (player) { // Check if the player element exists
-    if (player.style.transform === "translateY(100%)") {
+    if (player.style.transform === "translateY(115%)") {
       player.style.transform = "translateY(0%)";
       player.style.transition = "transform 300ms linear ";
       isPlayerVisible.value = true;
       setItem('isPlayerVisible', true);
     } else {
-      player.style.transform = "translateY(100%)";
+      player.style.transform = "translateY(115%)";
       player.style.transition = "transform 300ms linear";
       isPlayerVisible.value = false;
       setItem('isPlayerVisible', false);
