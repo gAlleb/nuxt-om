@@ -111,3 +111,10 @@ yarn preview
 ```
 
 Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+
+## Production with docker:
+
+```bash
+docker compose up -d
+```
+
