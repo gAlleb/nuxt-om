@@ -1,7 +1,7 @@
 <template>
     
 <section>
-    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(115%); ">
+    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(100%); ">
         <div class="ice-player-el mb-5">
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
