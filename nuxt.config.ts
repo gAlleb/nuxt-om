@@ -61,9 +61,9 @@ export default defineNuxtConfig({
     baseUrl: process.env.SITE_URL,
 
     locales: [
-      { code: 'en', name: 'English', language: 'en-US', file: 'en.json' },
-      { code: 'ru', name: 'Русский', language: 'ru-RU', file: 'ru.json' },
-      { code: 'es', name: 'Español', language: 'es-ES', file: 'es.json' },
+      { code: 'en', name: 'English', iso: 'en-US', file: 'en.json' },
+      { code: 'ru', name: 'Русский', iso: 'ru-RU', file: 'ru.json' },
+      { code: 'es', name: 'Español', iso: 'es-ES', file: 'es.json' },
     ],
     // trailingSlash: true,
     debug: false,
