@@ -64,18 +64,18 @@
          
         </div>
   
-        <VueEasyLightbox
+  
+  
+   
+        </div>
+      </section>
+      <VueEasyLightbox
         ref="lightbox"
         :visible="lightboxVisible"
         :imgs="lightboxImages"
         :index="lightboxIndex"
         @hide="lightboxVisible = false"
       />
-  
-  
-   
-        </div>
-      </section>
       </template>
       
       <script setup>
