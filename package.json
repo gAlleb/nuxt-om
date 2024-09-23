@@ -33,9 +33,6 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.5",
-    "@iconify-json/bxl": "^1.2.0",
-    "@iconify-json/heroicons-outline": "^1.2.0",
-    "@iconify-json/heroicons-solid": "^1.2.0",
     "nuxt-swiper": "^1.2.2",
     "pinia-plugin-persistedstate": "^3.2.3",
     "three": "^0.167.1"
