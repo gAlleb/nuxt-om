@@ -1,6 +1,6 @@
 <template>
     
-
+<section>
     <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(100%); ">
         <div class="ice-player-el mb-5">
             <div>
@@ -144,6 +144,13 @@
                 <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
+            <div class="flex">
+            <button @click="playerMenuToggle()"
+            type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" >
+            <span class="sr-only">Now Playing</span>
+            <Icon name="heroicons:musical-note" class="w-6 h-6" />
+            </button>
+            </div>
       
 
 
@@ -187,13 +194,38 @@
             </div>
 
             </div>
-
-
           
         </div>
 
     </div>
-    
+
+    <div class="fixed inset-0 z-40 " v-if="playerMenuOpen"  @click="playerMenuToggle()" />
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-40 w-11/12 sm:w-full overflow-y-auto dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-3 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="flex items-center justify-between">
+              <h1 class="text-xl">{{nowPlayingStation}}</h1>
+              <button type="button" @click="playerMenuToggle()" class="-m-2.5 rounded-md p-2.5">
+                <span class="sr-only">Close</span>
+                <Icon name="heroicons:x-mark" class="w-7 h-7" />
+              </button>
+             
+            </div>
+            <div class="mt-2" >
+              <div class="divide-y divide-zinc-500/10">
+                <div v-if="currentStream === 'stream'">
+                <StreamsOmfmOffcanvas/>
+                </div>
+              <div v-if="currentStream === 'rock'">
+                <StreamsRockOffcanvas/>
+              </div>
+              <div v-if="currentStream === 'coma'">
+              <StreamsComaOffcanvas/>
+              </div>
+              </div>
+            </div>
+
+
+    </div>
+</section>
     <VueEasyLightbox
     ref="lightbox"
     :visible="lightboxVisible"
@@ -221,6 +253,11 @@ const omfmData = computed(() => np_omfm.stations['station:radio']);
 const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
 
+const playerMenuOpen = ref(false)
+
+function playerMenuToggle() {
+  playerMenuOpen.value = !playerMenuOpen.value;
+}
 
 function minSec(duration) {
       const minutes = Math.trunc(duration / 60);
@@ -234,6 +271,19 @@ import { currentStreamStore } from '../stores/currentStream'; // Import the stor
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
+const nowPlayingStation = computed(() => {
+  switch (currentStream.value) {
+    case 'stream':
+      return 'omFM';
+    case 'rock':
+      return 'RockFM';
+    case 'coma':
+      return 'ComaFM';
+    default:
+      return ''; // Default text
+  }
+});
+
 
 const lightboxVisible = ref(false);
 const lightboxIndex = ref(0);
@@ -244,17 +294,6 @@ const openLightbox = (imageUrl,   index) => {
   lightboxIndex.value = index;
   lightboxVisible.value = true;
 };
-//import IcePlayer from '../composables/IcePlayer.js'; // Import the class
-// onMounted(() => {
-// /*
-//  IcePlayer v.3.0.0 - Player for Site (Icecast2 Online Radio)
-//  Copyright (c) 2016-2020 Andrew Molchanov
-//  https://github.com/JoCat/IcePlayer
-// */
-
-// new IcePlayer('#ice-player'); 
-// })
-
 
 const isPlayingComputed = computed(() => useInitPlayerStore.isPlaying);
 

@@ -198,7 +198,7 @@ export const useAzuracastData = defineStore({
         //   await this.fetchSpotifyToken(); // Fetch token if it's not available
         // }
         const response = await fetch(
-          `https://api.spotify.com/v1/search?q=${album} ${artist}&type=album&limit=1`,
+          `https://api.spotify.com/v1/search?q=${artist} ${album}&type=album&limit=1`,
           {
           headers: {
             'Authorization': 'Bearer ' + this.spotifyToken
