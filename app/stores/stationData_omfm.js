@@ -80,7 +80,6 @@ export const useOmfmData = defineStore({
         this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, npData.spotifyToken, station)
         .then(coverArtUrl => {
           this.coverArtUrls[station] = coverArtUrl;
-          console.warn(coverArtUrl);
         });
         
         this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, npData.spotifyToken, station);
