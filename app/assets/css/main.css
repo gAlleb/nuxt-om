@@ -507,36 +507,36 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
 /* box-shadow: 0 0 10px #FFFFFF; */
 border-radius:5px; }
 .ice-player.fixed {
-font-size: 1.5rem;
+  font-size: 1.5rem;
  position: fixed;
  bottom: 0;
- left: 1.5%;
- width: Calc(100% - 3%);
- border-radius: 0.75rem;
- margin-bottom: 0.75rem;
+ left: 0;
+ width: 100%;
  /*background-color: rgba(58, 103, 148, 0.638); */
- /* background:  linear-gradient(180deg, rgba(0, 0, 0, 0.694) 10%, rgba(0,0,0,0.6936974618949142) 100%); */
+  /* background:  linear-gradient(180deg, rgba(0, 0, 0, 0.694) 10%, rgba(0,0,0,0.6936974618949142) 100%); */
  border-top: 1px solid var(--ice-player-border-color);
- min-height: 12vh;
+min-height: 12vh  ;
+
 }
 
- .ice-player.fixed .ice-track {
+.ice-player.fixed .ice-track {
   display: block;
-  color:  #ffffff ;  
+     
+      color:  #ffffff ;  
+     
+      
+  
   }
   .ice-player.fixed .ice-track {
     font-size: 14px;
-  } 
-@media screen and (max-width:640px) {
- .ice-player.fixed {
-  left: 0;
-  width: 100%;
-  border-radius:0rem;
-  margin-bottom: 0rem;;
- }
- /* .ice-player.fixed i {
+  }
+@media screen and (max-width: 500px) {
+ 
+ .ice-player.fixed i {
   font-size: 1.5rem;
-} */
+}
+
+
 }
 @media (max-width: 1000px) and (min-width: 500px) {
  
@@ -1203,7 +1203,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     left: 0;
     bottom: 0;
     font-size: 14px;
-    margin-bottom: 5.5px;
+    margin-bottom: 1px;
     margin-left: 15px;
     z-index: 1;
   }
@@ -1213,7 +1213,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
     right: 0;
     bottom: 0;
     font-size: 14px;
-    margin-bottom: 5.5px;
+    margin-bottom: 1px;
     margin-right: 15px;
     z-index: 1;
   }
@@ -1268,7 +1268,7 @@ box-shadow: 0 0 0 10px rgba(255,255,255, .2)
       height: 15px;
       width: calc(100% - 20px);
       position: absolute;
-      bottom: 9%;
+      bottom: 5%;
       left: 10px;
       right: 0%;
       border: none;

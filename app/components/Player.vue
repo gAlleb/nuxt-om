@@ -2,7 +2,7 @@
     
 
     <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(100%); ">
-        <div class="ice-player-el mb-5">
+        <div class="ice-player-el mb-4">
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
                 <i class="ice-play hidden" @click="playStatus" style="font-size:1.6rem !important" ></i>
