@@ -13,15 +13,12 @@
     "@parcel/watcher": "2.1.0"
   },
   "devDependencies": {
-    "@iconify-json/bxl": "^1.1.11",
-    "@iconify-json/heroicons-outline": "^1.2.0",
-    "@iconify-json/heroicons-solid": "^1.2.0",
     "@nuxt/content": "^2.13.2",
     "@nuxt/image": "^1.7.0",
     "@nuxt/ui": "^2.18.4",
-    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge",
+    "@nuxtjs/i18n": "^8.5.5",
     "@pinia-plugin-persistedstate/nuxt": "^1.2.1",
-    "@pinia/nuxt": "^0.5.3",
+    "@pinia/nuxt": "^0.5.4",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/forms": "^0.5.7",
     "@tailwindcss/typography": "^0.5.14",
@@ -29,8 +26,8 @@
     "nuxt": "^3.12.4",
     "nuxt-aos": "^1.2.5",
     "nuxt-easy-lightbox": "^1.0.2",
-    "nuxt-gtag": "^2.1.0",
-    "pinia": "^2.2.1",
+    "nuxt-gtag": "^3.0.1",
+    "pinia": "^2.2.2",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.6"
   },

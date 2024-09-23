@@ -1,8 +1,8 @@
 <template>
     
-
-    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(100%); ">
-        <div class="ice-player-el mb-4">
+<section>
+    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(115%); ">
+        <div class="ice-player-el mb-5">
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
                 <i class="ice-play hidden" @click="playStatus" style="font-size:1.6rem !important" ></i>
@@ -144,6 +144,13 @@
                 <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
                 </div> 
             </div>
+            <div class="flex">
+            <button @click="playerMenuToggle()"
+            type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" >
+            <span class="sr-only">Now Playing</span>
+            <Icon name="heroicons:musical-note" class="w-6 h-6" />
+            </button>
+            </div>
       
 
 
@@ -187,13 +194,270 @@
             </div>
 
             </div>
-
-
           
         </div>
 
     </div>
-    
+
+<!--OffCanvas Now Playing-->
+
+    <div class="fixed inset-0 z-40 " v-if="playerMenuOpen"  @click="playerMenuToggle()" />
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"  style="flex-direction: column;"
+          class="transition-transform duration-300 ease-in-out fixed flex drop-shadow-2xl bottom-0  top-0 right-0 z-40 w-11/12 sm:w-fulldark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="absolute" style=" height: 105vh; width:100%;z-index: -1;">
+            <div v-if="currentStream === 'stream' && omfmData" class="h-full fixed w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`}"
+            style="min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  background-position: center;
+  background-size: cover;"/>
+              <div v-if="currentStream === 'rock' && radioData" class="h-full fixed w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`}"
+            style="min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  background-position: center;
+  background-size: cover;"/>
+
+<div v-if="currentStream === 'coma' && comaData" class="h-full fixed w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`}"
+            style="min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  background-position: center;
+  background-size: cover;"/>
+   <div style="min-width: 100%;
+  min-height: 100%;
+  position: absolute;
+  background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);
+  z-index: 2;"></div>
+            </div>
+            <div class="flex items-center justify-between p-3">
+              <h1 class="text-xl text-white">{{nowPlayingStation}}</h1>
+              <button type="button" @click="playerMenuToggle()" class="-m-2.5 rounded-md p-2.5">
+                <span class="sr-only text-white">Close</span>
+                <Icon name="heroicons:x-mark" class="w-7 h-7" />
+              </button>
+             
+            </div>
+           <div class="px-3 pb-6 " style="  flex-grow:1; overflow-y:auto"> 
+            
+            <div class="mt-2" >
+              <div class="divide-y divide-zinc-500/10">
+                <div v-if="currentStream === 'stream'">
+                  <div class="justify-center flex mx-auto mb-2 font-tenor">
+        <div v-if="omfmData" class="container">  
+          <h2 class="text-lg mb-3 text-white">Show: {{ omfmData.np.now_playing.playlist }}</h2>      
+              <div class="content-center">
+                <div class="mx-3">
+                 <div class="relative w-full">
+                   <img class="rounded-xl h-auto w-full shadow-2xl cursor-pointer" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
+                   <div class="absolute bg-sxvx-dark-bg bottom-0 rounded-b-xl  w-full h-5 overflow-hidden">
+                   <div class="absolute bg-muddy-waters-400 " style="height:20px;  transition: width 1s linear" :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
+                   </div>
+                   <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</span> 
+                   <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</span> 
+                   <div class="absolute text-muddy-waters-100  text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                    {{ getTimeFromTimestamp(omfmData.np.now_playing.played_at) }}
+                  </div>
+                 </div>
+                </div>
+                 <div class="ms-2" >
+                  <div class="px-3  text-center mb-0 py-3  rounded-xl w-full text-muddy-waters-200  bg-opacity-50  "> 
+                    <span class="text-lg">{{ omfmData.np.now_playing.song.title }}</span><br/>
+                    <span class="text-md">{{ omfmData.np.now_playing.song.artist }}</span><br/>
+                    <span class="text-md">Album: {{ omfmData.np.now_playing.song.album }}</span>
+                  </div>
+                 </div>
+              </div>
+            <hr/>
+            <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
+            <ul>
+            <li v-for="(historyItem, index) in omfmData.np.song_history.slice(1, 6)" :key="index">
+  
+              <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el text-muddy-waters-200" >
+                <div class=" relative">
+                  <img 
+                v-if="np_omfm.songHistoryCoverArt['station:radio'] && np_omfm.songHistoryCoverArt['station:radio'][index]" 
+                :src="np_omfm.songHistoryCoverArt['station:radio'][index]" 
+                alt="History Cover"
+                class="history-cover cursor-pointer rounded-xl h-auto w-24"
+                @click="openLightbox(np_omfm.songHistoryCoverArt['station:radio'][index], index)" 
+              >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                    {{ getTimeFromTimestamp(historyItem.played_at) }}
+                   </div>
+                  </div>
+                 <div class="" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                  <div class="px-3 py-0 sm:py-2 rounded-xl w-full ellipsify "> 
+                    <span class="text-lg">{{ historyItem.song.title  }}</span><br/>
+                    <span class="text-md">{{ historyItem.song.artist  }}</span>
+                  </div>
+                </div>
+               </div>
+            </li>
+          </ul>
+        </div>
+        </div>
+                </div>
+              <div v-if="currentStream === 'rock'">
+                <div class="justify-center flex mx-auto mb-2 font-metal">
+      <div v-if="radioData" class="container">  
+        <h2 class="text-lg mb-3 text-white">Show: {{ radioData.np.now_playing.playlist }}</h2>      
+            <div class="content-center">
+              <div class="mx-3">
+               <div class="relative w-full">
+                 <img class="rounded-xl h-auto w-full shadow-2xl cursor-pointer" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
+                 <div class="absolute bg-sxvx-dark-bg bottom-0 rounded-b-xl  w-full h-5 overflow-hidden">
+                 <div class="absolute bg-muddy-waters-400 " style="height:20px;  transition: width 1s linear" :style="{ width: `${np_ac.progress['station:radio'].width}%` }"></div>
+                 </div>
+                 <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].elapsed) }}</span> 
+                 <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].duration) }}</span> 
+                 <div class="absolute text-muddy-waters-100 text-4xl sm:text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(radioData.np.now_playing.played_at) }}
+                </div>
+               </div>
+
+              </div>
+               <div class="ms-2" >
+                <div class="px-3  text-center mb-0 py-3  rounded-xl w-full text-muddy-waters-200  bg-opacity-50  "> 
+                  <span class="text-lg">{{ radioData.np.now_playing.song.title }}</span><br/>
+                  <span class="text-md">{{ radioData.np.now_playing.song.artist }}</span><br/>
+                  <span class="text-md">Album: {{ radioData.np.now_playing.song.album }}</span>
+                </div>
+               </div>
+            </div>
+          <hr/>
+          <h2 v-if="radioData.np.now_playing.playlist !== ''" class="my-3 text-lg text-white">Next Song:</h2>
+
+<div v-if="radioData.np.now_playing.playlist !== ''" class="mt-3 mb-5 rounded-xl  ice-player-el text-muddy-waters-300" >
+    <div class=" relative">
+      <img 
+    v-if="np_ac.nextCoverArtUrls['station:radio']" 
+    :src="np_ac.nextCoverArtUrls['station:radio']" 
+    alt="History Cover"
+    class="history-cover cursor-pointer rounded-xl h-auto w-24"
+    @click="openLightbox(np_ac.nextCoverArtUrls['station:radio'], 0)" 
+  >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+        {{ getTimeFromTimestamp(radioData.np.playing_next.played_at) }}
+       </div>
+      </div>
+     <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+      <div class="px-3 rounded-xl w-full text-muddy-waters-200 ellipsify "> 
+        <span class="text-sm">Show: {{ radioData.np.playing_next.playlist }}</span><hr/>
+        <span class="text-lg">{{ radioData.np.playing_next.song.title  }}</span><br/>
+        <span class="text-md">{{ radioData.np.playing_next.song.artist  }}</span>
+      </div>
+    </div>
+   </div>
+   <hr/>
+          <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
+          <ul>
+          <li v-for="(historyItem, index) in radioData.np.song_history.slice(0, 5)" :key="index">
+            <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el text-muddy-waters-200" >
+              <div class=" relative">
+                <img 
+              v-if="np_ac.songHistoryCoverArt['station:radio'] && np_ac.songHistoryCoverArt['station:radio'][index]" 
+              :src="np_ac.songHistoryCoverArt['station:radio'][index]" 
+              alt="History Cover"
+              class="history-cover cursor-pointer rounded-xl h-auto w-24"
+              @click="openLightbox(np_ac.songHistoryCoverArt['station:radio'][index], index)" 
+            >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(historyItem.played_at) }}
+                 </div>
+                </div>
+               <div class="" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                <div class="px-3 py-0 sm:py-2 rounded-xl w-full  ellipsify "> 
+                  <span class="text-lg">{{ historyItem.song.title  }}</span><br/>
+                  <span class="text-md">{{ historyItem.song.artist  }}</span>
+                </div>
+              </div>
+             </div>
+          </li>
+        </ul>
+      </div>
+      </div>
+              </div>
+              <div v-if="currentStream === 'coma'">
+                <div class="justify-center flex mx-auto mx-2 font-UNSCII">
+      <div v-if="comaData" class="container">  
+        <h2 class="text-lg mb-3 text-white">Show: {{ comaData.np.now_playing.playlist }}</h2>      
+            <div class="content-center">
+              <div class="mx-3">
+               <div class="relative w-full">
+                 <img class="rounded-xl h-auto w-full shadow-2xl cursor-pointer" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art, 0)" >
+                 <div class="absolute bg-sxvx-dark-bg bottom-0 rounded-b-xl  w-full h-5 overflow-hidden">
+                 <div class="absolute bg-muddy-waters-400 " style="height:20px;  transition: width 1s linear" :style="{ width: `${np_ac.progress['station:coma'].width}%` }"></div>
+                 </div>
+                 <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].elapsed) }}</span> 
+                 <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].duration) }}</span> 
+                 <div class="absolute text-muddy-waters-100 text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(comaData.np.now_playing.played_at) }}
+                </div>
+               </div>
+              </div>
+               <div class="ms-2" >
+                <div class="px-3  text-center mb-0 py-3  rounded-xl w-full text-muddy-waters-200  bg-opacity-50  "> 
+                  <span class="text-lg">{{ comaData.np.now_playing.song.title }}</span><br/>
+                  <span class="text-md">{{ comaData.np.now_playing.song.artist }}</span><br/>
+                  <span class="text-md">Album: {{ comaData.np.now_playing.song.album }}</span>
+                </div>
+               </div>
+            </div>
+             <hr/>
+          <h2 v-if="comaData.np.now_playing.playlist !== ''" class="my-3 text-lg text-white">Next Song:</h2>
+
+<div v-if="comaData.np.now_playing.playlist !== ''" class="mt-3 mb-5 rounded-xl  ice-player-el text-muddy-waters-300" >
+    <div class=" relative">
+      <img 
+    :src="comaData.np.playing_next.song.art" 
+    alt="History Cover"
+    class="history-cover cursor-pointer rounded-xl h-auto w-24"
+    @click="openLightbox(comaData.np.playing_next.song.art, 0)" 
+  >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+        {{ getTimeFromTimestamp(comaData.np.playing_next.played_at) }}
+       </div>
+      </div>
+     <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+      <div class="px-3 rounded-xl w-full text-muddy-waters-200 ellipsify "> 
+        <span class="text-sm">Show: {{ comaData.np.playing_next.playlist }}</span><hr/>
+        <span class="text-lg">{{ comaData.np.playing_next.song.title  }}</span><br/>
+        <span class="text-md">{{ comaData.np.playing_next.song.artist  }}</span>
+      </div>
+    </div>
+   </div>
+          <hr/>
+          <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
+          <ul>
+          <li v-for="(historyItem, index) in comaData.np.song_history.slice(0, 5)" :key="index">
+            <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el text-muddy-waters-200" >
+              <div class=" relative">
+                <img 
+              v-if="comaData.np.song_history[index].song.art" 
+              :src="comaData.np.song_history[index].song.art" 
+              alt="History Cover"
+              class="history-cover cursor-pointer rounded-xl h-auto w-24"
+              @click="openLightbox(comaData.np.song_history[index].song.art, index)" 
+            >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(historyItem.played_at) }}
+                 </div>
+                </div>
+               <div class="" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                <div class="px-3 py-0 sm:py-2 rounded-xl w-full  ellipsify "> 
+                  <span class="text-lg">{{ historyItem.song.title  }}</span><br/>
+                  <span class="text-md">{{ historyItem.song.artist  }}</span>
+                </div>
+              </div>
+             </div>
+          </li>
+        </ul>       
+      </div> 
+      </div>
+              </div>
+              </div>
+            </div>
+
+
+    </div>
+  </div>
+</section>
     <VueEasyLightbox
     ref="lightbox"
     :visible="lightboxVisible"
@@ -221,19 +485,45 @@ const omfmData = computed(() => np_omfm.stations['station:radio']);
 const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
 
+const playerMenuOpen = ref(false)
+
+function playerMenuToggle() {
+  playerMenuOpen.value = !playerMenuOpen.value;
+}
 
 function minSec(duration) {
       const minutes = Math.trunc(duration / 60);
       const seconds = Math.trunc(duration % 60);
       return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
 }
-
+function getTimeFromTimestamp(timestamp) {
+      if (timestamp == "") {
+        return ""
+      }  else {
+      let tmp = new Date(timestamp * 1000);
+      return tmp.getHours().toString().padStart(2,'0') + ":"
+        + tmp.getMinutes().toString().padStart(2,'0');
+      }
+} 
 
 
 import { currentStreamStore } from '../stores/currentStream'; // Import the store
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
+const nowPlayingStation = computed(() => {
+  switch (currentStream.value) {
+    case 'stream':
+      return 'omFM';
+    case 'rock':
+      return 'RockFM';
+    case 'coma':
+      return 'ComaFM';
+    default:
+      return ''; // Default text
+  }
+});
+
 
 const lightboxVisible = ref(false);
 const lightboxIndex = ref(0);
@@ -244,17 +534,6 @@ const openLightbox = (imageUrl,   index) => {
   lightboxIndex.value = index;
   lightboxVisible.value = true;
 };
-//import IcePlayer from '../composables/IcePlayer.js'; // Import the class
-// onMounted(() => {
-// /*
-//  IcePlayer v.3.0.0 - Player for Site (Icecast2 Online Radio)
-//  Copyright (c) 2016-2020 Andrew Molchanov
-//  https://github.com/JoCat/IcePlayer
-// */
-
-// new IcePlayer('#ice-player'); 
-// })
-
 
 const isPlayingComputed = computed(() => useInitPlayerStore.isPlaying);
 
