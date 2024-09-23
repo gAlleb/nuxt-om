@@ -1,5 +1,5 @@
 <template>
-  <section class="mb-2 sm:mx-5 lg:mx-20 font-UNSCII">
+  <section class="mx-2 sm:mx-5 lg:mx-20 font-UNSCII">
     <div class="  justify-center flex mx-auto lg:mx-20 ">
 
       <div v-if="comaData" class="container">  
