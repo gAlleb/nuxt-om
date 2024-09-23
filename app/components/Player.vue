@@ -205,13 +205,13 @@
           <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"  style="flex-direction: column;"
           class="transition-transform duration-300 ease-in-out fixed flex drop-shadow-2xl bottom-0  top-0 right-0 z-40 w-11/12 sm:w-fulldark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="absolute" style=" height: 105vh; width:100%;z-index: -1;">
-            <div v-if="currentStream === 'stream' && omfmData" class="h-full fixed w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`}"
+            <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full fixed w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`}"
             style="min-width: 100%;
   min-height: 100%;
   position: absolute;
   background-position: center;
   background-size: cover;"/>
-              <div v-if="currentStream === 'rock' && radioData" class="h-full fixed w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`}"
+              <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full fixed w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`}"
             style="min-width: 100%;
   min-height: 100%;
   position: absolute;
