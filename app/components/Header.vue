@@ -123,7 +123,9 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <div  id="myMobileMenu"   :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl inset-y-0 right-0 z-10 w-11/12 sm:w-full overflow-y-auto dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div  id="myMobileMenu" style="flex-direction: column;"
+          :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl flex bottom-0 top-0 right-0 z-10 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          
             <div class="flex items-center justify-between">
               <h1 class="text-xl">Menu</h1>
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
@@ -132,23 +134,25 @@
               </button>
              
             </div>
-          <hr class="mt-5"/>
-            <div class="flex my-2 justify-center">
+          
+            <hr/>
+            <div id="content" style="flex-grow:1; overflow-y:auto">
+            <div class="flex my-3 justify-center">
                    
                   <BtnLocaleSwitch />
                   <BtnToggleColorMode />
                   <!-- <BtnEffects /> -->
                 </div>
             <hr/>
-            <div class="mt-6 flow-root" >
+            <div class="mt-0 flow-root" >
               <div class="-my-6 divide-y divide-zinc-500/10">
                 <div class="space-y-2 py-6" >
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class=" block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams')" class=" block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/omfm')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
-                     class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
                      <span class="text-zinc-600 dark:text-zinc-100">
                      omFM Main
                      </span>
@@ -157,7 +161,7 @@
                   <hr/>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/rock')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
-                     class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
                      <span class=" text-zinc-600 dark:text-zinc-100">
                      Rock @ omFM
                      </span>
@@ -166,14 +170,14 @@
                   <hr/>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/coma')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
-                     class="my-3 ms-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
                      <span class=" text-zinc-600 dark:text-zinc-100">
                      Coma @ omFM
                      </span>
                      </button>
                   </NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
                 
                 </div>
               </div>
@@ -193,7 +197,7 @@
           <Icon name="bxl:apple" class="h-6 w-6 text-zinc-500" aria-hidden="true" />
         </a>
       </span>
-      <hr/>
+    </div>
     </div>
       </ClientOnly>
 
