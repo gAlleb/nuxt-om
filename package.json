@@ -32,7 +32,6 @@
     "prettier-plugin-tailwindcss": "^0.6.6"
   },
   "dependencies": {
-    "@heroicons/vue": "^2.1.5",
     "nuxt-swiper": "^1.2.2",
     "pinia-plugin-persistedstate": "^3.2.3",
     "three": "^0.167.1"
