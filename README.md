@@ -11,6 +11,8 @@ This is an omFM Radio website project. It offers 100% code customizability. No C
 <img src="https://omfm.ru/assets/img/git/2.png" alt="2" width="300"/>
 <img src="https://omfm.ru/assets/img/git/3.png" alt="3" width="300"/>
 <img src="https://omfm.ru/assets/img/git/4.png" alt="4" width="300"/>
+<img src="https://omfm.ru/assets/img/git/5.png" alt="4" width="300"/>
+<img src="https://omfm.ru/assets/img/git/6.png" alt="4" width="300"/>
 
 ## Modules
 
