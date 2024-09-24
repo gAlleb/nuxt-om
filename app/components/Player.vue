@@ -202,33 +202,13 @@
 <!--OffCanvas Now Playing-->
 
     <div class="fixed inset-0 z-40 " v-if="playerMenuOpen"  @click="playerMenuToggle()" />
-          <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"  style="flex-direction: column;"
-          class="transition-transform duration-300 ease-in-out fixed flex drop-shadow-2xl bottom-0  top-0 right-0 z-40 w-11/12 sm:w-fulldark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div class="absolute" style=" height: 105vh; width:100%;z-index: -1;">
-            <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full fixed w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`}"
-            style="min-width: 100%;
-  min-height: 100%;
-  position: absolute;
-  background-position: center;
-  background-size: cover;"/>
-              <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full fixed w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`}"
-            style="min-width: 100%;
-  min-height: 100%;
-  position: absolute;
-  background-position: center;
-  background-size: cover;"/>
-
-<div v-if="currentStream === 'coma' && comaData" class="h-full fixed w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`}"
-            style="min-width: 100%;
-  min-height: 100%;
-  position: absolute;
-  background-position: center;
-  background-size: cover;"/>
-   <div style="min-width: 100%;
-  min-height: 100%;
-  position: absolute;
-  background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);
-  z-index: 2;"></div>
+          <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"
+          class="transition-transform duration-300 ease-in-out flex-col fixed flex drop-shadow-2xl bottom-0  top-0 right-0 z-40 w-11/12 sm:w-fulldark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark max-w-sm sm:ring-1 sm:ring-gray-900/10">
+            <div class="absolute" style=" height: 100vh; width:100%; z-index: -1;">
+            <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`,   backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <div v-if="currentStream === 'coma' && comaData" class="h-full absolute w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <div style="min-width: 100%; min-height: 100%; position: absolute;background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);z-index: 2;"/>
             </div>
             <div class="flex items-center justify-between p-3">
               <h1 class="text-xl text-white">{{nowPlayingStation}}</h1>
@@ -238,7 +218,7 @@
               </button>
              
             </div>
-           <div class="px-3 pb-6 " style="  flex-grow:1; overflow-y:auto"> 
+           <div class="px-3 pb-6 grow-1 overflow-y-auto"> 
             
             <div class="mt-2" >
               <div class="divide-y divide-zinc-500/10">
@@ -310,7 +290,7 @@
                  </div>
                  <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].elapsed) }}</span> 
                  <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].duration) }}</span> 
-                 <div class="absolute text-muddy-waters-100 text-4xl sm:text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                 <div class="absolute text-muddy-waters-100 text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
                   {{ getTimeFromTimestamp(radioData.np.now_playing.played_at) }}
                 </div>
                </div>

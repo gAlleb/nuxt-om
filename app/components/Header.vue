@@ -123,8 +123,9 @@
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
-          <div  id="myMobileMenu" style="flex-direction: column;"
-          :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  class="transition-transform duration-300 ease-in-out fixed drop-shadow-2xl flex bottom-0 top-0 right-0 z-10 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          <div  id="myMobileMenu" 
+          :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  
+          class="flex-col transition-transform duration-300 ease-in-out fixed drop-shadow-2xl flex bottom-0 top-0 right-0 z-10 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
           
             <div class="flex items-center justify-between">
               <h1 class="text-xl">Menu</h1>
@@ -136,7 +137,7 @@
             </div>
           
             <hr/>
-            <div id="content" style="flex-grow:1; overflow-y:auto">
+            <div id="content" class="grow-1 overflow-y-auto">
             <div class="flex my-3 justify-center">
                    
                   <BtnLocaleSwitch />
