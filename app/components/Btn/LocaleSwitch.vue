@@ -12,7 +12,7 @@ const switchLocalePath = useSwitchLocalePath()
       </MenuButton>
     </div>
     <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-      <MenuItems class="absolute right-0 z-10 mt-2 w-48 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline">
+      <MenuItems class="absolute right-0 z-10 mt-2 w-40 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline">
         <MenuItem as="div" class="hover:bg-gray-200 dark:hover:bg-primary-700">
           <NuxtLink :to="switchLocalePath('en')" class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100 w-full">
             <img src="/us.svg" class="h-6 w-8" aria-hidden="true" />
