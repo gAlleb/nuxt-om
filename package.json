@@ -1,5 +1,5 @@
 {
-  "name": "nuxt-ultra",
+  "name": "nuxt-om",
   "private": true,
   "scripts": {
     "build": "nuxt build",
@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "nuxt-swiper": "^1.2.2",
-    "pinia-plugin-persistedstate": "^3.2.3",
     "three": "^0.167.1"
   }
 }
