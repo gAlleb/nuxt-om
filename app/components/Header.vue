@@ -7,9 +7,9 @@
      mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between p-5  bg-sxvx-light dark:bg-sxvx-dark lg:px-20"
     >
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
-        <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-10 h-10  " />
-        <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-10 h-10  " />
-        <span class="ml-1 text-2xl hidden sm:block">omFM<sup>{{ logoText }}</sup></span>
+        <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-7 h-7  " />
+        <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-7 h-7  " />
+        <span class="ml-1 text-xl hidden sm:block">omFM<sup>{{ logoText }}</sup></span>
       </NuxtLink>
       
 
