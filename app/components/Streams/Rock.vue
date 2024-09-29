@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-2 sm:mx-5 lg:mx-20 font-metal">
+  <section class="mx-3 sm:mx-5 lg:mx-20 font-metal">
     <div class="  justify-center flex mx-auto lg:mx-20 ">
 
       <div v-if="radioData" class="container">  
