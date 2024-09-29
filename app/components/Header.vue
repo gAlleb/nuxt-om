@@ -125,7 +125,7 @@
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
           <div  id="myMobileMenu" 
           :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  
-          class="flex-col transition-transform duration-300 ease-in-out fixed drop-shadow-2xl flex bottom-0 top-0 right-0 z-10 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
+          class="flex-col transition-transform duration-300 ease-in-out fixed flex bottom-0 top-0 right-0 z-10 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
           
             <div class="flex items-center justify-between">
               <h1 class="text-xl">Menu</h1>

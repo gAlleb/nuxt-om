@@ -12,18 +12,18 @@
                     {{ getTimeFromTimestamp(omfmData.np.now_playing.played_at) }}
                    </div>
                   </div>
-                 <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
-                  <div class="px-3 py-1 mb-0 sm:py-4 sm:mb-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200  bg-opacity-50 ellipsify "> 
+                 <div class="ms-2 np-main">
+                  <div class="px-3 py-1 mb-0 sm:py-4 sm:mb-2 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200  bg-opacity-50 ellipsify "> 
                     <span class="text-xl sm:text-2xl">{{ omfmData.np.now_playing.song.title }}</span><br/>
                     <span class="text-lg sm:text-xl">{{ omfmData.np.now_playing.song.artist }}</span><br/>
                     <span class="text-md sm:text-lg" style="font-family: monospace">{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }} / {{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</span> 
   
                   </div>
-                  <div class="mt-2 sm:mt-5 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 "
+                  <div class="mt-2 sm:mt-2 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify"
                  > 
-                  <div class="text-sm sm:text-lg"> 
+                  <span class="text-sm sm:text-lg"> 
                    Show: {{ omfmData.np.now_playing.playlist }}
-                  </div>
+                  </span>
                   
                   </div>
                  </div>
