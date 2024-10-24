@@ -280,7 +280,7 @@
               <div v-if="currentStream === 'rock'">
                 <div class="justify-center flex mx-auto mb-2 font-metal">
       <div v-if="radioData" class="container">  
-        <h2 class="text-lg mb-3 text-white">Show: {{ radioData.np.now_playing.playlist }}</h2>      
+        <h2 class="text-lg mb-3 text-white">Show: {{ (radioData.np.now_playing.playlist !== '') ? radioData.np.now_playing.playlist : 'Relaying UltraFM' }}</h2>      
             <div class="content-center">
               <div class="mx-3">
                <div class="relative w-full">

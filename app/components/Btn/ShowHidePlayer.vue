@@ -118,7 +118,7 @@ function radioshow() {
 onMounted(() => {
 
 const playerVisibilityState = getItem('isPlayerVisible');
-if (playerVisibilityState === 'true') {
+if (playerVisibilityState === 'true' || playerVisibilityState === null) {
   setTimeout(() => {
   const player = document.getElementById("ice-player");
   player.style.transform = "translateY(0%)";
