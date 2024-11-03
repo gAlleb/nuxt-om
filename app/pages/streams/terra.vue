@@ -41,7 +41,7 @@
 
 
     </div>
-    <div class="hidden relative overflow-hidden dark:flex font-UNSCII" style="background: url('/terra.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
+    <div class="hidden relative overflow-hidden dark:flex font-tenor" style="background: url('/terra.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg"></div>
     <button 
         class="flex z-10 right-7 top-7 sm:top-10 sm:right-20 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
