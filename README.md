@@ -15,6 +15,8 @@ Version: v0.0.1
 <img src="https://omfm.ru/assets/img/git/4.png" alt="4" width="300"/>
 <img src="https://omfm.ru/assets/img/git/5.png" alt="4" width="300"/>
 <img src="https://omfm.ru/assets/img/git/6.png" alt="4" width="300"/>
+<img width="300" alt="image" src="https://github.com/user-attachments/assets/b457baee-cf39-4901-8cbe-667014926944">
+
 
 ## Modules
 
