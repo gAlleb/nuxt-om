@@ -84,7 +84,20 @@
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Coma</span>
             </div>
             </swiper-slide>
-
+            <swiper-slide class="me-2">
+            <div class="relative  cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('terra');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'terra',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
+            <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'terra',
+                  'opacity-75': currentStream !== 'terra',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Terra</span>
+            </div>
+            </swiper-slide>
           </swiper>
         </div>
  
@@ -109,6 +122,13 @@
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
+                <div v-else-if="currentStream === 'terra'" class="ellipsify">
+                <span class="text-xs text-zinc-500">Terra @ omFM</span> 
+                <br/>
+                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.title }}</span>
+                <br/>
+                <span class="text-xs">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.artist }}</span>
+                </div>
                 <div v-else-if="currentStream === 'stream'" class="ellipsify">
                 <span class="text-xs text-zinc-500">omFM</span>
                 <br/>
@@ -131,6 +151,14 @@
             <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'coma'">
                 <div v-if="comaData" >  
                 <img class="rounded-lg" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
+                </div>
+                <div v-else>
+                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                </div> 
+            </div>
+            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'terra'">
+                <div v-if="terraData" >  
+                <img class="rounded-lg" height="60" width="60" :src="terraData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(terraData.np.now_playing.song.art)" >
                 </div>
                 <div v-else>
                 <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
@@ -164,6 +192,9 @@
             v-if="currentStream === 'coma' && comaData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
+            v-if="currentStream === 'terra' && terraData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].elapsed) }}</div>
+            <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'stream' && omfmData"
             >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
    
@@ -173,6 +204,9 @@
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'coma' && comaData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].duration) }}</div>
+            <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
+            v-if="currentStream === 'terra' && terraData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].duration) }}</div>
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'stream' && omfmData"
             >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
@@ -188,6 +222,9 @@
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'coma' && comaData"
             :style="{ width: `${( np_ac.progress['station:coma'].width)}%` }"></div>
+            <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
+            v-if="currentStream === 'terra' && terraData"
+            :style="{ width: `${( np_ac.progress['station:terra'].width)}%` }"></div>
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'stream' && omfmData"
             :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
@@ -208,6 +245,8 @@
             <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`,   backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'coma' && comaData" class="h-full absolute w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <div v-if="currentStream === 'terra' && terraData" class="h-full absolute w-full" :style="{ background: `url(${terraData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+
             <div style="min-width: 100%; min-height: 100%; position: absolute;background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);z-index: 2;"/>
             </div>
             <div class="flex items-center justify-between p-3">
@@ -431,6 +470,84 @@
       </div> 
       </div>
               </div>
+
+              <div v-if="currentStream === 'terra'">
+                <div class="justify-center flex mx-auto mx-2 font-tenor">
+      <div v-if="terraData" class="container">  
+        <h2 class="text-lg mb-3 text-white">Show: {{ terraData.np.now_playing.playlist }}</h2>      
+            <div class="content-center">
+              <div class="mx-3">
+               <div class="relative w-full">
+                 <img class="rounded-xl h-auto w-full shadow-2xl cursor-pointer" :src="terraData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(terraData.np.now_playing.song.art, 0)" >
+                 <div class="absolute bg-sxvx-dark-bg bottom-0 rounded-b-xl  w-full h-5 overflow-hidden">
+                 <div class="absolute bg-muddy-waters-400 " style="height:20px;  transition: width 1s linear" :style="{ width: `${np_ac.progress['station:terra'].width}%` }"></div>
+                 </div>
+                 <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].elapsed) }}</span> 
+                 <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].duration) }}</span> 
+                 <div class="absolute text-muddy-waters-100 text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(terraData.np.now_playing.played_at) }}
+                </div>
+               </div>
+              </div>
+               <div class="ms-2" >
+                <div class="px-3  text-center mb-0 py-3  rounded-xl w-full text-muddy-waters-200  bg-opacity-50  "> 
+                  <span class="text-lg">{{ terraData.np.now_playing.song.title }}</span><br/>
+                  <span class="text-md">{{ terraData.np.now_playing.song.artist }}</span><br/>
+                  <span class="text-md">Album: {{ terraData.np.now_playing.song.album }}</span>
+                </div>
+               </div>
+            </div>
+             <hr/>
+          <h2 v-if="terraData.np.now_playing.playlist !== ''" class="my-3 text-lg text-white">Next Song:</h2>
+
+<div v-if="terraData.np.now_playing.playlist !== ''" class="mt-3 mb-5 rounded-xl  ice-player-el text-muddy-waters-300" >
+    <div class=" relative">
+      <img 
+    :src="terraData.np.playing_next.song.art" 
+    alt="History Cover"
+    class="history-cover cursor-pointer rounded-xl h-auto w-24"
+    @click="openLightbox(terraData.np.playing_next.song.art, 0)" 
+  >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+        {{ getTimeFromTimestamp(terraData.np.playing_next.played_at) }}
+       </div>
+      </div>
+     <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+      <div class="px-3 rounded-xl w-full text-muddy-waters-200 ellipsify "> 
+        <span class="text-sm">Show: {{ terraData.np.playing_next.playlist }}</span><hr/>
+        <span class="text-lg">{{ terraData.np.playing_next.song.title  }}</span><br/>
+        <span class="text-md">{{ terraData.np.playing_next.song.artist  }}</span>
+      </div>
+    </div>
+   </div>
+          <hr/>
+          <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
+          <ul>
+          <li v-for="(historyItem, index) in terraData.np.song_history.slice(0, 5)" :key="index">
+            <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el text-muddy-waters-200" >
+              <div class=" relative">
+                <img 
+              v-if="terraData.np.song_history[index].song.art" 
+              :src="terraData.np.song_history[index].song.art" 
+              alt="History Cover"
+              class="history-cover cursor-pointer rounded-xl h-auto w-24"
+              @click="openLightbox(terraData.np.song_history[index].song.art, index)" 
+            >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(historyItem.played_at) }}
+                 </div>
+                </div>
+               <div class="" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                <div class="px-3 py-0 sm:py-2 rounded-xl w-full  ellipsify "> 
+                  <span class="text-lg">{{ historyItem.song.title  }}</span><br/>
+                  <span class="text-md">{{ historyItem.song.artist  }}</span>
+                </div>
+              </div>
+             </div>
+          </li>
+        </ul>       
+      </div> 
+      </div>
+              </div>
+
               </div>
             </div>
 
@@ -464,7 +581,7 @@ const omfmData = computed(() => np_omfm.stations['station:radio']);
 
 const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
-
+const terraData = computed(() => np_ac.stations['station:terra']);
 const playerMenuOpen = ref(false)
 
 function playerMenuToggle() {
@@ -499,6 +616,8 @@ const nowPlayingStation = computed(() => {
       return 'RockFM';
     case 'coma':
       return 'ComaFM';
+    case 'terra':
+      return 'TerraFM';
     default:
       return ''; // Default text
   }
@@ -534,6 +653,7 @@ watch(isPlayingComputed, (isPlaying) => {
  watch(radioData, () => {updateTitleAndMediaSession()});
  watch(comaData, () => {updateTitleAndMediaSession()});
  watch(omfmData, () => {updateTitleAndMediaSession()});
+ watch(terraData, () => {updateTitleAndMediaSession()});
 
 function updateTitleAndMediaSession() {
   updateTitle();
@@ -585,6 +705,14 @@ function getTrackData(stream) {
         artist = comaData.value.np.now_playing.song.artist;
         album = comaData.value.np.now_playing.song.album;
         artwork = comaData.value.np.now_playing.song.art;
+      }
+      break;
+    case 'terra':
+      if (terraData.value) {
+        title = terraData.value.np.now_playing.song.title;
+        artist = terraData.value.np.now_playing.song.artist;
+        album = terraData.value.np.now_playing.song.album;
+        artwork = terraData.value.np.now_playing.song.art;
       }
       break;
     case 'stream':

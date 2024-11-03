@@ -10,6 +10,7 @@
                 'from-orange-800 via-orange-600 to-orange-500': currentStream === 'stream',
                 'from-red-800 via-red-600 to-red-500': currentStream === 'rock',
                 'from-blue-800 via-blue-600 to-blue-500': currentStream === 'coma',
+                'from-green-800 via-green-600 to-green-500': currentStream === 'terra',
             }">
       <Icon name="heroicons:link" class="h-6 w-6" aria-hidden="true" /><span class="text-zinc-200"> &nbsp; {{ linkText }} </span>
     </NuxtLink>
@@ -31,6 +32,8 @@ const linkText = computed(() => {
       return 'Magic Link Rock';
     case 'coma':
       return 'Magic Link Coma';
+    case 'terra':
+      return 'Magic Link Terra';
     default:
       return 'Magic Link'; // Default text
   }

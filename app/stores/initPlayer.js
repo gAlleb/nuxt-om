@@ -9,6 +9,7 @@ export const initPlayerStore = defineStore('player', {
     isPlayingStream: false, 
     isPlayingRock: false,
     isPlayingComa: false,
+    isPlayingTerra: false,
   }),
   actions: {
     initPlayer() {
@@ -30,6 +31,7 @@ export const initPlayerStore = defineStore('player', {
         this.isPlayingStream = false;
         this.isPlayingRock = false;
         this.isPlayingComa = false;
+        this.isPlayingTerra = false;
         this.isPlaying = false;
       } else {
         this.player.play();
@@ -43,6 +45,9 @@ export const initPlayerStore = defineStore('player', {
         if (this.player.stream_mount === 'coma') {
           this.isPlayingComa = true;
         }
+        if (this.player.stream_mount === 'terra') {
+          this.isPlayingTerra = true;
+        }
       }
     },
     togglePlay(name) {
@@ -54,6 +59,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingStream = false;
           this.isPlayingRock = false;
           this.isPlayingComa = false;
+          this.isPlayingTerra = false;
         } else {
          
           this.player.play();
@@ -68,6 +74,9 @@ export const initPlayerStore = defineStore('player', {
           if (this.player.stream_mount === 'coma') {
             this.isPlayingComa = true;
           }
+          if (this.player.stream_mount === 'terra') {
+            this.isPlayingTerra = true;
+          }
         }
         
       } else if (name !== this.player.stream_mount) {
@@ -79,6 +88,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingStream = false;
           this.isPlayingRock = false;
           this.isPlayingComa = false;
+          this.isPlayingTerra = false;
           this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
@@ -86,6 +96,7 @@ export const initPlayerStore = defineStore('player', {
             this.isPlayingStream = false;
             this.isPlayingRock = false;
             this.isPlayingComa = false;
+            this.isPlayingTerra = false;
           } else {
             this.player.play();
             this.isPlaying = true;
@@ -98,6 +109,9 @@ export const initPlayerStore = defineStore('player', {
             } 
             if (this.player.stream_mount === 'coma') {
               this.isPlayingComa = true;
+            }
+            if (this.player.stream_mount === 'terra') {
+              this.isPlayingTerra = true;
             }
           }
       } 
@@ -120,26 +134,29 @@ export const initPlayerStore = defineStore('player', {
       if (this.player.stream_mount === 'coma') {
         this.isPlayingComa = true;
       }
+      if (this.player.stream_mount === 'terra') {
+        this.isPlayingTerra = true;
+      }
     },
     stopPlayer() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();
       } 
       this.isPlaying = false;
-
       this.isPlayingStream = false;
       this.isPlayingRock = false;
       this.isPlayingComa = false;
+      this.isPlayingTerra = false;
     },
     pausePlayer1() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.pause();
       } 
       this.isPlaying = false;
-
       this.isPlayingStream = false;
       this.isPlayingRock = false;
       this.isPlayingComa = false;
+      this.isPlayingTerra = false;
     },
     changeVol3() { 
     this.player.change_volume3();
@@ -154,6 +171,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingRock = false;
       this.isPlayingComa = false;
       this.isPlayingStream = false;
+      this.isPlayingTerra = false;
     if (this.player.current_state === this.player.PLAYING) {
         if (name === 'stream') {
           this.isPlayingStream = true;
@@ -163,6 +181,9 @@ export const initPlayerStore = defineStore('player', {
         } 
         if (name === 'coma') {
           this.isPlayingComa = true;
+        }
+        if (name === 'terra') {
+          this.isPlayingTerra = true;
         }
     } 
     this.player.change_stream(name);
