@@ -196,7 +196,7 @@
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'stream' && omfmData"
-            >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
+            >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
    
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'rock' && radioData"
@@ -209,7 +209,7 @@
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].duration) }}</div>
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'stream' && omfmData"
-            >{{ np_ac.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
+            >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
 
             </div>       
 
