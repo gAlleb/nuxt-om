@@ -52,23 +52,23 @@ export default defineNuxtConfig({
     },
   ], 'pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos', "nuxt-easy-lightbox", 'nuxt-swiper'],
 
-  icon: {
-      serverBundle: 'local',
-      clientBundle: {
-      // list of icons to include in the client bundle
-      // icons: [
-      //   // 'heroicons-solid:play',
-      //   // 'heroicons-solid:stop',
-      //   // ...
-      // ],
-      // scan all components in the project and include icons 
-      scan: true,
-      // include all custom collections in the client bundle
-      includeCustomCollections: true, 
-      // guard for uncompressed bundle size, will fail the build if exceeds
-      sizeLimitKb: 256,
-    },
-  },
+  // icon: {
+  //     serverBundle: 'local',
+  //     clientBundle: {
+  //     // list of icons to include in the client bundle
+  //     // icons: [
+  //     //   // 'heroicons-solid:play',
+  //     //   // 'heroicons-solid:stop',
+  //     //   // ...
+  //     // ],
+  //     // scan all components in the project and include icons 
+  //     scan: true,
+  //     // include all custom collections in the client bundle
+  //     includeCustomCollections: true, 
+  //     // guard for uncompressed bundle size, will fail the build if exceeds
+  //     sizeLimitKb: 256,
+  //   },
+  // },
   i18n: {
     // langDir: 'locales',
     lazy: true,
