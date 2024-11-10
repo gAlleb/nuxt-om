@@ -1,12 +1,14 @@
-export const useStore = defineStore('userData', {
-  // arrow function recommended for full type inference
-  state: () => {
-    return {
-      // all these properties will have their type inferred automatically
-      count: '0',
+export const useCounterStore = defineStore(
+  'counter',
+  () => {
+    const count = ref(0)
+    const computedCount = computed(() => count.value * 2)
+    function increment() {
+      count.value++
     }
+    return { count, increment, computedCount }
   },
-  persist: {
-    storage: persistedState.sessionStorage,
-  },
-})
+  {
+    persist: true,
+  }
+)

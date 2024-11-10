@@ -343,6 +343,8 @@
 </template>
 
 <script setup>
+const localePath = useLocalePath()
+
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
  

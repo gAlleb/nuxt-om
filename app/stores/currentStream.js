@@ -97,9 +97,9 @@ export const currentStreamStore = defineStore('playerCurrentStream', {
             }
           },
     },
-     // // this below works great with run build
+    // // this below works great with run build
     // persist: {
-    //   storage: persistedState.cookiesWithOptions({
+    //   storage: piniaPluginPersistedstate.cookies({
     //     // sameSite: 'strict',
     //     sameSite: 'lax',
     //     maxAge: 798131659,

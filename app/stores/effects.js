@@ -20,7 +20,7 @@ export const useEffectsStore = defineStore('effectsOverlay', {
        
  //     // // this below works great with run build
     persist: {
-      storage: persistedState.cookiesWithOptions({
+      storage: piniaPluginPersistedstate.cookies({
         // sameSite: 'strict',
         sameSite: 'lax',
         maxAge: 798131659,

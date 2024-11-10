@@ -50,31 +50,27 @@ export default defineNuxtConfig({
     {
       autoImports: ['defineStore'],
     },
-  ], '@pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos', "nuxt-easy-lightbox", 'nuxt-swiper'],
+  ], 'pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos', "nuxt-easy-lightbox", 'nuxt-swiper'],
 
-  // icon: {
-  //     serverBundle: 'local',
-  //     clientBundle: {
-  //     // list of icons to include in the client bundle
-  //     // icons: [
-  //     //   // 'heroicons-solid:play',
-  //     //   // 'heroicons-solid:stop',
-  //     //   // ...
-  //     // ],
-  //     // scan all components in the project and include icons 
-  //     scan: true,
-  //     // include all custom collections in the client bundle
-  //     includeCustomCollections: true, 
-  //     // guard for uncompressed bundle size, will fail the build if exceeds
-  //     sizeLimitKb: 256,
-  //   },
-  // },
+  icon: {
+      serverBundle: 'local',
+      clientBundle: {
+      // list of icons to include in the client bundle
+      // icons: [
+      //   // 'heroicons-solid:play',
+      //   // 'heroicons-solid:stop',
+      //   // ...
+      // ],
+      // scan all components in the project and include icons 
+      scan: true,
+      // include all custom collections in the client bundle
+      includeCustomCollections: true, 
+      // guard for uncompressed bundle size, will fail the build if exceeds
+      sizeLimitKb: 256,
+    },
+  },
   i18n: {
-    // compilation: {
-    //   strictMessage: false,
-    //   escapeHtml: true,
-    // },
-    langDir: 'locales',
+    // langDir: 'locales',
     lazy: true,
     baseUrl: process.env.SITE_URL,
 
@@ -83,7 +79,6 @@ export default defineNuxtConfig({
       { code: 'ru', name: 'Русский', language: 'ru-RU', file: 'ru.json' },
       { code: 'es', name: 'Español', language: 'es-ES', file: 'es.json' },
     ],
-    // trailingSlash: true,
     debug: false,
     defaultLocale: 'en',
     // strategy: 'no_prefix',
