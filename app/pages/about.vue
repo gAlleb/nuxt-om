@@ -33,7 +33,7 @@
   <h1 class="text-5xl sm:text-7xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
    About
   </h1>
-  <h1 class="text-xl sm:text-xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
+  <h1 class="text-xl sm:text-xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.6);">
     Here you will find all our streaming URL addresses and playlist files for download for your media player.<br/>
     Icecast & HLS
   </h1>
@@ -41,7 +41,7 @@
   </div>
     </div>
   
-  <div class="lg:mx-20 md:mx-10 sm:mx-3 mt-5">
+  <div class="lg:mx-20 md:mx-10 sm:mx-3 xs:mx-3 mt-5">
   <p class="mb-5">
   omFM:<br/>
   –
