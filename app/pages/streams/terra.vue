@@ -34,9 +34,12 @@
       TerraFM
     </h1>
     <h1 class="text-2xl sm:text-3xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
-      nature, music of the Earth
+      Nature, music of the Earth<br/>
+      <span class="text-muddy-waters-800">Earth is a Solar Powered Jukebox</span>
     </h1>
-
+    <h1 class="text-lg md:text-xl text-muddy-waters-800 text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
+      The amazing world of sound from leading field recording artists around the globe. 
+    </h1>
     </div>
 
 
@@ -67,17 +70,24 @@
           aria-hidden="true"
         />
        </button>
-    <div class="absolute z-10"  style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
+    <div class="absolute z-10 w-full"  style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
  
  <h1 class="text-5xl sm:text-7xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
    TerraFM
  </h1>
  <h1 class="text-2xl sm:text-3xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
-   nature, music of the Earth
+   Nature, music of the Earth<br/>
+   <span class="text-red-200">Earth is a Solar Powered Jukebox</span>
+
+ </h1>
+ <h1 class="text-lg md:text-xl text-sxvx-light  text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
+  The amazing world of sound from leading field recording artists around the globe. 
+
  </h1>
 
  </div>
     </div>
+
 
 
 <StreamsTerra/>
