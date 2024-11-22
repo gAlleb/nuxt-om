@@ -86,8 +86,8 @@ export const useAzuracastData = defineStore({
           this.coverArtUrls[station] = coverArtUrl;
           console.warn(coverArtUrl);
         });
-        
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
+        this.ffetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);
         }
 
         // this.fetchSpotifyToken();
@@ -246,6 +246,14 @@ export const useAzuracastData = defineStore({
           });
       });
     },
+    async fetchNextCoverArt(artist, title, station) {
+      this.fetchCoverArt(artist, title, station)
+      .then(coverArtUrl => {
+        this.nextCoverArtUrls[station] = coverArtUrl;
+        
+      });
+   
+  },
     async fetchNextCoverArtSpotify(album, artist, station) {
         this.fetchCoverArtSpotify(album, artist, station)
         .then(coverArtUrl => {
