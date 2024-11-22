@@ -80,43 +80,46 @@ export const useAzuracastData = defineStore({
           removeClasses: ["animated","bounceInLeft"],
         });
         }, 2000);
-        // this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
-        // .then(coverArtUrl => {
-        //   this.coverArtUrls[station] = coverArtUrl;
-        //   console.warn(coverArtUrl);
-        // });
+        if (station === "station:radio") {
+        this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
+        .then(coverArtUrl => {
+          this.coverArtUrls[station] = coverArtUrl;
+          console.warn(coverArtUrl);
+        });
         
-        // this.fetchCoverArtForSongHistory(npData.np.song_history, station);
-        this.fetchSpotifyToken();
-
-        if (this.spotifyToken === '') {
-          this.fetchSpotifyToken()
-          .then(() => {
-              if (station === "station:radio") {
-                this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
-                .then(coverArtUrl => {
-                this.coverArtUrls[station] = coverArtUrl;
-               
-                });
-              
-                this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
-                this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist, station);
-              }
-          })
-        } else {
-              if (station === "station:radio") {
-                this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
-                .then(coverArtUrl => {
-                this.coverArtUrls[station] = coverArtUrl;
-                });
-          
-                this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
-                this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist,  station);
-              }    
+        this.fetchCoverArtForSongHistory(npData.np.song_history, station);
         }
-     } else {
+
+        // this.fetchSpotifyToken();
+
+    //     if (this.spotifyToken === '') {
+    //       this.fetchSpotifyToken()
+    //       .then(() => {
+    //           if (station === "station:radio") {
+    //             this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
+    //             .then(coverArtUrl => {
+    //             this.coverArtUrls[station] = coverArtUrl;
+               
+    //             });
+              
+    //             this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
+    //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist, station);
+    //           }
+    //       })
+    //     } else {
+    //           if (station === "station:radio") {
+    //             this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
+    //             .then(coverArtUrl => {
+    //             this.coverArtUrls[station] = coverArtUrl;
+    //             });
+          
+    //             this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
+    //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist,  station);
+    //           }    
+    //     }
+    //  } else {
         
-     }
+    //  }
     },
     startProgressBar(station, elapsed, duration) {
     // Dynamically initialize progress data for each station

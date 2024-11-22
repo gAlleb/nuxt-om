@@ -68,21 +68,22 @@ export const useOmfmData = defineStore({
 
       
         
-        // this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
-        // .then(coverArtUrl => {
-        //   this.coverArtUrls[station] = coverArtUrl;
-        //   console.warn(coverArtUrl);
-        // });
-        
-        // this.fetchCoverArtForSongHistory(npData.np.song_history, station);
-        
-       
-        this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, npData.spotifyToken, station)
+        this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
         .then(coverArtUrl => {
           this.coverArtUrls[station] = coverArtUrl;
+          console.warn(coverArtUrl);
         });
         
-        this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, npData.spotifyToken, station);
+        this.fetchCoverArtForSongHistory(npData.np.song_history, station);
+        
+       
+    //     this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, npData.spotifyToken, station)
+    //     .then(coverArtUrl => {
+    //       this.coverArtUrls[station] = coverArtUrl;
+    //     });
+        
+    //     this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, npData.spotifyToken, station);
+    // 
      } else {
         
      }
