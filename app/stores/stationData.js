@@ -156,7 +156,7 @@ export const useAzuracastData = defineStore({
 
     },
     async fetchCoverArt(artist, title, station) {
-      await this.ensureSpotifyToken();
+      // await this.ensureSpotifyToken();
       try {
         const response = await fetch(`https://itunes.apple.com/search?term=${artist} ${title}&media=music&limit=1`, {
           headers: {
