@@ -225,7 +225,7 @@ export const useAzuracastData = defineStore({
     async fetchCoverArtForSongHistory(songHistory, station) {
       const historyToFetch = songHistory.slice(0, 5); 
       historyToFetch.forEach((song, index) => {
-        this.fetchCoverArt(song.song.artis, song.song.title, station)
+        this.fetchCoverArt(song.song.artist, song.song.title, station)
           .then(coverArtUrl => {
             if (!this.songHistoryCoverArt[station]) {
               this.songHistoryCoverArt[station] = {};
