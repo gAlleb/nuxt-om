@@ -87,7 +87,7 @@ export const useAzuracastData = defineStore({
           console.warn(coverArtUrl);
         });
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
-        this.ffetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);
+        this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);
         }
 
         // this.fetchSpotifyToken();
