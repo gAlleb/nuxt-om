@@ -117,9 +117,9 @@ export const useAzuracastData = defineStore({
     //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist,  station);
     //           }    
     //     }
-    //  } else {
+     } else {
         
-    //  }
+     }
     },
     startProgressBar(station, elapsed, duration) {
     // Dynamically initialize progress data for each station
