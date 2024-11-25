@@ -84,7 +84,6 @@ export const useAzuracastData = defineStore({
         this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
         .then(coverArtUrl => {
           this.coverArtUrls[station] = coverArtUrl;
-          console.warn(coverArtUrl);
         });
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
         this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);

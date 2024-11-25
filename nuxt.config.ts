@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css'],
+  css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css', '~/assets/css/christmas.css'],
   
   // mdc: { 
   //   highlight: {

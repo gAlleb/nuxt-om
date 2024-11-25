@@ -108,6 +108,7 @@
     <!-- Mobile nav -->
     <div class="flex">
      <div class="flex">
+      <BtnChristmas /> 
       <BtnShowHidePlayer />
       <BtnSetStream /> 
       <BtnEffects_with_pinia />
