@@ -1,6 +1,6 @@
 <template>
     <div>
-      <UTooltip text="Chrismas Time!" :popper="{ offsetDistance: 5 }"  class="">
+      <UTooltip text="Christmas Time!" :popper="{ offsetDistance: 5 }"  class="">
 
 
       <button @click="changeChristmasState.toggle()"
