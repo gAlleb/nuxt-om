@@ -2,7 +2,7 @@
     text-align: center;
     white-space: nowrap;
     overflow: hidden;
-    position: absolute;
+    position: fixed;
     z-index: 9999;
     margin: -16px 0 0 0;
     padding: 0;
