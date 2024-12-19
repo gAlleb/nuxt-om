@@ -361,23 +361,59 @@ function clearCache() {
 
 // Изменение состояния элементов при загрузке страницы
 onMounted(() => {
-  // Restore the state of each individual overlay
-  for (let i = 0; i <= 5; i++) {
-    const overlayId = `overlay${i}`;
-    const overlay = document.getElementById(overlayId);
-    if (overlay) {
-      const overlayState = getItem(overlayId);
-      if (overlayState === 'true' || overlayState === null) {
-        overlay.style.display = 'flex';
-        effectStates.value[overlayId] = true;
-        effectsStore.setOverlayState(overlayId, true);
-      } else {
-        overlay.style.display = 'none';
-        effectStates.value[overlayId] = false;
-        effectsStore.setOverlayState(overlayId, false);
-      }
+  // // Restore the state of each individual overlay
+  // for (let i = 0; i <= 5; i++) {
+  //   const overlayId = `overlay${i}`;
+  //   const overlay = document.getElementById(overlayId);
+  //   if (overlay) {
+  //     const overlayState = getItem(overlayId);
+  //     if (overlayState === 'true' || overlayState === null) {
+  //       overlay.style.display = 'flex';
+  //       effectStates.value[overlayId] = true;
+  //       effectsStore.setOverlayState(overlayId, true);
+  //     } else {
+  //       overlay.style.display = 'none';
+  //       effectStates.value[overlayId] = false;
+  //       effectsStore.setOverlayState(overlayId, false);
+  //     }
+  //   }
+  // }
+
+  function handleOverlay(overlayId, effectState) {
+  const overlay = document.getElementById(overlayId);
+  if (overlay) {
+    if (effectState === 'true' || effectState === null) {
+      overlay.style.display = 'flex';
+      effectStates.value[overlayId] = true;
+      effectsStore.setOverlayState(overlayId, true);
+    } else {
+      overlay.style.display = 'none';
+      effectStates.value[overlayId] = false;
+      effectsStore.setOverlayState(overlayId, false);
     }
   }
+}
+function handleOverlayFALSE(overlayId, effectState) {
+  const overlay = document.getElementById(overlayId);
+  if (overlay) {
+    if (effectState === 'false' || effectState === null) {
+      overlay.style.display = 'none';
+      effectStates.value[overlayId] = false;
+      effectsStore.setOverlayState(overlayId, false);
+    } else {
+      overlay.style.display = 'flex';
+      effectStates.value[overlayId] = true;
+      effectsStore.setOverlayState(overlayId, true);
+    }
+  }
+}
+
+handleOverlayFALSE('overlay0', getItem('overlay0'));
+handleOverlay('overlay1', getItem('overlay1'));
+handleOverlayFALSE('overlay2', getItem('overlay2'));
+handleOverlay('overlay3', getItem('overlay3'));
+handleOverlay('overlay4', getItem('overlay4'));
+handleOverlay('overlay5', getItem('overlay5'));
 
   // Restore the combined state for overlays 3, 4, and 5
   // if (getItem('overlay3') === 'false' || getItem('overlay4') === 'false' || getItem('overlay5') === 'false') {
