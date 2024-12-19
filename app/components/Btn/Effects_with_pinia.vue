@@ -325,9 +325,11 @@ function toggleAllEffects() {
 function clearCache() {
   // Clear localStorage
   for (let i = 0; i <= 5; i++) {
-    removeItem(`overlay${i}`);
+    // removeItem(`overlay${i}`);
+    setItem(`overlay${i}`, 'true');
   }
-  removeItem('effects');
+  // removeItem('effects');
+  setItem('effects', 'true');
 
   // Reset overlay states
   effectStates.value = {
@@ -386,10 +388,12 @@ onMounted(() => {
       overlay.style.display = 'flex';
       effectStates.value[overlayId] = true;
       effectsStore.setOverlayState(overlayId, true);
+      setItem(overlayId, 'true');
     } else {
       overlay.style.display = 'none';
       effectStates.value[overlayId] = false;
       effectsStore.setOverlayState(overlayId, false);
+      setItem(overlayId, 'false');
     }
   }
 }
@@ -400,10 +404,12 @@ function handleOverlayFALSE(overlayId, effectState) {
       overlay.style.display = 'none';
       effectStates.value[overlayId] = false;
       effectsStore.setOverlayState(overlayId, false);
+      setItem(overlayId, 'false');
     } else {
       overlay.style.display = 'flex';
       effectStates.value[overlayId] = true;
       effectsStore.setOverlayState(overlayId, true);
+      setItem(overlayId, 'true');
     }
   }
 }

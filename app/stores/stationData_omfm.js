@@ -7,12 +7,12 @@ export const useOmfmData = defineStore({
     eventSource: null,
     isLoading: true,
     stationNames: ['radio'],
-    progress: {
-      
-    },
+    progress: {},
     coverArtUrls: {}, 
     lastFetchedShIds: {},
     songHistoryCoverArt: {},
+    collectionViewUrls: {},
+    songHistoryCollectionViewUrls: {},
   }),
   actions: {
     connectToSSE() {
@@ -69,8 +69,9 @@ export const useOmfmData = defineStore({
       
         
         this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
-        .then(coverArtUrl => {
-          this.coverArtUrls[station] = coverArtUrl;
+        .then(coverArtData => {
+          this.coverArtUrls[station] = coverArtData.artworkUrl;
+          this.collectionViewUrls[station] = coverArtData.collectionViewUrl;
         });
         
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
@@ -132,12 +133,19 @@ export const useOmfmData = defineStore({
         if (data.resultCount) {
           const artworkUrl100 = data.results[0].artworkUrl100;
           const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
-          return artworkUrl512;
+          const collectionViewUrl = data.results[0].collectionViewUrl;
+          return {
+            artworkUrl: artworkUrl512,
+            collectionViewUrl: collectionViewUrl
+          };
         }
       } catch (error) {
-        console.error('Error fetching cover art:', error);
+        console.error('Error fetching data from iTunes:', error);
       }
-      return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'; // Return null if no cover art is found
+      return {
+        artworkUrl: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg',
+        collectionViewUrl: '#'
+      };
     },
     async fetchCoverArtSpotify(album, artist, spotifyToken, station) {
       try {
@@ -167,12 +175,16 @@ export const useOmfmData = defineStore({
       const historyToFetch = songHistory.slice(1, 6); 
       historyToFetch.forEach((song, index) => {
         this.fetchCoverArt(song.song.artist, song.song.title, station)
-          .then(coverArtUrl => {
-            if (!this.songHistoryCoverArt[station]) {
-              this.songHistoryCoverArt[station] = {};
-            }
-            this.songHistoryCoverArt[station][index] = coverArtUrl;
-          });
+        .then(coverArtData => {
+          if (!this.songHistoryCoverArt[station]) {
+            this.songHistoryCoverArt[station] = {};
+          }
+          if (!this.songHistoryCollectionViewUrls[station]) {
+            this.songHistoryCollectionViewUrls[station] = {};
+          }
+          this.songHistoryCoverArt[station][index] = coverArtData.artworkUrl;
+          this.songHistoryCollectionViewUrls[station][index] = coverArtData.collectionViewUrl;
+        });
       });
     },
     async fetchCoverArtForSongHistorySpotify(songHistory, spotifyToken, station) {

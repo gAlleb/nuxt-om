@@ -12,6 +12,9 @@ export const useAzuracastData = defineStore({
     nextCoverArtUrls: {},  
     lastFetchedShIds: {},
     songHistoryCoverArt: {},
+    collectionViewUrls: {},
+    nextCollectionViewUrls: {},
+    songHistoryCollectionViewUrls: {},
     spotifyToken: '',
     documentTitle: {},
   }),
@@ -82,8 +85,9 @@ export const useAzuracastData = defineStore({
         }, 2000);
         if (station === "station:radio") {
         this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
-        .then(coverArtUrl => {
-          this.coverArtUrls[station] = coverArtUrl;
+        .then(coverArtData => {
+          this.coverArtUrls[station] = coverArtData.artworkUrl;
+          this.collectionViewUrls[station] = coverArtData.collectionViewUrl;
         });
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
         this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);
@@ -167,12 +171,19 @@ export const useAzuracastData = defineStore({
         if (data.resultCount) {
           const artworkUrl100 = data.results[0].artworkUrl100;
           const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
-          return artworkUrl512;
+          const collectionViewUrl = data.results[0].collectionViewUrl;
+          return {
+            artworkUrl: artworkUrl512,
+            collectionViewUrl: collectionViewUrl
+          };
         }
       } catch (error) {
-        console.error('Error fetching cover art:', error);
+        console.error('Error fetching data from iTunes:', error);
       }
-      return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'; // Return null if no cover art is found
+      return {
+        artworkUrl: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg',
+        collectionViewUrl: '#'
+      };
     },
     async fetchSpotifyToken() {
       try {
@@ -225,11 +236,15 @@ export const useAzuracastData = defineStore({
       const historyToFetch = songHistory.slice(0, 5); 
       historyToFetch.forEach((song, index) => {
         this.fetchCoverArt(song.song.artist, song.song.title, station)
-          .then(coverArtUrl => {
+          .then(coverArtData => {
             if (!this.songHistoryCoverArt[station]) {
               this.songHistoryCoverArt[station] = {};
             }
-            this.songHistoryCoverArt[station][index] = coverArtUrl;
+            if (!this.songHistoryCollectionViewUrls[station]) {
+              this.songHistoryCollectionViewUrls[station] = {};
+            }
+            this.songHistoryCoverArt[station][index] = coverArtData.artworkUrl;
+            this.songHistoryCollectionViewUrls[station][index] = coverArtData.collectionViewUrl;
           });
       });
     },
@@ -247,9 +262,9 @@ export const useAzuracastData = defineStore({
     },
     async fetchNextCoverArt(artist, title, station) {
       this.fetchCoverArt(artist, title, station)
-      .then(coverArtUrl => {
-        this.nextCoverArtUrls[station] = coverArtUrl;
-        
+      .then(coverArtData => {
+        this.nextCoverArtUrls[station] = coverArtData.artworkUrl;
+        this.nextCollectionViewUrls[station] = coverArtData.collectionViewUrl;
       });
    
   },

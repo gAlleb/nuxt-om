@@ -19,12 +19,27 @@
                   <span class="text-md sm:text-lg" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].elapsed) }} / {{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].duration) }}</span> 
 
                 </div>
-                <div class="mt-2 sm:mt-2 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "
+                <div class="mt-2 sm:mt-2 text-md sm:text-xl px-2 py-1 sm:py-4 justify-between flex rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "
                > 
-                <span class="text-sm sm:text-lg"> 
+                <span class="text-sm sm:text-lg inline-flex"> 
                  Show: {{ (radioData.np.now_playing.playlist !== '') ? radioData.np.now_playing.playlist : 'Relaying UltraFM' }}
                 </span>
-                
+                <a v-if="np_ac.collectionViewUrls['station:radio'] !== '#'" :href="np_ac.collectionViewUrls['station:radio']" target="_blank" rel="noopener noreferrer">
+                <Icon
+                name="heroicons-solid:musical-note"
+                class="h-4 w-4 sm:h-7 sm:w-7 bg-muddy-waters-800 dark:bg-muddy-waters-200"   
+                aria-hidden="true"
+                style="margin-top: 5px;
+                       margin-bottom: -5px;"
+               />
+               </a>
+                <Icon v-if="np_ac.collectionViewUrls['station:radio'] === '#'"
+                name="heroicons-solid:musical-note"
+                class="h-4 w-4 sm:h-7 sm:w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200 opacity-30"   
+                aria-hidden="true"
+                style="margin-top: 5px;
+                       margin-bottom: -5px;"
+               />
                 </div>
                </div>
 
@@ -58,9 +73,16 @@
                 </div>
               </div>
               <div class="me-2">
+                <a v-if="np_ac.nextCollectionViewUrls['station:radio'] !== '#'" :href="np_ac.nextCollectionViewUrls['station:radio']" target="_blank" rel="noopener noreferrer">
                 <Icon
                 name="heroicons-solid:musical-note"
                 class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200"   
+                aria-hidden="true"
+               />
+               </a>
+                <Icon v-if="np_ac.nextCollectionViewUrls['station:radio'] === '#'"
+                name="heroicons-solid:musical-note"
+                class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200 opacity-30"   
                 aria-hidden="true"
                />
               </div>
@@ -89,11 +111,20 @@
                 </div>
               </div>
               <div class="me-2">
+              
+              <a v-if="np_ac.songHistoryCollectionViewUrls['station:radio'] && np_ac.songHistoryCollectionViewUrls['station:radio'][index] !== '#'" :href="np_ac.songHistoryCollectionViewUrls['station:radio'][index]" target="_blank" rel="noopener noreferrer">
                 <Icon
                 name="heroicons-solid:musical-note"
                 class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200"   
                 aria-hidden="true"
                />
+               </a>
+                <Icon v-if="np_ac.songHistoryCollectionViewUrls['station:radio'] && np_ac.songHistoryCollectionViewUrls['station:radio'][index] === '#'"
+                name="heroicons-solid:musical-note"
+                class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200 opacity-30"   
+                aria-hidden="true"
+               />
+               
               </div>
 
              </div>
