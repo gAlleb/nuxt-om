@@ -408,12 +408,12 @@ function handleOverlayFALSE(overlayId, effectState) {
   }
 }
 
-handleOverlayFALSE('overlay0', getItem('overlay0'));
-handleOverlay('overlay1', getItem('overlay1'));
-handleOverlayFALSE('overlay2', getItem('overlay2'));
-handleOverlay('overlay3', getItem('overlay3'));
-handleOverlay('overlay4', getItem('overlay4'));
-handleOverlay('overlay5', getItem('overlay5'));
+handleOverlay('overlay0', getItem('overlay0'));
+handleOverlayFALSE('overlay1', getItem('overlay1'));
+handleOverlay('overlay2', getItem('overlay2'));
+handleOverlayFALSE('overlay3', getItem('overlay3'));
+handleOverlayFALSE('overlay4', getItem('overlay4'));
+handleOverlayFALSE('overlay5', getItem('overlay5'));
 
   // Restore the combined state for overlays 3, 4, and 5
   // if (getItem('overlay3') === 'false' || getItem('overlay4') === 'false' || getItem('overlay5') === 'false') {
