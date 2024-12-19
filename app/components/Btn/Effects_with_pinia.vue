@@ -229,11 +229,11 @@ onBeforeUnmount(() => {
 const allEffectsOn = ref(true); // Initial state - overlays initially visible
 const effectStates = ref({
   "overlay0": true,
-  "overlay1": true,
+  "overlay1": false,
   "overlay2": true,
-  "overlay3": true,
-  "overlay4": true,
-  "overlay5": true
+  "overlay3": false,
+  "overlay4": false,
+  "overlay5": false
   // "overlay3_5": true // Use a single key to control overlays 3, 4, and 5
 });
 // Function to check if all values are true
