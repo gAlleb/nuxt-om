@@ -5,11 +5,11 @@ export const useEffectsStore = defineStore('effectsOverlay', {
     state: () => ({
         effects: true,
         overlay0: true,
-        overlay1: false,
+        overlay1: true,
         overlay2: true,
-        overlay3: false,
-        overlay4: false,
-        overlay5: false,
+        overlay3: true,
+        overlay4: true,
+        overlay5: true,
     }),
     actions: {
       setOverlayState(overlayIndex, isOverlayActive) {
