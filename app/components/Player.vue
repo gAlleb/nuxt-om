@@ -222,10 +222,10 @@
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:radio'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'coma' && comaData"
-            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:core'].elapsed) }}</div>
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'core' && coreData"
-            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:coma'].elapsed) }}</div>
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:core'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'terra' && terraData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].elapsed) }}</div>

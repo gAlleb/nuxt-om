@@ -1,5 +1,7 @@
 <template>
-  <!-- <div class="mx-auto flex max-w-8xl flex-col justify-center rounded-full py-2">
+
+  <section>
+   <!-- <div class="mx-auto flex max-w-8xl flex-col justify-center rounded-full py-2">
     <h1 class="bg-primary-600 text-7xl font-extrabold text-zinc-900 dark:text-zinc-50">{{ $t('about') }}</h1>
   <UCard>
       <div>
@@ -9,7 +11,6 @@
       </div>
     </UCard> 
   </div> -->
-  <section>
     <div class="flex relative overflow-hidden dark:hidden font-tenor" style="background: url('/omfm4-light.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
     <div class="absolute z-10 w-full"  style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
@@ -73,6 +74,7 @@
   – <a href="https://radio.omfm.ru/hls/terra/live.m3u8" target="blank">Terra @ omFM Stream HLS</a><br/>
   </p>
 </div>
+
   
 
   </section>
