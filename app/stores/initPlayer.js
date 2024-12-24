@@ -9,6 +9,7 @@ export const initPlayerStore = defineStore('player', {
     isPlayingStream: false, 
     isPlayingRock: false,
     isPlayingComa: false,
+    isPlayingCore: false,
     isPlayingTerra: false,
   }),
   actions: {
@@ -32,6 +33,7 @@ export const initPlayerStore = defineStore('player', {
         this.isPlayingRock = false;
         this.isPlayingComa = false;
         this.isPlayingTerra = false;
+        this.isPlayingCore = false,
         this.isPlaying = false;
       } else {
         this.player.play();
@@ -48,6 +50,9 @@ export const initPlayerStore = defineStore('player', {
         if (this.player.stream_mount === 'terra') {
           this.isPlayingTerra = true;
         }
+        if (this.player.stream_mount === 'core') {
+          this.isPlayingCore = true;
+        }
       }
     },
     togglePlay(name) {
@@ -60,6 +65,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingRock = false;
           this.isPlayingComa = false;
           this.isPlayingTerra = false;
+          this.isPlayingCore = false;
         } else {
          
           this.player.play();
@@ -73,6 +79,9 @@ export const initPlayerStore = defineStore('player', {
           } 
           if (this.player.stream_mount === 'coma') {
             this.isPlayingComa = true;
+          }
+          if (this.player.stream_mount === 'core') {
+            this.isPlayingCore = true;
           }
           if (this.player.stream_mount === 'terra') {
             this.isPlayingTerra = true;
@@ -89,6 +98,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingRock = false;
           this.isPlayingComa = false;
           this.isPlayingTerra = false;
+          this.isPlayingCore = false;
           this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
@@ -97,6 +107,7 @@ export const initPlayerStore = defineStore('player', {
             this.isPlayingRock = false;
             this.isPlayingComa = false;
             this.isPlayingTerra = false;
+            this.isPlayingCore = false;
           } else {
             this.player.play();
             this.isPlaying = true;
@@ -109,6 +120,9 @@ export const initPlayerStore = defineStore('player', {
             } 
             if (this.player.stream_mount === 'coma') {
               this.isPlayingComa = true;
+            }
+            if (this.player.stream_mount === 'core') {
+              this.isPlayingCore = true;
             }
             if (this.player.stream_mount === 'terra') {
               this.isPlayingTerra = true;
@@ -134,6 +148,9 @@ export const initPlayerStore = defineStore('player', {
       if (this.player.stream_mount === 'coma') {
         this.isPlayingComa = true;
       }
+      if (this.player.stream_mount === 'core') {
+        this.isPlayingCore = true;
+      }
       if (this.player.stream_mount === 'terra') {
         this.isPlayingTerra = true;
       }
@@ -147,6 +164,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingRock = false;
       this.isPlayingComa = false;
       this.isPlayingTerra = false;
+      this.isPlayingCore = false;
     },
     pausePlayer1() {
       if (this.player.current_state === this.player.PLAYING) {
@@ -157,6 +175,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingRock = false;
       this.isPlayingComa = false;
       this.isPlayingTerra = false;
+      this.isPlayingCore = false;
     },
     changeVol3() { 
     this.player.change_volume3();
@@ -172,6 +191,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingComa = false;
       this.isPlayingStream = false;
       this.isPlayingTerra = false;
+      this.isPlayingCore = false;
     if (this.player.current_state === this.player.PLAYING) {
         if (name === 'stream') {
           this.isPlayingStream = true;
@@ -181,6 +201,9 @@ export const initPlayerStore = defineStore('player', {
         } 
         if (name === 'coma') {
           this.isPlayingComa = true;
+        }
+        if (name === 'core') {
+          this.isPlayingCore = true;
         }
         if (name === 'terra') {
           this.isPlayingTerra = true;

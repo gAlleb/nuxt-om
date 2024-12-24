@@ -20,9 +20,15 @@
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 3,
     }"
     >ComaFM</button>
-    <button @click="showDiv(4)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl"
+    <button @click="showDiv(4)" class="w-full rounded-t-lg inline-flex justify-center  font-UNSCII text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 4,
+    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 3,
+    }"
+    >COReFM</button>
+    <button @click="showDiv(5)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl"
+    :class="{
+    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 5,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 4,
     }"
     >TerraFM</button>
@@ -38,6 +44,9 @@
       <StreamsComa/>
     </div>
     <div v-if="activeDiv === 4">
+      <StreamsCore/>
+    </div>
+    <div v-if="activeDiv === 5">
       <StreamsTerra/>
     </div>
   </div>

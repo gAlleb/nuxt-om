@@ -62,6 +62,12 @@
   </p>
   <hr/>
   <p class="mb-5 mt-5">
+  CORE @ omFM:<br/>
+  – <a href="https://omfm.ru:8443/core" target="blank">CORE @ omFM Stream Icecast</a><br/>
+  – <a href="https://radio.omfm.ru/hls/core/live.m3u8" target="blank">CORE @ omFM Stream HLS</a><br/>
+  </p>
+  <hr/>
+  <p class="mb-5 mt-5">
   Terra @ omFM:<br/>
   – <a href="https://omfm.ru:8443/terra" target="blank">Terra @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/terra/live.m3u8" target="blank">Terra @ omFM Stream HLS</a><br/>

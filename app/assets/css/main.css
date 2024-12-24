@@ -346,6 +346,10 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
         z-index: 1000;
       background-image: radial-gradient(rgba(255, 108, 0, 0.16),rgba(244, 228, 47, 0.13) 100%);
         }
+        .overlay.radial-core {
+          z-index: 1000;
+        background-image:radial-gradient(rgba(14, 14, 14, 0.2),rgba(38, 37, 37, 0.31) 100%);
+          }
 @keyframes scanline {
   0% {
     transform:translateY(100%)

@@ -6,7 +6,7 @@ export const useAzuracastData = defineStore({
     stations: {}, // Object to store station data
     eventSource: null,
     isLoading: true,
-    stationNames: ['radio', 'coma', 'terra'],
+    stationNames: ['radio', 'coma', 'terra','core'],
     progress: {},
     coverArtUrls: {},
     nextCoverArtUrls: {},  

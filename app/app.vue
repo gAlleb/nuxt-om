@@ -6,7 +6,7 @@
   :class="{
                 'font-tenor': currentStream === 'stream' || currentStream ===  'terra',
                 'font-metal': currentStream === 'rock',
-                'font-UNSCII': currentStream === 'coma',
+                'font-UNSCII': currentStream === 'coma' || currentStream ===  'core',
             }"
     >
 <div id="overlay0" class="overlay  "  :class="{
@@ -14,6 +14,7 @@
                 'radial2': currentStream === 'rock',
                 'radial3': currentStream === 'coma',
                 'radial4-terra': currentStream === 'terra',
+                'radial-core': currentStream === 'core',
                  
             }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
              ></div>
@@ -42,7 +43,7 @@
       <NuxtPage />
     </main>
     <!-- Site footer -->
-    <BtnBuyMeCoffee />
+    <BtnTakeMeHome/>
     <div>
    
   </div>

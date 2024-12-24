@@ -68,6 +68,13 @@
           </button>
         </NuxtLink>
         <hr/>
+          <NuxtLink :to="localePath('/streams/core')" class="text-zinc-600 dark:text-zinc-100">
+          <button
+            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
+              <span class="text-zinc-600 dark:text-zinc-100">CORE @ omFM</span>
+          </button>
+        </NuxtLink>
+        <hr/>
         <NuxtLink :to="localePath('/streams/terra')" class="text-zinc-600 dark:text-zinc-100">
           <button 
             class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
@@ -186,6 +193,15 @@
                      </button>
                   </NuxtLink>
                   <hr/>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/core')" class="text-zinc-600 dark:text-zinc-100">
+                     <button 
+                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+                     <span class=" text-zinc-600 dark:text-zinc-100">
+                     CORE @ omFM
+                     </span>
+                     </button>
+                  </NuxtLink>
+                  <hr/>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/terra')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
                      class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
@@ -282,6 +298,8 @@ const logoText = computed(() => {
       return 'Rock';
     case 'coma':
       return 'Coma';
+    case 'core':
+      return 'xCOREx';
     case 'terra':
       return 'Terra';
     default:

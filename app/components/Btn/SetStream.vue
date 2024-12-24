@@ -40,6 +40,14 @@
             </NuxtLink>
           </button>
           <button :class="{
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'core',
+            }"
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream('core')">
+            <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
+              <span class="text-zinc-600 dark:text-zinc-100">CORE @ omFM</span>
+            </NuxtLink>
+          </button>
+          <button :class="{
                 'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'terra',
             }"
             class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="setStream('terra')">
