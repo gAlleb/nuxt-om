@@ -41,7 +41,7 @@
                    padding-bottom:3px;
                    " 
             class="relative"
-            :freeMode="true"  
+            :freeMode="false"  
             :mouseWheel="true"  
             :spaceBetween="5" 
             :init="false"

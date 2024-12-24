@@ -73,7 +73,7 @@
    CoreFM
  </h1>
  <h1 class="text-2xl sm:text-3xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
-   ambient, drone, field recordings
+   deathcore, metalcore, hardcore
  </h1>
 
  </div>
