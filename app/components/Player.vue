@@ -60,7 +60,7 @@
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">omFM</span>
             </div>
             </swiper-slide>
-            <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
+            <swiper-slide class="me-2 ms-2" style="height: 40px; width: 40px!important;">
             <div class="relative cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
               <img :class="{
                   'grayscale opacity-50': currentStream !== 'rock',
