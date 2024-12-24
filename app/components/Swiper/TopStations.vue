@@ -61,7 +61,7 @@
         </NuxtLink>
     </div>
   </swiper-slide>
-  <swiper-slide class="rounded-3xl overflow-hidden ps-0 sm:ps-0" style="height:150px; width: 266px!important">
+  <swiper-slide class="rounded-3xl overflow-hidden ms-1.5 ps-0 sm:ps-0" style="height:150px; width: 266px!important">
       <div 
       :class="{
                   'border border-red-500/50': currentStream === 'rock',
