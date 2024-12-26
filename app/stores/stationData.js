@@ -85,12 +85,12 @@ export const useAzuracastData = defineStore({
           })
         }, 2000)
         if (station === 'station:radio') {
-          this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, npData.np.now_playing.art).then((coverArtData) => {
+          this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, npData.np.now_playing.song.art).then((coverArtData) => {
             this.coverArtUrls[station] = coverArtData.artworkUrl
             this.collectionViewUrls[station] = coverArtData.collectionViewUrl
           })
           this.fetchCoverArtForSongHistory(npData.np.song_history, station)
-          this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, npData.np.playing_next.song.art)
+          this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, npData.np.playing_next.song.art, station)
         }
 
         // this.fetchSpotifyToken();
@@ -165,6 +165,7 @@ export const useAzuracastData = defineStore({
           title: title,
           artist: artist,
           artworkUrl: coverArt,
+          collectionViewUrl: '#',
         }
         return results
       }
@@ -175,6 +176,7 @@ export const useAzuracastData = defineStore({
           title: title,
           artist: artist,
           artworkUrl: coverArt,
+          collectionViewUrl: '#',
         }
         return results
       }
@@ -233,7 +235,7 @@ export const useAzuracastData = defineStore({
     async fetchCoverArtForSongHistory(songHistory, station) {
       const historyToFetch = songHistory.slice(0, 5)
       historyToFetch.forEach((song, index) => {
-        this.fetchCoverArt(song.song.artist, song.song.title, station).then((coverArtData) => {
+        this.fetchCoverArt(song.song.artist, song.song.title, song.song.art).then((coverArtData) => {
           if (!this.songHistoryCoverArt[station]) {
             this.songHistoryCoverArt[station] = {}
           }
@@ -256,8 +258,8 @@ export const useAzuracastData = defineStore({
         })
       })
     },
-    async fetchNextCoverArt(artist, title, station) {
-      this.fetchCoverArt(artist, title, station).then((coverArtData) => {
+    async fetchNextCoverArt(artist, title, coverArt, station) {
+      this.fetchCoverArt(artist, title, coverArt).then((coverArtData) => {
         this.nextCoverArtUrls[station] = coverArtData.artworkUrl
         this.nextCollectionViewUrls[station] = coverArtData.collectionViewUrl
       })
@@ -357,5 +359,4 @@ function setElement(target, content,
     }
   });
 }
-
 
