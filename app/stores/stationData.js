@@ -6,10 +6,10 @@ export const useAzuracastData = defineStore({
     stations: {}, // Object to store station data
     eventSource: null,
     isLoading: true,
-    stationNames: ['radio', 'coma', 'terra','core'],
+    stationNames: ['radio', 'coma', 'terra', 'core'],
     progress: {},
     coverArtUrls: {},
-    nextCoverArtUrls: {},  
+    nextCoverArtUrls: {},
     lastFetchedShIds: {},
     songHistoryCoverArt: {},
     collectionViewUrls: {},
@@ -20,274 +20,265 @@ export const useAzuracastData = defineStore({
   }),
   actions: {
     connectToSSE() {
-      const baseUri = "https://radio.omfm.ru";
+      const baseUri = 'https://radio.omfm.ru'
       const subs = this.stationNames.reduce((acc, stationName) => {
-        acc[`station:${stationName}`] = { "recover": true };
-        return acc;
-      }, {});
+        acc[`station:${stationName}`] = { recover: true }
+        return acc
+      }, {})
 
-      const sseUri = baseUri + "/api/live/nowplaying/sse?cf_connect=" + JSON.stringify({
-        "subs": subs
-      });
+      const sseUri =
+        baseUri +
+        '/api/live/nowplaying/sse?cf_connect=' +
+        JSON.stringify({
+          subs: subs,
+        })
 
-      this.eventSource = new EventSource(sseUri);
+      this.eventSource = new EventSource(sseUri)
 
       this.eventSource.addEventListener('message', (event) => {
-        const data = JSON.parse(event.data);
-        this.isLoading = false; // Set loading to false when connected
+        const data = JSON.parse(event.data)
+        this.isLoading = false // Set loading to false when connected
         if (data.connect && data.connect.subs) {
           for (const station in data.connect.subs) {
-            const publications = data.connect.subs[station].publications;
+            const publications = data.connect.subs[station].publications
             if (publications && publications.length > 0) {
-              const npData = publications[0].data;
-              this.updateStationData(station, npData);
+              const npData = publications[0].data
+              this.updateStationData(station, npData)
             }
           }
         } else if (data.pub) {
-          this.updateStationData(data.channel, data.pub.data);
+          this.updateStationData(data.channel, data.pub.data)
         }
-      });
+      })
 
       this.eventSource.onerror = () => {
-        console.error("SSE connection error. Reconnecting in 5 seconds...");
-        this.eventSource.close();
+        console.error('SSE connection error. Reconnecting in 5 seconds...')
+        this.eventSource.close()
         setTimeout(() => {
-          this.connectToSSE();
-        }, 5000);
-      };
-
+          this.connectToSSE()
+        }, 5000)
+      }
     },
     updateStationData(station, npData) {
-     
-      this.stations[station] = npData; // Update station data directly
-      let ch = station.split(":")[1] || null;
+      this.stations[station] = npData // Update station data directly
+      let ch = station.split(':')[1] || null
       // sanitize station shortcode for use in a CSS class name
-      ch = toKebabCase(ch);
+      ch = toKebabCase(ch)
       //const np = this.stations[station].np || null;
-      this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
-      this.documentTitle[station] = npData.np.now_playing.song.text;
+      this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration) // Start progress bar on data update
+      this.documentTitle[station] = npData.np.now_playing.song.text
       // Check for sh_id change (using separate object)
-      const currentShId = npData.np.now_playing.sh_id;
+      const currentShId = npData.np.now_playing.sh_id
       if (this.lastFetchedShIds[station] !== currentShId) {
-        this.lastFetchedShIds[station] = currentShId; // Update the last fetched sh_id
+        this.lastFetchedShIds[station] = currentShId // Update the last fetched sh_id
 
-      
-        setElement("np-" + ch + "-song-text", npData.np.now_playing.song.text);
-        setElement("np-" + ch + "-song-art",  "", {
+        setElement('np-' + ch + '-song-text', npData.np.now_playing.song.text)
+        setElement('np-' + ch + '-song-art', '', {
           style: {
-          "background-image": "url("+npData.np.now_playing.song.art+")"},
-          addClasses: ["animated","bounceInLeft"],
-        });
+            'background-image': 'url(' + npData.np.now_playing.song.art + ')',
+          },
+          addClasses: ['animated', 'bounceInLeft'],
+        })
         setTimeout(function () {
-        setElement("np-" + ch + "-song-art", "", {
-          removeClasses: ["animated","bounceInLeft"],
-        });
-        }, 2000);
-        if (station === "station:radio") {
-        this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
-        .then(coverArtData => {
-          this.coverArtUrls[station] = coverArtData.artworkUrl;
-          this.collectionViewUrls[station] = coverArtData.collectionViewUrl;
-        });
-        this.fetchCoverArtForSongHistory(npData.np.song_history, station);
-        this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);
+          setElement('np-' + ch + '-song-art', '', {
+            removeClasses: ['animated', 'bounceInLeft'],
+          })
+        }, 2000)
+        if (station === 'station:radio') {
+          this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, npData.np.now_playing.art).then((coverArtData) => {
+            this.coverArtUrls[station] = coverArtData.artworkUrl
+            this.collectionViewUrls[station] = coverArtData.collectionViewUrl
+          })
+          this.fetchCoverArtForSongHistory(npData.np.song_history, station)
+          this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, npData.np.playing_next.song.art)
         }
 
         // this.fetchSpotifyToken();
 
-    //     if (this.spotifyToken === '') {
-    //       this.fetchSpotifyToken()
-    //       .then(() => {
-    //           if (station === "station:radio") {
-    //             this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
-    //             .then(coverArtUrl => {
-    //             this.coverArtUrls[station] = coverArtUrl;
-               
-    //             });
-              
-    //             this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
-    //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist, station);
-    //           }
-    //       })
-    //     } else {
-    //           if (station === "station:radio") {
-    //             this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
-    //             .then(coverArtUrl => {
-    //             this.coverArtUrls[station] = coverArtUrl;
-    //             });
-          
-    //             this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
-    //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist,  station);
-    //           }    
-    //     }
-     } else {
-        
-     }
+        //     if (this.spotifyToken === '') {
+        //       this.fetchSpotifyToken()
+        //       .then(() => {
+        //           if (station === "station:radio") {
+        //             this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
+        //             .then(coverArtUrl => {
+        //             this.coverArtUrls[station] = coverArtUrl;
+
+        //             });
+
+        //             this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
+        //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist, station);
+        //           }
+        //       })
+        //     } else {
+        //           if (station === "station:radio") {
+        //             this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, station)
+        //             .then(coverArtUrl => {
+        //             this.coverArtUrls[station] = coverArtUrl;
+        //             });
+
+        //             this.fetchCoverArtForSongHistorySpotify(npData.np.song_history, station);
+        //             this.fetchNextCoverArtSpotify(npData.np.playing_next.song.album, npData.np.playing_next.song.artist,  station);
+        //           }
+        //     }
+      } else {
+      }
     },
     startProgressBar(station, elapsed, duration) {
-    // Dynamically initialize progress data for each station
+      // Dynamically initialize progress data for each station
       if (!this.progress[station]) {
-        this.progress[station] = { elapsed: 0, duration: 0, lastUpdate: Date.now(), intervalId: 0, width: 0 };
+        this.progress[station] = { elapsed: 0, duration: 0, lastUpdate: Date.now(), intervalId: 0, width: 0 }
       }
 
-      this.progress[station].elapsed = elapsed;
-      this.progress[station].duration = duration;
-      this.progress[station].lastUpdate = Date.now();
+      this.progress[station].elapsed = elapsed
+      this.progress[station].duration = duration
+      this.progress[station].lastUpdate = Date.now()
 
       if (this.progress[station].intervalId === 0) {
-        this.progress[station].intervalId = setInterval(() => this.updateProgressBar(station), 1000);
+        this.progress[station].intervalId = setInterval(() => this.updateProgressBar(station), 1000)
       }
-      this.updateProgressBar(station);
+      this.updateProgressBar(station)
     },
     stopProgressBar(station) {
       if (this.progress[station].intervalId !== 0) {
-        clearInterval(this.progress[station].intervalId);
+        clearInterval(this.progress[station].intervalId)
       }
-      this.progress[station].intervalId = 0;
+      this.progress[station].intervalId = 0
     },
     updateProgressBar(station) {
-      let now = Date.now();
-      this.progress[station].elapsed += (now - this.progress[station].lastUpdate) / 1000;
-      this.progress[station].lastUpdate = now;
-      this.progress[station].width = this.progress[station].elapsed / this.progress[station].duration * 100.0;
-      this.progress[station].width = this.progress[station].width > 100 ? 100 : this.progress[station].width;
+      let now = Date.now()
+      this.progress[station].elapsed += (now - this.progress[station].lastUpdate) / 1000
+      this.progress[station].lastUpdate = now
+      this.progress[station].width = (this.progress[station].elapsed / this.progress[station].duration) * 100.0
+      this.progress[station].width = this.progress[station].width > 100 ? 100 : this.progress[station].width
 
       if (this.progress[station].duration > 0 && this.progress[station].elapsed > this.progress[station].duration) {
-        this.progress[station].elapsed = this.progress[station].duration;
-        this.stopProgressBar(station);
+        this.progress[station].elapsed = this.progress[station].duration
+        this.stopProgressBar(station)
       }
-
     },
-    async fetchCoverArt(artist, title, station) {
-      // await this.ensureSpotifyToken();
-      try {
-        const response = await fetch(`https://itunes.apple.com/search?term=${artist} ${title}&media=music&limit=1`, {
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15'
-          }
-        });
+    async fetchCoverArt(artist, title, coverArt) {
+      const track = artist + ' - ' + title
+      const response = await fetch(`https://itunes.apple.com/search?limit=1&term=${encodeURIComponent(track)}`)
 
-        const data = await response.json();
-        if (data.resultCount) {
-          const artworkUrl100 = data.results[0].artworkUrl100;
-          const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
-          const collectionViewUrl = data.results[0].collectionViewUrl;
-          return {
-            artworkUrl: artworkUrl512,
-            collectionViewUrl: collectionViewUrl
-          };
+      if (response.status === 403) {
+        const results = {
+          title: title,
+          artist: artist,
+          artworkUrl: coverArt,
         }
-      } catch (error) {
-        console.error('Error fetching data from iTunes:', error);
+        return results
       }
-      return {
-        artworkUrl: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg',
-        collectionViewUrl: '#'
-      };
+
+      const data = response.ok ? await response.json() : {}
+      if (!data.results || data.results.length === 0) {
+        const results = {
+          title: title,
+          artist: artist,
+          artworkUrl: coverArt,
+        }
+        return results
+      }
+
+      const itunes = data.results[0]
+      const results = {
+        title: itunes.trackName || title,
+        artist: itunes.artistName || artist,
+        artworkUrl: itunes.artworkUrl100 ? itunes.artworkUrl100.replace('100x100', '512x512') : coverArt,
+        collectionViewUrl: itunes.collectionViewUrl,
+      }
+      return results
     },
     async fetchSpotifyToken() {
       try {
-
-        const response0 = await fetch(`https://rock.omfm.ru/api/spotifyToken`);
-        const spotifyToken = await response0.text();
+        const response0 = await fetch(`https://rock.omfm.ru/api/spotifyToken`)
+        const spotifyToken = await response0.text()
         if (spotifyToken.length !== 0) {
-          this.spotifyToken = spotifyToken;
+          this.spotifyToken = spotifyToken
         }
       } catch (error) {
-        console.error('Error fetching cover art:', error);
+        console.error('Error fetching cover art:', error)
       }
-      return '';
+      return ''
     },
     // Helper function to ensure spotifyToken is populated
     async ensureSpotifyToken() {
       if (this.spotifyToken === '') {
-        await this.fetchSpotifyToken();
+        await this.fetchSpotifyToken()
       }
     },
     async fetchCoverArtSpotify(album, artist, station) {
       try {
-
         // if (!this.spotifyToken) {
         //   await this.fetchSpotifyToken(); // Fetch token if it's not available
         // }
-        const response = await fetch(
-          `https://api.spotify.com/v1/search?q=${artist} ${album}&type=album&limit=1`,
-          {
+        const response = await fetch(`https://api.spotify.com/v1/search?q=${artist} ${album}&type=album&limit=1`, {
           headers: {
-            'Authorization': 'Bearer ' + this.spotifyToken
-          }
-        });
+            Authorization: 'Bearer ' + this.spotifyToken,
+          },
+        })
 
-        const data = await response.json();
+        const data = await response.json()
         if (data.albums && data.albums.items.length !== 0) {
-          const artworkUrl100 = data.albums.items[0].images[0].url;
-          const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
-          return artworkUrl512;
+          const artworkUrl100 = data.albums.items[0].images[0].url
+          const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb')
+          return artworkUrl512
         } else {
-          return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg';
+          return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'
         }
-        
       } catch (error) {
-        console.error('Error fetching cover art:', error);
+        console.error('Error fetching cover art:', error)
       }
-      return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'; // Return null if no cover art is found
+      return 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg' // Return null if no cover art is found
     },
     async fetchCoverArtForSongHistory(songHistory, station) {
-      const historyToFetch = songHistory.slice(0, 5); 
+      const historyToFetch = songHistory.slice(0, 5)
       historyToFetch.forEach((song, index) => {
-        this.fetchCoverArt(song.song.artist, song.song.title, station)
-          .then(coverArtData => {
-            if (!this.songHistoryCoverArt[station]) {
-              this.songHistoryCoverArt[station] = {};
-            }
-            if (!this.songHistoryCollectionViewUrls[station]) {
-              this.songHistoryCollectionViewUrls[station] = {};
-            }
-            this.songHistoryCoverArt[station][index] = coverArtData.artworkUrl;
-            this.songHistoryCollectionViewUrls[station][index] = coverArtData.collectionViewUrl;
-          });
-      });
+        this.fetchCoverArt(song.song.artist, song.song.title, station).then((coverArtData) => {
+          if (!this.songHistoryCoverArt[station]) {
+            this.songHistoryCoverArt[station] = {}
+          }
+          if (!this.songHistoryCollectionViewUrls[station]) {
+            this.songHistoryCollectionViewUrls[station] = {}
+          }
+          this.songHistoryCoverArt[station][index] = coverArtData.artworkUrl
+          this.songHistoryCollectionViewUrls[station][index] = coverArtData.collectionViewUrl
+        })
+      })
     },
     async fetchCoverArtForSongHistorySpotify(songHistory, station) {
-      const historyToFetch = songHistory.slice(0, 5); 
+      const historyToFetch = songHistory.slice(0, 5)
       historyToFetch.forEach((song, index) => {
-        this.fetchCoverArtSpotify(song.song.album, song.song.artist, station)
-          .then(coverArtUrl => {
-            if (!this.songHistoryCoverArt[station]) {
-              this.songHistoryCoverArt[station] = {};
-            }
-            this.songHistoryCoverArt[station][index] = coverArtUrl;
-          });
-      });
+        this.fetchCoverArtSpotify(song.song.album, song.song.artist, station).then((coverArtUrl) => {
+          if (!this.songHistoryCoverArt[station]) {
+            this.songHistoryCoverArt[station] = {}
+          }
+          this.songHistoryCoverArt[station][index] = coverArtUrl
+        })
+      })
     },
     async fetchNextCoverArt(artist, title, station) {
-      this.fetchCoverArt(artist, title, station)
-      .then(coverArtData => {
-        this.nextCoverArtUrls[station] = coverArtData.artworkUrl;
-        this.nextCollectionViewUrls[station] = coverArtData.collectionViewUrl;
-      });
-   
-  },
+      this.fetchCoverArt(artist, title, station).then((coverArtData) => {
+        this.nextCoverArtUrls[station] = coverArtData.artworkUrl
+        this.nextCollectionViewUrls[station] = coverArtData.collectionViewUrl
+      })
+    },
     async fetchNextCoverArtSpotify(album, artist, station) {
-        this.fetchCoverArtSpotify(album, artist, station)
-        .then(coverArtUrl => {
-          this.nextCoverArtUrls[station] = coverArtUrl;
-          
-        });
-     
+      this.fetchCoverArtSpotify(album, artist, station).then((coverArtUrl) => {
+        this.nextCoverArtUrls[station] = coverArtUrl
+      })
     },
   },
-    // Initialize stations dynamically
-    created() {
-      // for (const station in subs) {
-      //   this.stations[station] = { lastShId: null }; 
-      // }
-      this.stationNames.forEach((stationName) => {
-        //this.stations[`station:${stationName}`] = { lastShId: null }; 
-        this.lastFetchedShIds[`station:${stationName}`] = null; // Initialize lastFetchedShIds
-      });
-    },
-});
+  // Initialize stations dynamically
+  created() {
+    // for (const station in subs) {
+    //   this.stations[station] = { lastShId: null };
+    // }
+    this.stationNames.forEach((stationName) => {
+      //this.stations[`station:${stationName}`] = { lastShId: null };
+      this.lastFetchedShIds[`station:${stationName}`] = null // Initialize lastFetchedShIds
+    })
+  },
+})
 
 function minSec(duration) {
   const minutes = Math.trunc(duration / 60);
