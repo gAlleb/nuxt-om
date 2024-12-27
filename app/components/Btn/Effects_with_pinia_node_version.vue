@@ -412,7 +412,7 @@ function handleOverlayFALSE(overlayId, effectState) {
       setItem(overlayId, 'true');
     }
   }
-}s
+}
 
 handleOverlay('overlay0', getItem('overlay0'));
 handleOverlayFALSE('overlay1', getItem('overlay1'));

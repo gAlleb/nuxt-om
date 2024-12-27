@@ -44,13 +44,12 @@ export default defineNuxtConfig({
   },
 
   modules: [// remove this if you don't want to use @nuxt/content for your blog
-  '@nuxt/content', '@nuxt/ui', 
-  [
+  '@nuxt/content', '@nuxt/ui', [
     '@pinia/nuxt',
     {
       autoImports: ['defineStore'],
     },
-  ], 'pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos', "nuxt-easy-lightbox", 'nuxt-swiper'],
+  ], 'pinia-plugin-persistedstate/nuxt', 'nuxt-gtag', '@nuxtjs/i18n', "@nuxt/image", 'nuxt-aos', "nuxt-easy-lightbox", 'nuxt-swiper', '@pinia/nuxt'],
 
   icon: {
       serverBundle: 'local',
