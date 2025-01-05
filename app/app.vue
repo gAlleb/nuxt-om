@@ -41,7 +41,9 @@
     <!-- Page content -->
     <main class="my-20 grow">
       <NuxtPage />
+      <BackgroundCanvas />
     </main>
+    
     <!-- Site footer -->
     <BtnTakeMeHome/>
     <div>

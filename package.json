@@ -36,5 +36,8 @@
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.8",
     "three": "^0.170.0"
+  },
+  "dependencies": {
+    "@vueuse/core": "^12.3.0"
   }
 }
