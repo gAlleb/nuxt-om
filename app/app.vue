@@ -39,9 +39,8 @@
     <!-- Site header --> 
     <Header />
     <!-- Page content -->
-    <main class="my-20 grow">
+    <main class="my-20 grow" style="z-index:20">
       <NuxtPage />
-      <BackgroundCanvas />
     </main>
     
     <!-- Site footer -->
@@ -56,6 +55,10 @@
     <div class="hidden playerContainer">
       <Player />
     </div>
+
+    <ClientOnly>
+      <Art />
+    </ClientOnly>
 
   </div>
   <!-- <iframe
@@ -156,6 +159,8 @@ const currentStream = computed(() => useCurrentStreamStore.currentStream); // Re
 onMounted(() => {
 useCurrentStreamStore.loadStreamName();
 });
+
+
 
 </script>
 
