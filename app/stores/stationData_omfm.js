@@ -121,62 +121,62 @@ export const useOmfmData = defineStore({
 
     },
     async fetchCoverArt(artist, title, station) {
-      const track = artist + ' - ' + title
-      const defaultCoverart = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'
-      const response = await fetch(`https://itunes.apple.com/search?limit=1&term=${encodeURIComponent(track)}`)
-      if (response.status === 403) {
-        const results = {
-          title: title,
-          artist: artist,
-          artworkUrl: defaultCoverart,
-          collectionViewUrl: '#',
-        }
-        return results
-      }
-
-      const data = response.ok ? await response.json() : {}
-      if (!data.results || data.results.length === 0) {
-        const results = {
-          title: title,
-          artist: artist,
-          artworkUrl: defaultCoverart,
-          collectionViewUrl: '#',
-        }
-        return results
-      }
-
-      const itunes = data.results[0]
-      const results = {
-        title: itunes.trackName || title,
-        artist: itunes.artistName || artist,
-        artworkUrl: itunes.artworkUrl100 ? itunes.artworkUrl100.replace('100x100', '512x512') : defaultCoverart,
-        collectionViewUrl: itunes.collectionViewUrl,
-      }
-      return results
-      // try {
-      //   const response = await fetch(`https://itunes.apple.com/search?term=${artist} ${title}&media=music&limit=1`, {
-      //     headers: {
-      //       'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15'
-      //     }
-      //   });
-
-      //   const data = await response.json();
-      //   if (data.resultCount) {
-      //     const artworkUrl100 = data.results[0].artworkUrl100;
-      //     const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
-      //     const collectionViewUrl = data.results[0].collectionViewUrl;
-      //     return {
-      //       artworkUrl: artworkUrl512,
-      //       collectionViewUrl: collectionViewUrl
-      //     };
+      // const track = artist + ' - ' + title
+      // const defaultCoverart = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'
+      // const response = await fetch(`https://itunes.apple.com/search?limit=1&term=${encodeURIComponent(track)}`)
+      // if (response.status === 403) {
+      //   const results = {
+      //     title: title,
+      //     artist: artist,
+      //     artworkUrl: defaultCoverart,
+      //     collectionViewUrl: '#',
       //   }
-      // } catch (error) {
-      //   console.error('Error fetching data from iTunes:', error);
+      //   return results
       // }
-      // return {
-      //   artworkUrl: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg',
-      //   collectionViewUrl: '#'
-      // };
+
+      // const data = response.ok ? await response.json() : {}
+      // if (!data.results || data.results.length === 0) {
+      //   const results = {
+      //     title: title,
+      //     artist: artist,
+      //     artworkUrl: defaultCoverart,
+      //     collectionViewUrl: '#',
+      //   }
+      //   return results
+      // }
+
+      // const itunes = data.results[0]
+      // const results = {
+      //   title: itunes.trackName || title,
+      //   artist: itunes.artistName || artist,
+      //   artworkUrl: itunes.artworkUrl100 ? itunes.artworkUrl100.replace('100x100', '512x512') : defaultCoverart,
+      //   collectionViewUrl: itunes.collectionViewUrl,
+      // }
+      // return results
+      try {
+        const response = await fetch(`https://itunes.apple.com/search?term=${artist} ${title}&media=music&limit=1`, {
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Safari/605.1.15'
+          }
+        });
+
+        const data = await response.json();
+        if (data.resultCount) {
+          const artworkUrl100 = data.results[0].artworkUrl100;
+          const artworkUrl512 = artworkUrl100.replace('100x100bb', '512x512bb');
+          const collectionViewUrl = data.results[0].collectionViewUrl;
+          return {
+            artworkUrl: artworkUrl512,
+            collectionViewUrl: collectionViewUrl
+          };
+        }
+      } catch (error) {
+        console.error('Error fetching data from iTunes:', error);
+      }
+      return {
+        artworkUrl: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg',
+        collectionViewUrl: '#'
+      };
     },
     async fetchCoverArtSpotify(album, artist, spotifyToken, station) {
       try {
