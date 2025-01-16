@@ -39,7 +39,7 @@
     <!-- Site header --> 
     <Header />
     <!-- Page content -->
-    <main class="my-20 grow" style="z-index:20">
+    <main class="my-20 grow">
       <NuxtPage />
     </main>
     

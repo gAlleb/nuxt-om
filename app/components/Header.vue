@@ -118,6 +118,7 @@
       <BtnShowHidePlayer />
       <BtnSetStream /> 
       <BtnEffects_with_pinia />
+      <BtnGit />
       <!-- <BtnChristmas />  -->
       <!-- <BtnEffects_with_pinia_node_version /> -->
       <ClientOnly> 

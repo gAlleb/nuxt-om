@@ -181,7 +181,7 @@
 <h2>All stations</h2>
 </div>
 
-  <div  data-aos="fade-down" class="mx-5 md:grid lg:mx-10 md:mx-10 sm:mx-3 sm:px-2 mt-5 grid max-w-none gap-x-10 gap-y-5 lg:max-w-none sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
+  <div  class="mx-5 md:grid lg:mx-10 md:mx-10 sm:mx-3 sm:px-2 mt-5 grid max-w-none gap-x-10 gap-y-5 lg:max-w-none sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
   <div  :class="{
                 'border border-indigo-500/50': currentStream === 'stream',
             }" 
