@@ -1,5 +1,5 @@
 <template>
-  <section class="relative px-4 dark:text-zinc-200 text-zinc-700"  >
+  <section class="relative mt-5 px-4 dark:text-zinc-200 text-zinc-700"  >
     <div class="relative mx-auto max-w-7xl">
       <div class="text-center">
         <NuxtLink :to="localePath('/blog')"><h2 class="text-h text-3xl font-extrabold tracking-tight sm:text-4xl">{{ $t('blog') }}</h2></NuxtLink>
@@ -16,17 +16,20 @@
           <div v-for="blog in list" :key="blog.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
             <NuxtLink :to="blog._path">
             <div class="flex-shrink-0 overflow-hidden">
-              <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" :src="blog.img" :alt="blog.title" />
+              <div class="relative">
+                <!-- transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110 -->
+              <img class="h-full w-full object-cover" :src="blog.img" :alt="blog.title" /> 
+              <div class="flex flex-row gap-2 absolute bottom-0 left-0 mb-3 ms-5">
+              <p v-for="tag in blog.tags" class="bg-sxvx-light dark:bg-sxvx-dark text-p rounded-full px-4 py-1 text-xs font-semibold tracking-wide">
+                    {{ tag }}
+                  </p>
+              </div>
+              </div>
             </div>
             </NuxtLink>
             <div class="bg-accent dark:bg-gradient-to-r from-gray-800 flex flex-1 flex-col justify-between p-6">
               <div class="flex-1">
-                <div class="flex flex-row gap-2">
-                  <p v-for="tag in blog.tags" class="bg-sxvx-light dark:bg-sxvx-dark text-p rounded-full px-4 py-1 text-xs font-semibold tracking-wide">
-                    {{ tag }}
-                  </p>
-                </div>
-                <NuxtLink :to="blog._path" class="mt-6 block">
+                <NuxtLink :to="blog._path" class="block">
                   <p class="text-h text-lg font-semibold">
                     {{ blog.title }}
                   </p>

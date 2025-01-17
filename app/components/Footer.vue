@@ -25,6 +25,9 @@
         <a class="ml-3 text-gray-500">
           <Icon name="bxl:apple" class="flex h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
         </a>
+        <a class="ml-3 text-gray-500" href="https://github.com/galleb/nuxt-om" target="_blank">
+          <Icon name="bxl:github" class="flex h-6 w-6 text-zinc-500 hover:text-gray-900" aria-hidden="true" />
+        </a>
      
 
       </span>

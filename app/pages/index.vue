@@ -187,7 +187,7 @@
             }" 
   class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/omfm.jpg" />
+     <img class="h-full w-full object-cover brightness-75 hover:brightness-100 " src="/omfm.jpg" />
     </div>
     <button 
         class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
@@ -228,7 +228,7 @@
             }" 
     class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/rock.webp" />
+     <img class="h-full w-full object-cover brightness-75 hover:brightness-100" src="/rock.webp" />
     </div>
     <button 
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
@@ -268,7 +268,7 @@
                }" 
   class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/coma.jpg" />
+     <img class="h-full w-full object-cover brightness-75 hover:brightness-100" src="/coma.jpg" />
     </div>
     <button 
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
@@ -308,7 +308,7 @@
                }" 
   class="flex relative flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/core_sm.png" />
+     <img class="h-full w-full object-cover brightness-75 hover:brightness-100" src="/core_sm.png" />
     </div>
     <button 
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
@@ -348,7 +348,7 @@
                }" 
   class="flex relative flex-col   overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
     <div class="flex-shrink-0 overflow-hidden">
-     <img class="h-full w-full object-cover transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110" src="/terra.jpg" />
+     <img class="h-full w-full object-cover brightness-75 hover:brightness-100" src="/terra.jpg" />
     </div>
     <button 
         class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"

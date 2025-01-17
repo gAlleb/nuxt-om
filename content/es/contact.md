@@ -3,11 +3,11 @@ title: 'Contact'
 meta: 'Contact info'
 ---
 
-## Get in Touch 
+## Ponte en contacto conmigo
 
-Let's connect!  Whether you have a question, a collaboration proposal, or just want to say hello, I'd love to hear from you.
+¡Conectémonos! Si tienes alguna pregunta, una propuesta de colaboración o simplemente quieres saludar, me encantaría saber de ti.
 
-**Here's how you can reach me:**
+**A continuación, te indicamos cómo puedes comunicarte conmigo:**
 
 * **Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
-* **IRC:** [#omFM at ircs://irc.libera.chat:6697](https://libera.chat)
+* **IRC:** [#omFM en ircs://irc.libera.chat:6697](https://libera.chat)

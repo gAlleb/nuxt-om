@@ -9,16 +9,10 @@
         </template>
       </ContentDoc>
     </article>
-    <div class="flex center justify-center mx-auto">
-    <NuxtLink :to="localePath('/')" class="flex bg-gradient-to-r from-primary-800 via-primary-600 to-primary-500 hover:from-primary-600 hover:via-primary-500 hover:to-primary-400 py-2 px-6 rounded-full">
-      <p>Home</p>
-    </NuxtLink>
-  </div>
   </section>
 </template>
 <script setup>
 const { path } = useRoute()
-const localePath = useLocalePath()
 const { data } = await useAsyncData(`content-${path}`, () => queryContent().where({ _path: path }).only(['title', 'meta', 'img', 'date']).findOne())
 useHead({
   title: data.title,

@@ -206,7 +206,7 @@
             </div>
             <div class="flex">
             <button @click="playerMenuToggle()"
-            type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-sxvx-dark dark:bg-sxvx-dark-bg text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" >
+            type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-red-600 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" >
             <span class="sr-only">Now Playing</span>
             <Icon name="heroicons:information-circle" class="w-6 h-6" />
             </button>

@@ -157,8 +157,8 @@ export const useAzuracastData = defineStore({
       }
     },
     async fetchCoverArt(artist, title, coverArt) {
-      const track = artist + ' - ' + title
-      const response = await fetch(`https://itunes.apple.com/search?limit=1&term=${encodeURIComponent(track)}`)
+      const track = artist + ' ' + title
+      const response = await fetch(`https://itunes.apple.com/search?limit=1&media=music&term=${encodeURIComponent(track)}`)
 
       if (response.status === 403) {
         const results = {
