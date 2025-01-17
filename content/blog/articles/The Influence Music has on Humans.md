@@ -8,8 +8,10 @@ author: 'Stefan'
 authorAvatar: https://i.pravatar.cc/300
 ---
 # The Influence Music has on Humans 
+
+<img src="/images/blog/the_influence_music_has_on_humans/the_influence_music_has_on_humans.webp" alt="image" width="5000" class="rounded-lg">
+
 ***
-### Content:
 
 - [Music is a gift ](#music-is-a-gift-)
 - [Music’s Offerings](#musics-offerings)
@@ -18,10 +20,6 @@ authorAvatar: https://i.pravatar.cc/300
 - [Music’s Touching Capabilities to Thyself](#musics-touching-capabilities-to-thyself)
 - [Music is medicine ](#music-is-medicine-)
 - [Music in Greek Philosophy](#music-in-greek-philosophy)
-
-***
-
-<img src="/images/blog/the_influence_music_has_on_humans/the_influence_music_has_on_humans.webp" alt="image" width="5000" class="rounded-lg">
 
 ***
 
