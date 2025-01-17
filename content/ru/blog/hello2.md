@@ -2,7 +2,7 @@
 title: 'My awsome post title'
 meta: 'This is the meta description'
 date: 17 Jan 2023
-img: https://sxvx.ru/wordpress/wp-content/uploads/2023/06/vu2yq28ovof8ijcmm7tj8cj5pu54e393-300x225.jpg
+img: /images/blog/test/test.jpg
 tags: ['Nuxt', 'Tailwind']
 author: 'John Doe'
 authorAvatar: https://i.pravatar.cc/300

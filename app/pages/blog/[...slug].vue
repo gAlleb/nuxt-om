@@ -15,14 +15,14 @@
   <!-- <div class="footercurves_sxvx_style hidden dark:block"></div>
   <div class="footercurves_sxvx_style_light block dark:hidden"></div> -->
     <!-- Article content -->
-    <article v-if="data" class="prose pt-5 mx-auto max-sm:mx-5 max-md:mx-10 max-lg:mx-10 max-w-4xl dark:prose-invert">
+    <article v-if="data" class="prose mt-5 pt-5 px-0 md:px-28 lg:px-20 mx-auto max-sm:mx-5 max-md:mx-10 max-lg:mx-10 max-w-4xl dark:prose-invert">
       <ContentDoc :path="$route.path">
         <template #not-found>
           <NotFound />
         </template>
       </ContentDoc>
     </article>
-    <div class="flex center justify-center mx-auto">
+    <div class="flex center justify-center mx-auto mt-10">
     <NuxtLink :to="localePath('/blog')" class="flex bg-gradient-to-r from-primary-800 via-primary-600 to-primary-500 hover:from-primary-600 hover:via-primary-500 hover:to-primary-400 py-2 px-6 rounded-full">
       <p>Back to Blog</p>
     </NuxtLink>

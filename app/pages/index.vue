@@ -175,8 +175,10 @@
 </swiper-slide>
   </swiper>
 </div> -->
-<SwiperTopStations class="" />
 
+
+<SwiperTopStations class="" />
+<TextGreeting />
 <div class="mt-5 pt-5 ms-5 sm:ms-3 ps-0 sm:px-2 md:ms-10 text-xl bold">
 <h2>All stations</h2>
 </div>

@@ -1,6 +1,6 @@
 ---
 title: 'The history of relaxation music and its origins'
-meta: 'The history of relaxation music and its origins'
+meta: 'Throughout history, music has been a powerful tool for relaxation, healing, and overall well-being.'
 date: 17 Jan 2025
 img: /images/blog/history_of_relaxation_music/blog_relax_music_title.jpg
 tags: ['Meditation', 'Music']
@@ -8,6 +8,9 @@ author: 'Stefan'
 authorAvatar: https://i.pravatar.cc/300
 ---
 # The history of relaxation music and its origins 
+
+<img src="/images/blog/history_of_relaxation_music/blog_relax_music.jpg" alt="image" width="5000" class="rounded-lg">
+
 ***
 ### Content:
 
@@ -21,9 +24,7 @@ authorAvatar: https://i.pravatar.cc/300
 
 
 ***
-
-![1](/images/blog/history_of_relaxation_music/blog_relax_music.jpg)
-
+ 
 
 >    Throughout history, music has been a powerful tool for relaxation, healing, and overall well-being. The soothing melodies, gentle rhythms, and ambient sounds have the remarkable ability to transport us to a state of tranquility and inner peace. The history of relaxation music is deeply rooted in various cultures and spans across centuries, reflecting the human desire for calmness and serenity. Let's delve into the origins of relaxation music and explore its evolution over time.
 
