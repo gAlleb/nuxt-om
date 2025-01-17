@@ -12,6 +12,7 @@ authorAvatar: https://i.pravatar.cc/300
 <img src="/images/blog/the_influence_music_has_on_humans/the_influence_music_has_on_humans.webp" alt="image" width="5000" class="rounded-lg">
 
 ***
+### Content:
 
 - [Music is a gift ](#music-is-a-gift-)
 - [Music’s Offerings](#musics-offerings)
