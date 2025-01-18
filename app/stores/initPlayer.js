@@ -11,11 +11,22 @@ export const initPlayerStore = defineStore('player', {
     isPlayingComa: false,
     isPlayingCore: false,
     isPlayingTerra: false,
+    ctx: null,
+    audioSource: null,
+    analyzer: null,
+    frequencyData: null,
   }),
   actions: {
     initPlayer() {
       if (!this.player) {
         this.player = new IcePlayer('#ice-player');
+        this.player.audio_object.crossOrigin = "anonymous";
+        this.ctx = new AudioContext();
+        this.audioSource = this.ctx.createMediaElementSource(this.player.audio_object);
+        this.analyzer = this.ctx.createAnalyser();
+        this.audioSource.connect(this.analyzer);
+        this.audioSource.connect(this.ctx.destination);
+        this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
         // this.player.hide_stop_and_mute_button();
 
         //  this.player.audio_object.addEventListener('play', () => {

@@ -156,6 +156,10 @@ const currentStream = computed(() => useCurrentStreamStore.currentStream); // Re
 // });
 
 // Uncomment if not using pinia Coockie storage
+import { useVisualizerData } from '@/stores/VisualizerStore'; // Import the store
+const initVisualizerStore = useVisualizerData(); // Get the store instance
+ 
+ 
 onMounted(() => {
 useCurrentStreamStore.loadStreamName();
 });
