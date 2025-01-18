@@ -9,7 +9,7 @@ const ArtComponent = computed(() => {
     let art = Math.random() > 0.5 ? 'plum' : 'dots'
     if (typeof window !== 'undefined') {
       if (art === 'plum')
-        return defineAsyncComponent(() => import('./BackgroundArt2.vue'))
+        return defineAsyncComponent(() => import('./BackgroundArt.vue'))
       else if (art === 'dots')
         return defineAsyncComponent(() => import('./BackgroundArt.vue'))
     }

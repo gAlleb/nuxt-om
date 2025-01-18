@@ -1,6 +1,7 @@
 <template>
     <div>
-   
+    <div id="VisualizerWrapper" class="relative overflow-hidden">
+    <Visualizer />
     <div class="flex relative overflow-hidden dark:hidden font-tenor" style="background: url('/terra.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
     <button 
@@ -81,13 +82,11 @@
 
  </h1>
  <h1 class="text-lg md:text-xl text-sxvx-light  text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
-  The amazing world of sound from leading field recording artists around the globe. 
-
+  The amazing world of sound from leading field recording artists around the globe.
  </h1>
-
+  </div>
  </div>
-    </div>
-
+</div>
 
 
 <StreamsTerra/>

@@ -1,5 +1,5 @@
 <template>
- <div class="mt-10 mx-5 sm:mx-5 md:mx-12 lg:mx-12 rounded-3xl shadow-lg bg-sxvx-light dark:bg-sxvx-dark h-100">
+ <div class="mt-10 relative overflow-hidden mx-5 sm:mx-5 md:mx-12 lg:mx-12 rounded-3xl shadow-lg bg-sxvx-light dark:bg-sxvx-dark h-100">
   <div class="p-10 text-center">
     <h4 class="mt-0 bold text-2xl">
     <span class="text-red-500">omFM</span> Radio
@@ -14,5 +14,7 @@
     Enjoy a (High Quality) Music Journey into the Senses and click on your preferred station below:
    </p>
   </div>
+  <Visualizer />
+
  </div>
 </template>

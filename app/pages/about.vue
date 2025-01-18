@@ -76,6 +76,7 @@
 </div>
 
   
+<Visualizer />
 
   </section>
  
@@ -83,4 +84,5 @@
 
 <script setup lang="ts">
 const counter = useCounterStore()
+
 </script>

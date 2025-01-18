@@ -1,6 +1,7 @@
 <template>
   <div>
- 
+  <div id="VisualizerWrapper" class="relative overflow-hidden">
+  <Visualizer />
   <div class="flex relative overflow-hidden dark:hidden font-metal" style="background: url('/metal.webp') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <!-- <div class="flex relative overflow-hidden dark:hidden font-metal" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`, backgroundPosition: 'center 70%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover',  height: '45vh' }"> -->
 
@@ -77,9 +78,9 @@
 <h1 class="text-2xl sm:text-3xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
 heavy stuff and more
 </h1>
-
 </div>
-  </div>
+</div>
+</div>
 
 
 <StreamsRock/>

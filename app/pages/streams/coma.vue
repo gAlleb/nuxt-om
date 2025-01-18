@@ -1,6 +1,7 @@
 <template>
     <div>
-   
+     <div id="VisualizerWrapper" class="relative overflow-hidden">
+    <Visualizer />
     <div class="flex relative overflow-hidden dark:hidden font-UNSCII" style="background: url('/coma.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
     <button 
@@ -78,7 +79,7 @@
 
  </div>
     </div>
-
+</div>
 
 <StreamsComa/>
 

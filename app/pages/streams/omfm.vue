@@ -1,5 +1,7 @@
 <template>
     <div>
+    <div id="VisualizerWrapper" class="relative overflow-hidden">
+    <Visualizer />
    
     <div class="flex relative overflow-hidden dark:hidden font-tenor" style="background: url('/omfm4-light.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
@@ -78,7 +80,7 @@
   
   </div>
     </div>
-  
+  </div>
   
   <StreamsOmfm/>
   

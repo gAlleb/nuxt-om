@@ -26,6 +26,9 @@ export const initPlayerStore = defineStore('player', {
         //  });
       }
     },
+    // initVisualizer1() {
+    //   this.player.initVisualizer1();
+    // },
     togglePlayAll() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();

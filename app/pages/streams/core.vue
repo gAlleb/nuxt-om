@@ -1,6 +1,7 @@
 <template>
     <div>
-   
+    <div id="VisualizerWrapper" class="relative overflow-hidden">
+    <Visualizer />
     <div class="flex relative overflow-hidden dark:hidden font-UNSCII" style="background: url('/core_long.png') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
     <button 
@@ -77,7 +78,8 @@
  </h1>
 
  </div>
-    </div>
+</div>
+</div>
 
 
 <StreamsCore/>
@@ -92,6 +94,7 @@ import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
  
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
+import Visualizer from '~/components/Visualizer.vue';
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
