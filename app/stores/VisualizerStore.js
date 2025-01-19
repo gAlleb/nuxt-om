@@ -121,11 +121,5 @@ export const useVisualizerData = defineStore({
  
          visualizer(container)
     },
-    updateColorScheme(newColorScheme) {
-      this.colorScheme = newColorScheme;
-    },
-    updateVisualizer() {
-      this.overrideColorScheme = this.colorScheme;
-    },
   }
 });
