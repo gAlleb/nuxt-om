@@ -6,10 +6,13 @@ export const useVisualizerData = defineStore({
   state: () => ({
     animationFrameId: null,
     animationFrameIdWave: null, 
+    animationFrameId3Waves: null, 
     overrideColorScheme: null,
     customDarkScheme: null,
     overrideColorSchemeWave: null,
     customDarkSchemeWave: null,
+    overrideColorScheme3Waves: null,
+    customDarkScheme3Waves: null,
   }),
   getters: {
     colorScheme: (state) => {
@@ -45,7 +48,28 @@ export const useVisualizerData = defineStore({
       } else {
         return 'black'
       };
-    }
+    },
+    colorScheme3Waves: (state) => {
+      const colorMode = useColorMode()
+      const isDark = (colorMode.value === 'dark')
+     if (state.customDarkScheme && isDark) {
+        return state.customDarkScheme;
+       } else if (state.overrideColorScheme){
+        return state.overrideColorScheme;
+      } else if (isDark) {
+        return {
+          color1: '#f5ee73',
+          color2: '#69fffc',
+          color3: '#f549e9',
+        };
+      } else {
+        return {
+          color1: '#111111',
+          color2: '#222222',
+          color3: '#333333',
+        };
+      }
+    },
   },
   actions: {
     initVisualizer(container, overrideColorScheme = null, customDarkScheme = null) {
@@ -218,5 +242,108 @@ export const useVisualizerData = defineStore({
 
        visualizer(container)
   },
+  initVisualizer3Waves(container, overrideColorScheme3Waves = null, customDarkScheme3Waves = null) {
+    this.overrideColorScheme3Waves = overrideColorScheme3Waves; 
+    this.customDarkScheme3Waves = customDarkScheme3Waves;
+    const useInitPlayerStore = initPlayerStore(); 
+    // Functions
+         // Function to initialize the canvas (canvas)
+      function   initCanvas(container) {
+       const canvas = document.createElement("canvas");
+       canvas.setAttribute("id", "visualizerCanvas3Waves");
+       canvas.setAttribute("class", "visualizer-item-3waves");
+       container.appendChild(canvas);
+       canvas.width = container.clientWidth;
+       canvas.height = "255";
+       return canvas;
+     }
+   
+     // Feature to change canvas based on container size
+     function resizeCanvas(canvas, container) {
+       canvas.width = container.clientWidth;
+       canvas.height = container.clientHeight;
+     }
+   
+     // Visualizer
+    const visualizer = (container) => {
+       if (!container) {
+         return;
+       }
+       const options = {
+        fftSize: container.dataset.fftSize || 2048,
+        numBars: container.dataset.bars || 40,
+        maxHeight: container.dataset.maxHeight || 255,
+        waveformThickness: container.dataset.waveformThickness || 1.7, // Customize thickness
+       };
+       const canvas = initCanvas(container);
+       const canvasCtx = canvas.getContext("2d");
+
+    // let frameCounter = 0;
+    // const framesToSkip = 1;
+    const renderWaveform = () => {
+    if (this.animationFrameId3Waves) {
+        cancelAnimationFrame(this.animationFrameId3Waves);
+    }
+    this.animationFrameId3Waves = requestAnimationFrame(renderWaveform);
+    // frameCounter++;
+    // if (frameCounter >= framesToSkip) {
+    //     frameCounter = 0;
+        resizeCanvas(canvas, container);
+
+        useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
+        if (options.fftSize) {
+            useInitPlayerStore.analyzer.fftSize = options.fftSize;
+        }
+
+        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+
+
+        const frequencyData = useInitPlayerStore.frequencyData; // Create array
+        useInitPlayerStore.analyzer.getByteTimeDomainData(frequencyData); // Get time domain data
+        const numBins = frequencyData.length;
+        const lowBand = frequencyData.slice(0, numBins / 3);
+        const midBand = frequencyData.slice(numBins / 3, 2 * numBins / 3);
+        const highBand = frequencyData.slice(2 * numBins / 3);
+
+        // Draw lines - plotting multiple points
+        const lineWidth = 2;
+        canvasCtx.lineWidth = lineWidth;
+
+        drawFrequencyLine(canvasCtx, lowBand, this.colorScheme3Waves.color1, canvas.width, canvas.height);
+        drawFrequencyLine(canvasCtx, midBand, this.colorScheme3Waves.color2, canvas.width, canvas.height);
+        drawFrequencyLine(canvasCtx, highBand, this.colorScheme3Waves.color3, canvas.width, canvas.height);
+   // };
+    };
+
+    const drawFrequencyLine = (ctx, bandData, color, canvasWidth, canvasHeight) => {
+      ctx.strokeStyle = color;
+      ctx.beginPath();
+      const sliceWidth = canvasWidth / bandData.length;
+      let x = 0;
+      for (let i = 0; i < bandData.length; i++) {
+          const v = bandData[i] / 255; // Normalize to 0-1
+          const y = canvasHeight / 2 + v * canvasHeight / 2; // Corrected: Position below center
+          if (i === 0) {
+              ctx.moveTo(x, y);
+          } else {
+              ctx.lineTo(x, y);
+          }
+          x += sliceWidth;
+      }
+      ctx.stroke();
+     };
+
+
+
+      renderWaveform();
+   
+       // Window space change listener
+       window.addEventListener("resize", () => {
+         resizeCanvas(canvas, container);
+       });
+     };
+
+     visualizer(container)
+   },
   }
 });

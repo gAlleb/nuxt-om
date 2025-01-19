@@ -15,9 +15,10 @@
    </p>
   </div>
   <Visualizer />
-  <VisualizerWave />
-
-  
-
+  <Visualizer3Waves :style="{ display: useInitPlayerStore.isPlaying ? 'block' : 'none' }"/>
  </div>
 </template>
+<script setup>
+import { initPlayerStore } from '@/stores//initPlayer';
+const useInitPlayerStore = initPlayerStore(); 
+</script>
