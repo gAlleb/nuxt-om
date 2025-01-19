@@ -75,8 +75,7 @@
   </p>
 </div>
 
-  
-<Visualizer />
+
 
   </section>
  
