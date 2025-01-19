@@ -8,11 +8,8 @@ export const useVisualizerData = defineStore({
     animationFrameIdWave: null, 
     overrideColorScheme: null,
     customDarkScheme: null,
-  //   colorScheme: { 
-  //     color1: '#b017a8',
-  //     color2: 'cyan',
-  //     color3: 'green',
-  // },
+    overrideColorSchemeWave: null,
+    customDarkSchemeWave: null,
   }),
   getters: {
     colorScheme: (state) => {
@@ -35,6 +32,19 @@ export const useVisualizerData = defineStore({
           color3: '#00ff00',
         };
       }
+    },
+    colorSchemeWave: (state) => {
+      const colorMode = useColorMode()
+      const isDark = (colorMode.value === 'dark')
+      if (state.customDarkSchemeWave && isDark) {
+        return state.customDarkSchemeWave;
+       } else if (state.overrideColorSchemeWave){
+        return state.overrideColorSchemeWave;
+      } else if (isDark) {
+        return 'white'
+      } else {
+        return 'black'
+      };
     }
   },
   actions: {
@@ -120,9 +130,9 @@ export const useVisualizerData = defineStore({
  
          visualizer(container)
     },
-    initVisualizerWave(container, overrideColorScheme = null, customDarkScheme = null) {
-      this.overrideColorScheme = overrideColorScheme; 
-      this.customDarkScheme = customDarkScheme;
+    initVisualizerWave(container, overrideColorSchemeWave = null, customDarkSchemeWave = null) {
+      this.overrideColorSchemeWave = overrideColorSchemeWave; 
+      this.customDarkSchemeWave = customDarkSchemeWave;
       const useInitPlayerStore = initPlayerStore(); 
       // Functions
            // Function to initialize the canvas (canvas)
@@ -151,8 +161,7 @@ export const useVisualizerData = defineStore({
           fftSize: container.dataset.fftSize || 2048,
           numBars: container.dataset.bars || 40,
           maxHeight: container.dataset.maxHeight || 255,
-          waveformColor: container.dataset.waveformColor || "white", // Add color customization
-          waveformThickness: container.dataset.waveformThickness || 2, // Customize thickness
+          waveformThickness: container.dataset.waveformThickness || 2.5, // Customize thickness
          };
          const canvas = initCanvas(container);
          const canvasCtx = canvas.getContext("2d");
@@ -177,7 +186,7 @@ export const useVisualizerData = defineStore({
 
           canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
           canvasCtx.lineWidth = options.waveformThickness;
-          canvasCtx.strokeStyle = options.waveformColor;
+          canvasCtx.strokeStyle = this.colorSchemeWave;
           canvasCtx.beginPath();
 
           const waveformData = useInitPlayerStore.frequencyData; // Create array

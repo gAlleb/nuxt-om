@@ -1,5 +1,5 @@
 <template>
-        <div ref="visualizerContainerWave" class="visualizer" data-bars="65" :style="{ display: useInitPlayerStore.isPlaying ? 'block' : 'none' }"></div>
+        <div ref="visualizerContainerWave" class="visualizer" :style="{ display: useInitPlayerStore.isPlaying ? 'block' : 'none' }"></div>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -10,8 +10,8 @@ const useInitPlayerStore = initPlayerStore();
 const visualizerContainerWave = ref(null);
 const initVisualizerStore = useVisualizerData();
 const props = defineProps({
-  colorScheme: { type: Object, default: null },
-  customDarkScheme: { type: Object, default: null },
+  colorSchemeWave: null,
+  customDarkSchemeWave: null,
 });
 onMounted(async () => {
   if (initVisualizerStore.animationFrameIdWave) { // Only cancel if an animation exists
@@ -25,7 +25,7 @@ onMounted(async () => {
   }
   if (!initVisualizerStore.animationFrameIdWave) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
-        initVisualizerStore.initVisualizerWave(visualizerContainerWave.value, props.colorScheme, props.customDarkScheme);
+        initVisualizerStore.initVisualizerWave(visualizerContainerWave.value, props.colorSchemeWave, props.customDarkSchemeWave);
   }
 });
  
