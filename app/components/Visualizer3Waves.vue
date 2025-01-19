@@ -21,7 +21,7 @@ onMounted(async () => {
         canvas.remove();
     }
   }
-  if (!initVisualizerStore.animationFrameId) { // Check if already initialized
+  if (!initVisualizerStore.animationFrameId3Waves) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
         initVisualizerStore.initVisualizer3Waves(visualizerContainer3Waves.value, props.colorScheme, props.customDarkScheme);
   }
