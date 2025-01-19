@@ -52,10 +52,10 @@ export const useVisualizerData = defineStore({
     colorScheme3Waves: (state) => {
       const colorMode = useColorMode()
       const isDark = (colorMode.value === 'dark')
-     if (state.customDarkScheme && isDark) {
-        return state.customDarkScheme;
-       } else if (state.overrideColorScheme){
-        return state.overrideColorScheme;
+     if (state.customDarkScheme3Waves && isDark) {
+        return state.customDarkScheme3Waves;
+       } else if (state.overrideColorScheme3Waves){
+        return state.overrideColorScheme3Waves;
       } else if (isDark) {
         return {
           color1: '#f5ee73',
