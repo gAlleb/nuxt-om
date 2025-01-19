@@ -4,11 +4,11 @@ import { initPlayerStore } from './initPlayer';
 export const useVisualizerData = defineStore({
     id: 'VisualizerData',
   state: () => ({
+    animationFrameId: null, 
   }),
   actions: {
-    initVisualizer() {
+    initVisualizer(container) {
         const useInitPlayerStore = initPlayerStore(); 
-        const visualizerContainer = document.querySelector(".visualizer");
         // Functions
              // Function to initialize the canvas (canvas)
           function   initCanvas(container) {
@@ -39,19 +39,26 @@ export const useVisualizerData = defineStore({
            };
            const canvas = initCanvas(container);
            const canvasCtx = canvas.getContext("2d");
-       
+
            // Create bars
-         
+          let frameCounter = 0;
+          const framesToSkip = 1;
           const renderBars = () => {
-            let frameCounter = 0;
-            const frameSkip = 10;
+             if (this.animationFrameId) {
+               cancelAnimationFrame(this.animationFrameId);
+             }
+             this.animationFrameId = requestAnimationFrame(renderBars);
+             frameCounter++;
+             if (frameCounter >= framesToSkip) {
+             frameCounter = 0; // Reset the counter
              resizeCanvas(canvas, container);
+             
              useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
              if (options.fftSize) {
                 useInitPlayerStore.analyzer.fftSize = options.fftSize;
              }
              canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-             if (frameCounter % frameSkip === 0) {
+             
              for (let i = 0; i < options.numBars; i++) {
                const index = Math.floor((i + 10) * (i < options.numBars / 2 ? 2 : 1));
                const fd = useInitPlayerStore.frequencyData[index];
@@ -62,10 +69,9 @@ export const useVisualizerData = defineStore({
                canvasCtx.fillStyle = "white";
                canvasCtx.fillRect(x, y, barWidth - 2, barHeight);
              }
-             frameCounter++;
-             requestAnimationFrame(renderBars);
+            }
            };
-           };
+    
            renderBars();
        
            // Window space change listener
@@ -74,7 +80,7 @@ export const useVisualizerData = defineStore({
            });
          };
  
-         visualizer(visualizerContainer);
+         visualizer(container);
     },
   }
 });

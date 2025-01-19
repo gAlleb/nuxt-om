@@ -1,14 +1,28 @@
 <template>
-        <div class="visualizer" data-bars="50"></div>
+        <div ref="visualizerContainer" class="visualizer" data-bars="65"></div>
 </template>
 <script setup>
-import { useVisualizerData } from '@/stores/VisualizerStore'; // Import the store
-const initVisualizerStore = useVisualizerData(); // Get the store instance
- 
-onMounted(() => {
-initVisualizerStore.initVisualizer();
-});
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useVisualizerData } from '@/stores/VisualizerStore';
 
+const visualizerContainer = ref(null);
+const initVisualizerStore = useVisualizerData();
+
+onMounted(async () => {
+  if (initVisualizerStore.animationFrameId) { // Only cancel if an animation exists
+    cancelAnimationFrame(initVisualizerStore.animationFrameId);
+    initVisualizerStore.animationFrameId = null;
+    //Crucially, remove the canvas element from the DOM.
+    const canvas = document.getElementById('visualizerCanvas');
+    if(canvas) {
+        canvas.remove();
+    }
+  }
+  if (!initVisualizerStore.animationFrameId) { // Check if already initialized
+    await nextTick(); // Ensure DOM is ready
+        initVisualizerStore.initVisualizer(visualizerContainer.value);
+  }
+});
 // onMounted(() => {
 //      const visualizerContainer = document.querySelector(".visualizer");
 //  // Functions
