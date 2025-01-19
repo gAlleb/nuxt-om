@@ -1,7 +1,7 @@
 <template>
   <div>
   <div id="VisualizerWrapper" class="relative overflow-hidden">
-  <Visualizer />
+  <Visualizer :customDarkScheme="{ color1: 'red', color2: 'darkred', color3: 'red' }" :color-scheme="{ color1: '#000000', color2: '#000000', color3: '#000000' }" />
   <div class="flex relative overflow-hidden dark:hidden font-metal" style="background: url('/metal.webp') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <!-- <div class="flex relative overflow-hidden dark:hidden font-metal" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`, backgroundPosition: 'center 70%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover',  height: '45vh' }"> -->
 
@@ -99,3 +99,17 @@ import { useAzuracastData } from '../../stores/stationData'
   const np_omfm = useOmfmData();
   const np_ac = useAzuracastData();
 </script>
+<style scoped>
+.visualizer {
+	position: absolute;
+	inset: auto 0 0;
+	z-index: 1;
+	pointer-events: none;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-around;
+	height: 100%;
+	opacity: 0.6;
+  bottom: 0;
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
     <div>
     <div id="VisualizerWrapper" class="relative overflow-hidden">
-    <Visualizer />
+    <Visualizer :color-scheme="{ color1: '#b017a8', color2: 'cyan', color3: 'green' }"/>
    
     <div class="flex relative overflow-hidden dark:hidden font-tenor" style="background: url('/omfm4-light.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
@@ -98,3 +98,17 @@
   const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
   
   </script>
+   <style scoped>
+   .visualizer {
+    position: absolute;
+    inset: auto 0 0;
+    z-index: 1;
+    pointer-events: none;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-around;
+    height: 100%;
+    opacity: 0.5;
+    bottom: 0;
+  }
+  </style>

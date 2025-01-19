@@ -7,7 +7,10 @@ import { useVisualizerData } from '@/stores/VisualizerStore';
 
 const visualizerContainer = ref(null);
 const initVisualizerStore = useVisualizerData();
-
+const props = defineProps({
+  colorScheme: { type: Object, default: null },
+  customDarkScheme: { type: Object, default: null },
+});
 onMounted(async () => {
   if (initVisualizerStore.animationFrameId) { // Only cancel if an animation exists
     cancelAnimationFrame(initVisualizerStore.animationFrameId);
@@ -20,9 +23,10 @@ onMounted(async () => {
   }
   if (!initVisualizerStore.animationFrameId) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
-        initVisualizerStore.initVisualizer(visualizerContainer.value);
+        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme);
   }
 });
+ 
 // onMounted(() => {
 //      const visualizerContainer = document.querySelector(".visualizer");
 //  // Functions
@@ -104,7 +108,7 @@ onMounted(async () => {
 	align-items: flex-end;
 	justify-content: space-around;
 	height: 100%;
-	opacity: 0.17;
+	opacity: 0.2;
     bottom: 0;
 }
 

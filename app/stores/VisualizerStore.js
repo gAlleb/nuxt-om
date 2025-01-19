@@ -1,13 +1,47 @@
 import { defineStore } from 'pinia';
 import { initPlayerStore } from './initPlayer';
+import { computed } from 'vue';
+import { useNuxtApp } from '#imports';
 
 export const useVisualizerData = defineStore({
     id: 'VisualizerData',
   state: () => ({
     animationFrameId: null, 
+    overrideColorScheme: null,
+    customDarkScheme: null,
+  //   colorScheme: { 
+  //     color1: '#b017a8',
+  //     color2: 'cyan',
+  //     color3: 'green',
+  // },
   }),
+  getters: {
+    colorScheme: (state) => {
+      const colorMode = useColorMode()
+      const isDark = (colorMode.value === 'dark')
+     if (state.customDarkScheme && isDark) {
+        return state.customDarkScheme;
+       } else if (state.overrideColorScheme){
+        return state.overrideColorScheme;
+      } else if (isDark) {
+        return {
+          color1: '#b017a8',
+          color2: 'cyan',
+          color3: 'green',
+        };
+      } else {
+        return {
+          color1: '#ff0000',
+          color2: '#ffff00',
+          color3: '#00ff00',
+        };
+      }
+    }
+  },
   actions: {
-    initVisualizer(container) {
+    initVisualizer(container, overrideColorScheme = null, customDarkScheme = null) {
+        this.overrideColorScheme = overrideColorScheme; 
+        this.customDarkScheme = customDarkScheme;
         const useInitPlayerStore = initPlayerStore(); 
         // Functions
              // Function to initialize the canvas (canvas)
@@ -66,7 +100,12 @@ export const useVisualizerData = defineStore({
                const barWidth = canvas.width / options.numBars;
                const x = i * barWidth;
                const y = canvas.height - barHeight;
-               canvasCtx.fillStyle = "white";
+               const gradient = canvasCtx.createLinearGradient(0, 200, 0, 0);
+               gradient.addColorStop(0, this.colorScheme.color1);
+               gradient.addColorStop(0.5, this.colorScheme.color2);
+               gradient.addColorStop(1, this.colorScheme.color3);
+               canvasCtx.fillStyle = gradient;
+              //  canvasCtx.fillStyle = "white";
                canvasCtx.fillRect(x, y, barWidth - 2, barHeight);
              }
             }
@@ -80,7 +119,13 @@ export const useVisualizerData = defineStore({
            });
          };
  
-         visualizer(container);
+         visualizer(container)
+    },
+    updateColorScheme(newColorScheme) {
+      this.colorScheme = newColorScheme;
+    },
+    updateVisualizer() {
+      this.overrideColorScheme = this.colorScheme;
     },
   }
 });

@@ -1,7 +1,7 @@
 <template>
     <div>
     <div id="VisualizerWrapper" class="relative overflow-hidden">
-    <Visualizer />
+    <Visualizer :color-scheme="{ color1: '#ffffff', color2: '#ffffff', color3: '#ffffff' }" />
     <div class="flex relative overflow-hidden dark:hidden font-UNSCII" style="background: url('/core_long.png') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
     <button 
@@ -99,3 +99,17 @@ const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
  </script>
+ <style scoped>
+.visualizer {
+	position: absolute;
+	inset: auto 0 0;
+	z-index: 1;
+	pointer-events: none;
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-around;
+	height: 100%;
+	opacity: 0.4;
+  bottom: 0;
+}
+</style>
