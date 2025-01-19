@@ -15,6 +15,9 @@
    </p>
   </div>
   <Visualizer />
+  <VisualizerWave />
+
+  
 
  </div>
 </template>
