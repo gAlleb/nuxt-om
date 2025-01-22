@@ -38,6 +38,7 @@
     "three": "^0.170.0"
   },
   "dependencies": {
-    "@vueuse/core": "^12.3.0"
+    "@vueuse/core": "^12.3.0",
+    "colorthief": "^2.6.0"
   }
 }

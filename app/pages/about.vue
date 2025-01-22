@@ -41,10 +41,7 @@
   
   </div>
     </div>
-    <div style="height: 260px; width:100%">
-    <Visualizer3Waves style="position: relative;"/></div>
-  <Equalizer />
-  <div class="lg:mx-20 md:mx-10 sm:mx-3 xs:mx-3 mt-5">
+  <div class="mx-5 lg:mx-20 md:mx-10 sm:mx-3 xs:mx-3 mt-5">
   <p class="mb-5">
   omFM:<br/>
   –
