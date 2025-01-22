@@ -17,6 +17,7 @@ export const useAzuracastData = defineStore({
     songHistoryCollectionViewUrls: {},
     spotifyToken: '',
     documentTitle: {},
+    cache: {},
   }),
   actions: {
     connectToSSE() {
@@ -158,6 +159,10 @@ export const useAzuracastData = defineStore({
     },
     async fetchCoverArt(artist, title, coverArt) {
       const track = artist + ' ' + title
+      const cacheKey = track.toLowerCase();
+      if (this.cache[cacheKey]) {
+        return this.cache[cacheKey];
+      }
       const response = await fetch(`https://itunes.apple.com/search?limit=1&media=music&term=${encodeURIComponent(track)}`)
 
       if (response.status === 403) {
@@ -188,7 +193,8 @@ export const useAzuracastData = defineStore({
         artworkUrl: itunes.artworkUrl100 ? itunes.artworkUrl100.replace('100x100', '512x512') : coverArt,
         collectionViewUrl: itunes.collectionViewUrl,
       }
-      return results
+      this.cache[cacheKey] = results;
+      return results;
     },
     async fetchSpotifyToken() {
       try {

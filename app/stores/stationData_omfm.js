@@ -13,7 +13,8 @@ export const useOmfmData = defineStore({
     songHistoryCoverArt: {},
     collectionViewUrls: {},
     songHistoryCollectionViewUrls: {},
-    defaultCoverart: '/defaultCoverart.jpg'
+    defaultCoverart: '/static/img/defaultCoverart.jpg',
+    cache: {},
   }),
   actions: {
     connectToSSE() {
@@ -123,6 +124,10 @@ export const useOmfmData = defineStore({
     },
     async fetchCoverArt(artist, title, station) {
       const track = artist + ' ' + title
+      const cacheKey = track.toLowerCase();
+      if (this.cache[cacheKey]) {
+        return this.cache[cacheKey];
+      }
       const response = await fetch(`https://itunes.apple.com/search?limit=1&media=music&term=${encodeURIComponent(track)}`)
       if (response.status === 403) {
         const results = {
@@ -152,7 +157,8 @@ export const useOmfmData = defineStore({
         artworkUrl: itunes.artworkUrl100 ? itunes.artworkUrl100.replace('100x100', '512x512') : this.defaultCoverart,
         collectionViewUrl: itunes.collectionViewUrl,
       }
-      return results
+      this.cache[cacheKey] = results;
+      return results;
       // try {
       //   const response = await fetch(`https://itunes.apple.com/search?term=${artist} ${title}&media=music&limit=1`, {
       //     headers: {
