@@ -1,5 +1,5 @@
 <template>
-        <div ref="visualizerContainer" class="visualizer" data-bars="65"></div>
+        <div ref="visualizerContainer" class="visualizer"></div>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -10,6 +10,8 @@ const initVisualizerStore = useVisualizerData();
 const props = defineProps({
   colorScheme: { type: Object, default: null },
   customDarkScheme: { type: Object, default: null },
+  barsNumber: null,
+  maxHeight: null,
 });
 onMounted(async () => {
   if (initVisualizerStore.animationFrameId) { // Only cancel if an animation exists
@@ -23,7 +25,7 @@ onMounted(async () => {
   }
   if (!initVisualizerStore.animationFrameId) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
-        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme);
+        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
   }
 });
  

@@ -2,9 +2,11 @@
   <header style="z-index:31" class="dark:text-zinc-200 text-zinc-700 ">
     <div
     ref="header"
+    :class="indexClass, headerClasses, eqClass"
     class="header dark:text-zinc-200 text-zinc-600 
      container-fluid 
-     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between py-5 px-3 sm:px-5  bg-sxvx-light dark:bg-sxvx-dark lg:px-20"
+     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between py-5 px-3 sm:px-5 lg:px-20"
+   
     >
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-7 h-7  " />
@@ -93,6 +95,11 @@
         </div>
       </transition>
     </div> 
+        <NuxtLink :to="localePath('/eq')" class="mr-5 group transition-all duration-300 ease-in-out">
+        <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+          EQ
+        </span>
+        </NuxtLink>
         <NuxtLink :to="localePath('/blog')" class="mr-5 group transition-all duration-300 ease-in-out">
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
           {{ $t('blog') }}
@@ -116,6 +123,7 @@
     <div class="flex">
      <div class="flex">
       <BtnShowHidePlayer />
+      <BtnEq class="hidden sm:inline-flex"/>
       <BtnSetStream /> 
       <BtnEffects_with_pinia />
       <BtnGit />
@@ -211,6 +219,7 @@
                      </span>
                      </button>
                   </NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/EQ')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">EQ</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
                 
@@ -284,12 +293,41 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { currentStreamStore } from '../stores/currentStream'; // Import the store
+import { useRoute } from '#imports'
+
+
+const route = useRoute();
+ 
+let isScrolled = ref(false);
+const indexClass = computed(() => {
+  const baseClasses = {
+    'bg-transparent': route.path === '/', // Use route.value here
+    'dark:bg-sxvx-dark bg-sxvx-light':  route.path !== '/', // Corrected logic
+
+  };
+  return baseClasses;
+});
+const eqClass = computed(() => {
+  const baseClassesEq = {
+    'bg-black': route.path === '/eq', // Use route.value here
+    
+
+  };
+  return baseClassesEq;
+});
+const headerClasses = computed(() => {
+  const baseClasses2 = {
+    'dark:bg-sxvx-dark bg-sxvx-light': isScrolled.value === true, // Corrected logic
+  };
+  return baseClasses2;
+});
 
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};
 onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
+  
 });
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
@@ -345,9 +383,11 @@ const handleScroll = () => {
   if (scrollTop > hidePoint) {
     header.value.classList.add('is-scroll');
     header.value.classList.add('logo_resize');
+    isScrolled.value = true;
   } else {
     header.value.classList.remove('is-scroll');
     header.value.classList.remove('logo_resize');
+    isScrolled.value = false;
   }
 };
 
@@ -413,6 +453,5 @@ onBeforeUnmount(() => {
   padding-bottom: 5px!important;
   opacity: 0.96;
   box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  
 }
 </style>

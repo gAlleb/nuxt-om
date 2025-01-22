@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { initPlayerStore } from './initPlayer';
+import { toHandlers } from 'vue';
 
 export const useVisualizerData = defineStore({
     id: 'VisualizerData',
@@ -13,8 +14,24 @@ export const useVisualizerData = defineStore({
     customDarkSchemeWave: null,
     overrideColorScheme3Waves: null,
     customDarkScheme3Waves: null,
+    customBarsNumber: null,
+    customMaxHeight: null,
   }),
   getters: {
+    maxHeight: (state) => {
+      if (state.customMaxHeight) {
+        return state.customMaxHeight;
+       } else {
+        return 255;
+      }
+    },
+    barsNumber: (state) => {
+      if (state.customBarsNumber) {
+        return state.customBarsNumber;
+       } else {
+        return 65;
+      }
+    },
     colorScheme: (state) => {
       const colorMode = useColorMode()
       const isDark = (colorMode.value === 'dark')
@@ -72,9 +89,11 @@ export const useVisualizerData = defineStore({
     },
   },
   actions: {
-    initVisualizer(container, overrideColorScheme = null, customDarkScheme = null) {
+    initVisualizer(container, overrideColorScheme = null, customDarkScheme = null, customBarsNumber = null, customMaxHeight) {
         this.overrideColorScheme = overrideColorScheme; 
         this.customDarkScheme = customDarkScheme;
+        this.customBarsNumber = customBarsNumber;
+        this.customMaxHeight = customMaxHeight;
         const useInitPlayerStore = initPlayerStore(); 
         // Functions
              // Function to initialize the canvas (canvas)
@@ -101,8 +120,8 @@ export const useVisualizerData = defineStore({
            }
            const options = {
              fftSize: container.dataset.fftSize || 2048,
-             numBars: container.dataset.bars || 40,
-             maxHeight: container.dataset.maxHeight || 255,
+             numBars: this.barsNumber || 65,
+             maxHeight: this.maxHeight || 255,
            };
            const canvas = initCanvas(container);
            const canvasCtx = canvas.getContext("2d");
@@ -272,7 +291,7 @@ export const useVisualizerData = defineStore({
        const options = {
         fftSize: container.dataset.fftSize || 2048,
         numBars: container.dataset.bars || 40,
-        maxHeight: container.dataset.maxHeight || 255,
+        maxHeight: container.dataset.maxHeight || 130,
         waveformThickness: container.dataset.waveformThickness || 1.7, // Customize thickness
        };
        const canvas = initCanvas(container);

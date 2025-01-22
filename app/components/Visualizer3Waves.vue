@@ -1,5 +1,5 @@
 <template>
-        <div ref="visualizerContainer3Waves" class="visualizer" data-bars="65"></div>
+        <div ref="visualizerContainer3Waves" class="visualizer3waves" data-bars="65"></div>
 </template>
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue';
@@ -99,7 +99,7 @@ onMounted(async () => {
 // });
 </script>
 <style scoped>
-.visualizer {
+.visualizer3waves {
 	position: absolute;
 	inset: auto 0 0;
 	z-index: 1;

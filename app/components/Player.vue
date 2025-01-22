@@ -1,7 +1,7 @@
 <template>
     
 <section>
-    <div  class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(115%); ">
+    <div class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(115%); ">
         <div class="ice-player-el mb-5">
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
@@ -287,7 +287,7 @@
             <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`,   backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'coma' && comaData" class="h-full absolute w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'terra' && terraData" class="h-full absolute w-full" :style="{ background: `url(${terraData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-            <div v-if="currentStream === 'core' && terraData" class="h-full absolute w-full" :style="{ background: `url(${coreData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <div v-if="currentStream === 'core' && coreData" class="h-full absolute w-full" :style="{ background: `url(${coreData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
 
             <div style="min-width: 100%; min-height: 100%; position: absolute;background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);z-index: 2;"/>
             </div>
@@ -690,7 +690,6 @@
 <script setup>
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
- 
 
 import { usePlayer } from '../composables/player'; // Create this composable
 const { player, isPlaying, togglePlayAll, playStatus, changeVol3, showVol3, muteVol, setStream} = usePlayer(); // Get player instance and state

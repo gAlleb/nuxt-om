@@ -400,7 +400,10 @@ import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 
+
 </script>
 <style scoped>
-
+.header {
+  background: black!important;
+}
 </style>

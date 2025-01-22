@@ -14,8 +14,8 @@
     Enjoy a (High Quality) Music Journey into the Senses and click on your preferred station below:
    </p>
   </div>
-  <Visualizer />
-  <Visualizer3Waves :style="{ display: useInitPlayerStore.isPlaying ? 'block' : 'none' }"/>
+  <Visualizer class="-mb-3"/>
+  <Visualizer3Waves :style="{ display: useInitPlayerStore.isPlaying ? 'block' : 'none' }" />
  </div>
 </template>
 <script setup>

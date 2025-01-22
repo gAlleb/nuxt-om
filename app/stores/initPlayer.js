@@ -15,6 +15,8 @@ export const initPlayerStore = defineStore('player', {
     audioSource: null,
     analyzer: null,
     frequencyData: null,
+    eqFilters: [], // Array to hold BiquadFilterNodes
+    eqBands: Array(10).fill(0),
   }),
   actions: {
     initPlayer() {
@@ -27,6 +29,11 @@ export const initPlayerStore = defineStore('player', {
         this.audioSource.connect(this.analyzer);
         this.audioSource.connect(this.ctx.destination);
         this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
+
+        this.eqFilters = this.createEQFilters(this.ctx);
+        this.connectEQFilters();
+        this.getEQBandsFromStorage();
+
         // this.player.hide_stop_and_mute_button();
 
         //  this.player.audio_object.addEventListener('play', () => {
@@ -40,6 +47,60 @@ export const initPlayerStore = defineStore('player', {
     // initVisualizer1() {
     //   this.player.initVisualizer1();
     // },
+    createEQFilters(ctx) {
+      const bands = [60, 170, 350, 1000, 3000, 6000, 12000, 14000, 16000, 18000]; // Corrected center frequencies
+      const filters = [];
+    
+      for (let i = 0; i < 10; i++) {
+        const filter = ctx.createBiquadFilter();
+        filter.type = 'peaking';
+        filter.frequency.value = bands[i];
+        filter.Q.value = 1;
+        filter.gain.value = 0;
+        filters.push(filter);
+      }
+      return filters;
+    },
+    connectEQFilters() {
+      if (!this.player || !this.eqFilters) return;
+      this.audioSource.disconnect(); // Disconnect previous connection
+      this.audioSource.connect(this.eqFilters[0]); // Connect to the first filter
+      for (let i = 0; i < this.eqFilters.length - 1; i++) {
+        this.eqFilters[i].connect(this.eqFilters[i + 1]);
+      }
+      this.eqFilters[this.eqFilters.length - 1].connect(this.analyzer); // Last filter to analyzer
+      this.analyzer.connect(this.ctx.destination);
+    },
+
+    setEQGain(bandIndex, gain) {
+      if (bandIndex >= 0 && bandIndex < 10) {
+        const numericGain = parseFloat(gain);
+        if (!isNaN(numericGain) && isFinite(numericGain)) {
+          this.eqBands[bandIndex] = numericGain;
+          this.eqFilters[bandIndex].gain.value = numericGain;
+        } else {
+          console.error(`Invalid gain value for band ${bandIndex}: ${gain}`);
+        }
+      }
+    },
+    setEQBands(newBands) {
+      this.eqBands = newBands.map(Number); //Convert to Number for consistency
+      this.eqFilters.forEach((filter, index) => {
+        filter.gain.value = this.eqBands[index];
+      });
+    },
+    saveEQBandsToStorage(values) {
+      if (import.meta.client) {
+      localStorage.setItem('eqBands', JSON.stringify(values.map(String)));
+      }
+    },
+    getEQBandsFromStorage() {
+      if (import.meta.client) {
+      const storedValues = localStorage.getItem('eqBands');
+      this.eqBands = storedValues ? JSON.parse(storedValues).map(Number) : Array(10).fill(0);
+      this.setEQBands(this.eqBands);
+      }
+    },
     togglePlayAll() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();
@@ -234,5 +295,6 @@ export const initPlayerStore = defineStore('player', {
       return false;
     }
   }
-  }
+  },
+ 
 });

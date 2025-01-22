@@ -144,6 +144,9 @@ onMounted(() => {
   playerContainer.classList.remove('hidden');
 });
 
+import { initPlayerStore } from '@/stores/initPlayer';
+const playerStore = initPlayerStore();
+
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
