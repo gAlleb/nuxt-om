@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import ColorThief from 'colorthief'
 
 export const useOmfmData = defineStore({
   id: 'stationData_omfm',
@@ -15,6 +16,7 @@ export const useOmfmData = defineStore({
     songHistoryCollectionViewUrls: {},
     defaultCoverart: '/static/img/defaultCoverart.jpg',
     cache: {},
+    dominantColors: {},
   }),
   actions: {
     connectToSSE() {
@@ -74,6 +76,7 @@ export const useOmfmData = defineStore({
         .then(coverArtData => {
           this.coverArtUrls[station] = coverArtData.artworkUrl;
           this.collectionViewUrls[station] = coverArtData.collectionViewUrl;
+          this.getDominantColor(coverArtData.artworkUrl, station);
         });
         
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
@@ -90,6 +93,20 @@ export const useOmfmData = defineStore({
         
      }
       
+    },
+    async getDominantColor(imageUrl, station) {
+      try {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = imageUrl;
+        await new Promise((resolve) => img.onload = resolve); // Wait for image to load
+        const colorThief = new ColorThief();
+        const color = colorThief.getColor(img); // Get dominant color
+        this.dominantColors[station] = color; // Store the color
+        } catch (error) {
+          console.error('Error getting dominant color:', error);
+          this.dominantColors[station] = [0, 0, 0]; // Default to black if error
+        }
     },
     startProgressBar(station, elapsed, duration) {
     // Dynamically initialize progress data for each station

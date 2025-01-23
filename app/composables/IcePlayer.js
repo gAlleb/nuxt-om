@@ -9,12 +9,14 @@ class IcePlayer {
         // Player Params
         this.server_address = 'https://omfm.ru:8443/' // Default address:port
         this.stream_mount = (this.localStorage.getItem("stream_name") !== null) ? this.localStorage.getItem("stream_name") : 'stream'
-        this.style = 'fixed' // Player style (fixed or inline)
-        this.template = '<div class="ice-player-el "><div><i class="ice-play" style="display: inline-block;font-size:1.6rem !important" ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
+
+        
+        // this.style = 'fixed' // Player style (fixed or inline)
+        // this.template = '<div class="ice-player-el "><div><i class="ice-play" style="display: inline-block;font-size:1.6rem !important" ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
         
         // Informer Params
         // this.mounts_list = ['stream', 'nonstop'] // Mount point list
-        this.time_update = 10 // Time to update information (in seconds)
+        // this.time_update = 10 // Time to update information (in seconds)
 
         // System Params
         this.audio_object = new Audio()
@@ -37,7 +39,7 @@ class IcePlayer {
         // }
 
         this.player_el = document.querySelector(el);
-        this.player_el.classList.add('ice-player', this.style);
+        // this.player_el.classList.add('ice-player', this.style);
         // this.set_content(this.player_el, this.template);
 
         // Events
@@ -406,39 +408,39 @@ class IcePlayer {
         this.mute();
         }
     }
-    showinfo() {
-        // this.request(this.server_address + this.info_link, (data) => {
-        //     for (let mount_name of this.mounts_list) {
-        //         if (data[mount_name]) {
-        //             this.set_content('.ice-track', data[mount_name].title);
-        //             break;
-        //         }
-        //     }
-        // });
-        // this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
-            var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
+    // showinfo() {
+    //     // this.request(this.server_address + this.info_link, (data) => {
+    //     //     for (let mount_name of this.mounts_list) {
+    //     //         if (data[mount_name]) {
+    //     //             this.set_content('.ice-track', data[mount_name].title);
+    //     //             break;
+    //     //         }
+    //     //     }
+    //     // });
+    //     // this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
+    //         var xhttp = new XMLHttpRequest();
+    // xhttp.onreadystatechange = function () {
+    //     if (this.readyState === 4 && this.status === 200) {
 
-            var data = JSON.parse(this.responseText);
+    //         var data = JSON.parse(this.responseText);
 
-            let title = data.icestats.source.title;
-    document.title = title + "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
-    document.querySelector(".ice-track").innerHTML =  title;
+    //         let title = data.icestats.source.title;
+    // document.title = title + "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+    // document.querySelector(".ice-track").innerHTML =  title;
 
     
-        }
-    }
-    var d = new Date();
-    xhttp.open('GET', 'https://stream.omfm.ru/status-json.xsl?mount=/' + this.stream_mount + '&' + d.getTime(), true);
-    xhttp.send();
-    if (this.audio_object.paused === false) { // Check if playing
-        this.timer = setTimeout(() => {
-            this.showinfo()
-        }, this.time_update * 1000);
-    }
-    //this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
-    }
+    //     }
+    // }
+    // var d = new Date();
+    // xhttp.open('GET', 'https://stream.omfm.ru/status-json.xsl?mount=/' + this.stream_mount + '&' + d.getTime(), true);
+    // xhttp.send();
+    // if (this.audio_object.paused === false) { // Check if playing
+    //     this.timer = setTimeout(() => {
+    //         this.showinfo()
+    //     }, this.time_update * 1000);
+    // }
+    // //this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
+    // }
 
     play_pause_toggle() {
         if (this.current_state === this.PLAYING) {

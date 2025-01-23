@@ -518,19 +518,19 @@ border-radius:5px; }
 font-size: 1.5rem;
  position: fixed;
  bottom: 0;
- left: 1.5%;
- width: Calc(100% - 3%);
+ left: 1%;
+ width: Calc(100% - 2%);
  border-radius: 0.75rem;
- margin-bottom: 0.75rem;
+ margin-bottom: 0.5rem;
  /*background-color: rgba(58, 103, 148, 0.638); */
  /* background:  linear-gradient(180deg, rgba(0, 0, 0, 0.694) 10%, rgba(0,0,0,0.6936974618949142) 100%); */
- border-top: 1px solid var(--ice-player-border-color);
+ /*border-top: 1px solid var(--ice-player-border-color);*/
  min-height: 12vh;
 }
 
  .ice-player.fixed .ice-track {
   display: block;
-  color:  #ffffff ;  
+  /* color:  #ffffff ;   */
   }
   .ice-player.fixed .ice-track {
     font-size: 14px;

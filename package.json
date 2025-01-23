@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^12.3.0",
+    "chroma-js": "^3.1.2",
     "colorthief": "^2.6.0"
   }
 }

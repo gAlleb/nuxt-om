@@ -106,7 +106,7 @@
 
         <div class="ice-player-el" >
                <div class="relative">
-                 <img class="rounded-xl h-auto w-32 sm:w-52" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover">
+                 <img class="rounded-xl h-auto w-32 sm:w-52" src="/static/img/defaultCoverart.jpg" alt="Album Cover">
                 </div>
                <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
                 <div class="px-3 py-2 mb-0 sm:py-6 sm:mb-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "> 
@@ -133,7 +133,7 @@
           <div class="mt-2 rounded-l-xl ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200" >
               <div class=" relative">
               <img 
-              src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" 
+              src="/static/img/defaultCoverart.jpg" 
               alt="History Cover"
               class="history-cover rounded-l-xl h-auto w-24 sm:w-28"
               > 
@@ -153,8 +153,8 @@
 
             <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200" >
               <div class=" relative">
-                <img 
-              src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" 
+              <img 
+              src="/static/img/defaultCoverart.jpg"
               alt="History Cover"
               class="history-cover rounded-l-xl h-auto w-16 sm:w-20"
               >  

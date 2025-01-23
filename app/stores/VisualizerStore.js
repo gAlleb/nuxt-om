@@ -97,7 +97,10 @@ export const useVisualizerData = defineStore({
         const useInitPlayerStore = initPlayerStore(); 
         // Functions
              // Function to initialize the canvas (canvas)
-          function   initCanvas(container) {
+         function   initCanvas(container) {
+           if(document.getElementById('visualizerCanvas')) {
+            document.getElementById('visualizerCanvas').remove();
+           }
            const canvas = document.createElement("canvas");
            canvas.setAttribute("id", "visualizerCanvas");
            canvas.setAttribute("class", "visualizer-item");
@@ -127,27 +130,30 @@ export const useVisualizerData = defineStore({
            const canvasCtx = canvas.getContext("2d");
 
            // Create bars
-          let frameCounter = 0;
-          const framesToSkip = 1;
+          // let frameCounter = 0;
+          // const framesToSkip = 1;
           const renderBars = () => {
-             if (this.animationFrameId) {
-               cancelAnimationFrame(this.animationFrameId);
-             }
+             cancelAnimationFrame(this.animationFrameId);
+             this.animationFrameId = null;
              this.animationFrameId = requestAnimationFrame(renderBars);
-             frameCounter++;
-             if (frameCounter >= framesToSkip) {
-             frameCounter = 0; // Reset the counter
+            //  frameCounter++;
+            //  if (frameCounter >= framesToSkip) {
+            //  frameCounter = 0; // Reset the counter
              resizeCanvas(canvas, container);
-             
-             useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
+             let analyzer = null;
+             analyzer = useInitPlayerStore.analyzer;
+             let frequencyData = null;
+             frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+             analyzer.getByteFrequencyData(frequencyData);
+             // useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
              if (options.fftSize) {
-                useInitPlayerStore.analyzer.fftSize = options.fftSize;
+                analyzer.fftSize = options.fftSize;
              }
              canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
              
              for (let i = 0; i < options.numBars; i++) {
                const index = Math.floor((i + 10) * (i < options.numBars / 2 ? 2 : 1));
-               const fd = useInitPlayerStore.frequencyData[index];
+               const fd = frequencyData[index];
                const barHeight = Math.max(4, fd || 0) + options.maxHeight / 255;
                const barWidth = canvas.width / options.numBars;
                const x = i * barWidth;
@@ -157,9 +163,8 @@ export const useVisualizerData = defineStore({
                gradient.addColorStop(0.5, this.colorScheme.color2);
                gradient.addColorStop(1, this.colorScheme.color3);
                canvasCtx.fillStyle = gradient;
-              //  canvasCtx.fillStyle = "white";
                canvasCtx.fillRect(x, y, barWidth - 2, barHeight);
-             }
+            //  }
             }
            };
     
@@ -210,21 +215,26 @@ export const useVisualizerData = defineStore({
          const canvasCtx = canvas.getContext("2d");
 
          // Create bars
-        let frameCounter = 0;
-        const framesToSkip = 1;
+        // let frameCounter = 0;
+        // const framesToSkip = 1;
       const renderWaveform = () => {
       if (this.animationFrameIdWave) {
           cancelAnimationFrame(this.animationFrameIdWave);
       }
+      this.animationFrameIdWave = null;
       this.animationFrameIdWave = requestAnimationFrame(renderWaveform);
-      frameCounter++;
-      if (frameCounter >= framesToSkip) {
-          frameCounter = 0;
+      // frameCounter++;
+      // if (frameCounter >= framesToSkip) {
+      //     frameCounter = 0;
           resizeCanvas(canvas, container);
-
-          useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
+          let analyzer = null;
+          analyzer = useInitPlayerStore.analyzer;
+          let frequencyData = null;
+          frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+          analyzer.getByteFrequencyData(frequencyData);
+          //useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
           if (options.fftSize) {
-              useInitPlayerStore.analyzer.fftSize = options.fftSize;
+              analyzer.fftSize = options.fftSize;
           }
 
           canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
@@ -232,8 +242,8 @@ export const useVisualizerData = defineStore({
           canvasCtx.strokeStyle = this.colorSchemeWave;
           canvasCtx.beginPath();
 
-          const waveformData = useInitPlayerStore.frequencyData; // Create array
-          useInitPlayerStore.analyzer.getByteTimeDomainData(waveformData); // Get time domain data
+          const waveformData = frequencyData; // Create array
+          analyzer.getByteTimeDomainData(waveformData); // Get time domain data
           const sliceWidth = canvas.width / waveformData.length;
 
           let x = 0;
@@ -248,8 +258,8 @@ export const useVisualizerData = defineStore({
               x += sliceWidth;
           }
           canvasCtx.stroke();
-                  }
-  };
+                  // }
+    };
   
         renderWaveform();
      
@@ -303,22 +313,27 @@ export const useVisualizerData = defineStore({
     if (this.animationFrameId3Waves) {
         cancelAnimationFrame(this.animationFrameId3Waves);
     }
+    this.animationFrameId3Waves = null;
     this.animationFrameId3Waves = requestAnimationFrame(renderWaveform);
     // frameCounter++;
     // if (frameCounter >= framesToSkip) {
     //     frameCounter = 0;
         resizeCanvas(canvas, container);
-
-        useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
+        let analyzer = null;
+        analyzer = useInitPlayerStore.analyzer;
+        let frequencyData = null;
+        frequencyData = new Uint8Array(analyzer.frequencyBinCount);
+        analyzer.getByteFrequencyData(frequencyData);
+        // useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
         if (options.fftSize) {
-            useInitPlayerStore.analyzer.fftSize = options.fftSize;
+            analyzer.fftSize = options.fftSize;
         }
 
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
 
 
-        const frequencyData = useInitPlayerStore.frequencyData; // Create array
-        useInitPlayerStore.analyzer.getByteTimeDomainData(frequencyData); // Get time domain data
+   
+        analyzer.getByteTimeDomainData(frequencyData); // Get time domain data
         const numBins = frequencyData.length;
         const lowBand = frequencyData.slice(0, numBins / 3);
         const midBand = frequencyData.slice(numBins / 3, 2 * numBins / 3);

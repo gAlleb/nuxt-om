@@ -1,7 +1,9 @@
 <template>
     
 <section>
-    <div class="icecast_player bg-sxvx-dark-bg dark:bg-sxvx-dark " id="ice-player" style="z-index:30; transform: translateY(115%); ">
+    <div class="icecast_player ice-player fixed" id="ice-player" style="z-index:30; transform: translateY(165%);">
+    <div class="icecast_player ice-player fixed" style="z-index:30;"
+    :style="dynamicBackgroundColor">
         <div class="ice-player-el mb-5">
             <div>
                 <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
@@ -45,9 +47,10 @@
             :mouseWheel="true"  
             :spaceBetween="5" 
             :init="false"
+            :style="dynamicBackgroundColor"
             >
             <swiper-slide class="ms-1" style="height: 40px; width: 40px!important;">
-            <div class="relative cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('stream');">
+            <div class="relative cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('stream');">
             <img :class="{
                   'grayscale opacity-75': currentStream !== 'stream',
                   }" 
@@ -61,7 +64,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2 ms-2" style="height: 40px; width: 40px!important;">
-            <div class="relative cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
+            <div class="relative cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
               <img :class="{
                   'grayscale opacity-50': currentStream !== 'rock',
                   }" 
@@ -75,7 +78,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
-            <div class="relative  cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('coma');">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('coma');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'coma',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
@@ -89,7 +92,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
-            <div class="relative  cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('core');">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('core');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'core',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
@@ -103,7 +106,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-0" style="height: 40px; width: 40px!important;">
-            <div class="relative  cursor-pointer bg-sxvx-dark rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('terra');">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('terra');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'terra',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
@@ -124,52 +127,53 @@
 
 
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
-
+              <div :style="{color: dynamicTextColor.color}">
                 <div v-if="currentStream === 'rock'" class="ellipsify">
-                <span class="text-xs text-zinc-500">Rock @ omFM</span> 
+                <span class="text-xs opacity-75">Rock @ omFM</span> 
                 <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : radioData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'coma'" class="ellipsify">
-                <span class="text-xs text-zinc-500">Coma @ omFM</span> 
+                <span class="text-xs opacity-75">Coma @ omFM</span> 
                 <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : comaData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'core'" class="ellipsify">
-                <span class="text-xs text-zinc-500">CORE @ omFM</span> 
+                <span class="text-xs opacity-75">CORE @ omFM</span> 
                 <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : coreData.np.now_playing.song.title }}</span>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_ac.isLoading ? 'loading' : coreData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : coreData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'terra'" class="ellipsify">
-                <span class="text-xs text-zinc-500">Terra @ omFM</span> 
+                <span class="text-xs opacity-75">Terra @ omFM</span> 
                 <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.title }}</span>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'stream'" class="ellipsify">
-                <span class="text-xs text-zinc-500">omFM</span>
+                <span class="text-xs opacity-75">omFM</span>
                 <br/>
-                <span style="border-bottom: whitesmoke 1px solid;">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.artist }}</span>
                 </div>
             </div>
+            </div>
             
 
            
-            <div class="ms-3 cursor-pointer shadow-lg" v-if="currentStream === 'rock'">
+            <div class="ms-3 cursor-pointer shadow-lg border-solid border-1 border-zinc-500" v-if="currentStream === 'rock'">
                 <div v-if="radioData" >  
                 <img class="rounded-lg" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
             <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'coma'">
@@ -177,7 +181,7 @@
                 <img class="rounded-lg" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
             <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'core'">
@@ -185,7 +189,7 @@
                 <img class="rounded-lg" height="60" width="60" :src="coreData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(coreData.np.now_playing.song.art)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
             <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'terra'">
@@ -193,7 +197,7 @@
                 <img class="rounded-lg" height="60" width="60" :src="terraData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(terraData.np.now_playing.song.art)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
             <div class="ms-2 cursor-pointer  shadow-lg" v-else-if="currentStream === 'stream'">
@@ -201,7 +205,7 @@
                 <img class="rounded-lg" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
                 </div>
                 <div v-else>
-                <img class="rounded-lg" height="60" width="60" src="https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg" alt="Album Cover"  @click="openLightbox('https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg', 0)" >
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
             <div class="flex">
@@ -274,7 +278,7 @@
             </div>
           
         </div>
-
+      </div>
     </div>
 
 <!--OffCanvas Now Playing-->
@@ -822,7 +826,7 @@ function getTrackData(stream) {
   let title = 'Unknown';
   let artist = 'Unknown';
   let album = 'Unknown';
-  let artwork = 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg'; 
+  let artwork = '/static/img/defaultCoverart.jpg'; 
 
   switch (stream) {
     case 'rock':
@@ -869,4 +873,108 @@ function getTrackData(stream) {
 
   return { title, artist, album, artwork };
 }
+const dynamicBackgroundColor = computed(() => {
+  let stationKey;
+  let colorSource;
+  if (currentStream.value === 'stream') {
+    stationKey = 'station:radio'; 
+    colorSource = np_omfm;
+  } else if (currentStream.value === 'rock') {
+    stationKey = 'station:radio';
+    colorSource = np_ac;
+  } else {
+    stationKey = `station:${currentStream.value}`;
+    colorSource = np_ac;
+  }
+  const color = colorSource.dominantColors[stationKey];
+  const opacity = 0.93;
+  const backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : 'rgb(128,128,128)'; 
+  return { background: backgroundColor };
+});
+
+import chroma from 'chroma-js';
+// const dynamicTextColor = computed(() => {
+//   const backgroundColor = dynamicBackgroundColor.value.background;
+//   let rgb = [0, 0, 0]; // Default to black if parsing fails
+
+//   try {
+//     // More robust RGB extraction handling various formats, including rgba
+//     const match = backgroundColor.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)(,\s*(\d*\.?\d+))?\)/i);
+//     if (match) {
+//       rgb = match.slice(1, 4).map(Number);
+//     } else if (backgroundColor.startsWith('#')) { //Handle hex colors
+//       rgb = chroma(backgroundColor).rgb();
+//     }
+//   } catch (error) {
+//     console.error("Error parsing background color:", error, backgroundColor);
+//   }
+
+//   const color = chroma(rgb);
+//   const luminance = color.luminance();
+
+//   const contrastRatioThreshold = 4.5; // WCAG AA requires at least 4.5
+//   let textColor;
+
+//   if (luminance > 0.5) {
+//     textColor = color.darken(getContrastLevel(luminance)).hex();
+//   } else {
+//     textColor = color.brighten(getContrastLevel(1-luminance)).hex();
+//   }
+
+//   return { 
+//     color: textColor,
+//     borderColor: `1px ${textColor} solid` 
+//    };
+// });
+// function getContrastLevel(luminance) {
+//     if (luminance > 0.8) { // If background is very light
+//         return 3; // use a strong darkening
+//     } else {
+//         // Otherwise, use the previous non-linear approach
+//         return 1 + 2 * Math.pow(Math.abs(luminance - 0.5), 2.2);
+//     }
+// }
+const dynamicTextColor = computed(() => {
+  const backgroundColor = dynamicBackgroundColor.value.background;
+  let rgb = [0, 0, 0]; // Default to black if parsing fails
+
+  try {
+    const color = chroma(backgroundColor);
+    rgb = color.rgb();
+  } catch (error) {
+    console.error("Error parsing background color:", error, backgroundColor);
+    return { color: '#000', borderColor: '1px #000 solid' }; // Fallback to black
+  }
+
+  const luminance = chroma(rgb).luminance();
+  let textColor;
+
+  // More aggressive contrast adjustment:
+  if (luminance > 0.8) { // Very light background
+    textColor = chroma(rgb).darken(3).hex(); // Stronger darkening
+  } else if (luminance < 0.2) { // Very dark background
+    textColor = chroma(rgb).brighten(3).hex(); // Stronger brightening
+  } else {
+      // Calculate contrast ratio.  Aim for WCAG AAA (7:1) if possible, otherwise AA (4.5:1)
+      const targetRatio = 7; // Try for AAA contrast first
+      let attempt = 1; // initial attempt
+      let calculatedTextColor = chroma(rgb).darken(attempt);
+      let ratio = chroma.contrast(calculatedTextColor, chroma(rgb));
+      while (ratio < targetRatio && attempt < 5) {
+          attempt++;
+          calculatedTextColor = chroma(rgb).darken(attempt);
+          ratio = chroma.contrast(calculatedTextColor, chroma(rgb));
+      }
+
+      if (ratio < 4.5) {
+        // fallback to AA
+        console.warn(`Could not achieve AAA contrast for ${backgroundColor}, using AA`)
+      }
+      textColor = calculatedTextColor.hex();
+
+  }
+
+
+  return { color: textColor, borderColor: `1px ${textColor} solid` };
+});
 </script>

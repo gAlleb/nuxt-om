@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import ColorThief from 'colorthief'
 
 export const useAzuracastData = defineStore({
   id: 'stationData',
@@ -18,6 +19,7 @@ export const useAzuracastData = defineStore({
     spotifyToken: '',
     documentTitle: {},
     cache: {},
+    dominantColors: {},
   }),
   actions: {
     connectToSSE() {
@@ -68,6 +70,7 @@ export const useAzuracastData = defineStore({
       //const np = this.stations[station].np || null;
       this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration) // Start progress bar on data update
       this.documentTitle[station] = npData.np.now_playing.song.text
+      this.getDominantColor(npData.np.now_playing.song.art, station);
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.sh_id
       if (this.lastFetchedShIds[station] !== currentShId) {
@@ -89,6 +92,7 @@ export const useAzuracastData = defineStore({
           this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, npData.np.now_playing.song.art).then((coverArtData) => {
             this.coverArtUrls[station] = coverArtData.artworkUrl
             this.collectionViewUrls[station] = coverArtData.collectionViewUrl
+            this.getDominantColor(coverArtData.artworkUrl, station);
           })
           this.fetchCoverArtForSongHistory(npData.np.song_history, station)
           this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, npData.np.playing_next.song.art, station)
@@ -123,6 +127,22 @@ export const useAzuracastData = defineStore({
         //     }
       } else {
       }
+    },
+    async getDominantColor(imageUrl, station) {
+    //  return new Promise(async (resolve) => {
+      try {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.src = imageUrl;
+        await new Promise((resolve) => img.onload = resolve); // Wait for image to load
+        const colorThief = new ColorThief();
+        const color = colorThief.getColor(img); // Get dominant color
+        this.dominantColors[station] = color; // Store the color
+      } catch (error) {
+        console.error('Error getting dominant color:', error);
+        this.dominantColors[station] = [0, 0, 0]; // Default to black if error
+      }
+      // });
     },
     startProgressBar(station, elapsed, duration) {
       // Dynamically initialize progress data for each station
