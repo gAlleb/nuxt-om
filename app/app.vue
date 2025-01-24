@@ -1,4 +1,5 @@
 <template>
+<Analytics/>
 <UtilsPreloader />
 <NuxtLayout>
   <NuxtLoadingIndicator color="#ef4444"/>
@@ -119,6 +120,7 @@
 </template>
 
 <script setup defer>
+import { Analytics } from '@vercel/analytics/nuxt'
 import { useAzuracastData } from '@/stores/stationData';
 import { useOmfmData } from '@/stores/stationData_omfm';
 
