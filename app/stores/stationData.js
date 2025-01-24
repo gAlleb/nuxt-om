@@ -70,7 +70,9 @@ export const useAzuracastData = defineStore({
       //const np = this.stations[station].np || null;
       this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration) // Start progress bar on data update
       this.documentTitle[station] = npData.np.now_playing.song.text
+      if (station !== 'station:radio') {
       this.getDominantColor(npData.np.now_playing.song.art, station);
+      }
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.sh_id
       if (this.lastFetchedShIds[station] !== currentShId) {
