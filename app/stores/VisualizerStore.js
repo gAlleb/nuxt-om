@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia';
 import { initPlayerStore } from './initPlayer';
-import { toHandlers } from 'vue';
 
 export const useVisualizerData = defineStore({
     id: 'VisualizerData',
@@ -16,6 +15,8 @@ export const useVisualizerData = defineStore({
     customDarkScheme3Waves: null,
     customBarsNumber: null,
     customMaxHeight: null,
+    analyzer: null,
+    frequencyData: null,
   }),
   getters: {
     maxHeight: (state) => {
@@ -89,12 +90,17 @@ export const useVisualizerData = defineStore({
     },
   },
   actions: {
+    initStore() {
+      const useInitPlayerStore = initPlayerStore(); 
+      this.analyzer = useInitPlayerStore.analyzer;
+      this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
+      this.analyzer.fftSize = 2048;
+    },
     initVisualizer(container, overrideColorScheme = null, customDarkScheme = null, customBarsNumber = null, customMaxHeight) {
         this.overrideColorScheme = overrideColorScheme; 
         this.customDarkScheme = customDarkScheme;
         this.customBarsNumber = customBarsNumber;
         this.customMaxHeight = customMaxHeight;
-        const useInitPlayerStore = initPlayerStore(); 
         // Functions
              // Function to initialize the canvas (canvas)
          function   initCanvas(container) {
@@ -128,32 +134,24 @@ export const useVisualizerData = defineStore({
            };
            const canvas = initCanvas(container);
            const canvasCtx = canvas.getContext("2d");
-
            // Create bars
           // let frameCounter = 0;
           // const framesToSkip = 1;
           const renderBars = () => {
-             cancelAnimationFrame(this.animationFrameId);
+            if(this.animationFrameId){
+              cancelAnimationFrame(this.animationFrameId);
+            }
              this.animationFrameId = null;
              this.animationFrameId = requestAnimationFrame(renderBars);
             //  frameCounter++;
             //  if (frameCounter >= framesToSkip) {
             //  frameCounter = 0; // Reset the counter
              resizeCanvas(canvas, container);
-             let analyzer = null;
-             analyzer = useInitPlayerStore.analyzer;
-             let frequencyData = null;
-             frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-             analyzer.getByteFrequencyData(frequencyData);
-             // useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
-             if (options.fftSize) {
-                analyzer.fftSize = options.fftSize;
-             }
+             this.analyzer.getByteFrequencyData(this.frequencyData);
              canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-             
              for (let i = 0; i < options.numBars; i++) {
                const index = Math.floor((i + 10) * (i < options.numBars / 2 ? 2 : 1));
-               const fd = frequencyData[index];
+               const fd = this.frequencyData[index];
                const barHeight = Math.max(4, fd || 0) + options.maxHeight / 255;
                const barWidth = canvas.width / options.numBars;
                const x = i * barWidth;
@@ -199,7 +197,6 @@ export const useVisualizerData = defineStore({
          canvas.width = container.clientWidth;
          canvas.height = container.clientHeight;
        }
-     
        // Visualizer
       const visualizer = (container) => {
          if (!container) {
@@ -213,7 +210,6 @@ export const useVisualizerData = defineStore({
          };
          const canvas = initCanvas(container);
          const canvasCtx = canvas.getContext("2d");
-
          // Create bars
         // let frameCounter = 0;
         // const framesToSkip = 1;
@@ -227,25 +223,13 @@ export const useVisualizerData = defineStore({
       // if (frameCounter >= framesToSkip) {
       //     frameCounter = 0;
           resizeCanvas(canvas, container);
-          let analyzer = null;
-          analyzer = useInitPlayerStore.analyzer;
-          let frequencyData = null;
-          frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-          analyzer.getByteFrequencyData(frequencyData);
-          //useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
-          if (options.fftSize) {
-              analyzer.fftSize = options.fftSize;
-          }
-
+          this.analyzer.getByteTimeDomainData(this.frequencyData); 
           canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
           canvasCtx.lineWidth = options.waveformThickness;
           canvasCtx.strokeStyle = this.colorSchemeWave;
           canvasCtx.beginPath();
-
-          const waveformData = frequencyData; // Create array
-          analyzer.getByteTimeDomainData(waveformData); // Get time domain data
+          const waveformData = this.frequencyData; // Create array
           const sliceWidth = canvas.width / waveformData.length;
-
           let x = 0;
           for (let i = 0; i < waveformData.length; i++) {
               const v = waveformData[i] / 255.0; // Normalize to 0-1 range
@@ -260,9 +244,7 @@ export const useVisualizerData = defineStore({
           canvasCtx.stroke();
                   // }
     };
-  
         renderWaveform();
-     
          // Window space change listener
          window.addEventListener("resize", () => {
            resizeCanvas(canvas, container);
@@ -319,30 +301,15 @@ export const useVisualizerData = defineStore({
     // if (frameCounter >= framesToSkip) {
     //     frameCounter = 0;
         resizeCanvas(canvas, container);
-        let analyzer = null;
-        analyzer = useInitPlayerStore.analyzer;
-        let frequencyData = null;
-        frequencyData = new Uint8Array(analyzer.frequencyBinCount);
-        analyzer.getByteFrequencyData(frequencyData);
-        // useInitPlayerStore.analyzer.getByteFrequencyData(useInitPlayerStore.frequencyData);
-        if (options.fftSize) {
-            analyzer.fftSize = options.fftSize;
-        }
-
+        this.analyzer.getByteTimeDomainData(this.frequencyData); 
         canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
-
-
-   
-        analyzer.getByteTimeDomainData(frequencyData); // Get time domain data
-        const numBins = frequencyData.length;
-        const lowBand = frequencyData.slice(0, numBins / 3);
-        const midBand = frequencyData.slice(numBins / 3, 2 * numBins / 3);
-        const highBand = frequencyData.slice(2 * numBins / 3);
-
+        const numBins = this.frequencyData.length;
+        const lowBand = this.frequencyData.slice(0, numBins / 3);
+        const midBand = this.frequencyData.slice(numBins / 3, 2 * numBins / 3);
+        const highBand = this.frequencyData.slice(2 * numBins / 3);
         // Draw lines - plotting multiple points
         const lineWidth = 2;
         canvasCtx.lineWidth = lineWidth;
-
         drawFrequencyLine(canvasCtx, lowBand, this.colorScheme3Waves.color1, canvas.width, canvas.height);
         drawFrequencyLine(canvasCtx, midBand, this.colorScheme3Waves.color2, canvas.width, canvas.height);
         drawFrequencyLine(canvasCtx, highBand, this.colorScheme3Waves.color3, canvas.width, canvas.height);
@@ -366,11 +333,7 @@ export const useVisualizerData = defineStore({
       }
       ctx.stroke();
      };
-
-
-
       renderWaveform();
-   
        // Window space change listener
        window.addEventListener("resize", () => {
          resizeCanvas(canvas, container);

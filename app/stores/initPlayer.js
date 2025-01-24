@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import IcePlayer from '../composables/IcePlayer.js';
 import { currentStreamStore } from './currentStream';
+import { useVisualizerData } from './VisualizerStore.js';
 
 export const initPlayerStore = defineStore('player', {
   state: () => ({
@@ -29,6 +30,8 @@ export const initPlayerStore = defineStore('player', {
         // this.audioSource.connect(this.analyzer);
         // this.audioSource.connect(this.ctx.destination);
         //this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
+        const visualizerData = useVisualizerData(); 
+        visualizerData.initStore();
 
         this.eqFilters = this.createEQFilters(this.ctx);
         this.connectEQFilters();

@@ -168,7 +168,7 @@
             
 
            
-            <div class="ms-3 cursor-pointer shadow-lg border-solid border-1 border-zinc-500" v-if="currentStream === 'rock'">
+            <div class="ms-3 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-if="currentStream === 'rock'">
                 <div v-if="radioData" >  
                 <img class="rounded-lg" height="60" width="60" :src="np_ac.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_ac.coverArtUrls['station:radio'], 0)" >
                 </div>
@@ -176,7 +176,7 @@
                 <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'coma'">
+            <div class="ms-3 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'coma'">
                 <div v-if="comaData" >  
                 <img class="rounded-lg" height="60" width="60" :src="comaData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(comaData.np.now_playing.song.art)" >
                 </div>
@@ -184,7 +184,7 @@
                 <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'core'">
+            <div class="ms-3 cursor-pointerrounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'core'">
                 <div v-if="coreData" >  
                 <img class="rounded-lg" height="60" width="60" :src="coreData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(coreData.np.now_playing.song.art)" >
                 </div>
@@ -192,7 +192,7 @@
                 <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-3 cursor-pointer shadow-lg" v-else-if="currentStream === 'terra'">
+            <div class="ms-3 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'terra'">
                 <div v-if="terraData" >  
                 <img class="rounded-lg" height="60" width="60" :src="terraData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(terraData.np.now_playing.song.art)" >
                 </div>
@@ -200,7 +200,7 @@
                 <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
-            <div class="ms-2 cursor-pointer  shadow-lg" v-else-if="currentStream === 'stream'">
+            <div class="ms-2 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'stream'">
                 <div v-if="omfmData" >  
                 <img class="rounded-lg" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
                 </div>
@@ -951,7 +951,7 @@ const dynamicTextColor = computed(() => {
 
   // More aggressive contrast adjustment:
   if (luminance > 0.8) { // Very light background
-    textColor = chroma(rgb).darken(3).hex(); // Stronger darkening
+    textColor = chroma(rgb).darken(2).hex(); // Stronger darkening
   } else if (luminance < 0.2) { // Very dark background
     textColor = chroma(rgb).brighten(3).hex(); // Stronger brightening
   } else {
