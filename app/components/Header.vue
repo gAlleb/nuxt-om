@@ -5,7 +5,7 @@
     :class="indexClass, headerClasses, eqClass"
     class="header dark:text-zinc-200 text-zinc-600 
      container-fluid 
-     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between py-5 px-3 sm:px-5 lg:px-20"
+     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between py-5 px-3 sm:px-5 lg:px-12"
    
     >
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">

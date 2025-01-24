@@ -2,7 +2,7 @@
     
 <section>
     <div class="icecast_player ice-player fixed" id="ice-player" style="z-index:30; transform: translateY(165%);">
-    <div class="icecast_player ice-player fixed" style="z-index:30;"
+    <div class="icecast_player ice-player fixed backdrop-blur-[1rem]" style="z-index:30;"
     :style="dynamicBackgroundColor">
         <div class="ice-player-el mb-5">
             <div>
@@ -887,7 +887,7 @@ const dynamicBackgroundColor = computed(() => {
     colorSource = np_ac;
   }
   const color = colorSource.dominantColors[stationKey];
-  const opacity = 0.93;
+  const opacity = 0.6;
   const backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : 'rgb(128,128,128)'; 
   return { background: backgroundColor };
 });
@@ -951,7 +951,7 @@ const dynamicTextColor = computed(() => {
 
   // More aggressive contrast adjustment:
   if (luminance > 0.8) { // Very light background
-    textColor = chroma(rgb).darken(2).hex(); // Stronger darkening
+    textColor = chroma(rgb).darken(4).hex(); // Stronger darkening
   } else if (luminance < 0.2) { // Very dark background
     textColor = chroma(rgb).brighten(3).hex(); // Stronger brightening
   } else {
