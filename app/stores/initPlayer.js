@@ -7,7 +7,7 @@ export const initPlayerStore = defineStore('player', {
   state: () => ({
     player: null,
     isPlaying: false,
-    isPlayingStream: false, 
+    isPlayingStream: false,
     isPlayingRock: false,
     isPlayingComa: false,
     isPlayingCore: false,
@@ -30,7 +30,7 @@ export const initPlayerStore = defineStore('player', {
         // this.audioSource.connect(this.analyzer);
         // this.audioSource.connect(this.ctx.destination);
         //this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
-        const visualizerData = useVisualizerData(); 
+        const visualizerData = useVisualizerData();
         visualizerData.initStore();
 
         this.eqFilters = this.createEQFilters(this.ctx);
@@ -50,10 +50,30 @@ export const initPlayerStore = defineStore('player', {
     // initVisualizer1() {
     //   this.player.initVisualizer1();
     // },
+    unlockAudioContext(audioCtx) {
+      if (audioCtx.state === 'suspended') {
+        var events = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown'];
+        var unlock = function unlock() {
+          console.log('audioContext state: ' + audioCtx.state);
+          if (audioCtx.resume)
+            audioCtx.resume().then(() => {
+              console.log('audioContext resume state: ' + audioCtx.state);
+              if (audioCtx.state !== 'suspended') {
+                events.forEach(function (event) {
+                  document.body.removeEventListener(event, unlock);
+                });
+              }
+            });
+        };
+        events.forEach(function (event) {
+          document.body.addEventListener(event, unlock, false);
+        });
+      }
+    },
     createEQFilters(ctx) {
       const bands = [60, 170, 350, 1000, 3000, 6000, 12000, 14000, 16000, 18000]; // Corrected center frequencies
       const filters = [];
-    
+
       for (let i = 0; i < 10; i++) {
         const filter = ctx.createBiquadFilter();
         filter.type = 'peaking';
@@ -118,10 +138,10 @@ export const initPlayerStore = defineStore('player', {
         this.isPlaying = true;
         if (this.player.stream_mount === 'stream') {
           this.isPlayingStream = true;
-        }  
+        }
         if (this.player.stream_mount === 'rock') {
           this.isPlayingRock = true;
-        } 
+        }
         if (this.player.stream_mount === 'coma') {
           this.isPlayingComa = true;
         }
@@ -135,7 +155,7 @@ export const initPlayerStore = defineStore('player', {
     },
     togglePlay(name) {
       if (name === this.player.stream_mount) {
-        
+
         if (this.player.current_state === this.player.PLAYING) {
           this.player.stop();
           this.isPlaying = false;
@@ -145,16 +165,16 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
         } else {
-         
+
           this.player.play();
           this.isPlaying = true;
-          
+
           if (this.player.stream_mount === 'stream') {
             this.isPlayingStream = true;
-          }  
+          }
           if (this.player.stream_mount === 'rock') {
             this.isPlayingRock = true;
-          } 
+          }
           if (this.player.stream_mount === 'coma') {
             this.isPlayingComa = true;
           }
@@ -165,9 +185,9 @@ export const initPlayerStore = defineStore('player', {
             this.isPlayingTerra = true;
           }
         }
-        
+
       } else if (name !== this.player.stream_mount) {
-        
+
           this.player.stop();
           this.player.change_stream(name);
           const useCurrentStreamStore = currentStreamStore(); // Get the store instance
@@ -192,10 +212,10 @@ export const initPlayerStore = defineStore('player', {
 
             if (this.player.stream_mount === 'stream') {
               this.isPlayingStream = true;
-            }  
+            }
             if (this.player.stream_mount === 'rock') {
               this.isPlayingRock = true;
-            } 
+            }
             if (this.player.stream_mount === 'coma') {
               this.isPlayingComa = true;
             }
@@ -206,8 +226,8 @@ export const initPlayerStore = defineStore('player', {
               this.isPlayingTerra = true;
             }
           }
-      } 
-     
+      }
+
     },
     playPlayer() {
       if (this.player.current_state !== this.player.PLAYING) {
@@ -219,10 +239,10 @@ export const initPlayerStore = defineStore('player', {
     playStatus() {
       if (this.player.stream_mount === 'stream') {
         this.isPlayingStream = true;
-      }  
+      }
       if (this.player.stream_mount === 'rock') {
         this.isPlayingRock = true;
-      } 
+      }
       if (this.player.stream_mount === 'coma') {
         this.isPlayingComa = true;
       }
@@ -236,7 +256,7 @@ export const initPlayerStore = defineStore('player', {
     stopPlayer() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();
-      } 
+      }
       this.isPlaying = false;
       this.isPlayingStream = false;
       this.isPlayingRock = false;
@@ -247,7 +267,7 @@ export const initPlayerStore = defineStore('player', {
     pausePlayer1() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.pause();
-      } 
+      }
       this.isPlaying = false;
       this.isPlayingStream = false;
       this.isPlayingRock = false;
@@ -255,7 +275,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingTerra = false;
       this.isPlayingCore = false;
     },
-    changeVol3() { 
+    changeVol3() {
     this.player.change_volume3();
     },
     showVol3() {
@@ -273,10 +293,10 @@ export const initPlayerStore = defineStore('player', {
     if (this.player.current_state === this.player.PLAYING) {
         if (name === 'stream') {
           this.isPlayingStream = true;
-        }  
+        }
         if (name === 'rock') {
           this.isPlayingRock = true;
-        } 
+        }
         if (name === 'coma') {
           this.isPlayingComa = true;
         }
@@ -286,7 +306,7 @@ export const initPlayerStore = defineStore('player', {
         if (name === 'terra') {
           this.isPlayingTerra = true;
         }
-    } 
+    }
     this.player.change_stream(name);
     const useCurrentStreamStore = currentStreamStore(); // Get the store instance
     useCurrentStreamStore.setStream(name); // Update the store
@@ -299,5 +319,5 @@ export const initPlayerStore = defineStore('player', {
     }
   }
   },
- 
+
 });

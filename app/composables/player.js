@@ -5,7 +5,11 @@ export const usePlayer = () => {
 
   onMounted(() => {
     // Initialize the player in the store
-    playerStoreInit.initPlayer(); 
+    playerStoreInit.initPlayer();
+
+    if (playerStoreInit.ctx.state === 'suspended') {
+      playerStoreInit.unlockAudioContext(playerStoreInit.ctx)
+    }
   });
 
   return {
