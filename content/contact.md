@@ -13,7 +13,7 @@ Let's connect!  Whether you have a question, a collaboration proposal, or just w
 
 ---
 - **IRC:** 
-    - [#omFM at ircs://irc.libera.chat:6697](https://libera.chat)
-    - [#omFM at ircs://ircnet.ru:6689](https://ircnet.ru)
+    - <a href="https://libera.chat" target="_blank">#omFM at ircs://irc.libera.chat:6697</a>
+    - <a href="https://ircnet.ru" target="_blank">#omFM at ircs://ircnet.ru:6689</a>
  
 ---
