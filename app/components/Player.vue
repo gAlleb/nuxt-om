@@ -2,7 +2,7 @@
     
 <section>
     <div class="icecast_player ice-player fixed" id="ice-player" style="z-index:30; transform: translateY(165%);">
-    <div class="icecast_player ice-player fixed backdrop-blur-[1rem]" style="z-index:30;"
+    <div class="icecast_player ice-player fixed backdrop-blur-[1rem] transition-all duration-500" style="z-index:30;"
     :style="dynamicBackgroundColor">
         <div class="ice-player-el mb-5">
             <div>
