@@ -1,9 +1,7 @@
-
 import { defineStore } from 'pinia';
 
 export const useEffectsStore = defineStore('effectsOverlay', {
     state: () => ({
-        effects: true,
         overlay0: true,
         overlay1: false,
         overlay2: true,
@@ -15,11 +13,40 @@ export const useEffectsStore = defineStore('effectsOverlay', {
     actions: {
       setOverlayState(overlayIndex, isOverlayActive) {
         this[overlayIndex] = isOverlayActive; // Dynamically access overlay properties
+      },
+      setOverlayLocalStorage(overlayId, effectState) {
+        this[overlayId] = effectState;
+        if (import.meta.client) {
+            localStorage.setItem(overlayId, JSON.stringify(effectState));
+        }
+      },
+      loadOverlayLocalStorage(overlayId) {
+        if (import.meta.client) {
+          const storedData = localStorage.getItem(overlayId);
+          if (storedData) {
+            this[overlayId] = JSON.parse(storedData);
+          }
+        }
+       },
+      setToTrue() {
+        this.overlay0 = true;
+        this.overlay1 = true;
+        this.overlay2 = true;
+        this.overlay3 = true;
+        this.overlay4 = true;
+        this.overlay5 = true;
+        this.artBackground = true;
+      },
+      setToFalse() {
+        this.overlay0 = false;
+        this.overlay1 = false;
+        this.overlay2 = false;
+        this.overlay3 = false;
+        this.overlay4 = false;
+        this.overlay5 = false;
+        this.artBackground = false;
       }
     },
-   
-       
- //     // // this below works great with run build
     persist: {
       storage: piniaPluginPersistedstate.cookies({
         // sameSite: 'strict',

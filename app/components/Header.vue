@@ -125,10 +125,9 @@
       <BtnShowHidePlayer />
       <BtnEq class="hidden sm:inline-flex"/>
       <BtnSetStream /> 
-      <BtnEffects_with_pinia />
+      <BtnEffects />
       <BtnGit />
       <!-- <BtnChristmas />  -->
-      <!-- <BtnEffects_with_pinia_node_version /> -->
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />
         <BtnToggleColorMode /> -->

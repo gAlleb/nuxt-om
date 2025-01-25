@@ -1,13 +1,13 @@
 <template>
 <ClientOnly v-if="ArtComponent">
-<component :is="ArtComponent" v-if="effectsStore.artBackground"/>
+<component :is="ArtComponent" v-if="art"/>
 </ClientOnly>
 </template>
 
 <script setup>
 import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
-
+const art = computed(() => effectsStore.artBackground); 
 const ArtComponent = computed(() => {
     let art = Math.random() > 0.5 ? 'plum' : 'dots'
     if (typeof window !== 'undefined') {

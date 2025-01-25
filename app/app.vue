@@ -1,15 +1,13 @@
 <template>
-<Analytics/>
 <UtilsPreloader />
 <NuxtLayout>
-  <NuxtLoadingIndicator color="#ef4444"/>
-  <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
+<NuxtLoadingIndicator color="#ef4444"/>
+<div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
   :class="{
                 'font-tenor': currentStream === 'stream' || currentStream ===  'terra',
                 'font-metal': currentStream === 'rock',
                 'font-UNSCII': currentStream === 'coma' || currentStream ===  'core',
-            }"
-    >
+            }">
 <div id="overlay0" class="overlay  "  :class="{
                 'radial': currentStream === 'stream',
                 'radial2': currentStream === 'rock',
@@ -24,43 +22,25 @@
 <div id="overlay3" class="overlay scanlines" :style="{ display: overlay3 ? 'flex' : 'none' }"></div>
 <div id="overlay4" class="overlay scanline" :style="{ display: overlay4 ? 'flex' : 'none' }"></div>
 <div id="overlay5" class="overlay scanline2" :style="{ display: overlay5 ? 'flex' : 'none' }"></div>
-<!-- without_pinia_effects_block -->
-<!-- <div id="overlay0" class="overlay  "  :class="{
-                'radial': currentStream === 'omFM Main',
-                'radial2': currentStream === 'Rock @ omFM',
-                'radial3': currentStream === 'Coma @ omFM',
-            }"
-             style="display: flex;"></div>
-<div id="overlay1" class="overlay flicker" style="display: flex;"></div>
-<div id="overlay2" class="overlay noise" style="display: flex;"></div>
-<div id="overlay3" class="overlay scanlines" style="display: flex;"></div>
-<div id="overlay4" class="overlay scanline" style="display: flex;"></div>
-<div id="overlay5" class="overlay scanline2" style="display: flex;"></div> -->
-
     <!-- Site header --> 
     <Header />
     <!-- Page content -->
     <main class="my-20 grow">
       <NuxtPage />
     </main>
-    
     <!-- Site footer -->
     <BtnTakeMeHome/>
     <div>
-   
   </div>
     <div class="footercurves_sxvx_style_ hidden dark:block"></div>
     <div class="footercurves_sxvx_style_light_ block dark:hidden"></div>
     <Footer />
-
     <div class="hidden playerContainer">
       <Player />
     </div>
-
     <ClientOnly>
       <Art />
     </ClientOnly>
-
   </div>
   <!-- <iframe
       src="https://coma.omfm.ru"
@@ -117,8 +97,8 @@
   <li></li>
   <li></li>
 </ul> -->
+<Analytics/>
 </template>
-
 <script setup defer>
 import { Analytics } from '@vercel/analytics/nuxt'
 import { initPlayerStore } from '@/stores/initPlayer';
@@ -127,16 +107,6 @@ import { useOmfmData } from '@/stores/stationData_omfm';
 const useInitPlayerStore = initPlayerStore();
 const np_ac = useAzuracastData();
 const np_omfm = useOmfmData();
-
-onMounted(() => {
-  // Initialize the player in the store
-  useInitPlayerStore.initPlayer();
-  np_ac.connectToSSE(); 
-  np_omfm.connectToSSE();
-  const playerContainer = document.querySelector('.playerContainer');
-  playerContainer.classList.remove('hidden');
-});
-
 import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
 const overlay0 = computed(() => effectsStore.overlay0); 
@@ -145,24 +115,34 @@ const overlay2 = computed(() => effectsStore.overlay2);
 const overlay3 = computed(() => effectsStore.overlay3); 
 const overlay4 = computed(() => effectsStore.overlay4); 
 const overlay5 = computed(() => effectsStore.overlay5); 
-
+onMounted(() => {
+useInitPlayerStore.initPlayer();
+np_ac.connectToSSE(); 
+np_omfm.connectToSSE();
+const playerContainer = document.querySelector('.playerContainer');
+playerContainer.classList.remove('hidden');
+effectsStore.loadOverlayLocalStorage('overlay0');
+effectsStore.loadOverlayLocalStorage('overlay1');
+effectsStore.loadOverlayLocalStorage('overlay2');
+effectsStore.loadOverlayLocalStorage('overlay3');
+effectsStore.loadOverlayLocalStorage('overlay4');
+effectsStore.loadOverlayLocalStorage('overlay5');
+effectsStore.loadOverlayLocalStorage('artBackground');
+});
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-
 // import { useChristmasStore } from '@/stores/christmasStore';
 // const changeChristmasState = useChristmasStore();
 // const christmas = computed(() => changeChristmasState.christmas); 
 // onMounted(() => {
 // changeChristmasState.loadChristmasState();
 // });
-
 // Uncomment if not using pinia Coockie storage
 onMounted(() => {
 useCurrentStreamStore.loadStreamName();
 });
 </script>
-
 <style>
 .page-enter-active,
 .page-leave-active {
