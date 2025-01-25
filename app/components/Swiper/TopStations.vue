@@ -1,6 +1,6 @@
 <template>
 <section>
-<div class="mt-5 ms-5 pt-3 sm:ms-3 ps-0 sm:ps-2 md:ms-10 text-xl bold">
+<div class="mt-2 ms-5 pt-3 sm:ms-3 ps-0 sm:ps-2 md:ms-10 text-xl bold">
 <h2>Top stations
 <div class="hidden dark:inline-flex"><sup><svg xmlns="http://www.w3.org/2000/svg" width="40" height="24" viewBox="0 -5 24 24" style="fill: rgba(255, 255, 255, 0.8);transform: ;msFilter:;"><path d="M17 11H7V7l-5 5 5 5v-4h10v4l5-5-5-5z"></path></svg>
 </sup></div>

@@ -32,11 +32,12 @@ export const initPlayerStore = defineStore('player', {
         //this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
         const visualizerData = useVisualizerData();
         visualizerData.initStore();
-
         this.eqFilters = this.createEQFilters(this.ctx);
         this.connectEQFilters();
         this.getEQBandsFromStorage();
-
+        if (this.ctx.state === 'suspended') {
+          this.unlockAudioContext(this.ctx)
+        }
         // this.player.hide_stop_and_mute_button();
 
         //  this.player.audio_object.addEventListener('play', () => {

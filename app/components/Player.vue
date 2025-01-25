@@ -6,12 +6,12 @@
     :style="dynamicBackgroundColor">
         <div class="ice-player-el mb-5">
             <div>
-                <!-- <i class="ice-play hidden" @click="playStatus" style="display: inline-block;font-size:1.6rem !important" ></i> -->
-                <i class="ice-play hidden" @click="playStatus" style="font-size:1.6rem !important" ></i>
+                <!-- <i class="ice-play hidden" @click="useInitPlayerStore.playStatus()" style="display: inline-block;font-size:1.6rem !important" ></i> -->
+                <i class="ice-play hidden" @click="useInitPlayerStore.playStatus()" style="font-size:1.6rem !important" ></i>
                 <i class="ice-pause hidden"  @click="pausePlayer" ></i>
                 <i class="ice-stop hidden"  @click="stopPlayer"></i>
 
-                <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="togglePlayAll"  >     
+                <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="useInitPlayerStore.togglePlayAll()"  >     
                     <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
                     <Icon id="stopBtnPlayer" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
                 </button>
@@ -692,12 +692,8 @@
 </template>
 
 <script setup>
-import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
-const useInitPlayerStore = initPlayerStore(); // Get the store instance
-
-import { usePlayer } from '../composables/player'; // Create this composable
-const { player, isPlaying, togglePlayAll, playStatus, changeVol3, showVol3, muteVol, setStream} = usePlayer(); // Get player instance and state
-
+import { initPlayerStore } from '@/stores/initPlayer';
+const useInitPlayerStore = initPlayerStore();
 import { useAzuracastData } from '../stores/stationData';
 const np_ac = useAzuracastData();
 import { useOmfmData } from '../stores/stationData_omfm';
@@ -888,7 +884,7 @@ const dynamicBackgroundColor = computed(() => {
   }
   const color = colorSource.dominantColors[stationKey];
   const opacity = 0.6;
-  const backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : 'rgb(128,128,128)'; 
+  const backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : 'rgb(43, 48, 53)'; 
   return { background: backgroundColor };
 });
 

@@ -3,15 +3,6 @@ import { initPlayerStore } from '../stores/initPlayer';
 export const usePlayer = () => {
   const playerStoreInit = initPlayerStore();
 
-  onMounted(() => {
-    // Initialize the player in the store
-    playerStoreInit.initPlayer();
-
-    if (playerStoreInit.ctx.state === 'suspended') {
-      playerStoreInit.unlockAudioContext(playerStoreInit.ctx)
-    }
-  });
-
   return {
     // Access player properties and methods directly from the store
     player: playerStoreInit.player,

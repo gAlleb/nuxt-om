@@ -121,15 +121,20 @@
 
 <script setup defer>
 import { Analytics } from '@vercel/analytics/nuxt'
+import { initPlayerStore } from '@/stores/initPlayer';
 import { useAzuracastData } from '@/stores/stationData';
 import { useOmfmData } from '@/stores/stationData_omfm';
-
+const useInitPlayerStore = initPlayerStore();
 const np_ac = useAzuracastData();
 const np_omfm = useOmfmData();
 
 onMounted(() => {
+  // Initialize the player in the store
+  useInitPlayerStore.initPlayer();
   np_ac.connectToSSE(); 
   np_omfm.connectToSSE();
+  const playerContainer = document.querySelector('.playerContainer');
+  playerContainer.classList.remove('hidden');
 });
 
 import { useEffectsStore } from '@/stores/effects';
@@ -140,14 +145,6 @@ const overlay2 = computed(() => effectsStore.overlay2);
 const overlay3 = computed(() => effectsStore.overlay3); 
 const overlay4 = computed(() => effectsStore.overlay4); 
 const overlay5 = computed(() => effectsStore.overlay5); 
-
-onMounted(() => {
-  const playerContainer = document.querySelector('.playerContainer');
-  playerContainer.classList.remove('hidden');
-});
-
-import { initPlayerStore } from '@/stores/initPlayer';
-const playerStore = initPlayerStore();
 
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
