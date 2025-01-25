@@ -141,7 +141,7 @@ export const useOmfmData = defineStore({
     },
     async fetchCoverArt(artist, title, station) {
       const track = artist + ' ' + title
-      const cacheKey = track.toLowerCase();
+      const cacheKey = track; //Remove toLowerCase cause it messes up with non-latin which has no lowercase, e.g. devanagari (दारिद्र्य दहन शिवस्तोत्रं) or use track.normalize('NFC'); 
       if (this.cache[cacheKey]) {
         return this.cache[cacheKey];
       }
