@@ -9,5 +9,11 @@ meta: 'Contact info'
 
 **A continuación, te indicamos cómo puedes comunicarte conmigo:**
 
-* **Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
-* **IRC:** [#omFM en ircs://irc.libera.chat:6697](https://libera.chat)
+**Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
+
+---
+- **IRC:** 
+    - [#omFM at ircs://irc.libera.chat:6697](https://libera.chat)
+    - [#omFM at ircs://ircnet.ru:6689](https://ircnet.ru)
+ 
+---
