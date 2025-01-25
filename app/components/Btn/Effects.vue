@@ -3,9 +3,9 @@
     <UTooltip text="UI Settings" :popper="{ offsetDistance: 5 }" class="">
       <div :class="[
         (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground) ? 'bg-red-400 dark:bg-red-400' :
-          (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground)) ? 'bg-red-200 dark:bg-pink-400' :
-            'bg-sxvx-light-bg dark:bg-sxvx-dark-bg'
-         ]"
+        (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground)) ? 'bg-red-200 dark:bg-pink-400' :
+        'bg-sxvx-light-bg dark:bg-sxvx-dark-bg'
+        ]"
         class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2"
         @click="isOpen = !isOpen">
         <span class="sr-only">Effects On/Off</span>
@@ -115,32 +115,32 @@ const closeEffectsBlockOutside = (event) => {
 function toggleEffect(overlayId) {
   effectsStore[overlayId] = !effectsStore[overlayId];
   if (effectsStore[overlayId]) {
-    setItem(overlayId, true);
+    effectsStore.setOverlayLocalStorage(overlayId, true);
   } else {
-    setItem(overlayId, false);
+    effectsStore.setOverlayLocalStorage(overlayId, false);
   }
 }
 function toggleAllEffects() {
   if (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground) {
     effectsStore.setToTrue();
     for (let i = 0; i <= 5; i++) {
-      setItem(`overlay${i}`, true);
+    effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
     }
-    setItem('artBackground', true);
+    effectsStore.setOverlayLocalStorage('artBackground', true);
   } else {
     effectsStore.setToFalse();
     for (let i = 0; i <= 5; i++) {
-      setItem(`overlay${i}`, false);
+    effectsStore.setOverlayLocalStorage(`overlay${i}`, false);
     }
-    setItem('artBackground', false);
+    effectsStore.setOverlayLocalStorage('artBackground', false);
   }
 }
 // Not clear but set to true
 function clearCache() {
   for (let i = 0; i <= 5; i++) {
-    setItem(`overlay${i}`, true);
+    effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
   }
-  setItem('artBackground', true);
+  effectsStore.setOverlayLocalStorage('artBackground', true);
   effectsStore.setToTrue();
 }
 </script>
