@@ -10,6 +10,7 @@ export const useEffectsStore = defineStore('effectsOverlay', {
         overlay3: false,
         overlay4: false,
         overlay5: false,
+        artBackground: true,
     }),
     actions: {
       setOverlayState(overlayIndex, isOverlayActive) {

@@ -87,11 +87,9 @@ class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-
 @click="isOpen = !isOpen">  
 -->
 <div
-:class="[ 
-    areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
-    anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg' 
-  ]"
+:class="[(areAllFalse() && !effectsStore.artBackground) ? 'bg-red-400 dark:bg-red-400' : 
+    (anyEffectOff() || !effectsStore.artBackground) ? 'bg-red-200 dark:bg-pink-400' :
+    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg' ]"   
 class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2" 
 @click="isOpen = !isOpen">
   <span class="sr-only">Effects On/Off</span>
@@ -105,61 +103,66 @@ class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-
 
     <button type="button" @click="toggleEffect('overlay0')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay0') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300  text-xs ">Radial</span>
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs ">Radial</span>
     </button>
 
     <button type="button" @click="toggleEffect('overlay1')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay1') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Flicker</span>
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs">Flicker</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay2')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay2') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Noise</span>
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs">Noise</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay3')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay3') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Scanlines</span>
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs">Scanlines</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay4')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay4') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Scanline Black</span>
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs">Scanline Black</span>
     </button>
 
 
     <button type="button" @click="toggleEffect('overlay5')" :class="{ 'bg-red-400 dark:bg-red-400': !effectOn('overlay5') }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300  text-xs">Scanline Green</span>
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs">Scanline Green</span>
     </button>
 
-
+    <button type="button" @click="toggleArtBackground()" :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground }" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+      <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+      <span class="text-zinc-700 dark:text-zinc-100  text-xs">Strokes Art</span>
+    </button>
+    <hr/>
+    <hr/>
     <button type="button" id="allEffectsBtn" @click="toggleAllEffects" 
-    :class="[areAllFalse() ? 'bg-red-400 dark:bg-red-400' : 
-    anyEffectOff() ? 'bg-red-200 dark:bg-pink-400' :
+    :class="[(areAllFalse() && !effectsStore.artBackground) ? 'bg-red-400 dark:bg-red-400' : 
+    (anyEffectOff() || !effectsStore.artBackground) ? 'bg-red-200 dark:bg-pink-400' :
     'bg-slate-50 dark:bg-zinc-800' ]" 
     class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300 text-xs">Toggle Effects</span>
+      <span class="text-zinc-700 dark:text-zinc-100 text-xs">Toggle Effects</span>
     </button>
 
     <button type="button" id="clearCacheBtn" @click="clearCache" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
       <Icon name="heroicons:trash" class="h-4 w-4" aria-hidden="true" />
-      <span class="text-zinc-700 dark:text-zinc-300 text-xs">Clear Effects Cache</span>
+      <span class="text-zinc-700 dark:text-zinc-100 text-xs">Clear Effects Cache</span>
     </button>
     <hr/>
     <hr/>
           <button @click="colorMode.preference = 'light'" type="button" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
             <Icon name="heroicons:sun" class="h-4 w-4" aria-hidden="true" />
-            <span class="text-zinc-700 dark:text-zinc-300 text-xs">Light Mode</span>
+            <span class="text-zinc-700 dark:text-zinc-100 text-xs">Light Mode</span>
           </button>
           <button @click="colorMode.preference = 'dark'" type="button" class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
             <Icon name="heroicons:moon" class="h-4 w-4" aria-hidden="true" />
-            <span class="text-zinc-700 dark:text-zinc-300 text-xs">Dark Mode</span>
+            <span class="text-zinc-700 dark:text-zinc-100 text-xs">Dark Mode</span>
           </button>
 </div>
 </transition>
@@ -170,7 +173,7 @@ class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-
 const colorMode = useColorMode()
 //import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ref, onMounted } from 'vue';
-import { useEffectsStore } from '../../stores/effects';
+import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
@@ -285,6 +288,14 @@ function toggleEffect(overlayId) {
     }
   
 }
+function toggleArtBackground() {
+   effectsStore.artBackground = !effectsStore.artBackground;
+      if (effectsStore.artBackground) {
+        setItem('artBackground', 'true');
+      } else {
+        setItem('artBackground', 'false');
+      }
+}
 
 function effectOn(overlayId) {
   return effectStates.value[overlayId];
@@ -303,13 +314,14 @@ function toggleAllEffects() {
   allEffectsOn.value = !allEffectsOn.value;
 
   // Turn off all effects if allEffectsOn is false
-  if (!areAllTrue()) {
+  if (!areAllTrue() && !effectsStore.artBackground) {
     Object.keys(effectStates.value).forEach(overlayId => {
       effectStates.value[overlayId] = false;
       toggleEffect(overlayId);
     });
     setItem('effects', 'false');
     effectsStore.effects = false; 
+    toggleArtBackground();
   } else {
     // Turn on all effects if allEffectsOn is true
     Object.keys(effectStates.value).forEach(overlayId => {
@@ -318,6 +330,7 @@ function toggleAllEffects() {
     });
     setItem('effects', 'true');
     effectsStore.effects = true; 
+    toggleArtBackground();
   }
 }
 
@@ -330,6 +343,7 @@ function clearCache() {
   }
   // removeItem('effects');
   setItem('effects', 'true');
+  setItem('artBackground', 'true');
 
   // Reset overlay states
   effectStates.value = {
@@ -349,7 +363,7 @@ function clearCache() {
   effectsStore.overlay3 = true; 
   effectsStore.overlay4 = true; 
   effectsStore.overlay5 = true; 
-
+  effectsStore.artBackground = true; 
 
 
   // Update overlay display
@@ -397,6 +411,15 @@ onMounted(() => {
     }
   }
 }
+function handleOverlayArt(overlayId, effectState) {
+    if (effectState === 'true' || effectState === null) {
+      effectsStore.setOverlayState(overlayId, true);
+      setItem(overlayId, 'true');
+    } else {
+      effectsStore.setOverlayState(overlayId, false);
+      setItem(overlayId, 'false');
+    }
+  }
 function handleOverlayFALSE(overlayId, effectState) {
   const overlay = document.getElementById(overlayId);
   if (overlay) {
@@ -420,6 +443,7 @@ handleOverlay('overlay2', getItem('overlay2'));
 handleOverlayFALSE('overlay3', getItem('overlay3'));
 handleOverlayFALSE('overlay4', getItem('overlay4'));
 handleOverlayFALSE('overlay5', getItem('overlay5'));
+handleOverlayArt('artBackground', getItem('artBackground'));
 
   // Restore the combined state for overlays 3, 4, and 5
   // if (getItem('overlay3') === 'false' || getItem('overlay4') === 'false' || getItem('overlay5') === 'false') {
