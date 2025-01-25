@@ -7,7 +7,7 @@ meta: 'Contact info'
 
 **Как со мной связаться:**
 
-**Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
+- **Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
 
 ---
 - **IRC:** 

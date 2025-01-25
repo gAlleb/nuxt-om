@@ -9,7 +9,7 @@ Let's connect!  Whether you have a question, a collaboration proposal, or just w
 
 **Here's how you can reach me:**
 
-**Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
+- **Email:** [radio@omfm.ru](mailto:radio@omfm.ru)
 
 ---
 - **IRC:** 
