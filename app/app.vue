@@ -1,5 +1,5 @@
 <template>
-<UtilsPreloader />
+<!-- <UtilsPreloader /> -->
 <NuxtLayout>
 <NuxtLoadingIndicator color="#ef4444"/>
 <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
@@ -121,13 +121,6 @@ np_ac.connectToSSE();
 np_omfm.connectToSSE();
 const playerContainer = document.querySelector('.playerContainer');
 playerContainer.classList.remove('hidden');
-effectsStore.loadOverlayLocalStorage('overlay0');
-effectsStore.loadOverlayLocalStorage('overlay1');
-effectsStore.loadOverlayLocalStorage('overlay2');
-effectsStore.loadOverlayLocalStorage('overlay3');
-effectsStore.loadOverlayLocalStorage('overlay4');
-effectsStore.loadOverlayLocalStorage('overlay5');
-effectsStore.loadOverlayLocalStorage('artBackground');
 });
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
@@ -141,6 +134,13 @@ const currentStream = computed(() => useCurrentStreamStore.currentStream); // Re
 // Uncomment if not using pinia Coockie storage
 onMounted(() => {
 useCurrentStreamStore.loadStreamName();
+effectsStore.loadOverlayLocalStorage('overlay0');
+effectsStore.loadOverlayLocalStorage('overlay1');
+effectsStore.loadOverlayLocalStorage('overlay2');
+effectsStore.loadOverlayLocalStorage('overlay3');
+effectsStore.loadOverlayLocalStorage('overlay4');
+effectsStore.loadOverlayLocalStorage('overlay5');
+effectsStore.loadOverlayLocalStorage('artBackground');
 });
 </script>
 <style>

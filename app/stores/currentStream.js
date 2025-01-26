@@ -85,25 +85,25 @@ export const currentStreamStore = defineStore('playerCurrentStream', {
         setStream(streamName) {
           this.currentStream = streamName;
           if (import.meta.client) {
-              localStorage.setItem('stream_name_pinia', streamName);
+              localStorage.setItem('stream_name', streamName);
             }
         },
         loadStreamName() {
             if (import.meta.client) {
-              const storedName = localStorage.getItem('stream_name_pinia');
+              const storedName = localStorage.getItem('stream_name');
               if (storedName) {
                 this.currentStream = storedName;
               }
             }
           },
     },
-    // // this below works great with run build
-    // persist: {
-    //   storage: piniaPluginPersistedstate.cookies({
-    //     // sameSite: 'strict',
-    //     sameSite: 'lax',
-    //     maxAge: 798131659,
-    //   }),
-    // },
+    // this below works great with run build
+    persist: {
+      storage: piniaPluginPersistedstate.cookies({
+        // sameSite: 'strict',
+        sameSite: 'lax',
+        maxAge: 798131659,
+      }),
+    },
 
 }); 
