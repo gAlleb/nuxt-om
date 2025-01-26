@@ -101,35 +101,28 @@
           </li>
         </ul>
       </div>
-      <div v-else class="container mx-1 sm:mx-auto lg:mx-20">
+      <div v-else class="container">
         <h2 class="my-5 text-2xl">Now playing:</h2>      
-
         <div class="ice-player-el" >
                <div class="relative">
                  <img class="rounded-xl h-auto w-32 sm:w-52" src="/static/img/defaultCoverart.jpg" alt="Album Cover">
                 </div>
-               <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+               <div class="ms-2 np-main">
                 <div class="px-3 py-2 mb-0 sm:py-6 sm:mb-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "> 
                   <span class="text-xl sm:text-2xl">loading...</span><br/>
                   <span class="text-lg sm:text-xl">loading...</span>
                 </div>
-                <div class="mt-4 text-md sm:text-xl px-3 py-2 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200" style="font-family: monospace"> 
-                <div class="relative flex"> 
+                <div class="mt-2 sm:mt-2 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify"
+               > 
+                <span class="text-sm sm:text-lg"> 
                   00:00 / 00:00
-                </div>
+                </span>
                 </div>
                </div>
-
-
             </div>
             <div class="bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200  bg-opacity-50 my-2 rounded-xl relative w-full h-5 overflow-hidden">
             </div>
-
-         
-          
-            <h2 class="my-5 text-2xl">Next Song:</h2>      
-
-
+          <h2 class="my-5 text-2xl">Next Song:</h2>      
           <div class="mt-2 rounded-l-xl ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200" >
               <div class=" relative">
               <img 
@@ -144,17 +137,21 @@
                   <span class="text-lg sm:text-xl">loading...</span>
                 </div>
               </div>
+                <div class="me-2">
+                <Icon
+                name="heroicons-solid:musical-note"
+                class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200"   
+                aria-hidden="true"
+               />
+              </div>
              </div>
-         
           <h2 class="my-5 text-2xl">Recent Songs:</h2>      
-     
           <ul>
           <li v-for="i in 5" :key="i">
-
             <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200" >
               <div class=" relative">
-              <img 
-              src="/static/img/defaultCoverart.jpg"
+                <img 
+              src="/static/img/defaultCoverart.jpg" 
               alt="History Cover"
               class="history-cover rounded-l-xl h-auto w-16 sm:w-20"
               >  
@@ -166,7 +163,6 @@
                 </div>
               </div>
              </div>
-
           </li>
         </ul>
       </div> 

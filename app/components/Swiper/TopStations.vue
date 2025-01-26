@@ -9,13 +9,17 @@
 </h2>  
 </div>
 <div class="my-5" style="mask-image: linear-gradient(90deg,transparent 1%,#000 4%,#000 96%,transparent 99%);">
-    <ClientOnly>
+  <div v-if="!swiperInitialized" class="swiper-placeholder">
+      <div class="loading-indicator-container">
+        <div class="loading-indicator" :style="{ backgroundColor: isDarkMode ? '#2B3035' : '#F2EEE6' }"></div>
+      </div>
+    </div>
+  <ClientOnly>
   <swiper-container class="mt-5 topStations" ref="containerRef" 
             :freeMode="true"  
             :mouseWheel="true"  
             :spaceBetween="20" 
             :init="false"
-            
             >
              
      
@@ -241,6 +245,10 @@
 
 <script setup>
 const localePath = useLocalePath()
+const colorMode = useColorMode()
+const isDarkMode = (colorMode.value === 'dark')
+
+
 
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
@@ -256,10 +264,47 @@ slidesPerView: 'auto',
 navigation: false,
 scrollbar: false,
 })
+const swiperInitialized = computed(() => containerRef.value); //Efficiently check if swiper is initialized
+
 </script>
 <style scoped>
- .swiper-scrollbar  {opacity:0!important;}
+.swiper-scrollbar  {opacity:0!important;}
 .swiper-scrollbar .swiper-scrollbar-horizontal:hover {opacity:1;}
 .topStations .swiper-button-prev {color:white!important}
+.swiper-placeholder {
+  height: 150px; 
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-indicator-container {
+  width: 100%;  
+  height: 100%; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loading-indicator {
+  width: 80%; 
+  height: 20px;
+  border-radius: 10px;
+  animation: loading-animation 1.5s ease-in-out infinite;
+  background-color: #f2eee6; 
+  transition: background-color 0.3s ease;
+}
+@keyframes loading-animation {
+  0% { width: 0%; }
+  50% { width: 100%; }
+  100% { width: 0%; }
+}
+.dark .loading-indicator {
+  background-color: #2B3035; /* Dark mode color */
+}
+.swiper-placeholder{
+    background-color: rgba(242, 238, 230, 0.2);  
+}
+.dark .swiper-placeholder {
+  background-color: rgba(43, 48, 53, 0.2); 
 
 </style>
