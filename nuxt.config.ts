@@ -116,8 +116,7 @@ export default defineNuxtConfig({
   },
 
   gtag: {
-    // id: process.env.GTAG_ID,
-    id: 'G-JZGDCG24FM',
+    id: process.env.GTAG_ID, // change this to your Google Analytics ID G-xxxxxxxxxx
   },
 
   colorMode: {
