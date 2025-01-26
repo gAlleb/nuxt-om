@@ -306,5 +306,5 @@ const swiperInitialized = computed(() => containerRef.value); //Efficiently chec
 }
 .dark .swiper-placeholder {
   background-color: rgba(43, 48, 53, 0.2); 
-
+}
 </style>
