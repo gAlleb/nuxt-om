@@ -17,6 +17,9 @@ export const useVisualizerData = defineStore({
     customMaxHeight: null,
     analyzer: null,
     frequencyData: null,
+    canvas: null,
+    canvasWave: null,
+    canvas3Waves: null,
   }),
   getters: {
     maxHeight: (state) => {
@@ -103,17 +106,14 @@ export const useVisualizerData = defineStore({
         this.customMaxHeight = customMaxHeight;
         // Functions
              // Function to initialize the canvas (canvas)
-         function   initCanvas(container) {
-           if(document.getElementById('visualizerCanvas')) {
-            document.getElementById('visualizerCanvas').remove();
-           }
-           const canvas = document.createElement("canvas");
-           canvas.setAttribute("id", "visualizerCanvas");
-           canvas.setAttribute("class", "visualizer-item");
-           container.appendChild(canvas);
-           canvas.width = container.clientWidth;
-           canvas.height = "255";
-           return canvas;
+         function initCanvas(container) {
+           const canvasmaker = document.createElement("canvas");
+           canvasmaker.setAttribute("id", "visualizerCanvas");
+           canvasmaker.setAttribute("class", "visualizer-item");
+           container.appendChild(canvasmaker);
+           canvasmaker.width = container.clientWidth;
+           canvasmaker.height = "255";
+           return canvasmaker;
          }
        
          // Feature to change canvas based on container size
@@ -132,8 +132,8 @@ export const useVisualizerData = defineStore({
              numBars: this.barsNumber || 65,
              maxHeight: this.maxHeight || 255,
            };
-           const canvas = initCanvas(container);
-           const canvasCtx = canvas.getContext("2d");
+           this.canvas = initCanvas(container);
+           const canvasCtx = this.canvas.getContext("2d");
            // Create bars
           // let frameCounter = 0;
           // const framesToSkip = 1;
@@ -146,16 +146,16 @@ export const useVisualizerData = defineStore({
             //  frameCounter++;
             //  if (frameCounter >= framesToSkip) {
             //  frameCounter = 0; // Reset the counter
-             resizeCanvas(canvas, container);
+             resizeCanvas(this.canvas, container);
              this.analyzer.getByteFrequencyData(this.frequencyData);
-             canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+             canvasCtx.clearRect(0, 0, this.canvas.width, this.canvas.height);
              for (let i = 0; i < options.numBars; i++) {
                const index = Math.floor((i + 10) * (i < options.numBars / 2 ? 2 : 1));
                const fd = this.frequencyData[index];
                const barHeight = Math.max(4, fd || 0) + options.maxHeight / 255;
-               const barWidth = canvas.width / options.numBars;
+               const barWidth = this.canvas.width / options.numBars;
                const x = i * barWidth;
-               const y = canvas.height - barHeight;
+               const y = this.canvas.height - barHeight;
                const gradient = canvasCtx.createLinearGradient(0, 200, 0, 0);
                gradient.addColorStop(0, this.colorScheme.color1);
                gradient.addColorStop(0.5, this.colorScheme.color2);
@@ -170,7 +170,7 @@ export const useVisualizerData = defineStore({
        
            // Window space change listener
            window.addEventListener("resize", () => {
-             resizeCanvas(canvas, container);
+             resizeCanvas(this.canvas, container);
            });
          };
  
@@ -183,13 +183,13 @@ export const useVisualizerData = defineStore({
       // Functions
            // Function to initialize the canvas (canvas)
         function   initCanvas(container) {
-         const canvas = document.createElement("canvas");
-         canvas.setAttribute("id", "visualizerCanvasWave");
-         canvas.setAttribute("class", "visualizer-item-wave");
-         container.appendChild(canvas);
-         canvas.width = container.clientWidth;
-         canvas.height = "255";
-         return canvas;
+         const canvasmaker = document.createElement("canvas");
+         canvasmaker.setAttribute("id", "visualizerCanvasWave");
+         canvasmaker.setAttribute("class", "visualizer-item-wave");
+         container.appendChild(canvasmaker);
+         canvasmaker.width = container.clientWidth;
+         canvasmaker.height = "255";
+         return canvasmaker;
        }
      
        // Feature to change canvas based on container size
@@ -208,8 +208,8 @@ export const useVisualizerData = defineStore({
           maxHeight: container.dataset.maxHeight || 255,
           waveformThickness: container.dataset.waveformThickness || 2.5, // Customize thickness
          };
-         const canvas = initCanvas(container);
-         const canvasCtx = canvas.getContext("2d");
+        this.canvasWave = initCanvas(container);
+         const canvasCtx = this.canvasWave.getContext("2d");
          // Create bars
         // let frameCounter = 0;
         // const framesToSkip = 1;
@@ -222,18 +222,18 @@ export const useVisualizerData = defineStore({
       // frameCounter++;
       // if (frameCounter >= framesToSkip) {
       //     frameCounter = 0;
-          resizeCanvas(canvas, container);
+          resizeCanvas(this.canvasWave, container);
           this.analyzer.getByteTimeDomainData(this.frequencyData); 
-          canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+          canvasCtx.clearRect(0, 0, this.canvasWave.width, this.canvasWave.height);
           canvasCtx.lineWidth = options.waveformThickness;
           canvasCtx.strokeStyle = this.colorSchemeWave;
           canvasCtx.beginPath();
           const waveformData = this.frequencyData; // Create array
-          const sliceWidth = canvas.width / waveformData.length;
+          const sliceWidth = this.canvasWave.width / waveformData.length;
           let x = 0;
           for (let i = 0; i < waveformData.length; i++) {
               const v = waveformData[i] / 255.0; // Normalize to 0-1 range
-              const y = canvas.height / 2 + v * canvas.height / 2; // Center the waveform
+              const y = this.canvasWave.height / 2 + v * this.canvasWave.height / 2; // Center the waveform
               if (i === 0) {
                   canvasCtx.moveTo(x, y);
               } else {
@@ -247,7 +247,7 @@ export const useVisualizerData = defineStore({
         renderWaveform();
          // Window space change listener
          window.addEventListener("resize", () => {
-           resizeCanvas(canvas, container);
+           resizeCanvas(this.canvasWave, container);
          });
        };
 
@@ -260,13 +260,13 @@ export const useVisualizerData = defineStore({
     // Functions
          // Function to initialize the canvas (canvas)
       function   initCanvas(container) {
-       const canvas = document.createElement("canvas");
-       canvas.setAttribute("id", "visualizerCanvas3Waves");
-       canvas.setAttribute("class", "visualizer-item-3waves");
-       container.appendChild(canvas);
-       canvas.width = container.clientWidth;
-       canvas.height = "255";
-       return canvas;
+       const canvasmaker = document.createElement("canvas");
+       canvasmaker.setAttribute("id", "visualizerCanvas3Waves");
+       canvasmaker.setAttribute("class", "visualizer-item-3waves");
+       container.appendChild(canvasmaker);
+       canvasmaker.width = container.clientWidth;
+       canvasmaker.height = "255";
+       return canvasmaker;
      }
    
      // Feature to change canvas based on container size
@@ -286,8 +286,8 @@ export const useVisualizerData = defineStore({
         maxHeight: container.dataset.maxHeight || 130,
         waveformThickness: container.dataset.waveformThickness || 1.7, // Customize thickness
        };
-       const canvas = initCanvas(container);
-       const canvasCtx = canvas.getContext("2d");
+       this.canvas3Waves = initCanvas(container);
+       const canvasCtx = this.canvas3Waves.getContext("2d");
 
     // let frameCounter = 0;
     // const framesToSkip = 1;
@@ -300,9 +300,9 @@ export const useVisualizerData = defineStore({
     // frameCounter++;
     // if (frameCounter >= framesToSkip) {
     //     frameCounter = 0;
-        resizeCanvas(canvas, container);
+        resizeCanvas(this.canvas3Waves, container);
         this.analyzer.getByteTimeDomainData(this.frequencyData); 
-        canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
+        canvasCtx.clearRect(0, 0, this.canvas3Waves.width, this.canvas3Waves.height);
         const numBins = this.frequencyData.length;
         const lowBand = this.frequencyData.slice(0, numBins / 3);
         const midBand = this.frequencyData.slice(numBins / 3, 2 * numBins / 3);
@@ -310,9 +310,9 @@ export const useVisualizerData = defineStore({
         // Draw lines - plotting multiple points
         const lineWidth = 2;
         canvasCtx.lineWidth = lineWidth;
-        drawFrequencyLine(canvasCtx, lowBand, this.colorScheme3Waves.color1, canvas.width, canvas.height);
-        drawFrequencyLine(canvasCtx, midBand, this.colorScheme3Waves.color2, canvas.width, canvas.height);
-        drawFrequencyLine(canvasCtx, highBand, this.colorScheme3Waves.color3, canvas.width, canvas.height);
+        drawFrequencyLine(canvasCtx, lowBand, this.colorScheme3Waves.color1, this.canvas3Waves.width, this.canvas3Waves.height);
+        drawFrequencyLine(canvasCtx, midBand, this.colorScheme3Waves.color2, this.canvas3Waves.width, this.canvas3Waves.height);
+        drawFrequencyLine(canvasCtx, highBand, this.colorScheme3Waves.color3, this.canvas3Waves.width, this.canvas3Waves.height);
    // };
     };
 
@@ -334,9 +334,8 @@ export const useVisualizerData = defineStore({
       ctx.stroke();
      };
       renderWaveform();
-       // Window space change listener
        window.addEventListener("resize", () => {
-         resizeCanvas(canvas, container);
+         resizeCanvas(this.canvas3Waves, container);
        });
      };
 

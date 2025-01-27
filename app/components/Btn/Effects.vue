@@ -2,8 +2,8 @@
   <div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
     <UTooltip text="UI Settings" :popper="{ offsetDistance: 5 }" class="">
       <div :class="[
-        (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground) ? 'bg-red-400 dark:bg-red-400' :
-        (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground)) ? 'bg-red-200 dark:bg-pink-400' :
+        (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) ? 'bg-red-400 dark:bg-red-400' :
+        (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground && effectsStore.visualizer)) ? 'bg-red-200 dark:bg-pink-400' :
         'bg-sxvx-light-bg dark:bg-sxvx-dark-bg'
         ]"
         class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2"
@@ -35,13 +35,13 @@
           <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
           <span class="text-zinc-700 dark:text-zinc-100 text-xs">Noise</span>
         </button>
-        <button type="button" @click="toggleEffect('overlay3')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 }"
+        <button type="button" @click="toggleScanlineEffect()"
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 }"
           class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
           <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
           <span class="text-zinc-700 dark:text-zinc-100 text-xs">Scanlines</span>
         </button>
-        <button type="button" @click="toggleEffect('overlay4')"
+        <!-- <button type="button" @click="toggleEffect('overlay4')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay4 }"
           class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
           <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
@@ -52,18 +52,24 @@
           class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
           <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
           <span class="text-zinc-700 dark:text-zinc-100 text-xs">Scanline Green</span>
-        </button>
+        </button> -->
         <button type="button" @click="toggleEffect('artBackground')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground }"
           class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
           <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
           <span class="text-zinc-700 dark:text-zinc-100  text-xs">Strokes Art</span>
         </button>
+        <button type="button" @click="toggleEffect('visualizer')"
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.visualizer }"
+          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
+          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
+          <span class="text-zinc-700 dark:text-zinc-100  text-xs">Audio visualizer</span>
+        </button>
         <hr />
         <hr />
         <button type="button" id="allEffectsBtn" @click="toggleAllEffects" :class="[
-          (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground) ? 'bg-red-400 dark:bg-red-400' :
-            (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground)) ? 'bg-red-200 dark:bg-pink-400' :
+          (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) ? 'bg-red-400 dark:bg-red-400' :
+            (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground && effectsStore.visualizer)) ? 'bg-red-200 dark:bg-pink-400' :
               'bg-slate-50 dark:bg-zinc-800']"
           class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
           <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
@@ -120,6 +126,20 @@ function toggleEffect(overlayId) {
     effectsStore.setOverlayLocalStorage(overlayId, false);
   }
 }
+function toggleScanlineEffect() {
+  effectsStore.overlay3 = !effectsStore.overlay3;
+  effectsStore.overlay4 = !effectsStore.overlay4;
+  effectsStore.overlay5 = !effectsStore.overlay5;
+  if (effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5) {
+    for (let i = 3; i <= 5; i++) {
+    effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
+    }
+  } else {
+    for (let i = 3; i <= 5; i++) {
+    effectsStore.setOverlayLocalStorage(`overlay${i}`, false);
+    }
+  }
+}
 function toggleAllEffects() {
   if (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground) {
     effectsStore.setToTrue();
@@ -127,12 +147,15 @@ function toggleAllEffects() {
     effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
     }
     effectsStore.setOverlayLocalStorage('artBackground', true);
+    effectsStore.setOverlayLocalStorage('visualizer', true);
   } else {
     effectsStore.setToFalse();
     for (let i = 0; i <= 5; i++) {
     effectsStore.setOverlayLocalStorage(`overlay${i}`, false);
     }
     effectsStore.setOverlayLocalStorage('artBackground', false);
+    effectsStore.setOverlayLocalStorage('visualizer', false);
+
   }
 }
 // Not clear but set to true
@@ -141,6 +164,7 @@ function clearCache() {
     effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
   }
   effectsStore.setOverlayLocalStorage('artBackground', true);
+  effectsStore.setOverlayLocalStorage('visualizer', true);
   effectsStore.setToTrue();
 }
 </script>

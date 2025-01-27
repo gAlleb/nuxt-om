@@ -9,6 +9,7 @@ export const useEffectsStore = defineStore('effectsOverlay', {
         overlay4: false,
         overlay5: false,
         artBackground: true,
+        visualizer: true,
     }),
     actions: {
       setOverlayState(overlayIndex, isOverlayActive) {
@@ -36,6 +37,7 @@ export const useEffectsStore = defineStore('effectsOverlay', {
         this.overlay4 = true;
         this.overlay5 = true;
         this.artBackground = true;
+        this.visualizer = true;
       },
       setToFalse() {
         this.overlay0 = false;
@@ -45,6 +47,7 @@ export const useEffectsStore = defineStore('effectsOverlay', {
         this.overlay4 = false;
         this.overlay5 = false;
         this.artBackground = false;
+        this.visualizer = false;
       }
     },
     persist: {

@@ -5,28 +5,56 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 import { useVisualizerData } from '@/stores/VisualizerStore';
 import { initPlayerStore } from '@/stores//initPlayer';
+import { useEffectsStore } from '@/stores/effects';
+const effectsStore = useEffectsStore();
 const useInitPlayerStore = initPlayerStore(); 
-
 const visualizerContainerWave = ref(null);
 const initVisualizerStore = useVisualizerData();
 const props = defineProps({
   colorSchemeWave: null,
   customDarkSchemeWave: null,
 });
-onMounted(async () => {
-  if (initVisualizerStore.animationFrameIdWave) { // Only cancel if an animation exists
+watch(effectsStore, () => {updateVisualizerSession();});
+function updateVisualizerSession() {
+  if (effectsStore.visualizer) {
+    if (initVisualizerStore.animationFrameIdWave) { 
     cancelAnimationFrame(initVisualizerStore.animationFrameIdWave);
     initVisualizerStore.animationFrameIdWave = null;
-    //Crucially, remove the canvas element from the DOM.
-    const canvas = document.getElementById('visualizerCanvasWave');
-    if(canvas) {
-        canvas.remove();
+      if(initVisualizerStore.canvasWave) {
+        initVisualizerStore.canvasWave.remove();
+      }
+    }
+    if (!initVisualizerStore.animationFrameIdWave) { 
+      initVisualizerStore.initVisualizerWave(visualizerContainerWave.value, props.colorSchemeWave, props.customDarkSchemeWave);
+    }
+  } else {
+    cancelAnimationFrame(initVisualizerStore.animationFrameIdWave);
+    initVisualizerStore.animationFrameIdWave = null;
+    if (initVisualizerStore.canvasWave) initVisualizerStore.canvasWave.remove();
+  }
+};
+onMounted(async () => {
+  await nextTick();
+  effectsStore.loadOverlayLocalStorage('visualizer');
+  if (effectsStore.visualizer){
+  if (initVisualizerStore.animationFrameIdWave) {  
+    await nextTick();
+    cancelAnimationFrame(initVisualizerStore.animationFrameIdWave);
+    initVisualizerStore.animationFrameIdWave = null;    
+    if(initVisualizerStore.canvasWave) {
+      initVisualizerStore.canvasWave.remove();
     }
   }
   if (!initVisualizerStore.animationFrameIdWave) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
-        initVisualizerStore.initVisualizerWave(visualizerContainerWave.value, props.colorSchemeWave, props.customDarkSchemeWave);
+    initVisualizerStore.initVisualizerWave(visualizerContainerWave.value, props.colorSchemeWave, props.customDarkSchemeWave);
   }
+} 
+});
+onUnmounted(() => {
+  cancelAnimationFrame(initVisualizerStore.animationFrameIdWave);
+  initVisualizerStore.animationFrameIdWave = null;
+  if (initVisualizerStore.canvasWave) initVisualizerStore.canvasWave.remove();
 });
 </script>
 <style scoped>
