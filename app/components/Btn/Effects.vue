@@ -12,91 +12,101 @@
         <Icon name="heroicons:cog-6-tooth" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
       </div>
     </UTooltip>
-    <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95"
-      enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75"
+    <transition enter-active-class="transition ease-out duration-1000" enter-from-class="transform opacity-0 scale-95"
+      enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-1000"
       leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" v-if="isOpen">
       <div id="Effects_block" @click.stop.prevent
-        class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl outline ring-1 ring-black ring-opacity-5 focus:outline-none">
+        class="absolute grid grid-cols-2 right-0 z-10 mt-2 w-60 origin-top-right rounded-xl py-3 px-3  backdrop-blur-[1rem] bg-muddy-waters-100/90 dark:bg-zinc-800/90 gap-3 shadow-xl  ">
         <button type="button" @click="toggleEffect('overlay0')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay0 }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Radial</span>
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay0,
+                    'bg-white': effectsStore.overlay0
+          }"
+          class="flex flex-col gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Radial</span>
         </button>
         <button type="button" @click="toggleEffect('overlay1')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay1 }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Flicker</span>
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay1,
+                    'bg-white': effectsStore.overlay1
+          }"
+          class="flex flex-col  gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Flicker</span>
         </button>
         <button type="button" @click="toggleEffect('overlay2')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay2 }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Noise</span>
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay2,
+                    'bg-white': effectsStore.overlay2
+          }"
+          class="flex flex-col  gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Noise</span>
         </button>
         <button type="button" @click="toggleScanlineEffect()"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Scanlines</span>
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5,
+                    'bg-white': effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5
+          }"
+          class="flex flex-col  gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Scanlines</span>
         </button>
-        <!-- <button type="button" @click="toggleEffect('overlay4')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay4 }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Scanline Black</span>
-        </button>
-        <button type="button" @click="toggleEffect('overlay5')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay5 }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Scanline Green</span>
-        </button> -->
         <button type="button" @click="toggleEffect('artBackground')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100  text-xs">Strokes Art</span>
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground,
+                    'bg-white': effectsStore.artBackground
+          }"
+          class="flex flex-col  gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Strokes</span>
         </button>
         <button type="button" @click="toggleEffect('visualizer')"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.visualizer }"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100  text-xs">Audio visualizer</span>
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.visualizer,
+                    'bg-white': effectsStore.visualizer
+          }"
+          class="flex flex-col  gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Visualizer</span>
         </button>
         <hr />
         <hr />
-        <button type="button" id="allEffectsBtn" @click="toggleAllEffects" :class="[
+        <button type="button" @click="toggleAllEffects"
+          :class="[
           (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) ? 'bg-red-400 dark:bg-red-400' :
             (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground && effectsStore.visualizer)) ? 'bg-red-200 dark:bg-pink-400' :
-              'bg-slate-50 dark:bg-zinc-800']"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sparkles" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Toggle Effects</span>
+              'bg-white']"
+          class="flex flex-col  gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Toggle</span>
         </button>
         <button type="button" id="clearCacheBtn" @click="clearCache"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:trash" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Clear Cache</span>
+          class="flex flex-col  gap-2 bg-white
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:trash" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Cache</span>
         </button>
         <hr />
         <hr />
         <button @click="colorMode.preference = 'light'" type="button"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:sun" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Light Mode</span>
+          class="flex flex-col  gap-2 bg-white
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sun" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-900 text-xs">Light</span>
         </button>
         <button @click="colorMode.preference = 'dark'" type="button"
-          class="hover:bg-gray-200 dark:hover:bg-primary-700 flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-          <Icon name="heroicons:moon" class="h-4 w-4" aria-hidden="true" />
-          <span class="text-zinc-700 dark:text-zinc-100 text-xs">Dark Mode</span>
+          class="flex flex-col  gap-2 bg-zinc-900
+          px-4 py-2 text-sm text-zinc-100 w-full rounded-2xl">
+          <Icon name="heroicons:moon" class="h-6 w-6 w-full" aria-hidden="true" />
+          <span class="text-zinc-100 text-xs">Dark</span>
         </button>
       </div>
     </transition>
   </div>
 </template>
-
 <script setup>
 const colorMode = useColorMode()
 import { ref, onMounted } from 'vue';
