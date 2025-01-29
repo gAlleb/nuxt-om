@@ -224,7 +224,7 @@ class IcePlayer {
         if (!this.hls) {
             this.hls = new Hls();
         }
-        const hlsUrl = this.getHLSURL(this.stream_mount);
+        const hlsUrl = this.getURL(this.stream_mount, 'hls');
         if (hlsUrl) {
             this.detachAudio(); // Detach audio before attaching HLS
             this.hls.loadSource(hlsUrl);
@@ -243,34 +243,33 @@ class IcePlayer {
         }
     }
     playIcecast() {
-        this.isHLS = false;
-        this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
         this.detachAudio();
-        this.audio_object.setAttribute('src', this.getIcecastURL(this.stream_mount) + '?cache-ignore=' + Date.now());
+        this.audio_object.setAttribute('src', this.getURL(this.stream_mount, 'icecast') + '?cache-ignore=' + Date.now());
         this.audio_object.play();
         this.current_state = this.PLAYING;
         this.play_pause_toggle();
         this.destroyHLS();
     }
-    getHLSURL(streamName) {
-        const hlsUrls = {
-            'stream': 'https://omfm.ru/hls/stream.m3u8',
-            'rock': 'https://radio.omfm.ru/hls/radio/live.m3u8',
-            'coma': 'https://radio.omfm.ru/hls/coma/live.m3u8',
-            'terra': 'https://radio.omfm.ru/hls/terra/live.m3u8',
-            'core': 'https://radio.omfm.ru/hls/core/live.m3u8'
-        };
-        return hlsUrls[streamName] || null;
-    }
-    getIcecastURL(streamName) {
-        const icecastsUrls = {
-            'stream': 'https://omfm.ru:8443/stream',
-            'rock': 'https://omfm.ru:8443/rock',
-            'coma': 'https://omfm.ru:8443/coma',
-            'terra': 'https://omfm.ru:8443/terra',
-            'core': 'https://omfm.ru:8443/core'    
-        };
-        return icecastsUrls[streamName] || null;
+    getURL(streamName, source) {
+        if (source === 'hls') {
+            const hlsUrls = {
+                'stream': 'https://omfm.ru/hls/stream.m3u8',
+                'rock': 'https://radio.omfm.ru/hls/radio/live.m3u8',
+                'coma': 'https://radio.omfm.ru/hls/coma/live.m3u8',
+                'terra': 'https://radio.omfm.ru/hls/terra/live.m3u8',
+                'core': 'https://radio.omfm.ru/hls/core/live.m3u8'
+            };
+            return hlsUrls[streamName] || null;
+        } else {
+            const icecastsUrls = {
+                'stream': 'https://omfm.ru:8443/stream',
+                'rock': 'https://omfm.ru:8443/rock',
+                'coma': 'https://omfm.ru:8443/coma',
+                'terra': 'https://omfm.ru:8443/terra',
+                'core': 'https://omfm.ru:8443/core'    
+            };
+            return icecastsUrls[streamName] || null;
+        }
     }
     handleHLSError(data) {
         console.error("HLS Error:", data);
@@ -290,7 +289,7 @@ class IcePlayer {
         }
     }
     tryHLSRecovery() {
-        const recoveryTimeout = 3000; 
+        const recoveryTimeout = 7000; 
         setTimeout(() => {
             // Check if HLS is still stalled after timeout
             if (this.hls && this.hls.state === 'ERROR') {
