@@ -6,6 +6,7 @@ import { useVisualizerData } from './VisualizerStore.js';
 export const initPlayerStore = defineStore('player', {
   state: () => ({
     player: null,
+    isUsingHLS: true,
     isPlaying: false,
     isPlayingStream: false,
     isPlayingRock: false,
@@ -22,7 +23,7 @@ export const initPlayerStore = defineStore('player', {
   actions: {
     initPlayer() {
       if (!this.player) {
-        this.player = new IcePlayer('#ice-player');
+        this.player = new IcePlayer('#ice-player', this.isUsingHLS);
         this.player.audio_object.crossOrigin = "anonymous";
         this.ctx = new AudioContext();
         this.audioSource = this.ctx.createMediaElementSource(this.player.audio_object);
@@ -48,9 +49,33 @@ export const initPlayerStore = defineStore('player', {
         //  });
       }
     },
-    // initVisualizer1() {
-    //   this.player.initVisualizer1();
-    // },
+    toggleHLS() {
+      this.player.isHLS = !this.player.isHLS;
+      if (this.player.isHLS) {
+      this.isUsingHLS = true;
+        if (import.meta.client) {
+          localStorage.setItem("hls", JSON.stringify(this.isUsingHLS));
+        }
+      } else {
+        this.isUsingHLS = false;
+          if (import.meta.client) {
+            localStorage.setItem("hls", JSON.stringify(this.isUsingHLS));
+          }
+      }
+      this.player.stop();
+      if (this.isPlaying) {
+        this.player.play();
+      }
+    },
+    loadLocalStorageHLS(key, callback) {
+      if (import.meta.client) {
+        const storedData = localStorage.getItem(key);
+        if (storedData) {
+          this.isUsingHLS = JSON.parse(storedData);
+        }
+      }
+      callback();
+    },
     unlockAudioContext(audioCtx) {
       if (audioCtx.state === 'suspended') {
         var events = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown'];

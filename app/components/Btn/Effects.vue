@@ -16,7 +16,17 @@
       enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-1000"
       leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" v-if="isOpen">
       <div id="Effects_block" @click.stop.prevent
-        class="absolute grid grid-cols-2 right-0 z-10 mt-2 w-60 origin-top-right rounded-xl py-3 px-3  backdrop-blur-[1rem] bg-muddy-waters-100/90 dark:bg-zinc-800/90 gap-3 shadow-xl  ">
+        class="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-xl py-3 px-3  backdrop-blur-[1rem] bg-muddy-waters-100/90 dark:bg-zinc-800/90 shadow-xl  ">
+        <button type="button" @click="useInitPlayerStore.toggleHLS"
+          :class="{ 'bg-red-400 dark:bg-red-400': !useInitPlayerStore.player.isHLS,
+                    'bg-green-400': useInitPlayerStore.player.isHLS
+          }"
+          class="flex flex-col mb-2 gap-2 
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <span class="text-zinc-900 text-lg">HLS</span>
+        </button>
+        <hr class="mb-2"/>
+        <div class=" grid grid-cols-2 gap-3  ">
         <button type="button" @click="toggleEffect('overlay0')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay0,
                     'bg-white': effectsStore.overlay0
@@ -103,11 +113,14 @@
           <Icon name="heroicons:moon" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="text-zinc-100 text-xs">Dark</span>
         </button>
+        </div>
       </div>
     </transition>
   </div>
 </template>
 <script setup>
+import { initPlayerStore } from '@/stores/initPlayer';
+const useInitPlayerStore = initPlayerStore();
 const colorMode = useColorMode()
 import { ref, onMounted } from 'vue';
 import { useEffectsStore } from '@/stores/effects';

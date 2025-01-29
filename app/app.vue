@@ -116,7 +116,9 @@ const overlay3 = computed(() => effectsStore.overlay3);
 const overlay4 = computed(() => effectsStore.overlay4); 
 const overlay5 = computed(() => effectsStore.overlay5); 
 onMounted(() => {
-useInitPlayerStore.initPlayer();
+useInitPlayerStore.loadLocalStorageHLS('hls', () => {
+    useInitPlayerStore.initPlayer();
+  });
 np_ac.connectToSSE(); 
 np_omfm.connectToSSE();
 const playerContainer = document.querySelector('.playerContainer');

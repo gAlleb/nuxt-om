@@ -1,30 +1,23 @@
 "use strict";
+import Hls from 'hls.js';
+
 
 class IcePlayer {
-    constructor(el, init_params) {
+    constructor(el, isHLS) {
         if (el.length === 0) throw new Error('Player element not found!');
-
+        this.hls = null; // Add HLS instance
+        this.isHLS = isHLS;
         this.localStorage = window.localStorage;
-
-        // Player Params
-        this.server_address = 'https://omfm.ru:8443/' // Default address:port
         this.stream_mount = (this.localStorage.getItem("stream_name") !== null) ? this.localStorage.getItem("stream_name") : 'stream'
-
-        
         // this.style = 'fixed' // Player style (fixed or inline)
         // this.template = '<div class="ice-player-el "><div><i class="ice-play" style="display: inline-block;font-size:1.6rem !important" ></i><i class="ice-pause"  ></i><i class="ice-stop"  ></i><a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a></div><a class="mute speaker ml-1" title="mute/unmute"><span></span></a><input class="ice-volume hidden sm:inline-flex " type="range" min="0" max="100" value="70" step="1"><div class="vol_value hidden sm:inline-flex ms-2" style="font-family: monospace;position: fixed;left: 107px;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div><div class="vol_value2 hidden ">70%</div><input id="ice_volume_vertical" class="volume-vertical inline-flex  sm:hidden" type="range" min="0" max="100" value="70" step="1"><img class="ms-3 ml-3" id="live" src="/live.gif" style=" opacity:1;display:inline-flex;"><div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0;"><span class="ms-3 ice-track ellipsify" id="trackname" style="opacity:1;"></span></div></div>'
-        
         // Informer Params
         // this.mounts_list = ['stream', 'nonstop'] // Mount point list
         // this.time_update = 10 // Time to update information (in seconds)
-
         // System Params
         this.audio_object = new Audio()
-        //this.audio_object.volume = 0.5
-        this.localStorage = window.localStorage;
         this.audio_object.volume = (this.localStorage.getItem("vol") !== null) ? parseFloat(this.localStorage.getItem("vol")) : 1.0       
         this.current_state = 0
-
         //State const
         this.STOPPED = 0
         this.PLAYING = 1
@@ -226,30 +219,146 @@ class IcePlayer {
       this.hide_opacity('#live')
       this.hide_opacity('#vl')
     }
-     
     // Functions
-    
-    play() {
-        if (this.current_state === this.STOPPED)
-            this.audio_object.setAttribute('src', this.server_address + this.stream_mount + '?cache-ignore=' + Date.now());
+    playHLS() {
+        if (!this.hls) {
+            this.hls = new Hls();
+        }
+        const hlsUrl = this.getHLSURL(this.stream_mount);
+        if (hlsUrl) {
+            this.detachAudio(); // Detach audio before attaching HLS
+            this.hls.loadSource(hlsUrl);
+            this.hls.attachMedia(this.audio_object);
+            this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+                this.audio_object.play();
+                this.current_state = this.PLAYING;
+                this.play_pause_toggle();
+            });
+            this.hls.on(Hls.Events.ERROR, (event, data) => {
+                this.handleHLSError(data);
+            });
+        } else {
+            console.error("Could not determine HLS URL for:", this.stream_mount);
+            this.handleHLSError({ message: "HLS URL not found." });
+        }
+    }
+    playIcecast() {
+        this.isHLS = false;
+        this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
+        this.detachAudio();
+        this.audio_object.setAttribute('src', this.getIcecastURL(this.stream_mount) + '?cache-ignore=' + Date.now());
         this.audio_object.play();
-        //this.showinfo();
-        document.querySelector(".ice-track").style.opacity = "1";
+        this.current_state = this.PLAYING;
+        this.play_pause_toggle();
+        this.destroyHLS();
+    }
+    getHLSURL(streamName) {
+        const hlsUrls = {
+            'stream': 'https://omfm.ru/hls/stream.m3u8',
+            'rock': 'https://radio.omfm.ru/hls/radio/live.m3u8',
+            'coma': 'https://radio.omfm.ru/hls/coma/live.m3u8',
+            'terra': 'https://radio.omfm.ru/hls/terra/live.m3u8',
+            'core': 'https://radio.omfm.ru/hls/core/live.m3u8'
+        };
+        return hlsUrls[streamName] || null;
+    }
+    getIcecastURL(streamName) {
+        const icecastsUrls = {
+            'stream': 'https://omfm.ru:8443/stream',
+            'rock': 'https://omfm.ru:8443/rock',
+            'coma': 'https://omfm.ru:8443/coma',
+            'terra': 'https://omfm.ru:8443/terra',
+            'core': 'https://omfm.ru:8443/core'    
+        };
+        return icecastsUrls[streamName] || null;
+    }
+    handleHLSError(data) {
+        console.error("HLS Error:", data);
+        let errorMessage = "HLS stream error. ";
+        if (data.details === "bufferAppendError") {
+            errorMessage += "Check network connection and browser codec support.";
+        } else if (data.details === "bufferStalledError") {
+            errorMessage += "Buffer stalled. Checking network connection...";
+            console.log(errorMessage); // Show initial message
+            this.tryHLSRecovery(); // Attempt HLS recovery
+        } else {
+            errorMessage += "An unknown error occurred. Details: " + JSON.stringify(data);
+            console.log(errorMessage);
+            this.isHLS = false;
+            this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
+            this.playIcecast();
+        }
+    }
+    tryHLSRecovery() {
+        const recoveryTimeout = 3000; 
+        setTimeout(() => {
+            // Check if HLS is still stalled after timeout
+            if (this.hls && this.hls.state === 'ERROR') {
+                console.log("HLS recovery failed. Switching to Icecast.");
+                this.isHLS = false;
+                this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
+                this.playIcecast();
+            } else {
+                console.log("HLS stream recovered."); 
+            }
+        }, recoveryTimeout);
+    }
+    stop() {
+        this.audio_object.pause();
+        this.detachAudio();
+        this.audio_object.setAttribute('src', '');
+        this.current_state = this.STOPPED;
+        this.play_pause_toggle();
+        this.destroyHLS();
+        document.querySelector(".ice-track").style.opacity = "0";
     }
     pause() {
         this.audio_object.pause();
         clearTimeout(this.timer);
-        //document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
-    }
-    stop() {
-        this.audio_object.pause();
-        this.audio_object.setAttribute('src', '');
-        this.current_state = this.STOPPED;
-        clearTimeout(this.timer);
-        //document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+        this.destroyHLS();
         document.querySelector(".ice-track").style.opacity = "0";
-        this.play_pause_toggle();
     }
+    detachAudio() {
+        if (this.hls) {
+            this.hls.detachMedia();
+        }
+    }
+    destroyHLS() {
+        if (this.hls) {
+            this.hls.destroy();
+            this.hls = null;
+        }
+    }
+    play() {
+        if (this.isHLS) {
+            this.playHLS();
+        } else {
+            this.playIcecast();
+        }
+        document.querySelector(".ice-track").style.opacity = "1";
+    }
+    // play() {
+    //     if (this.current_state === this.STOPPED)
+    //         this.audio_object.setAttribute('src', this.server_address + this.stream_mount + '?cache-ignore=' + Date.now());
+    //     this.audio_object.play();
+    //     //this.showinfo();
+    //     document.querySelector(".ice-track").style.opacity = "1";
+    // }
+    // pause() {
+    //     this.audio_object.pause();
+    //     clearTimeout(this.timer);
+    //     //document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+    // }
+    
+    // stop() {
+    //     this.audio_object.pause();
+    //     this.audio_object.setAttribute('src', '');
+    //     this.current_state = this.STOPPED;
+    //     clearTimeout(this.timer);
+    //     //document.title = "omFM.ru — Радио ОМ FM — Музыка для медитации, йоги, сна | om fm" ;
+    //     document.querySelector(".ice-track").style.opacity = "0";
+    //     this.play_pause_toggle();
+    // }
     change_stream(name) {
         if (this.stream_mount !== name) {
             if (this.current_state === this.PLAYING) {
@@ -264,17 +373,6 @@ class IcePlayer {
             }
         }
     }
-    hide_stop_and_mute_button() {
-        // const playBtnPlayer1 = document.getElementById("playBtnPlayer1");
-        // playBtnPlayer1.style.display = "inline-flex";
-        // const stopBtnPlayer1 = document.getElementById("stopBtnPlayer1");
-        // stopBtnPlayer1.style.display = "none"; 
-        // const stopBtnPlayer = document.getElementById("stopBtnPlayer");
-        // stopBtnPlayer.style.display = "none";
-        // const mute_btn_header_Muted = document.getElementById("ice-volume3_Muted");
-        // mute_btn_header_Muted.style.display = "none";
-    }
-
     change_volume() {
         if (this.audio_object.muted === false)  {
         this.audio_object.volume = this.get_element('.ice-volume').value / 100;
