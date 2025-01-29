@@ -285,9 +285,9 @@ class IcePlayer {
         } else {
             errorMessage += "An unknown error occurred. Details: " + JSON.stringify(data);
             console.log(errorMessage);
-            this.isHLS = false;
-            this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
-            this.playIcecast();
+            // this.isHLS = false;
+            // this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
+            // this.playIcecast();
         }
     }
     tryHLSRecovery() {
