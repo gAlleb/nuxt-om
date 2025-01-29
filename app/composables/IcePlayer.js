@@ -277,9 +277,11 @@ class IcePlayer {
         if (data.details === "bufferAppendError") {
             errorMessage += "Check network connection and browser codec support.";
         } else if (data.details === "bufferStalledError") {
-            errorMessage += "Buffer stalled. Checking network connection...";
-            console.log(errorMessage); // Show initial message
-            this.tryHLSRecovery(); // Attempt HLS recovery
+            // errorMessage += "Buffer stalled. Checking network connection...";
+            // console.log(errorMessage); // Show initial message
+            // this.tryHLSRecovery(); // Attempt HLS recovery
+            errorMessage = "Buffering..."; // Initial message
+            console.log(errorMessage);
         } else {
             errorMessage += "An unknown error occurred. Details: " + JSON.stringify(data);
             console.log(errorMessage);
