@@ -221,25 +221,41 @@ class IcePlayer {
     }
     // Functions
     playHLS() {
-        if (!this.hls) {
-            this.hls = new Hls();
-        }
         const hlsUrl = this.getURL(this.stream_mount, 'hls');
-        if (hlsUrl) {
-            this.detachAudio(); // Detach audio before attaching HLS
-            this.hls.loadSource(hlsUrl);
-            this.hls.attachMedia(this.audio_object);
-            this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
-                this.audio_object.play();
-                this.current_state = this.PLAYING;
-                this.play_pause_toggle();
-            });
-            this.hls.on(Hls.Events.ERROR, (event, data) => {
-                this.handleHLSError(data);
-            });
-        } else {
+        if (!hlsUrl) {
             console.error("Could not determine HLS URL for:", this.stream_mount);
             this.handleHLSError({ message: "HLS URL not found." });
+            return;
+        }
+        if (Hls.isSupported()) {
+            if (!this.hls) {
+                this.hls = new Hls();
+            }
+                this.detachAudio(); // Detach audio before attaching HLS
+                this.hls.loadSource(hlsUrl);
+                this.hls.attachMedia(this.audio_object);
+                this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
+                    this.audio_object.play();
+                    this.current_state = this.PLAYING;
+                    this.play_pause_toggle();
+                });
+                this.hls.on(Hls.Events.ERROR, (event, data) => {
+                    this.handleHLSError(data);
+                });
+        } else if (this.audio_object.canPlayType('application/vnd.apple.mpegurl')) {
+                this.detachAudio();
+                this.audio_object.src = hlsUrl;
+                this.audio_object.play()
+                    .then(() => {
+                        this.current_state = this.PLAYING;
+                        this.play_pause_toggle();
+                    })
+                    .catch(error => {
+                        this.handleHLSError({ message: `Native HLS playback failed: ${error.message}` });
+                    });
+        } else {
+            console.log('Your browser does not support HLS.');
+            this.handleHLSError({ message: 'HLS not supported.' });
         }
     }
     playIcecast() {
