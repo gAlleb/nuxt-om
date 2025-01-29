@@ -28,6 +28,9 @@ export const initPlayerStore = defineStore('player', {
         this.ctx = new AudioContext();
         this.audioSource = this.ctx.createMediaElementSource(this.player.audio_object);
         this.analyzer = this.ctx.createAnalyser();
+        // this.analyzer.minDecibels = -90;
+        // this.analyzer.maxDecibels = -16;
+        this.analyzer.smoothingTimeConstant = 0.85;
         // this.audioSource.connect(this.analyzer);
         // this.audioSource.connect(this.ctx.destination);
         //this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
