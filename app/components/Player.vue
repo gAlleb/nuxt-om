@@ -125,7 +125,7 @@
         </div>
             <!-- <img class=" sm:hidden ms-14 sm:ms-2 ml-0" id="live" src="/equalizer.gif">             -->
 
-            <div id="vl" class="me-2  ms-14" style="border-left: 0.5px solid white;height:40px;"></div>
+            <div id="vl" class="me-2 ms-14 sm:ms-2" style="border-left: 0.5px solid white;height:40px;"></div>
 
 
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
