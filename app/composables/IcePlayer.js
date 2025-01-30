@@ -561,13 +561,13 @@ class IcePlayer {
         if (this.current_state === this.PLAYING) {
             // this.hide('.ice-play');
             // this.show('.ice-pause');
-            this.show_opacity('#live')
+            // this.show_opacity('#live')
             this.show_opacity('#vl')
             document.querySelector(".ice-track").style.visibility = "visible"
         } else {
             // this.hide('.ice-pause');
             // this.show('.ice-play');
-            this.hide_opacity('#live')
+            // this.hide_opacity('#live')
             this.hide_opacity('#vl')
             document.querySelector(".ice-track").style.visibility = "hidden"
         }
