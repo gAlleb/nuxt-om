@@ -45,9 +45,9 @@ export const useVisualizerData = defineStore({
         return state.overrideColorScheme;
       } else if (isDark) {
         return {
-          color1: '#0f0',
-          color2: '#ff0',
-          color3: '#f00',
+          color1: '#b017a8',
+          color2: 'cyan',
+          color3: 'green',
           capStyle: 'white',
         };
       } else {
