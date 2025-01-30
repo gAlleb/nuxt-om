@@ -216,7 +216,7 @@ class IcePlayer {
          this.get_element('.speaker').classList.add("muted");
          document.getElementById("ice-volume3_Mute").classList.add("muted");
       }
-      this.hide_opacity('#live')
+    //this.hide_opacity('#live')
       this.hide_opacity('#vl')
     }
     // Functions
