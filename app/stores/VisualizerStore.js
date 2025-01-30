@@ -5,8 +5,8 @@ export const useVisualizerData = defineStore({
     id: 'VisualizerData',
   state: () => ({
     animationFrameId: null,
-    animationFrameIdWave: null, 
-    animationFrameId3Waves: null, 
+    animationFrameIdWave: null,
+    animationFrameId3Waves: null,
     overrideColorScheme: null,
     customDarkScheme: null,
     overrideColorSchemeWave: null,
@@ -45,15 +45,17 @@ export const useVisualizerData = defineStore({
         return state.overrideColorScheme;
       } else if (isDark) {
         return {
-          color1: '#b017a8',
-          color2: 'cyan',
-          color3: 'green',
+          color1: '#0f0',
+          color2: '#ff0',
+          color3: '#f00',
+          capStyle: 'white',
         };
       } else {
         return {
-          color1: '#ff0000',
-          color2: '#ffff00',
-          color3: '#00ff00',
+          color1: '#0f0',
+          color2: '#ff0',
+          color3: '#f00',
+          capStyle: 'black',
         };
       }
     },
@@ -94,13 +96,13 @@ export const useVisualizerData = defineStore({
   },
   actions: {
     initStore() {
-      const useInitPlayerStore = initPlayerStore(); 
+      const useInitPlayerStore = initPlayerStore();
       this.analyzer = useInitPlayerStore.analyzer;
       this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
       this.analyzer.fftSize = 2048;
     },
     initVisualizer(container, overrideColorScheme = null, customDarkScheme = null, customBarsNumber = null, customMaxHeight) {
-        this.overrideColorScheme = overrideColorScheme; 
+        this.overrideColorScheme = overrideColorScheme;
         this.customDarkScheme = customDarkScheme;
         this.customBarsNumber = customBarsNumber;
         this.customMaxHeight = customMaxHeight;
@@ -115,13 +117,13 @@ export const useVisualizerData = defineStore({
            canvasmaker.height = "255";
            return canvasmaker;
          }
-       
+
          // Feature to change canvas based on container size
          function resizeCanvas(canvas, container) {
            canvas.width = container.clientWidth;
            canvas.height = container.clientHeight;
          }
-       
+
          // Visualizer
         const visualizer = (container) => {
            if (!container) {
@@ -134,6 +136,9 @@ export const useVisualizerData = defineStore({
            };
            this.canvas = initCanvas(container);
            const canvasCtx = this.canvas.getContext("2d");
+
+           const capYPositionArray = []
+           const capHeight = 2
            // Create bars
           // let frameCounter = 0;
           // const framesToSkip = 1;
@@ -156,6 +161,20 @@ export const useVisualizerData = defineStore({
                const barWidth = this.canvas.width / options.numBars;
                const x = i * barWidth;
                const y = this.canvas.height - barHeight;
+               const cheight = this.canvas.height - 2
+
+               if (capYPositionArray.length < Math.round(options.numBars)) {
+                capYPositionArray.push(fd)
+               }
+
+               canvasCtx.fillStyle = this.colorScheme.capStyle
+               if (fd < capYPositionArray[i]) {
+                canvasCtx.fillRect(x, cheight - --capYPositionArray[i], barWidth - 2, capHeight)
+               } else {
+                canvasCtx.fillRect(x, cheight - fd, barWidth - 2, capHeight)
+                capYPositionArray[i] = fd
+               }
+
                const gradient = canvasCtx.createLinearGradient(0, 200, 0, 0);
                gradient.addColorStop(0, this.colorScheme.color1);
                gradient.addColorStop(0.5, this.colorScheme.color2);
@@ -165,21 +184,21 @@ export const useVisualizerData = defineStore({
             //  }
             }
            };
-    
+
            renderBars();
-       
+
            // Window space change listener
            window.addEventListener("resize", () => {
              resizeCanvas(this.canvas, container);
            });
          };
- 
+
          visualizer(container)
     },
     initVisualizerWave(container, overrideColorSchemeWave = null, customDarkSchemeWave = null) {
-      this.overrideColorSchemeWave = overrideColorSchemeWave; 
+      this.overrideColorSchemeWave = overrideColorSchemeWave;
       this.customDarkSchemeWave = customDarkSchemeWave;
-      const useInitPlayerStore = initPlayerStore(); 
+      const useInitPlayerStore = initPlayerStore();
       // Functions
            // Function to initialize the canvas (canvas)
         function   initCanvas(container) {
@@ -191,7 +210,7 @@ export const useVisualizerData = defineStore({
          canvasmaker.height = "255";
          return canvasmaker;
        }
-     
+
        // Feature to change canvas based on container size
        function resizeCanvas(canvas, container) {
          canvas.width = container.clientWidth;
@@ -223,7 +242,7 @@ export const useVisualizerData = defineStore({
       // if (frameCounter >= framesToSkip) {
       //     frameCounter = 0;
           resizeCanvas(this.canvasWave, container);
-          this.analyzer.getByteTimeDomainData(this.frequencyData); 
+          this.analyzer.getByteTimeDomainData(this.frequencyData);
           canvasCtx.clearRect(0, 0, this.canvasWave.width, this.canvasWave.height);
           canvasCtx.lineWidth = options.waveformThickness;
           canvasCtx.strokeStyle = this.colorSchemeWave;
@@ -254,9 +273,9 @@ export const useVisualizerData = defineStore({
        visualizer(container)
   },
   initVisualizer3Waves(container, overrideColorScheme3Waves = null, customDarkScheme3Waves = null) {
-    this.overrideColorScheme3Waves = overrideColorScheme3Waves; 
+    this.overrideColorScheme3Waves = overrideColorScheme3Waves;
     this.customDarkScheme3Waves = customDarkScheme3Waves;
-    const useInitPlayerStore = initPlayerStore(); 
+    const useInitPlayerStore = initPlayerStore();
     // Functions
          // Function to initialize the canvas (canvas)
       function   initCanvas(container) {
@@ -268,13 +287,13 @@ export const useVisualizerData = defineStore({
        canvasmaker.height = "255";
        return canvasmaker;
      }
-   
+
      // Feature to change canvas based on container size
      function resizeCanvas(canvas, container) {
        canvas.width = container.clientWidth;
        canvas.height = container.clientHeight;
      }
-   
+
      // Visualizer
     const visualizer = (container) => {
        if (!container) {
@@ -301,7 +320,7 @@ export const useVisualizerData = defineStore({
     // if (frameCounter >= framesToSkip) {
     //     frameCounter = 0;
         resizeCanvas(this.canvas3Waves, container);
-        this.analyzer.getByteTimeDomainData(this.frequencyData); 
+        this.analyzer.getByteTimeDomainData(this.frequencyData);
         canvasCtx.clearRect(0, 0, this.canvas3Waves.width, this.canvas3Waves.height);
         const numBins = this.frequencyData.length;
         const lowBand = this.frequencyData.slice(0, numBins / 3);

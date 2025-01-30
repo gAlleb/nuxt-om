@@ -67,7 +67,7 @@ onUnmounted(() => {
 	align-items: flex-end;
 	justify-content: space-around;
 	height: 100%;
-	opacity: 0.2;
+	opacity: 0.3;
     bottom: 0;
 }
 
