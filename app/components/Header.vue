@@ -281,7 +281,7 @@ const headerClass = computed(() => {
   if (route.path === '/' && isScrolled.value !== true) {
     baseClasses = 'bg-transparent';
   } else if (route.path === '/eq') {
-    baseClasses = 'eq-class'
+    baseClasses = 'eq-class dark:bg-sxvx-dark bg-sxvx-light'
   } else {
     baseClasses = 'dark:bg-sxvx-dark bg-sxvx-light';
   }
