@@ -21,7 +21,8 @@
 }
 
 .glowing-text {
-  animation: textShadow 1.033s infinite;
+  /* animation: textShadow 1.033s infinite; */
+  text-shadow: 0px 0px 10px #fff;
 }
 .text-shadow-animation {
   animation: textShadow 1.033s infinite;

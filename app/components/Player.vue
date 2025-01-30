@@ -55,7 +55,7 @@
                   'grayscale opacity-75': currentStream !== 'stream',
                   }" 
                    class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
-            <img v-if="useInitPlayerStore.isPlayingStream" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+            <!-- <img v-if="useInitPlayerStore.isPlayingStream" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
             <span :class="{
                   'glowing-text': currentStream === 'stream',
                   'opacity-75': currentStream !== 'stream',
@@ -69,7 +69,7 @@
                   'grayscale opacity-50': currentStream !== 'rock',
                   }" 
                    class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-90-thumb.jpg">
-              <img v-if="useInitPlayerStore.isPlayingRock" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+              <!-- <img v-if="useInitPlayerStore.isPlayingRock" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
               <span :class="{
                   'glowing-text': currentStream === 'rock',
                   'opacity-75': currentStream !== 'rock',
@@ -82,7 +82,7 @@
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'coma',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
-            <img v-if="useInitPlayerStore.isPlayingComa" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+            <!-- <img v-if="useInitPlayerStore.isPlayingComa" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
                   
               <span :class="{
                   'glowing-text': currentStream === 'coma',
@@ -96,7 +96,7 @@
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'core',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
-            <img v-if="useInitPlayerStore.isPlayingCore" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+            <!-- <img v-if="useInitPlayerStore.isPlayingCore" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
                   
               <span :class="{
                   'glowing-text': currentStream === 'core',
@@ -110,7 +110,7 @@
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'terra',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
-            <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif">
+            <!-- <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
                   
               <span :class="{
                   'glowing-text': currentStream === 'terra',
@@ -123,9 +123,9 @@
             </swiper-slide>
           </swiper-container>
         </div>
-            <img class=" sm:hidden ms-14 sm:ms-2 ml-0" id="live" src="/equalizer.gif">            
+            <!-- <img class=" sm:hidden ms-14 sm:ms-2 ml-0" id="live" src="/equalizer.gif">             -->
 
-            <div id="vl" class="me-2  ms-2" style="border-left: 0.5px solid white;height:40px;"></div>
+            <div id="vl" class="me-2  ms-14" style="border-left: 0.5px solid white;height:40px;"></div>
 
 
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
