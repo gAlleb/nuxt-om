@@ -11,7 +11,7 @@
     The musical art often speaks in sounds more penetrating than the words of poetry, and takes hold of the most hidden crevices of the heart… Song elevates our being and leads us to the good and the true...<br/>
    </p>
    <p class="text-lg">
-    Enjoy a (High Quality) Music Journey into the Senses and click on your preferred station below:
+    Enjoy a (High Quality HLS / Icecast) Music Journey into the Senses and click on your preferred station below:
    </p>
   </div>
   <Visualizer class="-mb-3"/>

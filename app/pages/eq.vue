@@ -1,6 +1,6 @@
 <template>
 <section>
-<div class="fixed h-screen w-full" style="margin-top: -50px; background-color: #0d0f17; z-index: 30;">
+<div class="fixed h-screen -mt-20 w-full" style="background-color: #0d0f17; z-index: 30;">
  
 
  <div  class="absolute h-screen w-full" style="background: rgba(0, 0, 0, .7); z-index: 1;"/>

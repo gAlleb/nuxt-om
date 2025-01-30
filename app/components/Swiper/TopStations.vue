@@ -11,7 +11,7 @@
 <div class="my-5" style="mask-image: linear-gradient(90deg,transparent 1%,#000 4%,#000 96%,transparent 99%);">
   <div v-if="!swiperInitialized" class="swiper-placeholder">
       <div class="loading-indicator-container">
-        <div class="loading-indicator" :style="{ backgroundColor: isDarkMode ? '#2B3035' : '#F2EEE6' }"></div>
+        <div class="loading-indicator"></div>
       </div>
     </div>
   <ClientOnly>
@@ -192,7 +192,7 @@
         </NuxtLink>
     </div>
   </swiper-slide>
-  <swiper-slide class="rounded-3xl overflow-hidden me-5  pe-5" style="height:150px; width: 266px!important" >
+  <swiper-slide class="rounded-3xl overflow-hidden me-2" style="height:150px; width: 266px!important" >
     <div :class="{
                   'border border-blue-500/50': currentStream === 'terra',
                  }" style="height:150px; width: 266px!important"
@@ -234,6 +234,8 @@
         </NuxtLink>
     </div>
       
+    </swiper-slide>
+    <swiper-slide  style="height:150px; width: 20px!important">
     </swiper-slide>
  
   </swiper-container>

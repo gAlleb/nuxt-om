@@ -50,7 +50,7 @@
             :style="dynamicBackgroundColor"
             >
             <swiper-slide class="ms-1" style="height: 40px; width: 40px!important;">
-            <div class="relative cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('stream');">
+            <div class="relative cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('stream');">
             <img :class="{
                   'grayscale opacity-75': currentStream !== 'stream',
                   }" 
@@ -64,7 +64,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2 ms-2" style="height: 40px; width: 40px!important;">
-            <div class="relative cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('rock');">
+            <div class="relative cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('rock');">
               <img :class="{
                   'grayscale opacity-50': currentStream !== 'rock',
                   }" 
@@ -78,7 +78,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
-            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('coma');">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('coma');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'coma',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
@@ -92,7 +92,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
-            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('core');">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('core');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'core',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
@@ -106,7 +106,7 @@
             </div>
             </swiper-slide>
             <swiper-slide class="me-0" style="height: 40px; width: 40px!important;">
-            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.setStream('terra');">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('terra');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'terra',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
@@ -118,6 +118,8 @@
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Terra</span>
             </div>
+            </swiper-slide>
+            <swiper-slide class="ms-2" style="height: 40px; width: 0px!important;">
             </swiper-slide>
           </swiper-container>
         </div>
@@ -287,11 +289,13 @@
           <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"
           class="transition-transform duration-300 ease-in-out flex-col fixed flex bottom-0  top-0 right-0 z-40 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark max-w-sm  ">
             <div class="absolute" style=" height: 100vh; width:100%; z-index: -1;">
-            <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <!-- <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`,   backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'coma' && comaData" class="h-full absolute w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
             <div v-if="currentStream === 'terra' && terraData" class="h-full absolute w-full" :style="{ background: `url(${terraData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-            <div v-if="currentStream === 'core' && coreData" class="h-full absolute w-full" :style="{ background: `url(${coreData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
+            <div v-if="currentStream === 'core' && coreData" class="h-full absolute w-full" :style="{ background: `url(${coreData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/> -->
+
+            <div class="h-full absolute w-full" :style="{ backgroundImage: backgroundImage, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
 
             <div style="min-width: 100%; min-height: 100%; position: absolute;background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);z-index: 2;"/>
             </div>
@@ -713,6 +717,21 @@ const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
 const terraData = computed(() => np_ac.stations['station:terra']);
 const coreData = computed(() => np_ac.stations['station:core']);
+
+const backgroundImage = computed(() => {
+    if (currentStream.value === 'stream' && np_omfm.coverArtUrls['station:radio']) {
+      return `url(${np_omfm.coverArtUrls['station:radio']})`;
+    } else if (currentStream.value === 'rock' && np_ac.coverArtUrls['station:radio']) {
+      return `url(${np_ac.coverArtUrls['station:radio']})`;
+    } else if (currentStream.value === 'coma' && np_ac.stations['station:coma']?.np?.now_playing?.song?.art) {
+      return `url(${np_ac.stations['station:coma'].np.now_playing.song.art})`;
+    } else if (currentStream.value === 'terra' && np_ac.stations['station:terra']?.np?.now_playing?.song?.art) {
+      return `url(${np_ac.stations['station:terra'].np.now_playing.song.art})`;
+    } else if (currentStream.value === 'core' && np_ac.stations['station:core']?.np?.now_playing?.song?.art) {
+      return `url(${np_ac.stations['station:core'].np.now_playing.song.art})`;
+    }
+    return 'url(/static/img/defaultCoverart.jpg)';
+});
 const playerMenuOpen = ref(false)
 
 function playerMenuToggle() {
@@ -869,6 +888,7 @@ function getTrackData(stream) {
 
   return { title, artist, album, artwork };
 }
+const colorMode = useColorMode()
 const dynamicBackgroundColor = computed(() => {
   let stationKey;
   let colorSource;
@@ -883,7 +903,13 @@ const dynamicBackgroundColor = computed(() => {
     colorSource = np_ac;
   }
   const color = colorSource.dominantColors[stationKey];
-  const opacity = 0.6;
+  const isDark = (colorMode.value === 'dark');
+  let opacity;
+  if (isDark) {
+    opacity = 0.6;
+  } else {
+    opacity = 0.85;
+  }
   const backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : 'rgb(43, 48, 53)'; 
   return { background: backgroundColor };
 });

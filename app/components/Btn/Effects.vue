@@ -21,9 +21,10 @@
           :class="{ 'bg-red-400 dark:bg-red-400': !useInitPlayerStore.player.isHLS,
                     'bg-green-400': useInitPlayerStore.player.isHLS
           }"
-          class="flex flex-col mb-2 gap-2 
+          class="flex mb-2 gap-2 justify-center
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
-          <span class="text-zinc-900 text-lg">HLS</span>
+          <Icon name="bxl:apple" class="h-10 w-10" aria-hidden="true" />
+          <span class="flex text-zinc-900 text-xl mt-2">HLS</span>
         </button>
         <hr class="mb-2"/>
         <div class=" grid grid-cols-2 gap-3  ">
@@ -34,7 +35,7 @@
           class="flex flex-col gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Radial</span>
+          <span class="grid w-full text-zinc-900 text-xs">Radial</span>
         </button>
         <button type="button" @click="toggleEffect('overlay1')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay1,
@@ -43,7 +44,7 @@
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Flicker</span>
+          <span class="grid w-full text-zinc-900 text-xs">Flicker</span>
         </button>
         <button type="button" @click="toggleEffect('overlay2')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay2,
@@ -52,7 +53,7 @@
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Noise</span>
+          <span class="grid w-full text-zinc-900 text-xs">Noise</span>
         </button>
         <button type="button" @click="toggleScanlineEffect()"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5,
@@ -61,7 +62,7 @@
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Scanlines</span>
+          <span class="grid w-full text-zinc-900 text-xs">Scanlines</span>
         </button>
         <button type="button" @click="toggleEffect('artBackground')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground,
@@ -70,7 +71,7 @@
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Strokes</span>
+          <span class="grid w-full text-zinc-900 text-xs">Strokes</span>
         </button>
         <button type="button" @click="toggleEffect('visualizer')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.visualizer,
@@ -79,7 +80,7 @@
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Visualizer</span>
+          <span class="grid w-full text-zinc-900 text-xs">Visualizer</span>
         </button>
         <hr />
         <hr />
@@ -91,13 +92,13 @@
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Toggle</span>
+          <span class="grid w-full text-zinc-900 text-xs">Toggle</span>
         </button>
         <button type="button" id="clearCacheBtn" @click="clearCache"
           class="flex flex-col  gap-2 bg-white
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:trash" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Cache</span>
+          <span class="grid w-full text-zinc-900 text-xs">Cache</span>
         </button>
         <hr />
         <hr />
@@ -105,13 +106,13 @@
           class="flex flex-col  gap-2 bg-white
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sun" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-900 text-xs">Light</span>
+          <span class="grid w-full text-zinc-900 text-xs">Light</span>
         </button>
         <button @click="colorMode.preference = 'dark'" type="button"
           class="flex flex-col  gap-2 bg-zinc-900
           px-4 py-2 text-sm text-zinc-100 w-full rounded-2xl">
           <Icon name="heroicons:moon" class="h-6 w-6 w-full" aria-hidden="true" />
-          <span class="text-zinc-100 text-xs">Dark</span>
+          <span class="grid w-full text-zinc-100 text-xs">Dark</span>
         </button>
         </div>
       </div>

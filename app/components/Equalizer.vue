@@ -12,7 +12,7 @@
     </div>
   </div>
   </div>
-  <button class="w-full text-center" @click="resetEQ"><span class="">Reset</span></button>
+  <button class="w-full text-center text-white" @click="resetEQ"><span class="">Reset</span></button>
 
 </div>
 </template>

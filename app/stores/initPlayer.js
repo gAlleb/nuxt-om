@@ -258,6 +258,74 @@ export const initPlayerStore = defineStore('player', {
       }
 
     },
+    toggleInstantPlay(name) {
+      if (name === this.player.stream_mount) {
+
+        if (this.player.current_state === this.player.PLAYING) {
+
+          this.isPlaying = true;
+
+        } else {
+
+          this.player.play();
+          this.isPlaying = true;
+
+          if (this.player.stream_mount === 'stream') {
+            this.isPlayingStream = true;
+          }
+          if (this.player.stream_mount === 'rock') {
+            this.isPlayingRock = true;
+          }
+          if (this.player.stream_mount === 'coma') {
+            this.isPlayingComa = true;
+          }
+          if (this.player.stream_mount === 'core') {
+            this.isPlayingCore = true;
+          }
+          if (this.player.stream_mount === 'terra') {
+            this.isPlayingTerra = true;
+          }
+        }
+
+      } else if (name !== this.player.stream_mount) {
+
+          this.player.stop();
+          this.player.change_stream(name);
+          const useCurrentStreamStore = currentStreamStore(); // Get the store instance
+          useCurrentStreamStore.setStream(name); // Update the store
+          this.isPlayingStream = false;
+          this.isPlayingRock = false;
+          this.isPlayingComa = false;
+          this.isPlayingTerra = false;
+          this.isPlayingCore = false;
+          this.isPlaying = false;
+          if (this.player.current_state === this.player.PLAYING) {
+
+            this.isPlaying = true;
+
+          } else {
+            this.player.play();
+            this.isPlaying = true;
+
+            if (this.player.stream_mount === 'stream') {
+              this.isPlayingStream = true;
+            }
+            if (this.player.stream_mount === 'rock') {
+              this.isPlayingRock = true;
+            }
+            if (this.player.stream_mount === 'coma') {
+              this.isPlayingComa = true;
+            }
+            if (this.player.stream_mount === 'core') {
+              this.isPlayingCore = true;
+            }
+            if (this.player.stream_mount === 'terra') {
+              this.isPlayingTerra = true;
+            }
+          }
+      }
+
+    },
     playPlayer() {
       if (this.player.current_state !== this.player.PLAYING) {
         this.player.play();

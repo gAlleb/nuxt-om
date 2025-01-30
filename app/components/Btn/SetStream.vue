@@ -18,7 +18,7 @@
           <button :class="{
                 'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'stream',
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full" @click="useInitPlayerStore.setStream('stream')">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full" @click="useInitPlayerStore.toggleInstantPlay('stream')">
             <NuxtLink class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">omFM Main</span>
             </NuxtLink>
@@ -26,7 +26,7 @@
           <button :class="{
             'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'rock', 
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.setStream('rock')">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.toggleInstantPlay('rock')">
             <NuxtLink class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
             </NuxtLink>
@@ -34,7 +34,7 @@
           <button :class="{
                 'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'coma',
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.setStream('coma')">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.toggleInstantPlay('coma')">
             <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
             </NuxtLink>
@@ -42,7 +42,7 @@
           <button :class="{
                 'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'core',
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.setStream('core')">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.toggleInstantPlay('core')">
             <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">CORE @ omFM</span>
             </NuxtLink>
@@ -50,7 +50,7 @@
           <button :class="{
                 'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'terra',
             }"
-            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.setStream('terra')">
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.toggleInstantPlay('terra')">
             <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
               <span class="text-zinc-600 dark:text-zinc-100">Terra @ omFM</span>
             </NuxtLink>

@@ -2,20 +2,15 @@
   <header style="z-index:31" class="dark:text-zinc-200 text-zinc-700 ">
     <div
     ref="header"
-    :class="indexClass, headerClasses, eqClass"
+    :class="headerClass"
     class="header dark:text-zinc-200 text-zinc-600 
      container-fluid 
-     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between py-5 px-3 sm:px-5 lg:px-12"
-   
-    >
+     mx-auto lg:mx-0 fixed  top-0 left-0 right-0  flex justify-between py-5 px-3 sm:px-5 lg:px-12">
       <NuxtLink :to="localePath('/')" class="flex font-medium items-center dark:text-zinc-200 text-zinc-700">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-7 h-7  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-7 h-7  " />
         <span class="ml-1 text-xl hidden sm:block">omFM<sup>{{ logoText }}</sup></span>
       </NuxtLink>
-      
-
-
       <!-- Desktop nav -->
       <nav class="hidden md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 lg:flex flex-wrap items-center text-base justify-center">
         <NuxtLink :to="localePath('/')" class="mr-5 group transition-all duration-300 ease-in-out">
@@ -112,13 +107,8 @@
         </NuxtLink>
       </nav>
       <div class="hidden md:flex">
-     
-        
-        
-
        <!--  <ClientOnly> Without this block apps show Hydration error but works ok. TODO </ClientOnly>  -->
       </div>
-
     <!-- Mobile nav -->
     <div class="flex">
      <div class="flex">
@@ -132,7 +122,6 @@
         <!-- <BtnLocaleSwitch />
         <BtnToggleColorMode /> -->
       </ClientOnly> 
-     
      </div>
      <div class="flex">
       <!-- <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
@@ -142,23 +131,19 @@
      </button>
      </div>
     </div>
-
   </div> 
     <ClientOnly>
           <div class="fixed inset-0 z-10 backdrop-filter backdrop-blur-sm bg-black bg-opacity-20" v-if="mobileMenuOpen"  @click="mobileMenuToggle()" />
           <div  id="myMobileMenu" 
           :class="{ 'translate-x-0': mobileMenuOpen, 'translate-x-full': !mobileMenuOpen }"  
           class="flex-col transition-transform duration-300 ease-in-out fixed flex bottom-0 top-0 right-0 z-10 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark px-6 py-6 max-w-sm sm:ring-1 sm:ring-gray-900/10">
-          
             <div class="flex items-center justify-between">
               <h1 class="text-xl">Menu</h1>
               <button type="button" @click="mobileMenuToggle()" class="-m-2.5 rounded-md p-2.5">
                 <span class="sr-only">Close menu</span>
                 <Icon name="heroicons:x-mark" class="w-7 h-7" />
               </button>
-             
             </div>
-          
             <hr/>
             <div id="content" class="grow-1 overflow-y-auto">
             <div class="flex my-3 justify-center">
@@ -221,7 +206,6 @@
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/EQ')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">EQ</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
-                
                 </div>
               </div>
             </div>
@@ -246,7 +230,6 @@
     </div>
     </div>
       </ClientOnly>
-
       <!-- Old menu compatible with at thhe top
       <button type="button" class="ml-4 flex rounded-full bg-slate-50 dark:bg-zinc-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" @click="mobileMenuOpen = true"> -->
 
@@ -285,42 +268,25 @@
           </DialogPanel>
         </Dialog>
       </ClientOnly> -->
-
   </header>
 </template>
-
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { currentStreamStore } from '../stores/currentStream'; // Import the store
 import { useRoute } from '#imports'
-
-
 const route = useRoute();
- 
 let isScrolled = ref(false);
-const indexClass = computed(() => {
-  const baseClasses = {
-    'bg-transparent': route.path === '/', // Use route.value here
-    'dark:bg-sxvx-dark bg-sxvx-light':  route.path !== '/', // Corrected logic
-
-  };
+const headerClass = computed(() => {
+  let baseClasses;
+  if (route.path === '/' && isScrolled.value !== true) {
+    baseClasses = 'bg-transparent';
+  } else if (route.path === '/eq') {
+    baseClasses = 'eq-class'
+  } else {
+    baseClasses = 'dark:bg-sxvx-dark bg-sxvx-light';
+  }
   return baseClasses;
 });
-const eqClass = computed(() => {
-  const baseClassesEq = {
-    'bg-black': route.path === '/eq', // Use route.value here
-    
-
-  };
-  return baseClassesEq;
-});
-const headerClasses = computed(() => {
-  const baseClasses2 = {
-    'dark:bg-sxvx-dark bg-sxvx-light': isScrolled.value === true, // Corrected logic
-  };
-  return baseClasses2;
-});
-
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};
@@ -328,7 +294,6 @@ onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
   
 });
-
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 const logoText = computed(() => {
@@ -347,11 +312,8 @@ const logoText = computed(() => {
       return ''; // Default text
   }
 });
-
-
 const localePath = useLocalePath()
 const mobileMenuOpen = ref(false)
-
 function mobileMenuToggle() {
   mobileMenuOpen.value = !mobileMenuOpen.value;
 }
@@ -360,11 +322,9 @@ const header = ref(null);
 const lastScrollTop = ref(0);
 const threshold = 300;
 const hidePoint = 30;
- 
 // Function to handle scroll
 const handleScroll = () => {
   const scrollTop = window.scrollY;
-  
   if (lastScrollTop.value > scrollTop) {
     if (header.value.classList.contains('hide')) {
       header.value.classList.remove('hide');
@@ -378,7 +338,6 @@ const handleScroll = () => {
     } 
   }  
   lastScrollTop.value = scrollTop;
-
   if (scrollTop > hidePoint) {
     header.value.classList.add('is-scroll');
     header.value.classList.add('logo_resize');
@@ -389,13 +348,11 @@ const handleScroll = () => {
     isScrolled.value = false;
   }
 };
-
 // Function to handle reaching the end of the page
 const handleEndScroll = () => {
   const scrollTop = window.scrollY;
   const scrollHeight = document.documentElement.scrollHeight;
   const clientHeight = document.documentElement.clientHeight;
-
   // Check if we've reached the end of the page
   if (scrollTop + clientHeight >= scrollHeight) {
     if (header.value.classList.contains('hide')) {
@@ -403,7 +360,6 @@ const handleEndScroll = () => {
     } 
   }
 };
-
 // Lifecycle hooks to add/remove the scroll event listener
 onMounted(() => {
   if (typeof window !== 'undefined') {
@@ -412,7 +368,6 @@ onMounted(() => {
     lastScrollTop.value = window.scrollY; // Initialize scroll position
   }
 });
-
 onBeforeUnmount(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('scroll', handleScroll);
@@ -420,33 +375,25 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-
-
- 
-
 <style scoped>
-
- 
+.eq-class {
+  padding-top: 5px!important;
+  padding-bottom: 5px!important;
+}
 /* Add styles here */
 .header {
-  transition: all 0.5s;
+  transition: all 0.25s;
   opacity: 1;
- 
-  
 }
-
 .header img {
   transition: all 0.5s;
 }
-
 .header.hide {
   transform: translateY(-100%);
 }
 .header.logo_resize img {
   transform: scale(0.8);
-  
 }
-
 .header.is-scroll {
   padding-top: 5px!important;
   padding-bottom: 5px!important;
