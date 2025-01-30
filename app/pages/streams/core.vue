@@ -1,7 +1,7 @@
 <template>
     <div>
     <div id="VisualizerWrapper" class="relative overflow-hidden">
-    <Visualizer :color-scheme="{ color1: '#ffffff', color2: '#ffffff', color3: '#ffffff' }" />
+    <Visualizer :color-scheme="{ color1: '#ffffff', color2: '#ffffff', color3: '#ffffff', capStyle: 'white' }" />
     <div class="flex relative overflow-hidden dark:hidden font-UNSCII" style="background: url('/core_long.png') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>
     <button 

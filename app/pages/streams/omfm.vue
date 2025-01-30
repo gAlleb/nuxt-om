@@ -1,7 +1,7 @@
 <template>
     <div>
     <div id="VisualizerWrapper" class="relative overflow-hidden">
-    <Visualizer :color-scheme="{ color1: '#b017a8', color2: 'cyan', color3: 'green' }"/>
+    <Visualizer :color-scheme="{ color1: '#b017a8', color2: 'cyan', color3: 'green', capStyle: '#b017a8' }"/>
    
     <div class="flex relative overflow-hidden dark:hidden font-tenor" style="background: url('/omfm4-light.jpg') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <div class="indexSliderImg-light"></div>

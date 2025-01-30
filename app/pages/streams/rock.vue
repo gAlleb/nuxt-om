@@ -1,7 +1,7 @@
 <template>
   <div>
   <div id="VisualizerWrapper" class="relative overflow-hidden">
-  <Visualizer :customDarkScheme="{ color1: 'red', color2: 'darkred', color3: 'red' }" :color-scheme="{ color1: '#000000', color2: '#000000', color3: '#000000' }" />
+  <Visualizer :customDarkScheme="{ color1: 'red', color2: 'darkred', color3: 'red', capStyle: 'red' }" :color-scheme="{ color1: '#000000', color2: '#000000', color3: '#000000', capStyle: 'black' }" />
   <div class="flex relative overflow-hidden dark:hidden font-metal" style="background: url('/metal.webp') center 40% no-repeat; background-size: cover; height: 45vh;  ">
     <!-- <div class="flex relative overflow-hidden dark:hidden font-metal" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`, backgroundPosition: 'center 70%', backgroundRepeat: 'no-repeat', backgroundSize: 'cover',  height: '45vh' }"> -->
 

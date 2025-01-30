@@ -26,7 +26,7 @@
   <Equalizer style="height: 320px;z-index: 3;position: relative;"/>
   <div class="absolute bottom-0 w-full" style="height: 250px;z-index: 2;">
   <div class="relative overflow-hidden" style="height: 250px;"> 
-    <Visualizer :color-scheme="{ color1: 'purple', color2: 'cyan', color3: 'green' }" :bars-number="20" :max-height="200"/>
+    <Visualizer :color-scheme="{ color1: 'purple', color2: 'cyan', color3: 'green', capStyle: 'purple' }" :bars-number="20" :max-height="200"/>
   </div>
   </div>
  
