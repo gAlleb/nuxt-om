@@ -6,6 +6,7 @@ import { useVisualizerData } from './VisualizerStore.js';
 export const initPlayerStore = defineStore('player', {
   state: () => ({
     player: null,
+    playerVisible: true,
     isUsingHLS: true,
     isPlaying: false,
     isPlayingStream: false,
@@ -50,6 +51,12 @@ export const initPlayerStore = defineStore('player', {
         //  this.player.audio_object.addEventListener('stop', () => {
         //    this.isPlaying = false;
         //  });
+      }
+    },
+    togglePlayerVisibility() {
+      this.playerVisible = !this.playerVisible;
+      if (import.meta.client) {
+      localStorage.setItem('playerVisible', JSON.stringify(this.playerVisible));
       }
     },
     toggleHLS() {

@@ -73,15 +73,23 @@
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Strokes</span>
         </button>
+        <div class="flex flex-col gap-2 ">
         <button type="button" @click="toggleEffect('visualizer')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.visualizer,
                     'bg-white': effectsStore.visualizer
           }"
-          class="flex flex-col  gap-2 
-          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
-          <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
+          class="grid px-4 pt-2 pb-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="heroicons:sparkles" class="h-4 w-4 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Visualizer</span>
         </button>
+        <button type="button" @click="toggleEffect('visualizerCaps')"
+          :class="{ 'bg-red-400 dark:bg-red-400': (!effectsStore.visualizerCaps || !effectsStore.visualizer),
+                    'bg-white': (effectsStore.visualizerCaps && effectsStore.visualizer)
+          }"
+          class="flex px-4 pt-0 pb-0 text-sm text-zinc-900 w-full rounded-2xl">
+          <span class="grid w-full text-zinc-900 text-xs">Caps</span>
+        </button>
+        </div>
         <hr />
         <hr />
         <button type="button" @click="toggleAllEffects"
@@ -165,13 +173,14 @@ function toggleScanlineEffect() {
   }
 }
 function toggleAllEffects() {
-  if (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground) {
+  if (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) {
     effectsStore.setToTrue();
     for (let i = 0; i <= 5; i++) {
     effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
     }
     effectsStore.setOverlayLocalStorage('artBackground', true);
     effectsStore.setOverlayLocalStorage('visualizer', true);
+    effectsStore.setOverlayLocalStorage('visualizerCaps', true);
   } else {
     effectsStore.setToFalse();
     for (let i = 0; i <= 5; i++) {
@@ -179,7 +188,7 @@ function toggleAllEffects() {
     }
     effectsStore.setOverlayLocalStorage('artBackground', false);
     effectsStore.setOverlayLocalStorage('visualizer', false);
-
+    effectsStore.setOverlayLocalStorage('visualizerCaps', false);
   }
 }
 // Not clear but set to true
@@ -189,6 +198,7 @@ function clearCache() {
   }
   effectsStore.setOverlayLocalStorage('artBackground', true);
   effectsStore.setOverlayLocalStorage('visualizer', true);
+  effectsStore.setOverlayLocalStorage('visualizerCaps', true);
   effectsStore.setToTrue();
 }
 </script>

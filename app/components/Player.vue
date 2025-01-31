@@ -1,7 +1,8 @@
 <template>
     
 <section>
-    <div class="icecast_player ice-player fixed" id="ice-player" style="z-index:30; transform: translateY(165%);">
+    <div class="icecast_player ice-player fixed transition duration-300 ease-in-linear" id="ice-player" style="z-index:30;"
+    :style="{ transform:`translateY(${useInitPlayerStore.playerVisible ? '0%' : '165%'})`}">
     <div class="icecast_player ice-player fixed backdrop-blur-[1rem] transition-all duration-[1500ms]" style="z-index:30;"
     :style="dynamicBackgroundColor">
         <div class="ice-player-el mb-5">

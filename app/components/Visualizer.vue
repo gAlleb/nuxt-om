@@ -25,7 +25,11 @@ function updateVisualizerSession() {
       }
     }
     if (!initVisualizerStore.animationFrameId) { 
-      initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
+      if (effectsStore.visualizerCaps) {
+        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight, props.useCaps);
+      } else {
+        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
+      } 
     }
   } else {
     cancelAnimationFrame(initVisualizerStore.animationFrameId);
@@ -36,6 +40,7 @@ function updateVisualizerSession() {
 onMounted(async () => {
   await nextTick();
   effectsStore.loadOverlayLocalStorage('visualizer');
+  effectsStore.loadOverlayLocalStorage('visualizerCaps');
   if (effectsStore.visualizer){
   if (initVisualizerStore.animationFrameId) {  
     await nextTick();
@@ -47,7 +52,11 @@ onMounted(async () => {
   }
   if (!initVisualizerStore.animationFrameId) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
-    initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
+    if (effectsStore.visualizerCaps) {
+      initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight, props.useCaps);
+    } else {
+      initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
+    }  
   }
 } 
 });

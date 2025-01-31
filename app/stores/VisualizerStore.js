@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { initPlayerStore } from './initPlayer';
+import { useEffectsStore } from '@/stores/effects';
 
 export const useVisualizerData = defineStore({
     id: 'VisualizerData',
@@ -101,11 +102,12 @@ export const useVisualizerData = defineStore({
       this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
       this.analyzer.fftSize = 2048;
     },
-    initVisualizer(container, overrideColorScheme = null, customDarkScheme = null, customBarsNumber = null, customMaxHeight) {
+    initVisualizer(container, overrideColorScheme = null, customDarkScheme = null, customBarsNumber = null, customMaxHeight = null) {
         this.overrideColorScheme = overrideColorScheme;
         this.customDarkScheme = customDarkScheme;
         this.customBarsNumber = customBarsNumber;
         this.customMaxHeight = customMaxHeight;
+        const effectsStore = useEffectsStore();
         // Functions
              // Function to initialize the canvas (canvas)
          function initCanvas(container) {
@@ -161,18 +163,20 @@ export const useVisualizerData = defineStore({
                const barWidth = this.canvas.width / options.numBars;
                const x = i * barWidth;
                const y = this.canvas.height - barHeight;
-               const cheight = this.canvas.height - 2
 
-               if (capYPositionArray.length < Math.round(options.numBars)) {
-                capYPositionArray.push(fd)
-               }
 
-               canvasCtx.fillStyle = this.colorScheme.capStyle
-               if (fd < capYPositionArray[i]) {
-                canvasCtx.fillRect(x, cheight - --capYPositionArray[i], barWidth - 2, capHeight)
-               } else {
-                canvasCtx.fillRect(x, cheight - fd, barWidth - 2, capHeight)
-                capYPositionArray[i] = fd
+               if (effectsStore.visualizerCaps) {
+                  const cheight = this.canvas.height - 2
+                  if (capYPositionArray.length < Math.round(options.numBars)) {
+                   capYPositionArray.push(fd)
+                  }
+                  canvasCtx.fillStyle = this.colorScheme.capStyle
+                  if (fd < capYPositionArray[i]) {
+                   canvasCtx.fillRect(x, cheight - --capYPositionArray[i], barWidth - 2, capHeight)
+                  } else {
+                   canvasCtx.fillRect(x, cheight - fd, barWidth - 2, capHeight)
+                   capYPositionArray[i] = fd
+                  }
                }
 
                const gradient = canvasCtx.createLinearGradient(0, 200, 0, 0);
