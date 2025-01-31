@@ -699,9 +699,9 @@
 <script setup>
 import { initPlayerStore } from '@/stores/initPlayer';
 const useInitPlayerStore = initPlayerStore();
-import { useAzuracastData } from '../stores/stationData';
+import { useAzuracastData } from '@/stores/stationData';
 const np_ac = useAzuracastData();
-import { useOmfmData } from '../stores/stationData_omfm';
+import { useOmfmData } from '@/stores/stationData_omfm';
 const np_omfm = useOmfmData();
 const omfmData = computed(() => np_omfm.stations['station:radio']);
 
@@ -755,7 +755,7 @@ function getTimeFromTimestamp(timestamp) {
 } 
 
 
-import { currentStreamStore } from '../stores/currentStream'; // Import the store
+import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream

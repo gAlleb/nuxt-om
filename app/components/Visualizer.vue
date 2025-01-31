@@ -25,11 +25,7 @@ function updateVisualizerSession() {
       }
     }
     if (!initVisualizerStore.animationFrameId) { 
-      if (effectsStore.visualizerCaps) {
-        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight, props.useCaps);
-      } else {
-        initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
-      } 
+    initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
     }
   } else {
     cancelAnimationFrame(initVisualizerStore.animationFrameId);
@@ -52,11 +48,7 @@ onMounted(async () => {
   }
   if (!initVisualizerStore.animationFrameId) { // Check if already initialized
     await nextTick(); // Ensure DOM is ready
-    if (effectsStore.visualizerCaps) {
-      initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight, props.useCaps);
-    } else {
-      initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
-    }  
+    initVisualizerStore.initVisualizer(visualizerContainer.value, props.colorScheme, props.customDarkScheme, props.barsNumber, props.maxHeight);
   }
 } 
 });
