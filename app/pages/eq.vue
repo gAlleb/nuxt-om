@@ -4,12 +4,6 @@
  
 
  <div  class="absolute h-screen w-full" style="background: rgba(0, 0, 0, .7); z-index: 1;"/>
- <!-- <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio'] && useInitPlayerStore.isPlaying" data-aos="fade-in" data-aos-duration="3000" class="blur-sm h-screen absolute w-full transition-all duration-3000" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
- <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio'] && useInitPlayerStore.isPlaying"  data-aos="fade-in" data-aos-duration="3000" class="blur-sm h-screen absolute w-full transition-all duration-3000" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`,   backgroundPosition: 'center', backgroundSize: 'cover' }"/>
- <div v-if="currentStream === 'coma' && comaData && useInitPlayerStore.isPlaying"  data-aos="fade-in" data-aos-duration="3000" class="blur-sm h-screen absolute w-full transition-all duration-3000" :style="{ backgroundImage: `url(${comaData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
- <div v-if="currentStream === 'terra' && terraData && useInitPlayerStore.isPlaying"  data-aos="fade-in" data-aos-duration="3000" class="blur-sm h-screen absolute w-full transition-all duration-3000" :style="{ backgroundImage: `url(${terraData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
- <div v-if="currentStream === 'core' && coreData && useInitPlayerStore.isPlaying"  data-aos="fade-in" data-aos-duration="30000" class="blur-sm h-screen absolute w-full transition-all duration-3000" :style="{ backgroundImage: `url(${coreData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
- -->
  <div 
       class="blur-sm h-screen absolute w-full" 
       style="transition: background-image 2s ease-in"
@@ -29,9 +23,6 @@
     <Visualizer :color-scheme="{ color1: 'purple', color2: 'cyan', color3: 'green', capStyle: 'purple' }" :bars-number="20" :max-height="200"/>
   </div>
   </div>
- 
-
-
 </div>
 </section>
 </template>
@@ -58,6 +49,8 @@ const backgroundImage = computed(() => {
       return `url(${np_ac.stations['station:terra'].np.now_playing.song.art})`;
     } else if (currentStream.value === 'core' && np_ac.stations['station:core']?.np?.now_playing?.song?.art) {
       return `url(${np_ac.stations['station:core'].np.now_playing.song.art})`;
+    } else if (currentStream.value === 'chill' && np_ac.stations['station:chill']?.np?.now_playing?.song?.art) {
+      return `url(${np_ac.stations['station:chill'].np.now_playing.song.art})`;
     }
   }
   return 'url(/static/img/defaultCoverart.jpg)';
