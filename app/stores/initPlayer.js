@@ -14,6 +14,7 @@ export const initPlayerStore = defineStore('player', {
     isPlayingComa: false,
     isPlayingCore: false,
     isPlayingTerra: false,
+    isPlayingChill: false,
     ctx: null,
     audioSource: null,
     analyzer: null,
@@ -168,6 +169,7 @@ export const initPlayerStore = defineStore('player', {
         this.isPlayingComa = false;
         this.isPlayingTerra = false;
         this.isPlayingCore = false,
+        this.isPlayingChill = false;
         this.isPlaying = false;
       } else {
         this.player.play();
@@ -187,6 +189,9 @@ export const initPlayerStore = defineStore('player', {
         if (this.player.stream_mount === 'core') {
           this.isPlayingCore = true;
         }
+        if (this.player.stream_mount === 'chill') {
+          this.isPlayingChill = true;
+        }
       }
     },
     togglePlay(name) {
@@ -200,6 +205,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingComa = false;
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
+          this.isPlayingChill = false;
         } else {
 
           this.player.play();
@@ -220,6 +226,9 @@ export const initPlayerStore = defineStore('player', {
           if (this.player.stream_mount === 'terra') {
             this.isPlayingTerra = true;
           }
+          if (this.player.stream_mount === 'chill') {
+            this.isPlayingChill = true;
+          }
         }
 
       } else if (name !== this.player.stream_mount) {
@@ -233,6 +242,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingComa = false;
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
+          this.isPlayingChill = false;
           this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
@@ -242,6 +252,7 @@ export const initPlayerStore = defineStore('player', {
             this.isPlayingComa = false;
             this.isPlayingTerra = false;
             this.isPlayingCore = false;
+            this.isPlayingChill = false;
           } else {
             this.player.play();
             this.isPlaying = true;
@@ -260,6 +271,9 @@ export const initPlayerStore = defineStore('player', {
             }
             if (this.player.stream_mount === 'terra') {
               this.isPlayingTerra = true;
+            }
+            if (this.player.stream_mount === 'chill') {
+              this.isPlayingChill = true;
             }
           }
       }
@@ -292,6 +306,9 @@ export const initPlayerStore = defineStore('player', {
           if (this.player.stream_mount === 'terra') {
             this.isPlayingTerra = true;
           }
+          if (this.player.stream_mount === 'chill') {
+            this.isPlayingChill = true;
+          }
         }
 
       } else if (name !== this.player.stream_mount) {
@@ -305,6 +322,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingComa = false;
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
+          this.isPlayingChill = false;
           this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
 
@@ -329,33 +347,12 @@ export const initPlayerStore = defineStore('player', {
             if (this.player.stream_mount === 'terra') {
               this.isPlayingTerra = true;
             }
+            if (this.player.stream_mount === 'chill') {
+              this.isPlayingChill = true;
+            }
           }
       }
 
-    },
-    playPlayer() {
-      if (this.player.current_state !== this.player.PLAYING) {
-        this.player.play();
-        this.isPlaying = true;
-
-      }
-    },
-    playStatus() {
-      if (this.player.stream_mount === 'stream') {
-        this.isPlayingStream = true;
-      }
-      if (this.player.stream_mount === 'rock') {
-        this.isPlayingRock = true;
-      }
-      if (this.player.stream_mount === 'coma') {
-        this.isPlayingComa = true;
-      }
-      if (this.player.stream_mount === 'core') {
-        this.isPlayingCore = true;
-      }
-      if (this.player.stream_mount === 'terra') {
-        this.isPlayingTerra = true;
-      }
     },
     stopPlayer() {
       if (this.player.current_state === this.player.PLAYING) {
@@ -367,17 +364,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingComa = false;
       this.isPlayingTerra = false;
       this.isPlayingCore = false;
-    },
-    pausePlayer1() {
-      if (this.player.current_state === this.player.PLAYING) {
-        this.player.pause();
-      }
-      this.isPlaying = false;
-      this.isPlayingStream = false;
-      this.isPlayingRock = false;
-      this.isPlayingComa = false;
-      this.isPlayingTerra = false;
-      this.isPlayingCore = false;
+      this.isPlayingChill = false;
     },
     changeVol3() {
     this.player.change_volume3();
@@ -394,6 +381,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingStream = false;
       this.isPlayingTerra = false;
       this.isPlayingCore = false;
+      this.isPlayingChill = false;
     if (this.player.current_state === this.player.PLAYING) {
         if (name === 'stream') {
           this.isPlayingStream = true;
@@ -410,18 +398,14 @@ export const initPlayerStore = defineStore('player', {
         if (name === 'terra') {
           this.isPlayingTerra = true;
         }
+        if (name === 'chill') {
+          this.isPlayingChill = true;
+        }
     }
     this.player.change_stream(name);
     const useCurrentStreamStore = currentStreamStore(); // Get the store instance
     useCurrentStreamStore.setStream(name); // Update the store
     },
-    playState() {
-      if (this.player.current_state === this.player.PLAYING) {
-        return true;
-    } else {
-      return false;
-    }
-  }
   },
 
 });

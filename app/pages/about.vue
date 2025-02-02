@@ -72,6 +72,12 @@
   – <a href="https://omfm.ru:8443/terra" target="blank">Terra @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/terra/live.m3u8" target="blank">Terra @ omFM Stream HLS</a><br/>
   </p>
+  <hr/>
+  <p class="mb-5 mt-5">
+  Chill @ omFM:<br/>
+  – <a href="https://omfm.ru:8443/chill" target="blank">Chill @ omFM Stream Icecast</a><br/>
+  – <a href="https://radio.omfm.ru/hls/chill/live.m3u8" target="blank">Chill @ omFM Stream HLS</a><br/>
+  </p>
 </div>
 
   </section>

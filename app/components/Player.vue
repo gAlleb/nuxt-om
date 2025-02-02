@@ -7,10 +7,10 @@
     :style="dynamicBackgroundColor">
         <div class="ice-player-el mb-5">
             <div>
-                <!-- <i class="ice-play hidden" @click="useInitPlayerStore.playStatus()" style="display: inline-block;font-size:1.6rem !important" ></i> -->
-                <i class="ice-play hidden" @click="useInitPlayerStore.playStatus()" style="font-size:1.6rem !important" ></i>
-                <i class="ice-pause hidden"  @click="pausePlayer" ></i>
-                <i class="ice-stop hidden"  @click="stopPlayer"></i>
+                <!-- <i class="ice-play hidden" style="display: inline-block;font-size:1.6rem !important" ></i> -->
+                <i class="ice-play hidden"style="font-size:1.6rem !important" ></i>
+                <i class="ice-pause hidden"></i>
+                <i class="ice-stop hidden"></i>
 
                 <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="useInitPlayerStore.togglePlayAll()"  >     
                     <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
@@ -106,7 +106,7 @@
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">CORE</span>
             </div>
             </swiper-slide>
-            <swiper-slide class="me-0" style="height: 40px; width: 40px!important;">
+            <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
             <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('terra');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'terra',
@@ -118,6 +118,20 @@
                   'opacity-75': currentStream !== 'terra',
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Terra</span>
+            </div>
+            </swiper-slide>
+            <swiper-slide class="me-0" style="height: 40px; width: 40px!important;">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('chill');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'chill',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/pink-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'chill',
+                  'opacity-75': currentStream !== 'chill',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Chill</span>
             </div>
             </swiper-slide>
             <swiper-slide class="ms-2" style="height: 40px; width: 0px!important;">
@@ -158,6 +172,13 @@
                 <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.title }}</span>
                 <br/>
                 <span class="text-xs">{{ np_ac.isLoading ? 'loading' : terraData.np.now_playing.song.artist }}</span>
+                </div>
+                <div v-else-if="currentStream === 'chill'" class="ellipsify">
+                <span class="text-xs opacity-75">Chill @ omFM</span> 
+                <br/>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_ac.isLoading ? 'loading' : chillData.np.now_playing.song.title }}</span>
+                <br/>
+                <span class="text-xs">{{ np_ac.isLoading ? 'loading' : chillData.np.now_playing.song.artist }}</span>
                 </div>
                 <div v-else-if="currentStream === 'stream'" class="ellipsify">
                 <span class="text-xs opacity-75">omFM</span>
@@ -203,6 +224,14 @@
                 <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
+            <div class="ms-3 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'chill'">
+                <div v-if="chillData" >  
+                <img class="rounded-lg" height="60" width="60" :src="chillData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(chillData.np.now_playing.song.art)" >
+                </div>
+                <div v-else>
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
+                </div> 
+            </div>
             <div class="ms-2 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'stream'">
                 <div v-if="omfmData" >  
                 <img class="rounded-lg" height="60" width="60" :src="np_omfm.coverArtUrls['station:radio']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:radio'], 0)" >
@@ -237,6 +266,9 @@
             v-if="currentStream === 'terra' && terraData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].elapsed) }}</div>
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
+            v-if="currentStream === 'chill' && terraData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].elapsed) }}</div>
+            <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'stream' && omfmData"
             >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
    
@@ -252,6 +284,9 @@
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'terra' && terraData"
             >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:terra'].duration) }}</div>
+            <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
+            v-if="currentStream === 'chill' && chillData"
+            >{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].duration) }}</div>
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'stream' && omfmData"
             >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
@@ -274,6 +309,9 @@
             v-if="currentStream === 'terra' && terraData"
             :style="{ width: `${( np_ac.progress['station:terra'].width)}%` }"></div>
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
+            v-if="currentStream === 'chill' && chillData"
+            :style="{ width: `${( np_ac.progress['station:chill'].width)}%` }"></div>
+            <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'stream' && omfmData"
             :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
             </div>
@@ -290,14 +328,7 @@
           <div  id="myMobileMenu"   :class="{ 'translate-x-0': playerMenuOpen, 'translate-x-full': !playerMenuOpen }"
           class="transition-transform duration-300 ease-in-out flex-col fixed flex bottom-0  top-0 right-0 z-40 w-11/12 sm:w-full dark:text-zinc-200 text-zinc-600 bg-sxvx-light dark:bg-sxvx-dark max-w-sm  ">
             <div class="absolute" style=" height: 100vh; width:100%; z-index: -1;">
-            <!-- <div v-if="currentStream === 'stream' && np_omfm.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_omfm.coverArtUrls['station:radio']})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-            <div v-if="currentStream === 'rock' && np_ac.coverArtUrls['station:radio']" class="h-full absolute w-full" :style="{ background: `url(${np_ac.coverArtUrls['station:radio']})`,   backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-            <div v-if="currentStream === 'coma' && comaData" class="h-full absolute w-full" :style="{ background: `url(${comaData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-            <div v-if="currentStream === 'terra' && terraData" class="h-full absolute w-full" :style="{ background: `url(${terraData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-            <div v-if="currentStream === 'core' && coreData" class="h-full absolute w-full" :style="{ background: `url(${coreData.np.now_playing.song.art})`, backgroundPosition: 'center', backgroundSize: 'cover' }"/> -->
-
             <div class="h-full absolute w-full" :style="{ backgroundImage: backgroundImage, backgroundPosition: 'center', backgroundSize: 'cover' }"/>
-
             <div style="min-width: 100%; min-height: 100%; position: absolute;background: radial-gradient(rgba(0, 0, 0, .5) 20%, #000 85%);z-index: 2;"/>
             </div>
             <div class="flex items-center justify-between p-3">
@@ -678,13 +709,90 @@
         </ul>       
       </div> 
       </div>
-              </div>
-
-              </div>
-            </div>
-
-
     </div>
+
+    <div v-if="currentStream === 'chill'">
+                <div class="justify-center flex mx-auto mx-2 font-tenor">
+      <div v-if="chillData" class="container">  
+        <h2 class="text-lg mb-3 text-white">Show: {{ chillData.np.now_playing.playlist }}</h2>      
+            <div class="content-center">
+              <div class="mx-3">
+               <div class="relative w-full">
+                 <img class="rounded-xl h-auto w-full shadow-2xl cursor-pointer" :src="chillData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(chillData.np.now_playing.song.art, 0)" >
+                 <div class="absolute bg-sxvx-dark-bg bottom-0 rounded-b-xl  w-full h-5 overflow-hidden">
+                 <div class="absolute bg-muddy-waters-400 " style="height:20px;  transition: width 1s linear" :style="{ width: `${np_ac.progress['station:chill'].width}%` }"></div>
+                 </div>
+                 <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].elapsed) }}</span> 
+                 <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].duration) }}</span> 
+                 <div class="absolute text-muddy-waters-100 text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(chillData.np.now_playing.played_at) }}
+                </div>
+               </div>
+              </div>
+               <div class="ms-2" >
+                <div class="px-3  text-center mb-0 py-3  rounded-xl w-full text-muddy-waters-200  bg-opacity-50  "> 
+                  <span class="text-lg">{{ chillData.np.now_playing.song.title }}</span><br/>
+                  <span class="text-md">{{ chillData.np.now_playing.song.artist }}</span><br/>
+                  <span class="text-md">Album: {{ chillData.np.now_playing.song.album }}</span>
+                </div>
+               </div>
+            </div>
+             <hr/>
+          <h2 v-if="chillData.np.now_playing.playlist !== ''" class="my-3 text-lg text-white">Next Song:</h2>
+
+<div v-if="chillData.np.now_playing.playlist !== ''" class="mt-3 mb-5 rounded-xl  ice-player-el text-muddy-waters-300" >
+    <div class=" relative">
+      <img 
+    :src="chillData.np.playing_next.song.art" 
+    alt="History Cover"
+    class="history-cover cursor-pointer rounded-xl h-auto w-24"
+    @click="openLightbox(chillData.np.playing_next.song.art, 0)" 
+  >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+        {{ getTimeFromTimestamp(chillData.np.playing_next.played_at) }}
+       </div>
+      </div>
+     <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+      <div class="px-3 rounded-xl w-full text-muddy-waters-200 ellipsify "> 
+        <span class="text-sm">Show: {{ chillData.np.playing_next.playlist }}</span><hr/>
+        <span class="text-lg">{{ chillData.np.playing_next.song.title  }}</span><br/>
+        <span class="text-md">{{ chillData.np.playing_next.song.artist  }}</span>
+      </div>
+    </div>
+   </div>
+          <hr/>
+          <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
+          <ul>
+          <li v-for="(historyItem, index) in chillData.np.song_history.slice(0, 5)" :key="index">
+            <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el text-muddy-waters-200" >
+              <div class=" relative">
+                <img 
+              v-if="chillData.np.song_history[index].song.art" 
+              :src="chillData.np.song_history[index].song.art" 
+              alt="History Cover"
+              class="history-cover cursor-pointer rounded-xl h-auto w-24"
+              @click="openLightbox(chillData.np.song_history[index].song.art, index)" 
+            >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(historyItem.played_at) }}
+                 </div>
+                </div>
+               <div class="" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                <div class="px-3 py-0 sm:py-2 rounded-xl w-full  ellipsify "> 
+                  <span class="text-lg">{{ historyItem.song.title  }}</span><br/>
+                  <span class="text-md">{{ historyItem.song.artist  }}</span>
+                </div>
+              </div>
+             </div>
+          </li>
+        </ul>       
+      </div> 
+      </div>
+    </div>
+
+   </div>
+   </div>
+
+
+  </div>
   </div>
 </section>
     <VueEasyLightbox
@@ -703,21 +811,18 @@ import { useAzuracastData } from '@/stores/stationData';
 const np_ac = useAzuracastData();
 import { useOmfmData } from '@/stores/stationData_omfm';
 const np_omfm = useOmfmData();
-const omfmData = computed(() => np_omfm.stations['station:radio']);
-
-
 const playerSwiper = ref(null)
 const swiper1 = useSwiper(playerSwiper, {
 loop: false,
 slidesPerView: 'auto',
 navigation: false,
 })
-
-
+const omfmData = computed(() => np_omfm.stations['station:radio']);
 const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
 const terraData = computed(() => np_ac.stations['station:terra']);
 const coreData = computed(() => np_ac.stations['station:core']);
+const chillData = computed(() => np_ac.stations['station:chill']);
 
 const backgroundImage = computed(() => {
     if (currentStream.value === 'stream' && np_omfm.coverArtUrls['station:radio']) {
@@ -730,6 +835,8 @@ const backgroundImage = computed(() => {
       return `url(${np_ac.stations['station:terra'].np.now_playing.song.art})`;
     } else if (currentStream.value === 'core' && np_ac.stations['station:core']?.np?.now_playing?.song?.art) {
       return `url(${np_ac.stations['station:core'].np.now_playing.song.art})`;
+    } else if (currentStream.value === 'chill' && np_ac.stations['station:chill']?.np?.now_playing?.song?.art) {
+      return `url(${np_ac.stations['station:chill'].np.now_playing.song.art})`;
     }
     return 'url(/static/img/defaultCoverart.jpg)';
 });
@@ -771,6 +878,8 @@ const nowPlayingStation = computed(() => {
       return 'TerraFM';
     case 'core':
       return 'CORE FM';
+    case 'chill':
+      return 'Chill FM';
     default:
       return ''; // Default text
   }
@@ -808,6 +917,7 @@ watch(isPlayingComputed, (isPlaying) => {
  watch(omfmData, () => {updateTitleAndMediaSession()});
  watch(terraData, () => {updateTitleAndMediaSession()});
  watch(coreData, () => {updateTitleAndMediaSession()});
+ watch(chillData, () => {updateTitleAndMediaSession()});
 
 function updateTitleAndMediaSession() {
   updateTitle();
@@ -883,6 +993,14 @@ function getTrackData(stream) {
         artist = omfmData.value.np.now_playing.song.artist;
         album = omfmData.value.np.now_playing.song.album;
         artwork = np_omfm.coverArtUrls['station:radio'];
+      }
+      break;
+    case 'chill':
+      if (chillData.value) {
+        title = chillData.value.np.now_playing.song.title;
+        artist = chillData.value.np.now_playing.song.artist;
+        album = chillData.value.np.now_playing.song.album;
+        artwork = chillData.value.np.now_playing.song.art;
       }
       break;
   }

@@ -351,6 +351,24 @@ background-image: radial-gradient(rgba(229, 23, 187, 0.25),rgba(52, 220, 173, 0.
           z-index: 1000;
         background-image:radial-gradient(rgba(14, 14, 14, 0.2),rgba(38, 37, 37, 0.31) 100%);
           }
+          .overlay.radial-chill {
+            z-index: 1000;
+          background-image:radial-gradient(#0056fb29,#ff00fb26);
+            }
+.neon-pink-text-shadow {
+  text-shadow:
+  0 0 5px #fff,
+  0 0 10px #fff,
+  0 0 20px #fff,
+  0 0 40px #FF10F0,
+  0 0 80px #FF10F0,
+  0 0 90px #FF10F0,
+  0 0 100px #FF10F0,
+  0 0 150px #FF10F0;
+}         
+.neon-pink-text-shadow-sm {
+  text-shadow: 0 0 5px #fff, 0 0 0px #fff, 0 0 20px #fff, 0 0 20px #FF10F0, 0 0 20px #FF10F0;
+}
 @keyframes scanline {
   0% {
     transform:translateY(100%)

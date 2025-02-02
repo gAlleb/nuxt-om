@@ -273,7 +273,8 @@ class IcePlayer {
                 'rock': 'https://radio.omfm.ru/hls/radio/live.m3u8',
                 'coma': 'https://radio.omfm.ru/hls/coma/live.m3u8',
                 'terra': 'https://radio.omfm.ru/hls/terra/live.m3u8',
-                'core': 'https://radio.omfm.ru/hls/core/live.m3u8'
+                'core': 'https://radio.omfm.ru/hls/core/live.m3u8',
+                'chill': 'https://radio.omfm.ru/hls/chill/live.m3u8'
             };
             return hlsUrls[streamName] || null;
         } else {
@@ -282,7 +283,8 @@ class IcePlayer {
                 'rock': 'https://omfm.ru:8443/rock',
                 'coma': 'https://omfm.ru:8443/coma',
                 'terra': 'https://omfm.ru:8443/terra',
-                'core': 'https://omfm.ru:8443/core'    
+                'core': 'https://omfm.ru:8443/core', 
+                'chill': 'https://omfm.ru:8443/chill'   
             };
             return icecastsUrls[streamName] || null;
         }

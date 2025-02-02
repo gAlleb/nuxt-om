@@ -1,5 +1,4 @@
 <template>
-    
     <div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
       <UTooltip text="Pick your Stream" :popper="{ offsetDistance: 5 }"  class="">
       <div 
@@ -55,6 +54,14 @@
               <span class="text-zinc-600 dark:text-zinc-100">Terra @ omFM</span>
             </NuxtLink>
           </button>
+          <button :class="{
+                'bg-gray-150 dark:bg-primary-500 glowing-text': currentStream === 'chill',
+            }"
+            class="hover:bg-gray-200 dark:hover:bg-primary-700 w-full"  @click="useInitPlayerStore.toggleInstantPlay('chill')">
+            <NuxtLink  class="flex items-center gap-2 px-4 py-2 text-sm text-zinc-600 dark:text-zinc-100">
+              <span class="text-zinc-600 dark:text-zinc-100">Chill @ omFM</span>
+            </NuxtLink>
+          </button>
         </div>
       </transition>
     </div> 
@@ -90,7 +97,6 @@
     </transition>
   </Menu> -->
    </template>
-  
 <script setup>
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 import { ref } from 'vue';
@@ -98,26 +104,6 @@ const useInitPlayerStore = initPlayerStore(); // Get the store instance
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-
-// const showStreamBlock = ref(false);
-
-// const toggleStreamBlock = () => {
-//     showStreamBlock.value = !showStreamBlock.value;
-// };
-
-// const closeStreamBlockOutside = (event) => {
-//   if (showStreamBlock.value && !document.getElementById('StreamBlock').contains(event.target)) {
-//     showStreamBlock.value = false;
-//   }
-// };
-
-// onMounted(() => {
-//   document.addEventListener('click', closeStreamBlockOutside);
-// });
-
-// onBeforeUnmount(() => {
-//   document.removeEventListener('click', closeStreamBlockOutside);
-// }); 
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};

@@ -79,6 +79,13 @@
           </button>
         </NuxtLink>
         <hr/>
+        <NuxtLink :to="localePath('/streams/chill')" class="text-zinc-600 dark:text-zinc-100">
+          <button 
+            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+              <span class="text-zinc-600 dark:text-zinc-100">Chill @ omFM</span>
+          </button>
+        </NuxtLink>
+        <hr/>
         <NuxtLink :to="localePath('/streams')" class="text-zinc-600 dark:text-zinc-100">
         <button 
         class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
@@ -203,6 +210,15 @@
                      </span>
                      </button>
                   </NuxtLink>
+                  <hr/>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/chill')" class="text-zinc-600 dark:text-zinc-100">
+                     <button 
+                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
+                     <span class=" text-zinc-600 dark:text-zinc-100">
+                     Chill @ omFM
+                     </span>
+                     </button>
+                  </NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/EQ')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">EQ</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
@@ -308,6 +324,8 @@ const logoText = computed(() => {
       return 'xCOREx';
     case 'terra':
       return 'Terra';
+    case 'chill':
+      return 'ChiLL';
     default:
       return ''; // Default text
   }

@@ -12,26 +12,32 @@
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 2,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 2,
     }"
-    >RockFM
+    >Rock
     </button>
     <button @click="showDiv(3)" class="w-full rounded-t-lg inline-flex justify-center  font-UNSCII text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 3,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 3,
     }"
-    >ComaFM</button>
+    >Coma</button>
     <button @click="showDiv(4)" class="w-full rounded-t-lg inline-flex justify-center  font-UNSCII text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 4,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 3,
+    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 4,
     }"
-    >COReFM</button>
+    >CORe</button>
     <button @click="showDiv(5)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl"
     :class="{
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 5,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 4,
+    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 5,
     }"
-    >TerraFM</button>
+    >Terra</button>
+    <button @click="showDiv(6)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl"
+    :class="{
+    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 5,
+    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 6,
+    }"
+    >Chill</button>
     </div>
     <div class="h-14"></div>
     <div v-if="activeDiv === 1">
@@ -48,6 +54,9 @@
     </div>
     <div v-if="activeDiv === 5">
       <StreamsTerra/>
+    </div>
+    <div v-if="activeDiv === 6">
+      <StreamsChill/>
     </div>
   </div>
 </template>
@@ -133,18 +142,13 @@ onBeforeUnmount(() => {
   }
 });
 </script>
-
-
 <style scoped>
 /* Add styles here */
 .streams_header {
   transition: all 0.5s;
   opacity: 1;
   transform: translateY(0%);
-
-  
 }
-
 .streams_header.hide {
   transform: translateY(-250%);
 }
@@ -156,5 +160,4 @@ onBeforeUnmount(() => {
   transform: translateY(-94%);
   opacity: 0.96;
 }
-
 </style>

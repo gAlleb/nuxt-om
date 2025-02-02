@@ -4,7 +4,7 @@
 <NuxtLoadingIndicator color="#ef4444"/>
 <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
   :class="{
-                'font-tenor': currentStream === 'stream' || currentStream ===  'terra',
+                'font-tenor': currentStream === 'stream' || currentStream ===  'terra' || currentStream ===  'chill',
                 'font-metal': currentStream === 'rock',
                 'font-UNSCII': currentStream === 'coma' || currentStream ===  'core',
             }">
@@ -14,6 +14,7 @@
                 'radial3': currentStream === 'coma',
                 'radial4-terra': currentStream === 'terra',
                 'radial-core': currentStream === 'core',
+                'radial-chill': currentStream === 'chill',
                  
             }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
              ></div>

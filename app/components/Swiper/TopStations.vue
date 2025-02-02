@@ -233,7 +233,48 @@
           <span class="text-sm text-zinc-300">nature, music of the Earth</span>
         </NuxtLink>
     </div>
-      
+    </swiper-slide>
+    <swiper-slide class="rounded-3xl overflow-hidden me-2" style="height:150px; width: 266px!important" >
+    <div :class="{
+                  'border border-pink-500/50': currentStream === 'chill',
+                 }" style="height:150px; width: 266px!important"
+    class="  relative lg:col-start-2  overflow-hidden rounded-3xl">
+      <div class="flex-shrink-0 overflow-hidden">
+       <img class="h-full w-full object-cover brightness-75" src="/static/img/station/chill/chill.jpg" />
+      </div>
+      <button 
+          class="flex right-4 top-4 absolute bg-zinc-500 bg-opacity-50 right-5 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
+          @click="useInitPlayerStore.togglePlay('chill')"
+          :class="{
+                  'glowing-text': currentStream === 'chill',
+              }" 
+        >
+          <Icon
+            name="heroicons-solid:play"
+            class="h-7 w-7 bg-white"            :class="{
+                  '': !useInitPlayerStore.isPlayingChill,
+                  'hidden': useInitPlayerStore.isPlayingChill,
+              }" 
+            aria-hidden="true"
+          />
+          <Icon
+            name="heroicons-solid:stop"
+            class="h-7 w-7 bg-red-500"            :class="{
+                  'hidden': !useInitPlayerStore.isPlayingChill,
+                  '': useInitPlayerStore.isPlayingChill,
+              }" 
+            aria-hidden="true"
+          />
+          <span class="content-center text-zinc-100">&nbsp;Chill @ omFM</span>
+        </button>
+        <NuxtLink  :to="localePath('/streams/chill')" class="absolute bottom-3 left-5 text-2xl text-zinc-600 dark:text-zinc-100 group transition-all duration-300 ease-in-out">        
+          <span class="text-zinc-300 bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
+          Chill
+          </span>
+          <br/>
+          <span class="text-sm text-zinc-300">future garage, chillstep, ambient</span>
+        </NuxtLink>
+    </div>
     </swiper-slide>
     <swiper-slide  style="height:150px; width: 20px!important">
     </swiper-slide>
@@ -244,21 +285,15 @@
   </div>
 </section>
 </template>
-
 <script setup>
 const localePath = useLocalePath()
 const colorMode = useColorMode()
 const isDarkMode = (colorMode.value === 'dark')
-
-
-
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
- 
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-
 const containerRef = ref(null)
 const swiper1 = useSwiper(containerRef, {
 loop: false,
@@ -267,7 +302,6 @@ navigation: false,
 scrollbar: false,
 })
 const swiperInitialized = computed(() => containerRef.value); //Efficiently check if swiper is initialized
-
 </script>
 <style scoped>
 .swiper-scrollbar  {opacity:0!important;}
