@@ -1,5 +1,5 @@
 <template>
-  <div v-if="currentPage !== '/' && !isSubPathOfHome" class="flex mx-auto">
+  <div v-if="currentPage" class="flex mx-auto">
     <NuxtLink 
       :to="localePath('/')"
       class="flex bg-gradient-to-r 
@@ -23,9 +23,17 @@ const localePath = useLocalePath()
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 const route = useRoute();
-const currentPage = computed(() => route.path);
-//Handle subpaths of the home page
-const isSubPathOfHome = computed(() => {
-  return route.path.startsWith('/es') || route.path.startsWith('/ru') 
+const currentPage = computed(() => {
+  let baseClasses;
+  if (route.path === '/') {
+    baseClasses = false;
+  } else if  (route.path === '/es') {
+    baseClasses = false;
+  } else if  (route.path === '/ru') {
+    baseClasses = false;
+  } else {
+    baseClasses = true;
+  }
+  return baseClasses;
 });
 </script>

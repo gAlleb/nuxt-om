@@ -298,7 +298,11 @@ const isSubPathOfHome = computed(() => {
 });
 const headerClass = computed(() => {
   let baseClasses;
-  if (route.path === '/' && isScrolled.value !== true || isSubPathOfHome && isScrolled.value !== true) {
+  if (route.path === '/' && isScrolled.value !== true) {
+    baseClasses = 'bg-transparent';
+  } else if  (route.path === '/es' && isScrolled.value !== true) {
+    baseClasses = 'bg-transparent';
+  } else if  (route.path === '/ru' && isScrolled.value !== true) {
     baseClasses = 'bg-transparent';
   } else if (route.path === '/eq' || route.path === '/ru/eq' || route.path === '/es/eq') {
     baseClasses = 'eq-class dark:bg-sxvx-dark bg-sxvx-light'
