@@ -70,10 +70,10 @@
        </button>
     <div class="absolute z-10"  style="top: 50%; left: 50%; transform: translate(-50%, -50%);">
  
- <h1 class="text-5xl sm:text-7xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
+ <h1 class="text-5xl sm:text-7xl text-sxvx-light text-center neon-pink-text-shadow">
    Chill
  </h1>
- <h1 class="text-2xl sm:text-3xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.3);">
+ <h1 class="text-2xl sm:text-3xl text-sxvx-light text-center neon-pink-text-shadow-sm">
   future garage, chillstep, ambient
  </h1>
 
