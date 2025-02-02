@@ -34,7 +34,7 @@
             <div   style="
                    border-radius:30px;
                    border: gray 1px solid;
-                   width:150px;
+                   width:170px;
                    "
                    class="ms-14 hidden sm:block overflow-hidden bg-sxvx-dark-bg"> 
             <swiper-container
