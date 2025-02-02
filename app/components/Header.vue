@@ -292,11 +292,15 @@ import { currentStreamStore } from '../stores/currentStream'; // Import the stor
 import { useRoute } from '#imports'
 const route = useRoute();
 let isScrolled = ref(false);
+//Handle subpaths of the home page
+const isSubPathOfHome = computed(() => {
+  return route.path.startsWith('/es') || route.path.startsWith('/ru') 
+});
 const headerClass = computed(() => {
   let baseClasses;
-  if (route.path === '/' && isScrolled.value !== true) {
+  if (route.path === '/' && isScrolled.value !== true || isSubPathOfHome && isScrolled.value !== true) {
     baseClasses = 'bg-transparent';
-  } else if (route.path === '/eq') {
+  } else if (route.path === '/eq' || route.path === '/ru/eq' || route.path === '/es/eq') {
     baseClasses = 'eq-class dark:bg-sxvx-dark bg-sxvx-light'
   } else {
     baseClasses = 'dark:bg-sxvx-dark bg-sxvx-light';

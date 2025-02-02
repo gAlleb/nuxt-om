@@ -292,7 +292,9 @@ class IcePlayer {
     handleHLSError(data) {
         console.error("HLS Error:", data);
         let errorMessage = "HLS stream error. ";
-        if (data.details === "bufferAppendError") {
+        if (data.details === "levelLoadTimeOut") {
+        errorMessage += "Timeout loading media segment. Retrying...";
+        } else if (data.details === "bufferAppendError") {
             errorMessage += "Check network connection and browser codec support.";
         } else if (data.details === "bufferStalledError") {
             // errorMessage += "Buffer stalled. Checking network connection...";
@@ -309,7 +311,7 @@ class IcePlayer {
         }
     }
     tryHLSRecovery() {
-        const recoveryTimeout = 7000; 
+        const recoveryTimeout = 30000; 
         setTimeout(() => {
             // Check if HLS is still stalled after timeout
             if (this.hls && this.hls.state === 'ERROR') {
