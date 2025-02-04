@@ -20,7 +20,7 @@ export const useOmfmData = defineStore({
   }),
   actions: {
     connectToSSE() {
-      const baseUri = "https://centrifugo.omfm.ru";
+      const baseUri = "https://centrifugo.omfm.ru"; 
       const subs = this.stationNames.reduce((acc, station) => {
         acc[`station:${station}`] = { "recover": true };
         return acc;

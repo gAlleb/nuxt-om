@@ -269,7 +269,7 @@ class IcePlayer {
     getURL(streamName, source) {
         if (source === 'hls') {
             const hlsUrls = {
-                'stream': 'https://omfm.ru/hls/stream.m3u8',
+                'stream': 'https://hls.omfm.ru/stream.m3u8',
                 'rock': 'https://radio.omfm.ru/hls/radio/live.m3u8',
                 'coma': 'https://radio.omfm.ru/hls/coma/live.m3u8',
                 'terra': 'https://radio.omfm.ru/hls/terra/live.m3u8',
