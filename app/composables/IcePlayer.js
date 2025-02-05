@@ -240,7 +240,8 @@ class IcePlayer {
                     this.play_pause_toggle();
                 });
                 this.hls.on(Hls.Events.ERROR, (event, data) => {
-                    this.handleHLSError(data);
+                    console.log(data);
+                    // this.handleHLSError(data);
                 });
         } else if (this.audio_object.canPlayType('application/vnd.apple.mpegurl')) {
                 this.detachAudio();
@@ -251,11 +252,12 @@ class IcePlayer {
                         this.play_pause_toggle();
                     })
                     .catch(error => {
-                        this.handleHLSError({ message: `Native HLS playback failed: ${error.message}` });
+                        console.log(error);
+                        // this.handleHLSError({ message: `Native HLS playback failed: ${error.message}` });
                     });
         } else {
             console.log('Your browser does not support HLS.');
-            this.handleHLSError({ message: 'HLS not supported.' });
+            // this.handleHLSError({ message: 'HLS not supported.' });
         }
     }
     playIcecast() {
@@ -279,51 +281,51 @@ class IcePlayer {
             return hlsUrls[streamName] || null;
         } else {
             const icecastsUrls = {
-                'stream': 'https://omfm.ru:8443/stream',
-                'rock': 'https://omfm.ru:8443/rock',
-                'coma': 'https://omfm.ru:8443/coma',
-                'terra': 'https://omfm.ru:8443/terra',
-                'core': 'https://omfm.ru:8443/core', 
-                'chill': 'https://omfm.ru:8443/chill'   
+                'stream': 'https://stream.omfm.ru/stream',
+                'rock': 'https://stream.omfm.ru/rock',
+                'coma': 'https://stream.omfm.ru/coma',
+                'terra': 'https://stream.omfm.ru/terra',
+                'core': 'https://stream.omfm.ru/core', 
+                'chill': 'https://stream.omfm.ru/chill'   
             };
             return icecastsUrls[streamName] || null;
         }
     }
-    handleHLSError(data) {
-        console.error("HLS Error:", data);
-        let errorMessage = "HLS stream error. ";
-        if (data.details === "levelLoadTimeOut") {
-        errorMessage += "Timeout loading media segment. Retrying...";
-        } else if (data.details === "bufferAppendError") {
-            errorMessage += "Check network connection and browser codec support.";
-        } else if (data.details === "bufferStalledError") {
-            // errorMessage += "Buffer stalled. Checking network connection...";
-            // console.log(errorMessage); // Show initial message
-            // this.tryHLSRecovery(); // Attempt HLS recovery
-            errorMessage = "Buffering..."; // Initial message
-            console.log(errorMessage);
-        } else {
-            errorMessage += "An unknown error occurred. Details: " + JSON.stringify(data);
-            console.log(errorMessage);
-            // this.isHLS = false;
-            // this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
-            // this.playIcecast();
-        }
-    }
-    tryHLSRecovery() {
-        const recoveryTimeout = 30000; 
-        setTimeout(() => {
-            // Check if HLS is still stalled after timeout
-            if (this.hls && this.hls.state === 'ERROR') {
-                console.log("HLS recovery failed. Switching to Icecast.");
-                this.isHLS = false;
-                this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
-                this.playIcecast();
-            } else {
-                console.log("HLS stream recovered."); 
-            }
-        }, recoveryTimeout);
-    }
+    // handleHLSError(data) {
+    //     console.error("HLS Error:", data);
+    //     let errorMessage = "HLS stream error. ";
+    //     if (data.details === "levelLoadTimeOut") {
+    //     errorMessage += "Timeout loading media segment. Retrying...";
+    //     } else if (data.details === "bufferAppendError") {
+    //         errorMessage += "Check network connection and browser codec support.";
+    //     } else if (data.details === "bufferStalledError") {
+    //         // errorMessage += "Buffer stalled. Checking network connection...";
+    //         // console.log(errorMessage); // Show initial message
+    //         // this.tryHLSRecovery(); // Attempt HLS recovery
+    //         errorMessage = "Buffering..."; // Initial message
+    //         console.log(errorMessage);
+    //     } else {
+    //         errorMessage += "An unknown error occurred. Details: " + JSON.stringify(data);
+    //         console.log(errorMessage);
+    //         // this.isHLS = false;
+    //         // this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
+    //         // this.playIcecast();
+    //     }
+    // }
+    // tryHLSRecovery() {
+    //     const recoveryTimeout = 30000; 
+    //     setTimeout(() => {
+    //         // Check if HLS is still stalled after timeout
+    //         if (this.hls && this.hls.state === 'ERROR') {
+    //             console.log("HLS recovery failed. Switching to Icecast.");
+    //             this.isHLS = false;
+    //             this.localStorage.setItem("hls", JSON.stringify(this.isHLS));
+    //             this.playIcecast();
+    //         } else {
+    //             console.log("HLS stream recovered."); 
+    //         }
+    //     }, recoveryTimeout);
+    // }
     stop() {
         this.audio_object.pause();
         this.detachAudio();
