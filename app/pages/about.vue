@@ -19,7 +19,7 @@
       About
     </h1>
     <h1 class="text-xl sm:text-xl text-sxvx-light text-center" style="text-shadow: 1px 2px 5px rgba(0,0,0,0.6);">
-      Here you will find all our streaming URL addresses and the playlist files for download for your media player.<br/>
+      Here you will find all our streaming URL addresses and playlist files for your media player.<br/>
       Icecast & HLS
     </h1>
   
@@ -45,37 +45,37 @@
   <p class="mb-5">
   omFM:<br/>
   –
-  <a href="https://omfm.ru:8443/stream" target="blank">omFM Stream Icecast</a><br/>
-  – <a href="https://omfm.ru/hls/stream.m3u8" target="blank">omFM Stream HLS</a><br/>
+  <a href="https://stream.omfm.ru:8443/stream" target="blank">omFM Stream Icecast</a><br/>
+  – <a href="https://hls.omfm.ru/stream.m3u8" target="blank">omFM Stream HLS</a><br/>
   </p>
   <hr/>
   <p class="mb-5 mt-5">
   Rock @ omFM:<br/>
-  – <a href="https://omfm.ru:8443/rock" target="blank">Rock @ omFM Stream Icecast</a><br/>
+  – <a href="https://stream.omfm.ru:8443/rock" target="blank">Rock @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/radio/live.m3u8" target="blank">Rock @ omFM Stream HLS</a><br/>
   </p>
   <hr/>
   <p class="mb-5 mt-5">
   Coma @ omFM:<br/>
-  – <a href="https://omfm.ru:8443/coma" target="blank">Coma @ omFM Stream Icecast</a><br/>
+  – <a href="https://stream.omfm.ru:8443/coma" target="blank">Coma @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/coma/live.m3u8" target="blank">Coma @ omFM Stream HLS</a><br/>
   </p>
   <hr/>
   <p class="mb-5 mt-5">
   CORE @ omFM:<br/>
-  – <a href="https://omfm.ru:8443/core" target="blank">CORE @ omFM Stream Icecast</a><br/>
+  – <a href="https://stream.omfm.ru:8443/core" target="blank">CORE @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/core/live.m3u8" target="blank">CORE @ omFM Stream HLS</a><br/>
   </p>
   <hr/>
   <p class="mb-5 mt-5">
   Terra @ omFM:<br/>
-  – <a href="https://omfm.ru:8443/terra" target="blank">Terra @ omFM Stream Icecast</a><br/>
+  – <a href="https://stream.omfm.ru:8443/terra" target="blank">Terra @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/terra/live.m3u8" target="blank">Terra @ omFM Stream HLS</a><br/>
   </p>
   <hr/>
   <p class="mb-5 mt-5">
   Chill @ omFM:<br/>
-  – <a href="https://omfm.ru:8443/chill" target="blank">Chill @ omFM Stream Icecast</a><br/>
+  – <a href="https://stream.omfm.ru:8443/chill" target="blank">Chill @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/chill/live.m3u8" target="blank">Chill @ omFM Stream HLS</a><br/>
   </p>
 </div>
