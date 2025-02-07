@@ -38,7 +38,7 @@
               'scale-0 translate-y-32': !streamsSmallMenu,
               'scale-100 translate-y-0': streamsSmallMenu,
             }"
-            class="absolute bottom-12 transition-all duration-500 bg-sxvx-dark pt-2 rounded-xl px-2 flex-col flex" style="border: 1px white solid; z-index: 35; left: -8px">
+            class="absolute bottom-12 transition-all duration-500 bg-sxvx-dark pt-2 rounded-xl px-2 flex-col flex" style="border: 1px white solid; z-index: 35; left: -9px">
 
             <div class="relative transition-all duration-500 flex flex-col" >
 
