@@ -12,11 +12,12 @@
                 <i class="ice-pause hidden"></i>
                 <i class="ice-stop hidden"></i>
 
-                <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out   text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="useInitPlayerStore.togglePlayAll()"  >     
+                <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="useInitPlayerStore.togglePlayAll()"  >     
                     <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
                     <Icon id="stopBtnPlayer" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
                 </button>
                 <!-- <a id="show_volume_xs" class=" sm:hidden speaker_as_icon"><span></span></a> -->
+                
               
             </div>
             <div class="relative">
@@ -29,6 +30,99 @@
            
             <div class="vol_value2 hidden ">70%</div>
             <input id="ice_volume_vertical" class="volume-vertical inline-flex  hidden" type="range" min="0" max="100" value="100" step="1">
+
+            <!-- Mobile Streams menu> -->
+
+            <div class="relative me-2 ms-14 sm:hidden transition-all duration-500" ref="dropUpContainer">
+            <div :class="{
+              'scale-0 translate-y-32': !streamsSmallMenu,
+              'scale-100 translate-y-0': streamsSmallMenu,
+            }"
+            class="absolute bottom-12 transition-all duration-500 bg-sxvx-dark pt-2 rounded-xl px-2 flex-col flex" style="border: 1px white solid; z-index: 35; left: -8px">
+
+            <div class="relative transition-all duration-500 flex flex-col" >
+
+             <div class="relative flex mb-2 cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('stream');">
+            <img :class="{
+                  'grayscale opacity-75': currentStream !== 'stream',
+                  }" 
+                   class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingStream" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+            <span :class="{
+                  'glowing-text': currentStream === 'stream',
+                  'opacity-75': currentStream !== 'stream',
+                  }" 
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">omFM</span>
+            </div>
+
+            <div class="relative flex mb-2 cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('rock');">
+              <img :class="{
+                  'grayscale opacity-50': currentStream !== 'rock',
+                  }" 
+                   class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-90-thumb.jpg">
+              <!-- <img v-if="useInitPlayerStore.isPlayingRock" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+              <span :class="{
+                  'glowing-text': currentStream === 'rock',
+                  'opacity-75': currentStream !== 'rock',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Rock</span>
+            </div>
+
+            <div class="relative flex mb-2 cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('coma');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'coma',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-80-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingComa" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'coma',
+                  'opacity-75': currentStream !== 'coma',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Coma</span>
+            </div> 
+
+            <div class="relative flex mb-2 cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('core');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'core',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-70-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingCore" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'core',
+                  'opacity-75': currentStream !== 'core',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">CORE</span>
+            </div>
+
+            <div class="relative  cursor-pointer flex mb-2 rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('terra');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'terra',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+              <span :class="{
+                  'glowing-text': currentStream === 'terra',
+                  'opacity-75': currentStream !== 'terra',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Terra</span>
+            </div>
+            <div class="relative flex cursor-pointer rounded-full mb-2" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('chill');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'chill',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/pink-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'chill',
+                  'opacity-75': currentStream !== 'chill',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Chill</span>
+            </div>
+          </div>
+            </div>
+          <button class="rounded-xl px-2 focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " style="height:40px; margin-top: 2px;" @click="streamsSmallMenu = !streamsSmallMenu">
+               <Icon name="heroicons-solid:radio" class="h-6 w-6 bg-red-500 mt-2" aria-hidden="true" />
+          </button>
+        </div>
 
             <!-- streams -->
             <div   style="
@@ -140,9 +234,8 @@
         </div>
             <!-- <img class=" sm:hidden ms-14 sm:ms-2 ml-0" id="live" src="/equalizer.gif">             -->
 
-            <div id="vl" class="me-2 ms-14 sm:ms-2" style="border-left: 0.5px solid white;height:40px;"
+            <div id="vl" class="me-2 ms-0 sm:ms-2" style="border-left: 0.5px solid white;height:40px;"
             :style="{opacity: useInitPlayerStore.isPlaying ? '1' : '0' }"></div>
-
 
             <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname"
             :style="{opacity: useInitPlayerStore.isPlaying ? '1' : '0' }">
@@ -807,11 +900,12 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { initPlayerStore } from '@/stores/initPlayer';
-const useInitPlayerStore = initPlayerStore();
 import { useAzuracastData } from '@/stores/stationData';
-const np_ac = useAzuracastData();
 import { useOmfmData } from '@/stores/stationData_omfm';
+const useInitPlayerStore = initPlayerStore();
+const np_ac = useAzuracastData();
 const np_omfm = useOmfmData();
 const playerSwiper = ref(null)
 const swiper1 = useSwiper(playerSwiper, {
@@ -819,6 +913,14 @@ loop: false,
 slidesPerView: 'auto',
 navigation: false,
 })
+const streamsSmallMenu = ref(false);
+const dropUpContainer = ref(null);
+const handleOutsideClick = (event) => {if (dropUpContainer.value && !dropUpContainer.value.contains(event.target)) { streamsSmallMenu.value = false; }};
+onMounted(() => {
+  window.addEventListener('click', handleOutsideClick);
+  
+});
+
 const omfmData = computed(() => np_omfm.stations['station:radio']);
 const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
