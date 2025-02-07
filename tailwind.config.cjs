@@ -65,6 +65,10 @@ module.exports = {
         wider: '0.02em',
         widest: '0.4em',
       },
+      boxShadow: {
+        'np': '1px 1px 20px  rgba(100,100,100,0.4)',
+        'np-dark': '1px 1px 20px  rgba(100,100,100,0.15)',
+      },
     },
   },
   corePlugins: {

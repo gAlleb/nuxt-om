@@ -140,10 +140,12 @@
         </div>
             <!-- <img class=" sm:hidden ms-14 sm:ms-2 ml-0" id="live" src="/equalizer.gif">             -->
 
-            <div id="vl" class="me-2 ms-14 sm:ms-2" style="border-left: 0.5px solid white;height:40px;"></div>
+            <div id="vl" class="me-2 ms-14 sm:ms-2" style="border-left: 0.5px solid white;height:40px;"
+            :style="{opacity: useInitPlayerStore.isPlaying ? '1' : '0' }"></div>
 
 
-            <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname">
+            <div style="flex-grow: 1;flex-shrink: 1;flex-basis: 0%;min-width: 0; opacity:0;" class="ice-track ellipsify" id="trackname"
+            :style="{opacity: useInitPlayerStore.isPlaying ? '1' : '0' }">
               <div :style="{color: dynamicTextColor.color}">
                 <div v-if="currentStream === 'rock'" class="ellipsify">
                 <span class="text-xs opacity-75">Rock @ omFM</span> 
@@ -897,7 +899,39 @@ const openLightbox = (imageUrl,   index) => {
 };
 
 const isPlayingComputed = computed(() => useInitPlayerStore.isPlaying);
+// onMounted(() => {
 
+// useInitPlayerStore.loadLocalStorageHLS('hls', () => {
+//     useInitPlayerStore.initPlayer();
+//     if (useInitPlayerStore.ctx.state === 'suspended') {
+//     useInitPlayerStore.unlockAudioContext(useInitPlayerStore.ctx, () => {
+//       if ('mediaSession' in navigator) {
+//     if (useInitPlayerStore.isPlaying) {
+//       navigator.mediaSession.playbackState = 'playing';
+//       updateMediaSession();
+//     } else {
+//       navigator.mediaSession.playbackState = 'paused';
+//     }
+//   }
+//       updateTitle();
+//     });  
+//     }
+// });
+// });
+onMounted(() => {
+  updateMediaSession();
+  if ('mediaSession' in navigator) {
+    navigator.mediaSession.setActionHandler("play", () => {
+    useInitPlayerStore.togglePlayAll();
+  });
+  navigator.mediaSession.setActionHandler("pause", () => {
+    useInitPlayerStore.togglePlayAll();
+  });
+  navigator.mediaSession.setActionHandler("stop", () => {
+    useInitPlayerStore.togglePlayAll();
+  });
+  }
+})
 // Watch the computed property
 watch(isPlayingComputed, (isPlaying) => {
   if ('mediaSession' in navigator) {
@@ -945,7 +979,7 @@ function updateMediaSession() {
         type: 'image/jpg'
       }],
     });
-  }
+ }
 }
 // Helper Function to Get Track Data
 function getTrackData(stream) {
@@ -1078,7 +1112,6 @@ import chroma from 'chroma-js';
 const dynamicTextColor = computed(() => {
   const backgroundColor = dynamicBackgroundColor.value.background;
   let rgb = [0, 0, 0]; // Default to black if parsing fails
-
   try {
     const color = chroma(backgroundColor);
     rgb = color.rgb();
@@ -1086,10 +1119,8 @@ const dynamicTextColor = computed(() => {
     console.error("Error parsing background color:", error, backgroundColor);
     return { color: '#000', borderColor: '1px #000 solid' }; // Fallback to black
   }
-
   const luminance = chroma(rgb).luminance();
   let textColor;
-
   // More aggressive contrast adjustment:
   if (luminance > 0.8) { // Very light background
     textColor = chroma(rgb).darken(4).hex(); // Stronger darkening
@@ -1106,16 +1137,12 @@ const dynamicTextColor = computed(() => {
           calculatedTextColor = chroma(rgb).darken(attempt);
           ratio = chroma.contrast(calculatedTextColor, chroma(rgb));
       }
-
       if (ratio < 4.5) {
         // fallback to AA
         console.warn(`Could not achieve AAA contrast for ${backgroundColor}, using AA`)
       }
       textColor = calculatedTextColor.hex();
-
   }
-
-
   return { color: textColor, borderColor: `1px ${textColor} solid` };
 });
 </script>

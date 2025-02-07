@@ -5,27 +5,28 @@
         <h2 class="my-5 text-2xl">Now playing:</h2>      
             <div class="ice-player-el" >
                <div class="relative">
-                 <img class="rounded-xl h-auto w-32 shadow-2xl cursor-pointer sm:w-52" :src="chillData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(chillData.np.now_playing.song.art, 0)" >
+                 <img class="rounded-xl h-auto w-32 shadow-2xl cursor-pointer sm:w-52 shadow-np dark:shadow-np-dark" :src="chillData.np.now_playing.song.art" alt="Album Cover"  @click="openLightbox(chillData.np.now_playing.song.art, 0)" >
                  <div class="absolute text-muddy-waters-100    text-4xl sm:text-6xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
                   {{ getTimeFromTimestamp(chillData.np.now_playing.played_at) }}
                  </div>
                 </div>
                <div class="ms-2 np-main">
-                <div class="px-3 py-1 mb-0 sm:py-4 sm:mb-2 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200  bg-opacity-50 ellipsify "> 
-                  <span class="text-xl sm:text-2xl">{{ chillData.np.now_playing.song.title }}</span><br/>
-                  <span class="text-lg sm:text-xl">{{ chillData.np.now_playing.song.artist }}</span><br/>
-                  <span class="text-md sm:text-lg" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].elapsed) }} / {{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].duration) }}</span> 
+                <div class="px-3 py-1 mb-0 sm:py-4 sm:mb-2 rounded-xl w-full ellipsify shadow-np dark:shadow-np-dark"
+                :style="dynamicBackgroundColor"> 
+                  <span class="text-xl sm:text-2xl" :style="{color: dynamicTextColor.color}">{{ chillData.np.now_playing.song.title }}</span><br/>
+                  <span class="text-lg sm:text-xl" :style="{color: dynamicTextColor.color}">{{ chillData.np.now_playing.song.artist }}</span><br/>
+                  <span class="text-md sm:text-lg" :style="{color: dynamicTextColor.color}" style="font-family: monospace">{{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].elapsed) }} / {{ np_ac.isLoading ? '' : minSec(np_ac.progress['station:chill'].duration) }}</span> 
                 </div>
-                <div class="mt-2 sm:mt-2 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify"
-               > 
-                <span class="text-sm sm:text-lg"> 
+                <div class="mt-2 sm:mt-2 text-md sm:text-xl px-3 py-1 sm:py-5 rounded-xl w-full ellipsify shadow-np dark:shadow-np-dark"
+                 :style="dynamicBackgroundColor"> 
+                <span class="text-sm sm:text-lg" :style="{color: dynamicTextColor.color}"> 
                  Show: {{ chillData.np.now_playing.playlist }}
                 </span>
                 </div>
                </div>
             </div>
-            <div class="bg-sxvx-light dark:bg-sxvx-dark  my-2 rounded-xl relative w-full h-5 overflow-hidden">
-            <div class="absolute bg-muddy-waters-300 dark:bg-muddy-waters-400 " style="height:30px;  transition: width 1s linear" :style="{ width: `${( np_ac.progress['station:chill'].elapsed /  np_ac.progress['station:chill'].duration * 100).toFixed(2)}%` }"></div>
+            <div class="my-2 rounded-xl relative w-full h-5 overflow-hidden shadow-np dark:shadow-np-dark" :style="dynamicBackgroundColor">
+            <div class="absolute" style="height: 30px; transition: width 1s linear; opacity: 0.5" :style="{background: dynamicTextColor.color, width: `${( np_ac.progress['station:chill'].elapsed /  np_ac.progress['station:chill'].duration * 100).toFixed(2)}%` }"></div>
             </div>
           <h2 class="my-5 text-2xl">Next Song:</h2>
           <div class="mt-2 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-300" >
@@ -158,16 +159,16 @@
       :imgs="lightboxImages"
       :index="lightboxIndex"
       @hide="lightboxVisible = false"
-    />
+      />
       </div>
     </section>
-    </template>
-    
+    </template> 
 <script setup>
+  import { getTimeFromTimestamp, minSec } from '@/composables/time';
+  import chroma from 'chroma-js';
   import { useAzuracastData } from '@/stores/stationData'
   const np_ac = useAzuracastData();
   const chillData = computed(() => np_ac.stations['station:chill']);
-
   const lightboxVisible = ref(false);
   const lightboxIndex = ref(0);
   const lightboxImages = ref([]);
@@ -176,40 +177,55 @@
     lightboxIndex.value = index;
     lightboxVisible.value = true;
   };
-  function getTimeFromTimestamp(timestamp) {
-    if (timestamp == "") {
-      return ""
-    }  else {
-    let tmp = new Date(timestamp * 1000);
-    return tmp.getHours().toString().padStart(2,'0') + ":"
-      + tmp.getMinutes().toString().padStart(2,'0');
-    }
-  }  
-  function minSec(duration) {
-        const minutes = Math.trunc(duration / 60);
-        const seconds = Math.trunc(duration % 60);
-        return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+const colorMode = useColorMode();
+const dynamicBackgroundColor = computed(() => {
+  const color = np_ac.dominantColors['station:chill'];
+  const isDark = (colorMode.value === 'dark');
+  let opacity;
+  let backgroundColor;
+  if (isDark) {
+    opacity = color ? 0.6 : 0.5;
+    backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : '#2b3035'; 
+  } else {
+    opacity = color ? 0.85 : 0.5;
+    backgroundColor = color ? `rgba(${color.join(',')},${opacity})` : '#f2eee6'; 
   }
-  </script>
-                      <!-- <div id="soundwave sm:block">
-                  <ul>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  <li></li>
-                  </ul>
-                 </div> -->
+  return { background: backgroundColor };
+});
+const dynamicTextColor = computed(() => {
+  const backgroundColor = dynamicBackgroundColor.value.background;
+  let rgb = [0, 0, 0]; // Default to black if parsing fails
+  try {
+    const color = chroma(backgroundColor);
+    rgb = color.rgb();
+  } catch (error) {
+    console.error("Error parsing background color:", error, backgroundColor);
+    return { color: '#000', borderColor: '1px #000 solid' }; // Fallback to black
+  }
+  const luminance = chroma(rgb).luminance();
+  let textColor;
+  // More aggressive contrast adjustment:
+  if (luminance > 0.8) { // Very light background
+    textColor = chroma(rgb).darken(4).hex(); // Stronger darkening
+  } else if (luminance < 0.2) { // Very dark background
+    textColor = chroma(rgb).brighten(3).hex(); // Stronger brightening
+  } else {
+      // Calculate contrast ratio.  Aim for WCAG AAA (7:1) if possible, otherwise AA (4.5:1)
+      const targetRatio = 7; // Try for AAA contrast first
+      let attempt = 1; // initial attempt
+      let calculatedTextColor = chroma(rgb).darken(attempt);
+      let ratio = chroma.contrast(calculatedTextColor, chroma(rgb));
+      while (ratio < targetRatio && attempt < 5) {
+          attempt++;
+          calculatedTextColor = chroma(rgb).darken(attempt);
+          ratio = chroma.contrast(calculatedTextColor, chroma(rgb));
+      }
+      if (ratio < 4.5) {
+        // fallback to AA
+        console.warn(`Could not achieve AAA contrast for ${backgroundColor}, using AA`)
+      }
+      textColor = calculatedTextColor.hex();
+  }
+  return { color: textColor, borderColor: `1px ${textColor} solid` };
+});
+</script>

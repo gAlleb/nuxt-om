@@ -28,6 +28,7 @@ export const initPlayerStore = defineStore('player', {
         this.player = new IcePlayer('#ice-player', this.isUsingHLS);
         this.player.audio_object.crossOrigin = "anonymous";
         this.ctx = new AudioContext();
+        this.unlockAudioContext(this.ctx);
         this.audioSource = this.ctx.createMediaElementSource(this.player.audio_object);
         this.analyzer = this.ctx.createAnalyser();
         // this.analyzer.minDecibels = -90;
@@ -41,9 +42,6 @@ export const initPlayerStore = defineStore('player', {
         this.eqFilters = this.createEQFilters(this.ctx);
         this.connectEQFilters();
         this.getEQBandsFromStorage();
-        if (this.ctx.state === 'suspended') {
-          this.unlockAudioContext(this.ctx)
-        }
         // this.player.hide_stop_and_mute_button();
 
         //  this.player.audio_object.addEventListener('play', () => {
@@ -88,7 +86,8 @@ export const initPlayerStore = defineStore('player', {
       callback();
     },
     unlockAudioContext(audioCtx) {
-      if (audioCtx.state === 'suspended') {
+      return new Promise(function (resolve, reject) {
+      if ((audioCtx.state === 'suspended' && 'ontouchstart' in window) || (audioCtx.state === 'suspended')) {
         var events = ['click', 'touchstart', 'touchend', 'mousedown', 'keydown'];
         var unlock = function unlock() {
           console.log('audioContext state: ' + audioCtx.state);
@@ -100,12 +99,17 @@ export const initPlayerStore = defineStore('player', {
                   document.body.removeEventListener(event, unlock);
                 });
               }
+              resolve(true);
             });
         };
         events.forEach(function (event) {
           document.body.addEventListener(event, unlock, false);
         });
-      }
+      
+     } else {
+        resolve(false);
+     }
+     });
     },
     createEQFilters(ctx) {
       const bands = [60, 170, 350, 1000, 3000, 6000, 12000, 14000, 16000, 18000]; // Corrected center frequencies

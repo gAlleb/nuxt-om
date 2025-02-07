@@ -193,11 +193,9 @@ class IcePlayer {
 
         this.audio_object.addEventListener('play', () => {
             this.current_state = this.PLAYING;
-            this.play_pause_toggle();
         });
         this.audio_object.addEventListener('pause', () => {
             this.current_state = this.PAUSED;
-            this.play_pause_toggle();
         });
 
       // Set the volume when the player is initialized
@@ -216,8 +214,6 @@ class IcePlayer {
          this.get_element('.speaker').classList.add("muted");
          document.getElementById("ice-volume3_Mute").classList.add("muted");
       }
-    //this.hide_opacity('#live')
-      this.hide_opacity('#vl')
     }
     // Functions
     playHLS() {
@@ -237,7 +233,6 @@ class IcePlayer {
                 this.hls.on(Hls.Events.MEDIA_ATTACHED, () => {
                     this.audio_object.play();
                     this.current_state = this.PLAYING;
-                    this.play_pause_toggle();
                 });
                 this.hls.on(Hls.Events.ERROR, (event, data) => {
                     console.log(data);
@@ -249,7 +244,6 @@ class IcePlayer {
                 this.audio_object.play()
                     .then(() => {
                         this.current_state = this.PLAYING;
-                        this.play_pause_toggle();
                     })
                     .catch(error => {
                         console.log(error);
@@ -265,7 +259,6 @@ class IcePlayer {
         this.audio_object.setAttribute('src', this.getURL(this.stream_mount, 'icecast') + '?cache-ignore=' + Date.now());
         this.audio_object.play();
         this.current_state = this.PLAYING;
-        this.play_pause_toggle();
         this.destroyHLS();
     }
     getURL(streamName, source) {
@@ -331,15 +324,11 @@ class IcePlayer {
         this.detachAudio();
         this.audio_object.setAttribute('src', '');
         this.current_state = this.STOPPED;
-        this.play_pause_toggle();
-        this.destroyHLS();
-        document.querySelector(".ice-track").style.opacity = "0";
-    }
+        this.destroyHLS();    }
     pause() {
         this.audio_object.pause();
         clearTimeout(this.timer);
         this.destroyHLS();
-        document.querySelector(".ice-track").style.opacity = "0";
     }
     detachAudio() {
         if (this.hls) {
@@ -358,7 +347,6 @@ class IcePlayer {
         } else {
             this.playIcecast();
         }
-        document.querySelector(".ice-track").style.opacity = "1";
     }
     // play() {
     //     if (this.current_state === this.STOPPED)
@@ -562,23 +550,6 @@ class IcePlayer {
     // }
     // //this.timer = setTimeout(() => {this.showinfo()}, this.time_update*1000);
     // }
-
-    play_pause_toggle() {
-        if (this.current_state === this.PLAYING) {
-            // this.hide('.ice-play');
-            // this.show('.ice-pause');
-            // this.show_opacity('#live')
-            this.show_opacity('#vl')
-            document.querySelector(".ice-track").style.visibility = "visible"
-        } else {
-            // this.hide('.ice-pause');
-            // this.show('.ice-play');
-            // this.hide_opacity('#live')
-            this.hide_opacity('#vl')
-            document.querySelector(".ice-track").style.visibility = "hidden"
-        }
-    }
-
     // Utils
     get_element(el) {
         return (typeof el == 'object') ? el : this.player_el.querySelector(el);
@@ -599,12 +570,6 @@ class IcePlayer {
     }
     hide(el) {
         this.get_element(el).style.display = 'none';
-    }
-    hide_opacity(el) {
-        this.get_element(el).style.opacity = '0';
-    }
-    show_opacity(el) {
-        this.get_element(el).style.opacity = '1';
     }
     show(el) {
         this.get_element(el).style.display = 'inline-block';

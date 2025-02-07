@@ -97,12 +97,12 @@ export default defineNuxtConfig({
 
     // differentDomains: true,
     // skipSettingLocaleOnNavigate: true,
-    // detectBrowserLanguage: false,
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'i18n_redirected',
-      redirectOn: 'root', // recommended
-    },
+    detectBrowserLanguage: false,
+    // detectBrowserLanguage: {
+    //   useCookie: true,
+    //   cookieKey: 'i18n_redirected',
+    //   redirectOn: 'root', // recommended
+    // },
   },
 
   content: {

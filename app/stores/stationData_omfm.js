@@ -69,19 +69,13 @@ export const useOmfmData = defineStore({
       const currentShId = npData.np.now_playing.song.text;
       if (this.lastFetchedShIds[station] !== currentShId) {
         this.lastFetchedShIds[station] = currentShId; // Update the last fetched sh_id
-
-      
-        
         this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
         .then(coverArtData => {
           this.coverArtUrls[station] = coverArtData.artworkUrl;
           this.collectionViewUrls[station] = coverArtData.collectionViewUrl;
-          this.getDominantColor(coverArtData.artworkUrl, station);
+          this.getDominantColor(coverArtData.artworkUrl, npData.np.now_playing.song.text, station);
         });
-        
         this.fetchCoverArtForSongHistory(npData.np.song_history, station);
-        
-       
     //     this.fetchCoverArtSpotify(npData.np.now_playing.song.album, npData.np.now_playing.song.artist, npData.spotifyToken, station)
     //     .then(coverArtUrl => {
     //       this.coverArtUrls[station] = coverArtUrl;
@@ -94,19 +88,25 @@ export const useOmfmData = defineStore({
      }
       
     },
-    async getDominantColor(imageUrl, station) {
-      try {
-        const img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.src = imageUrl;
-        await new Promise((resolve) => img.onload = resolve); // Wait for image to load
-        const colorThief = new ColorThief();
-        const color = colorThief.getColor(img); // Get dominant color
-        this.dominantColors[station] = color; // Store the color
-        } catch (error) {
-          console.error('Error getting dominant color:', error);
-          this.dominantColors[station] = [0, 0, 0]; // Default to black if error
-        }
+    async getDominantColor(imageUrl, key, station) {
+      const cacheKey = key;
+      if (this.cache[cacheKey]) {
+        this.dominantColors[station] = this.cache[cacheKey]; 
+      } else {
+          try {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = imageUrl;
+            await new Promise((resolve) => img.onload = resolve); // Wait for image to load
+            const colorThief = new ColorThief();
+            const color = colorThief.getColor(img); // Get dominant color
+            this.dominantColors[station] = color; // Store the color
+            this.cache[cacheKey] = color;
+          } catch (error) {
+            console.error('Error getting dominant color:', error);
+            this.dominantColors[station] = [0, 0, 0]; // Default to black if error
+         }
+      }
     },
     startProgressBar(station, elapsed, duration) {
     // Dynamically initialize progress data for each station

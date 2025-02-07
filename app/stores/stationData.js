@@ -71,7 +71,7 @@ export const useAzuracastData = defineStore({
       this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration) // Start progress bar on data update
       this.documentTitle[station] = npData.np.now_playing.song.text
       if (station !== 'station:radio') {
-      this.getDominantColor(npData.np.now_playing.song.art, station);
+      this.getDominantColor(npData.np.now_playing.song.art, npData.np.now_playing.sh_id, station);
       }
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.sh_id
@@ -94,7 +94,7 @@ export const useAzuracastData = defineStore({
           this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, npData.np.now_playing.song.art).then((coverArtData) => {
             this.coverArtUrls[station] = coverArtData.artworkUrl
             this.collectionViewUrls[station] = coverArtData.collectionViewUrl
-            this.getDominantColor(coverArtData.artworkUrl, station);
+            this.getDominantColor(coverArtData.artworkUrl, npData.np.now_playing.sh_id, station);
           })
           this.fetchCoverArtForSongHistory(npData.np.song_history, station)
           this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, npData.np.playing_next.song.art, station)
@@ -130,19 +130,25 @@ export const useAzuracastData = defineStore({
       } else {
       }
     },
-    async getDominantColor(imageUrl, station) {
-    //  return new Promise(async (resolve) => {
-      try {
-        const img = new Image();
-        img.crossOrigin = "Anonymous";
-        img.src = imageUrl;
-        await new Promise((resolve) => img.onload = resolve); // Wait for image to load
-        const colorThief = new ColorThief();
-        const color = colorThief.getColor(img); // Get dominant color
-        this.dominantColors[station] = color; // Store the color
-      } catch (error) {
-        console.error('Error getting dominant color:', error);
-        this.dominantColors[station] = [0, 0, 0]; // Default to black if error
+    async getDominantColor(imageUrl, key, station) {
+      //  return new Promise(async (resolve) => {
+      const cacheKey = key;
+      if (this.cache[cacheKey]) {
+        this.dominantColors[station] = this.cache[cacheKey]; 
+      } else {
+          try {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = imageUrl;
+            await new Promise((resolve) => img.onload = resolve); // Wait for image to load
+            const colorThief = new ColorThief();
+            const color = colorThief.getColor(img); // Get dominant color
+            this.dominantColors[station] = color; // Store the color
+            this.cache[cacheKey] = color;
+          } catch (error) {
+            console.error('Error getting dominant color:', error);
+            this.dominantColors[station] = [0, 0, 0]; // Default to black if error
+         }
       }
       // });
     },
