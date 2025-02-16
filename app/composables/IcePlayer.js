@@ -274,12 +274,12 @@ class IcePlayer {
             return hlsUrls[streamName] || null;
         } else {
             const icecastsUrls = {
-                'stream': 'https://stream.omfm.ru/stream',
-                'rock': 'https://stream.omfm.ru/rock',
-                'coma': 'https://stream.omfm.ru/coma',
-                'terra': 'https://stream.omfm.ru/terra',
-                'core': 'https://stream.omfm.ru/core', 
-                'chill': 'https://stream.omfm.ru/chill'   
+                'stream': 'https://stream.omfm.ru:8443/stream',
+                'rock': 'https://stream.omfm.ru:8443/rock',
+                'coma': 'https://stream.omfm.ru:8443/coma',
+                'terra': 'https://stream.omfm.ru:8443/terra',
+                'core': 'https://stream.omfm.ru:8443/core', 
+                'chill': 'https://stream.omfm.ru:8443/chill'   
             };
             return icecastsUrls[streamName] || null;
         }
