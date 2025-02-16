@@ -12,7 +12,7 @@
                 'radial': currentStream === 'stream',
                 'radial2': currentStream === 'rock',
                 'radial3': currentStream === 'coma',
-                'radial4-terra': currentStream === 'terra',
+                'radial4-terra': currentStream === 'terra' || 'cdp',
                 'radial-core': currentStream === 'core',
                 'radial-chill': currentStream === 'chill',
                  
