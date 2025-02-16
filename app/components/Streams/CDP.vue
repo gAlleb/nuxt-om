@@ -51,7 +51,42 @@
             :style="{background: dynamicTextColor.color, width: `${( np_omfm.progress['station:cdp'].elapsed /  np_omfm.progress['station:cdp'].duration * 100).toFixed(2)}%` }">
           </div>
           </div>
-
+          <h2  v-if="cdpData.np.now_playing.playlist !== ''" class="my-5 text-2xl">Next Song:</h2>
+          <div  v-if="cdpData.np.now_playing.playlist !== ''" class="mt-2 rounded-xl  ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-300" >
+              <div class=" relative">
+                <img 
+              v-if="np_omfm.nextCoverArtUrls['station:cdp']" 
+              :src="np_omfm.nextCoverArtUrls['station:cdp']" 
+              alt="History Cover"
+              class="history-cover cursor-pointer rounded-l-xl h-auto w-24 sm:w-28"
+              @click="openLightbox(np_omfm.nextCoverArtUrls['station:cdp'], 0)" 
+            >  
+            <!-- <div class="absolute text-muddy-waters-100 text-3xl sm:text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                  {{ getTimeFromTimestamp(cdpData.np.playing_next.played_at) }}
+                 </div> -->
+                </div>
+               <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                <div class="px-3 py-2 sm:py-2 rounded-xl w-full  text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify "> 
+                  <span class="text-sm sm:text-md">Show: {{ cdpData.np.playing_next.playlist }}</span><hr/>
+                  <span class="text-xl sm:text-2xl">{{ cdpData.np.playing_next.song.title  }}</span><br/>
+                  <span class="text-lg sm:text-xl">{{ cdpData.np.playing_next.song.artist  }}</span>
+                </div>
+              </div>
+              <div class="me-2">
+                <a v-if="np_omfm.nextCollectionViewUrls['station:cdp'] !== '#'" :href="np_omfm.nextCollectionViewUrls['station:cdp']" target="_blank" rel="noopener noreferrer">
+                <Icon
+                name="heroicons-solid:musical-note"
+                class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200"   
+                aria-hidden="true"
+               />
+               </a>
+                <Icon v-if="np_omfm.nextCollectionViewUrls['station:cdp'] === '#'"
+                name="heroicons-solid:musical-note"
+                class="h-7 w-7  bg-muddy-waters-800 dark:bg-muddy-waters-200 opacity-30"   
+                aria-hidden="true"
+               />
+              </div>
+             </div>
             <h2 class="my-5 text-2xl">Recent Songs:</h2>      
             <ul>
             <li v-for="(historyItem, index) in cdpData.np.song_history.slice(1, 6)" :key="index">

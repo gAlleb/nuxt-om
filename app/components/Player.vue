@@ -571,6 +571,30 @@
                  </div>
               </div>
             <hr/>
+            <h2 v-if="cdpData.np.now_playing.playlist !== ''" class="my-3 text-lg text-white">Next Song:</h2>
+
+<div v-if="cdpData.np.now_playing.playlist !== ''" class="mt-3 mb-5 rounded-xl  ice-player-el text-muddy-waters-300" >
+    <div class=" relative">
+      <img 
+    v-if="np_omfm.nextCoverArtUrls['station:cdp']" 
+    :src="np_omfm.nextCoverArtUrls['station:cdp']" 
+    alt="History Cover"
+    class="history-cover cursor-pointer rounded-xl h-auto w-24"
+    @click="openLightbox(np_omfm.nextCoverArtUrls['station:cdp'], 0)" 
+  >  
+  <!-- <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+        {{ getTimeFromTimestamp(cdpData.np.playing_next.played_at) }}
+       </div> -->
+      </div>
+     <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+      <div class="px-3 rounded-xl w-full text-muddy-waters-200 ellipsify "> 
+        <span class="text-sm">Show: {{ cdpData.np.playing_next.playlist }}</span><hr/>
+        <span class="text-lg">{{ cdpData.np.playing_next.song.title  }}</span><br/>
+        <span class="text-md">{{ cdpData.np.playing_next.song.artist  }}</span>
+      </div>
+    </div>
+   </div>
+   <hr/>
             <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
             <ul>
             <li v-for="(historyItem, index) in cdpData.np.song_history.slice(1, 6)" :key="index">

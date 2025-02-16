@@ -43,7 +43,7 @@
     'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 6,
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 6,
     }"
-    >Chill</button>
+    >Cafe</button>
     </div>
     <div class="h-14"></div>
     <div v-if="activeDiv === 1">

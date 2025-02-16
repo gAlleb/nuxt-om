@@ -10,7 +10,10 @@ export const useOmfmData = defineStore({
     stationNames: ['radio','cdp'],
     progress: {},
     coverArtUrls: {}, 
+    nextCoverArtUrls: {},
+    nextCollectionViewUrls: {},
     lastFetchedShIds: {},
+    lastFetchedShIds2: {},
     songHistoryCoverArt: {},
     collectionViewUrls: {},
     songHistoryCollectionViewUrls: {},
@@ -67,6 +70,14 @@ export const useOmfmData = defineStore({
       this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration); // Start progress bar on data update
       // Check for sh_id change (using separate object)
       const currentShId = npData.np.now_playing.song.text;
+      if (station === 'station:cdp') {
+      const currentShId_next = npData.np.playing_next.song.title;
+      if (this.lastFetchedShIds2[station] !== currentShId_next) {
+        this.lastFetchedShIds2[station] = currentShId_next; // Update the last fetched sh_id
+          this.fetchNextCoverArt(npData.np.playing_next.song.artist, npData.np.playing_next.song.title, station);
+      } else {
+      }
+      }
       if (this.lastFetchedShIds[station] !== currentShId) {
         this.lastFetchedShIds[station] = currentShId; // Update the last fetched sh_id
         this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, station)
@@ -205,6 +216,12 @@ export const useOmfmData = defineStore({
       //   artworkUrl: 'https://radio.omfm.ru/static/uploads/album_art.1702973774.jpg',
       //   collectionViewUrl: '#'
       // };
+    },
+    async fetchNextCoverArt(artist, title, station) {
+      this.fetchCoverArt(artist, title, station).then((coverArtData) => {
+        this.nextCoverArtUrls[station] = coverArtData.artworkUrl
+        this.nextCollectionViewUrls[station] = coverArtData.collectionViewUrl
+      })
     },
     async fetchCoverArtSpotify(album, artist, spotifyToken, station) {
       try {
