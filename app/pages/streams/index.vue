@@ -38,6 +38,12 @@
     'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 6,
     }"
     >Chill</button>
+    <button @click="showDiv(7)" class="w-full rounded-t-lg inline-flex justify-center font-tenor text-xl"
+    :class="{
+    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 6,
+    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 6,
+    }"
+    >Chill</button>
     </div>
     <div class="h-14"></div>
     <div v-if="activeDiv === 1">
@@ -57,6 +63,9 @@
     </div>
     <div v-if="activeDiv === 6">
       <StreamsChill/>
+    </div>
+    <div v-if="activeDiv === 7">
+      <StreamsCDP/>
     </div>
   </div>
 </template>

@@ -78,6 +78,11 @@
   – <a href="https://stream.omfm.ru:8443/chill" target="blank">Chill @ omFM Stream Icecast</a><br/>
   – <a href="https://radio.omfm.ru/hls/chill/live.m3u8" target="blank">Chill @ omFM Stream HLS</a><br/>
   </p>
+  <p class="mb-5 mt-5">
+  Café de Paris @ omFM:<br/>
+  – <a href="https://stream.omfm.ru:8443/cdp" target="blank">Café de Paris @ omFM Stream Icecast</a><br/>
+  – <a href="https://hls.omfm.ru/cdp.m3u8" target="blank">Café de Paris @ omFM Stream HLS</a><br/>
+  </p>
 </div>
 
   </section>

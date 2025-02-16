@@ -117,6 +117,18 @@
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Chill</span>
             </div>
+            <div class="relative flex cursor-pointer rounded-full mb-2" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('chill');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'cdp',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'cdp',
+                  'opacity-75': currentStream !== 'cdp',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Cafe</span>
+            </div>
           </div>
             </div>
           <button class="rounded-xl px-2 focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " style="height:40px; margin-top: 2px;" @click="streamsSmallMenu = !streamsSmallMenu">
@@ -214,7 +226,7 @@
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Terra</span>
             </div>
             </swiper-slide>
-            <swiper-slide class="me-0" style="height: 40px; width: 40px!important;">
+            <swiper-slide class="me-2" style="height: 40px; width: 40px!important;">
             <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('chill');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'chill',
@@ -226,6 +238,20 @@
                   'opacity-75': currentStream !== 'chill',
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Chill</span>
+            </div>
+            </swiper-slide>
+            <swiper-slide class="me-0" style="height: 40px; width: 40px!important;">
+            <div class="relative  cursor-pointer rounded-full" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('cdp');">
+            <img :class="{
+                  'grayscale opacity-50': currentStream !== 'cdp',
+                  }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
+            <!-- <img v-if="useInitPlayerStore.isPlayingTerra" class="rounded-full absolute bottom-0 opacity-75" height="40" width="40" src="/equalizer.gif"> -->
+                  
+              <span :class="{
+                  'glowing-text': currentStream === 'cdp',
+                  'opacity-75': currentStream !== 'cdp',
+                  }"
+            class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Cafe</span>
             </div>
             </swiper-slide>
             <swiper-slide class="ms-2" style="height: 40px; width: 0px!important;">
@@ -282,6 +308,13 @@
                 <br/>
                 <span class="text-xs">{{ np_omfm.isLoading ? 'loading' : omfmData.np.now_playing.song.artist }}</span>
                 </div>
+                <div v-else-if="currentStream === 'cdp'" class="ellipsify">
+                <span class="text-xs opacity-75">Café de Paris</span>
+                <br/>
+                <span :style="{borderBottom: `1px solid ${dynamicTextColor.color}`}">{{ np_omfm.isLoading ? 'loading' : cdpData.np.now_playing.song.title }}</span>
+                <br/>
+                <span class="text-xs">{{ np_omfm.isLoading ? 'loading' : cdpData.np.now_playing.song.artist }}</span>
+                </div>
             </div>
             </div>
             
@@ -335,6 +368,14 @@
                 <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
                 </div> 
             </div>
+            <div class="ms-2 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500" v-else-if="currentStream === 'cdp'">
+                <div v-if="cdpData" >  
+                <img class="rounded-lg" height="60" width="60" :src="np_omfm.coverArtUrls['station:cdp']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:cdp'], 0)" >
+                </div>
+                <div v-else>
+                <img class="rounded-lg" height="60" width="60" src="/static/img/defaultCoverart.jpg" alt="Album Cover"  @click="openLightbox('/static/img/defaultCoverart.jpg', 0)" >
+                </div> 
+            </div>
             <div class="flex">
             <button @click="playerMenuToggle()"
             type="button" class="ml-1 sm:ml-4 flex rounded-xl bg-red-600 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 p-2" >
@@ -366,6 +407,9 @@
             <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
             v-if="currentStream === 'stream' && omfmData"
             >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].elapsed) }}</div>
+            <div id="song_progress_elapsed" style="opacity:1" class="np-radio-song-elapsed song_progress_elapsed"
+            v-if="currentStream === 'cdp' && cdpData"
+            >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:cdp'].elapsed) }}</div>
    
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'rock' && radioData"
@@ -385,6 +429,9 @@
             <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
             v-if="currentStream === 'stream' && omfmData"
             >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:radio'].duration) }}</div>
+            <div style="opacity:1" id="song_duration" class="song_duration np-radio-song-duration"
+            v-if="currentStream === 'cdp' && cdpData"
+            >{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:cdp'].duration) }}</div>
 
             </div>       
 
@@ -409,10 +456,11 @@
             <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
             v-if="currentStream === 'stream' && omfmData"
             :style="{ width: `${( np_omfm.progress['station:radio'].elapsed /  np_omfm.progress['station:radio'].duration * 100).toFixed(2)}%` }"></div>
-            </div>
-
-            </div>
-          
+            <div id="progress_bar_div" style="opacity:1" class="progressbar np-radio-song-progressbar" role="progressbar"
+            v-if="currentStream === 'cdp' && cdpData"
+            :style="{ width: `${( np_omfm.progress['station:cdp'].elapsed /  np_omfm.progress['station:cdp'].duration * 100).toFixed(2)}%` }"></div>
+          </div>
+         </div>
         </div>
       </div>
     </div>
@@ -480,6 +528,61 @@
                 alt="History Cover"
                 class="history-cover cursor-pointer rounded-xl h-auto w-24"
                 @click="openLightbox(np_omfm.songHistoryCoverArt['station:radio'][index], index)" 
+              >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                    {{ getTimeFromTimestamp(historyItem.played_at) }}
+                   </div>
+                  </div>
+                 <div class="" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
+                  <div class="px-3 py-0 sm:py-2 rounded-xl w-full ellipsify "> 
+                    <span class="text-lg">{{ historyItem.song.title  }}</span><br/>
+                    <span class="text-md">{{ historyItem.song.artist  }}</span>
+                  </div>
+                </div>
+               </div>
+            </li>
+          </ul>
+        </div>
+        </div>
+                </div>
+                <div v-if="currentStream === 'cdp'">
+                  <div class="justify-center flex mx-auto mb-2 font-tenor">
+        <div v-if="cdpData" class="container">  
+          <h2 class="text-lg mb-3 text-white">Show: {{ cdpData.np.now_playing.playlist }}</h2>      
+              <div class="content-center">
+                <div class="mx-3">
+                 <div class="relative w-full">
+                   <img class="rounded-xl h-auto w-full shadow-2xl cursor-pointer" :src="np_omfm.coverArtUrls['station:cdp']" alt="Album Cover"  @click="openLightbox(np_omfm.coverArtUrls['station:cdp'], 0)" >
+                   <div class="absolute bg-sxvx-dark-bg bottom-0 rounded-b-xl  w-full h-5 overflow-hidden">
+                   <div class="absolute bg-muddy-waters-400 " style="height:20px;  transition: width 1s linear" :style="{ width: `${( np_omfm.progress['station:cdp'].elapsed /  np_omfm.progress['station:cdp'].duration * 100).toFixed(2)}%` }"></div>
+                   </div>
+                   <span class="text-white ms-2  absolute bottom-0 left-0" style="font-family: monospace">{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:cdp'].elapsed) }}</span> 
+                   <span class="text-white absolute me-2 bottom-0 right-0" style="font-family: monospace">{{ np_omfm.isLoading ? '' : minSec(np_omfm.progress['station:cdp'].duration) }}</span> 
+                   <div class="absolute text-muddy-waters-100  text-8xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+                    {{ getTimeFromTimestamp(cdpData.np.now_playing.played_at) }}
+                  </div>
+                 </div>
+                </div>
+                 <div class="ms-2" >
+                  <div class="px-3  text-center mb-0 py-3  rounded-xl w-full text-muddy-waters-200  bg-opacity-50  "> 
+                    <span class="text-lg">{{ cdpData.np.now_playing.song.title }}</span><br/>
+                    <span class="text-md">{{ cdpData.np.now_playing.song.artist }}</span><br/>
+                    <span class="text-md">Album: {{ cdpData.np.now_playing.song.album }}</span>
+                  </div>
+                 </div>
+              </div>
+            <hr/>
+            <h2 class="text-lg mt-3 text-white">Recent Songs:</h2>      
+            <ul>
+            <li v-for="(historyItem, index) in cdpData.np.song_history.slice(1, 6)" :key="index">
+  
+              <div class="mt-3 sm:mt-5 rounded-xl  ice-player-el text-muddy-waters-200" >
+                <div class=" relative">
+                  <img 
+                v-if="np_omfm.songHistoryCoverArt['station:cdp'] && np_omfm.songHistoryCoverArt['station:cdp'][index]" 
+                :src="np_omfm.songHistoryCoverArt['station:cdp'][index]" 
+                alt="History Cover"
+                class="history-cover cursor-pointer rounded-xl h-auto w-24"
+                @click="openLightbox(np_omfm.songHistoryCoverArt['station:cdp'][index], index)" 
               >  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
                     {{ getTimeFromTimestamp(historyItem.played_at) }}
                    </div>
@@ -900,6 +1003,7 @@
 </template>
 
 <script setup>
+import { getTimeFromTimestamp, minSec } from '@/composables/time';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { initPlayerStore } from '@/stores/initPlayer';
 import { useAzuracastData } from '@/stores/stationData';
@@ -922,6 +1026,7 @@ onMounted(() => {
 });
 
 const omfmData = computed(() => np_omfm.stations['station:radio']);
+const cdpData = computed(() => np_omfm.stations['station:cdp']);
 const radioData = computed(() => np_ac.stations['station:radio']);
 const comaData = computed(() => np_ac.stations['station:coma']);
 const terraData = computed(() => np_ac.stations['station:terra']);
@@ -931,6 +1036,8 @@ const chillData = computed(() => np_ac.stations['station:chill']);
 const backgroundImage = computed(() => {
     if (currentStream.value === 'stream' && np_omfm.coverArtUrls['station:radio']) {
       return `url(${np_omfm.coverArtUrls['station:radio']})`;
+    } else if (currentStream.value === 'cdp' && np_omfm.coverArtUrls['station:cdp']) {
+      return `url(${np_omfm.coverArtUrls['station:cdp']})`;
     } else if (currentStream.value === 'rock' && np_ac.coverArtUrls['station:radio']) {
       return `url(${np_ac.coverArtUrls['station:radio']})`;
     } else if (currentStream.value === 'coma' && np_ac.stations['station:coma']?.np?.now_playing?.song?.art) {
@@ -950,22 +1057,6 @@ function playerMenuToggle() {
   playerMenuOpen.value = !playerMenuOpen.value;
 }
 
-function minSec(duration) {
-      const minutes = Math.trunc(duration / 60);
-      const seconds = Math.trunc(duration % 60);
-      return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-function getTimeFromTimestamp(timestamp) {
-      if (timestamp == "") {
-        return ""
-      }  else {
-      let tmp = new Date(timestamp * 1000);
-      return tmp.getHours().toString().padStart(2,'0') + ":"
-        + tmp.getMinutes().toString().padStart(2,'0');
-      }
-} 
-
-
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
@@ -984,6 +1075,8 @@ const nowPlayingStation = computed(() => {
       return 'CORE FM';
     case 'chill':
       return 'Chill FM';
+    case 'cdp':
+      return 'Café de Paris';
     default:
       return ''; // Default text
   }
@@ -1054,6 +1147,7 @@ watch(isPlayingComputed, (isPlaying) => {
  watch(terraData, () => {updateTitleAndMediaSession()});
  watch(coreData, () => {updateTitleAndMediaSession()});
  watch(chillData, () => {updateTitleAndMediaSession()});
+ watch(cdpData, () => {updateTitleAndMediaSession()});
 
 function updateTitleAndMediaSession() {
   updateTitle();
@@ -1131,6 +1225,14 @@ function getTrackData(stream) {
         artwork = np_omfm.coverArtUrls['station:radio'];
       }
       break;
+    case 'cdp':
+      if (omfmData.value && np_omfm.coverArtUrls['station:cdp']) {
+        title = cdpData.value.np.now_playing.song.title;
+        artist = cdpData.value.np.now_playing.song.artist;
+        album = cdpData.value.np.now_playing.song.album;
+        artwork = np_omfm.coverArtUrls['station:cdp'];
+      }
+      break;
     case 'chill':
       if (chillData.value) {
         title = chillData.value.np.now_playing.song.title;
@@ -1149,6 +1251,9 @@ const dynamicBackgroundColor = computed(() => {
   let colorSource;
   if (currentStream.value === 'stream') {
     stationKey = 'station:radio'; 
+    colorSource = np_omfm;
+  } else if (currentStream.value === 'cdp') {
+    stationKey = 'station:cdp'; 
     colorSource = np_omfm;
   } else if (currentStream.value === 'rock') {
     stationKey = 'station:radio';

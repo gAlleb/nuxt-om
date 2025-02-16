@@ -15,6 +15,7 @@ export const initPlayerStore = defineStore('player', {
     isPlayingCore: false,
     isPlayingTerra: false,
     isPlayingChill: false,
+    isPlayingCDP: false,
     ctx: null,
     audioSource: null,
     analyzer: null,
@@ -174,6 +175,7 @@ export const initPlayerStore = defineStore('player', {
         this.isPlayingTerra = false;
         this.isPlayingCore = false,
         this.isPlayingChill = false;
+        this.isPlayingCDP = false;
         this.isPlaying = false;
       } else {
         this.player.play();
@@ -196,6 +198,9 @@ export const initPlayerStore = defineStore('player', {
         if (this.player.stream_mount === 'chill') {
           this.isPlayingChill = true;
         }
+        if (this.player.stream_mount === 'cdp') {
+          this.isPlayingCDP = true;
+        }
       }
     },
     togglePlay(name) {
@@ -210,6 +215,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
           this.isPlayingChill = false;
+          this.isPlayingCDP = false;
         } else {
 
           this.player.play();
@@ -233,6 +239,9 @@ export const initPlayerStore = defineStore('player', {
           if (this.player.stream_mount === 'chill') {
             this.isPlayingChill = true;
           }
+          if (this.player.stream_mount === 'cdp') {
+            this.isPlayingCDP = true;
+          }
         }
 
       } else if (name !== this.player.stream_mount) {
@@ -247,6 +256,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
           this.isPlayingChill = false;
+          this.isPlayingCDP = false;
           this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
             this.player.stop();
@@ -257,6 +267,7 @@ export const initPlayerStore = defineStore('player', {
             this.isPlayingTerra = false;
             this.isPlayingCore = false;
             this.isPlayingChill = false;
+            this.isPlayingCDP = false;
           } else {
             this.player.play();
             this.isPlaying = true;
@@ -278,6 +289,9 @@ export const initPlayerStore = defineStore('player', {
             }
             if (this.player.stream_mount === 'chill') {
               this.isPlayingChill = true;
+            }
+            if (this.player.stream_mount === 'cdp') {
+              this.isPlayingCDP = true;
             }
           }
       }
@@ -313,6 +327,9 @@ export const initPlayerStore = defineStore('player', {
           if (this.player.stream_mount === 'chill') {
             this.isPlayingChill = true;
           }
+          if (this.player.stream_mount === 'cdp') {
+            this.isPlayingCDP = true;
+          }
         }
 
       } else if (name !== this.player.stream_mount) {
@@ -327,6 +344,7 @@ export const initPlayerStore = defineStore('player', {
           this.isPlayingTerra = false;
           this.isPlayingCore = false;
           this.isPlayingChill = false;
+          this.isPlayingCDP = false;
           this.isPlaying = false;
           if (this.player.current_state === this.player.PLAYING) {
 
@@ -354,6 +372,9 @@ export const initPlayerStore = defineStore('player', {
             if (this.player.stream_mount === 'chill') {
               this.isPlayingChill = true;
             }
+            if (this.player.stream_mount === 'cdp') {
+              this.isPlayingCDP = true;
+            }
           }
       }
 
@@ -369,6 +390,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingTerra = false;
       this.isPlayingCore = false;
       this.isPlayingChill = false;
+      this.isPlayingCDP = false;
     },
     changeVol3() {
     this.player.change_volume3();
@@ -386,6 +408,7 @@ export const initPlayerStore = defineStore('player', {
       this.isPlayingTerra = false;
       this.isPlayingCore = false;
       this.isPlayingChill = false;
+      this.isPlayingCDP = false;
     if (this.player.current_state === this.player.PLAYING) {
         if (name === 'stream') {
           this.isPlayingStream = true;
@@ -401,9 +424,12 @@ export const initPlayerStore = defineStore('player', {
         }
         if (name === 'terra') {
           this.isPlayingTerra = true;
-        }
+        }   
         if (name === 'chill') {
           this.isPlayingChill = true;
+        }
+        if (name === 'cdp') {
+          this.isPlayingCDP = true;
         }
     }
     this.player.change_stream(name);

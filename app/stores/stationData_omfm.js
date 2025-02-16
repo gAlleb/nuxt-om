@@ -7,7 +7,7 @@ export const useOmfmData = defineStore({
     stations: {}, // Object to store station data
     eventSource: null,
     isLoading: true,
-    stationNames: ['radio'],
+    stationNames: ['radio','cdp'],
     progress: {},
     coverArtUrls: {}, 
     lastFetchedShIds: {},
