@@ -41,7 +41,7 @@ const backgroundImage = computed(() => {
   if (useInitPlayerStore.isPlaying) {
     if (currentStream.value === 'stream' && np_omfm.coverArtUrls['station:radio']) {
       return `url(${np_omfm.coverArtUrls['station:radio']})`;
-    } else if (currentStream.value === 'cdp' && np_ofm.coverArtUrls['station:cdp']) {
+    } else if (currentStream.value === 'cdp' && np_omfm.coverArtUrls['station:cdp']) {
       return `url(${np_omfm.coverArtUrls['station:cdp']})`;
     } else if (currentStream.value === 'rock' && np_ac.coverArtUrls['station:radio']) {
       return `url(${np_ac.coverArtUrls['station:radio']})`;
