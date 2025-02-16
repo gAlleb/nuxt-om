@@ -30,17 +30,19 @@
 <script setup>
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
-import { currentStreamStore } from '../stores/currentStream';
+import { currentStreamStore } from '@/stores/currentStream';
 const useCurrentStreamStore = currentStreamStore();
 const currentStream = computed(() => useCurrentStreamStore.currentStream);
-import { useAzuracastData } from '../stores/stationData';
+import { useAzuracastData } from '@/stores/stationData';
 const np_ac = useAzuracastData();
-import { useOmfmData } from '../stores/stationData_omfm';
+import { useOmfmData } from '@/stores/stationData_omfm';
 const np_omfm = useOmfmData();
 const backgroundImage = computed(() => {
   if (useInitPlayerStore.isPlaying) {
     if (currentStream.value === 'stream' && np_omfm.coverArtUrls['station:radio']) {
       return `url(${np_omfm.coverArtUrls['station:radio']})`;
+    } else if (currentStream.value === 'cdp' && np_ofm.coverArtUrls['station:cdp']) {
+      return `url(${np_omfm.coverArtUrls['station:cdp']})`;
     } else if (currentStream.value === 'rock' && np_ac.coverArtUrls['station:radio']) {
       return `url(${np_ac.coverArtUrls['station:radio']})`;
     } else if (currentStream.value === 'coma' && np_ac.stations['station:coma']?.np?.now_playing?.song?.art) {
