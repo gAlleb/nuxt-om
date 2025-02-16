@@ -4,7 +4,7 @@
 <NuxtLoadingIndicator color="#ef4444"/>
 <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
   :class="{
-                'font-tenor': currentStream === 'stream' || currentStream ===  'terra' || currentStream ===  'chill',
+                'font-tenor': currentStream === 'stream' || currentStream ===  'terra' || currentStream ===  'chill' || 'cdp',
                 'font-metal': currentStream === 'rock',
                 'font-UNSCII': currentStream === 'coma' || currentStream ===  'core',
             }">
