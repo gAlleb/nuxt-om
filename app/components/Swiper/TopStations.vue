@@ -282,7 +282,7 @@
               }" 
     class=" relative overflow-hidden rounded-3xl shadow-lg" style="height:150px; width: 266px">
       <div class="flex-shrink-0 overflow-hidden">
-       <img class="h-full w-full object-cover brightness-75" src="/cdp.png" />
+       <img class="h-full w-full object-cover brightness-50" src="/cdp.png" />
       </div>
       <button 
           class="flex absolute right-4 top-4 bg-zinc-500 bg-opacity-50 rounded-full transitio-all duration-500 ease-in-out ring-2 ring-white text-sm focus:outline-none focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 p-2"
