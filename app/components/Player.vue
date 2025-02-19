@@ -117,7 +117,7 @@
                   }"
             class="text-xs z-1 text-white absolute" style="top: 50%; left: 50%; transform: translate(-50%, -50%);">Chill</span>
             </div>
-            <div class="relative flex cursor-pointer rounded-full mb-2" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('chill');">
+            <div class="relative flex cursor-pointer rounded-full mb-2" style="height: 40px; width: 40px;" @click="useInitPlayerStore.toggleInstantPlay('cdp');">
             <img :class="{
                   'grayscale opacity-50': currentStream !== 'cdp',
                   }"  class="rounded-full absolute" height="40" width="40" src="~/assets/img/rock-00-thumb.jpg">
