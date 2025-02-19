@@ -4,17 +4,18 @@
 <NuxtLoadingIndicator color="#ef4444"/>
 <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
   :class="{
-                'font-tenor': currentStream === 'stream' || currentStream ===  'terra' || currentStream ===  'chill' || 'cdp',
+                'font-tenor': currentStream === 'stream' || currentStream === 'terra' || currentStream === 'cdp',
                 'font-metal': currentStream === 'rock',
-                'font-UNSCII': currentStream === 'coma' || currentStream ===  'core',
+                'font-UNSCII': currentStream === 'coma' || currentStream ===  'core' || currentStream === 'chill',
             }">
 <div id="overlay0" class="overlay  "  :class="{
                 'radial': currentStream === 'stream',
                 'radial2': currentStream === 'rock',
                 'radial3': currentStream === 'coma',
-                'radial4-terra': currentStream === 'terra' || 'cdp',
+                'radial4-terra': currentStream === 'terra',
                 'radial-core': currentStream === 'core',
                 'radial-chill': currentStream === 'chill',
+                'radial-cdp': currentStream === 'cdp',
                  
             }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
              ></div>
