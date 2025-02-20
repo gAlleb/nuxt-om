@@ -582,9 +582,9 @@
     class="history-cover cursor-pointer rounded-xl h-auto w-24"
     @click="openLightbox(np_omfm.nextCoverArtUrls['station:cdp'], 0)" 
   >  
-  <!-- <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
-        {{ getTimeFromTimestamp(cdpData.np.playing_next.played_at) }}
-       </div> -->
+  <div class="absolute text-muddy-waters-100 text-4xl pointer-events-none" style="top:50%;left:50%;transform:translate(-50%, -50%);text-shadow: 1px 2px 5px black;">
+        {{ getTimeFromTimestamp(cdpData.np.playing_next.played_at_source_value) }}
+       </div>
       </div>
      <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
       <div class="px-3 rounded-xl w-full text-muddy-waters-200 ellipsify "> 
