@@ -22,7 +22,7 @@
                 <div class="mt-2 sm:mt-2 text-md sm:text-xl px-2 py-1 sm:py-4 justify-between flex rounded-xl w-full ellipsify shadow-np dark:shadow-np-dark"
                 :style="dynamicBackgroundColor"> 
                 <span class="text-sm sm:text-lg inline-flex" :style="{color: dynamicTextColor.color}"> 
-                 Show: {{ (cdpData.np.now_playing.playlist !== '') ? cdpData.np.now_playing.playlist : 'Relaying UltraFM' }}
+                 Show: {{ (cdpData.np.now_playing.playlist !== '') ? cdpData.np.now_playing.playlist : 'Request' }}
                 </span>
                 <a v-if="np_omfm.collectionViewUrls['station:cdp'] !== '#'" :href="np_omfm.collectionViewUrls['station:cdp']" target="_blank" rel="noopener noreferrer">
                 <Icon
