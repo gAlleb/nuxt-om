@@ -2,7 +2,7 @@
  
   <footer class="text-gray-600 body-font bg-sxvx-light dark:bg-sxvx-dark dark:text-zinc-200 text-zinc-700">
     
-    <div class="container px-5 pb-5 pt-0 mx-auto flex items-center md:flex-row flex-col mb-[110px]>
+    <div class="container px-5 pb-5 pt-0 mx-auto flex items-center md:flex-row flex-col mb-[110px]">
       <NuxtLink :to="$localePath('/')" class="flex font-medium items-center text-zinc-700 dark:text-zinc-200 mb-4 md:mb-0">
         <img   src="~/assets/img/om2.svg" alt="logo" class="dark:block hidden w-8 h-8  " />
         <img   src="~/assets/img/om1.svg" alt="logo" class="dark:hidden w-8 h-8  " />
