@@ -18,6 +18,9 @@
     <div class="mb-8">
       <h2 class="text-3xl font-semibold dark:text-white text-gray-800 mb-4">Station Listeners</h2>
       <p class="dark:text-gray-300 text-gray-600">Real-time listener data for our stations.</p>
+      <p class="text-xl font-medium dark:text-gray-200 text-gray-800">
+        Overall Listeners: <span class="font-bold">{{ overallTotalListeners }}</span>
+      </p>
     </div>
     <!-- omFM Stream -->
     <div class="mb-8">
@@ -343,5 +346,19 @@ onUnmounted(() => {
     isConnected.value = false;
     console.log('SSE connection closed and component unmounted.');
   }
+});
+const overallTotalListeners = computed(() => {
+  if (!l.value || !l.value.total_listeners) {
+    return 0;
+  }
+  return (
+    l.value.total_listeners.omfm +
+    l.value.total_listeners.cdp +
+    l.value.total_listeners.rock +
+    l.value.total_listeners.terra +
+    l.value.total_listeners.core +
+    l.value.total_listeners.coma +
+    l.value.total_listeners.chill
+  );
 });
 </script>
