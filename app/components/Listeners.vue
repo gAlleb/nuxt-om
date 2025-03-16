@@ -1,11 +1,11 @@
 <template>
+  <section class="mx-3 sm:mx-5 lg:mx-20">
   <div
     :class="[
       'min-h-screen',
       'py-6',
-      'px-4',
-      'sm:px-6',
-      'lg:px-8',
+      'mx-auto',
+      'lg:mx-20',
       'transition-colors',
       'duration-300',
       'dark:bg-sxvx-dark-bg', // Dark mode background
@@ -313,9 +313,8 @@
     :class="[
       'min-h-screen',
       'py-6',
-      'px-4',
-      'sm:px-6',
-      'lg:px-8',
+      'lg:mx-20',
+      'mx-auto',
       'transition-colors',
       'duration-300',
       'dark:bg-gray-900',
@@ -327,6 +326,7 @@
   >
     Loading...
   </div>
+</section>
 </template>
 <script setup>
 import { getTimeFromTimestamp, minSec } from '@/composables/time';
