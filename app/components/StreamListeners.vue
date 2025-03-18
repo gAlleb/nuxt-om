@@ -39,10 +39,8 @@
       </div>
     </div>
   </template>
-  
   <script setup>
   import { minSec } from '@/composables/time';
-  
   const props = defineProps({
     streamName: String,
     listeners: Array,
