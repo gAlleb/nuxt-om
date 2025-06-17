@@ -25,7 +25,11 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="bxl:apple" class="h-10 w-10" aria-hidden="true" />
           <span class="flex text-zinc-900 text-xl mt-2">HLS</span>
+          
+
         </button>
+        <center> <UToggle @click="useInitPlayerStore.toggleHLS" v-model="useInitPlayerStore.player.isHLS" /></center>
+
         <hr class="mb-2"/>
         <div class=" grid grid-cols-2 gap-3  ">
         <button type="button" @click="toggleEffect('overlay0')"
@@ -36,7 +40,10 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Radial</span>
+          <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay0" /></center>
+
         </button>
+
         <button type="button" @click="toggleEffect('overlay1')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay1,
                     'bg-white': effectsStore.overlay1
@@ -45,6 +52,8 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Flicker</span>
+          <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay1" /></center>
+
         </button>
         <button type="button" @click="toggleEffect('overlay2')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay2,
@@ -54,6 +63,8 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Noise</span>
+         <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay2" /></center>
+
         </button>
         <button type="button" @click="toggleScanlineEffect()"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5,
@@ -63,6 +74,7 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Scanlines</span>
+          <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay3" /></center>
         </button>
         <button type="button" @click="toggleEffect('artBackground')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground,
@@ -72,6 +84,7 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Strokes</span>
+         <center><UToggle class="pointer-events-none" v-model="effectsStore.artBackground" /></center>
         </button>
         <div class="flex flex-col gap-2 ">
         <button type="button" @click="toggleEffect('visualizer')"
@@ -81,13 +94,15 @@
           class="grid px-4 pt-2 pb-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-4 w-4 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Visualizer</span>
+          <center><UToggle class="pointer-events-none" v-model="effectsStore.visualizer" /></center>
         </button>
         <button type="button" @click="toggleEffect('visualizerCaps')"
           :class="{ 'bg-red-400 dark:bg-red-400': (!effectsStore.visualizerCaps || !effectsStore.visualizer),
                     'bg-white': (effectsStore.visualizerCaps && effectsStore.visualizer)
           }"
-          class="flex px-4 pt-0 pb-0 text-sm text-zinc-900 w-full rounded-2xl">
+          class="flex px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <span class="grid w-full text-zinc-900 text-xs">Caps</span>
+          <center><UToggle class=" grid pointer-events-none" v-model="effectsStore.visualizerCaps" /></center>
         </button>
         </div>
         <hr />
