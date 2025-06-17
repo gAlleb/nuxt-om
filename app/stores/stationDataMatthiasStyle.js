@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useAzuracastData_another = defineStore({
-  id: 'stationData',
+export const useAzuracastData_another = defineStore('stationData',{
   state: () => ({
     stations: {}, // Object to store station data
     eventSource: null,

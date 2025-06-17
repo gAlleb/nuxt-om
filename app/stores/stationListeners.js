@@ -1,7 +1,6 @@
 import { defineStore } from 'pinia';
 
-export const useListenersData = defineStore({
-  id: 'stationListeners',
+export const useListenersData = defineStore('stationListeners', {
   state: () => ({
     channel: {}, // Object to store data
     eventSource: null,

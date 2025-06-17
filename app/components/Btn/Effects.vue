@@ -25,10 +25,12 @@
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="bxl:apple" class="h-10 w-10" aria-hidden="true" />
           <span class="flex text-zinc-900 text-xl mt-2">HLS</span>
-          
+
 
         </button>
-        <center> <UToggle @click="useInitPlayerStore.toggleHLS" v-model="useInitPlayerStore.player.isHLS" /></center>
+        <div class="flex justify-center mb-2">
+        <UToggle class=" " @click="useInitPlayerStore.toggleHLS" v-model="useInitPlayerStore.player.isHLS" />
+        </div>
 
         <hr class="mb-2"/>
         <div class=" grid grid-cols-2 gap-3  ">

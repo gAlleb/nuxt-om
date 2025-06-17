@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import ColorThief from 'colorthief'
 
-export const useOmfmData = defineStore({
-  id: 'stationData_omfm',
+export const useOmfmData = defineStore('stationData_omfm',{
   state: () => ({
     stations: {}, // Object to store station data
     eventSource: null,

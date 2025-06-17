@@ -2,8 +2,7 @@ import { defineStore } from 'pinia';
 import { initPlayerStore } from './initPlayer';
 import { useEffectsStore } from '@/stores/effects';
 
-export const useVisualizerData = defineStore({
-    id: 'VisualizerData',
+export const useVisualizerData = defineStore('VisualizerData', {
   state: () => ({
     animationFrameId: null,
     animationFrameIdWave: null,

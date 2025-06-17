@@ -1,8 +1,7 @@
 import { defineStore } from 'pinia';
 import ColorThief from 'colorthief'
 
-export const useAzuracastData = defineStore({
-  id: 'stationData',
+export const useAzuracastData = defineStore('stationData', {
   state: () => ({
     stations: {}, // Object to store station data
     eventSource: null,
