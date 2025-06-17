@@ -100,7 +100,7 @@
           :class="{ 'bg-red-400 dark:bg-red-400': (!effectsStore.visualizerCaps || !effectsStore.visualizer),
                     'bg-white': (effectsStore.visualizerCaps && effectsStore.visualizer)
           }"
-          class="flex px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          class="flex px-4 py-2n text-sm text-zinc-900 w-full rounded-2xl">
           <span class="grid w-full text-zinc-900 text-xs">Caps</span>
           <center><UToggle class=" grid pointer-events-none" v-model="effectsStore.visualizerCaps" /></center>
         </button>
