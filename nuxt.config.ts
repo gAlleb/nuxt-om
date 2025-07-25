@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n', 
     "@nuxt/image", 
     'nuxt-aos', 
-   
+    'nuxt-easy-lightbox',
     'nuxt-swiper', 
     '@pinia/nuxt'
     ],
