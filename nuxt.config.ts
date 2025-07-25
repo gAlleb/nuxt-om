@@ -7,9 +7,9 @@ export default defineNuxtConfig({
   //     ignore: ["/dynamic"],
   //   },
   // },
-  future: {
-    compatibilityVersion: 4,
-  },
+  // future: {
+  //   compatibilityVersion: 4,
+  // },
 
   css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css', '~/assets/css/christmas.css'],
   
@@ -44,7 +44,7 @@ export default defineNuxtConfig({
   },
 
   modules: [// remove this if you don't want to use @nuxt/content for your blog
-  '@nuxt/content', '@nuxt/ui', [
+  '@nuxt/ui', [
     '@pinia/nuxt',
     {
       autoImports: ['defineStore'],
@@ -54,7 +54,7 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n', 
     "@nuxt/image", 
     'nuxt-aos', 
-    "nuxt-easy-lightbox", 
+   
     'nuxt-swiper', 
     '@pinia/nuxt'
     ],
@@ -105,15 +105,15 @@ export default defineNuxtConfig({
     // },
   },
 
-  content: {
-    experimental: {
-      search: true
-    },
-    highlight: {
-      // Code Theme used in all color schemes.
-      theme: 'one-dark-pro',
-    },
-  },
+  // content: {
+  //   experimental: {
+  //     search: true
+  //   },
+  //   highlight: {
+  //     // Code Theme used in all color schemes.
+  //     theme: 'one-dark-pro',
+  //   },
+  // },
 
   gtag: {
     id: process.env.GTAG_ID, // change this to your Google Analytics ID G-xxxxxxxxxx

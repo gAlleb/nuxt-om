@@ -109,16 +109,16 @@
           EQ
         </span>
         </NuxtLink>
-        <NuxtLink :to="localePath('/blog')" class="mr-5 group transition-all duration-300 ease-in-out">
+        <!--<NuxtLink :to="localePath('/blog')" class="mr-5 group transition-all duration-300 ease-in-out">
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
           {{ $t('blog') }}
         </span>
         </NuxtLink>
-        <NuxtLink :to="localePath('/contact')" class="mr-5 group transition-all duration-300 ease-in-out">
+        <NuxtLink :to="localePath('/contact_')" class="mr-5 group transition-all duration-300 ease-in-out">
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out"> 
           {{ $t('contact') }}
         </span>
-        </NuxtLink>
+        </NuxtLink> -->
       </nav>
       <div class="hidden md:flex">
        <!--  <ClientOnly> Without this block apps show Hydration error but works ok. TODO </ClientOnly>  -->
@@ -235,9 +235,9 @@
                      </button>
                   </NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/EQ')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">EQ</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
-                </div>
+                  <!-- <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact_')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
+                --></div>
               </div>
             </div>
             <hr />
