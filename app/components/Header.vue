@@ -113,12 +113,12 @@
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
           {{ $t('blog') }}
         </span>
-        </NuxtLink>
-        <NuxtLink :to="localePath('/contact_')" class="mr-5 group transition-all duration-300 ease-in-out">
+        </NuxtLink> -->
+        <NuxtLink :to="localePath('/contacts')" class="mr-5 group transition-all duration-300 ease-in-out">
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out"> 
           {{ $t('contact') }}
         </span>
-        </NuxtLink> -->
+        </NuxtLink>
       </nav>
       <div class="hidden md:flex">
        <!--  <ClientOnly> Without this block apps show Hydration error but works ok. TODO </ClientOnly>  -->
