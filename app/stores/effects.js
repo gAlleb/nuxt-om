@@ -53,11 +53,11 @@ export const useEffectsStore = defineStore('effectsOverlay', {
         this.visualizerCaps = false;
       }
     },
-    persist: {
-      storage: piniaPluginPersistedstate.cookies({
-        // sameSite: 'strict',
-        sameSite: 'lax',
-        maxAge: 798131659,
-      }),
-    },
+    // persist: {
+    //   storage: piniaPluginPersistedstate.cookies({
+    //     // sameSite: 'strict',
+    //     sameSite: 'lax',
+    //     maxAge: 798131659,
+    //   }),
+    // },
 }); 

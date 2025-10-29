@@ -98,12 +98,12 @@ export const currentStreamStore = defineStore('playerCurrentStream', {
           },
     },
     // this below works great with run build
-    persist: {
-      storage: piniaPluginPersistedstate.cookies({
-        // sameSite: 'strict',
-        sameSite: 'lax',
-        maxAge: 798131659,
-      }),
-    },
+    // persist: {
+    //   storage: piniaPluginPersistedstate.cookies({
+    //     // sameSite: 'strict',
+    //     sameSite: 'lax',
+    //     maxAge: 798131659,
+    //   }),
+    // },
 
 }); 
