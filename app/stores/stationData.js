@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import ColorThief from 'colorthief'
+import ColorThief from '~/../node_modules/colorthief/dist/color-thief.mjs'
 
 export const useAzuracastData = defineStore('stationData', {
   state: () => ({
