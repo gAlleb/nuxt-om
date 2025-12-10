@@ -147,6 +147,31 @@ effectsStore.loadOverlayLocalStorage('overlay4');
 effectsStore.loadOverlayLocalStorage('overlay5');
 effectsStore.loadOverlayLocalStorage('artBackground');
 });
+// Define the details for the card
+const title = 'omFM.ru - The only radio out there, that sucks less'
+const description = 'Discover the best streams and New Year Special on ROCK stream.'
+// IMPORTANT: This must be your actual live domain
+const siteUrl = 'https://omfm.ru' 
+const image = `${siteUrl}/seo.jpg`
+
+useSeoMeta({
+  // Basic SEO
+  title: title,
+  description: description,
+
+  // Open Graph (Facebook, WhatsApp, Discord)
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: image,
+  ogUrl: siteUrl,
+  ogType: 'website',
+
+  // Twitter / X (Twitter Cards)
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: image,
+  twitterCard: 'summary_large_image', // Makes the image large
+})
 </script>
 <style>
 .page-enter-active,
