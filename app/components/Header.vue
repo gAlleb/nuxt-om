@@ -131,7 +131,7 @@
       <BtnSetStream /> 
       <BtnEffects />
       <BtnGit />
-      <BtnChristmas />
+      <!-- <BtnChristmas /> -->
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />
         <BtnToggleColorMode /> -->
