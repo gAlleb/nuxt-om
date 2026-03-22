@@ -226,6 +226,7 @@
                      </span>
                      </button>
                   </NuxtLink>
+                   <hr/>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/cdp')" class="text-zinc-600 dark:text-zinc-100">
                      <button 
                      class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
