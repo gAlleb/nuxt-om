@@ -264,13 +264,13 @@ class IcePlayer {
     getURL(streamName, source) {
         if (source === 'hls') {
             const hlsUrls = {
-                'stream': 'https://hls.omfm.ru/omfm/stream.m3u8',
-                'rock': 'https://radio.omfm.ru/hls/radio/live.m3u8',
-                'coma': 'https://radio.omfm.ru/hls/coma/live.m3u8',
-                'terra': 'https://radio.omfm.ru/hls/terra/live.m3u8',
-                'core': 'https://radio.omfm.ru/hls/core/live.m3u8',
-                'chill': 'https://radio.omfm.ru/hls/chill/live.m3u8',
-                'cdp': 'https://hls.omfm.ru/cdp/cdp.m3u8',
+                'stream': 'https://relay.omfm.ru/direct/omfm/stream.m3u8',
+                'rock': 'https://relay.omfm.ru/azura/hls/radio/live.m3u8',
+                'coma': 'https://relay.omfm.ru/azura/hls/coma/live.m3u8',
+                'terra': 'https://relay.omfm.ru/azura/hls/terra/live.m3u8',
+                'core': 'https://relay.omfm.ru/azura/hls/core/live.m3u8',
+                'chill': 'https://relay.omfm.ru/azura/hls/chill/live.m3u8',
+                'cdp': 'https://relay.omfm.ru/direct/cdp/cdp.m3u8',
             };
             return hlsUrls[streamName] || null;
         } else {
