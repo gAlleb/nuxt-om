@@ -9,13 +9,11 @@ Version: v0.0.1
 - Netlify, Vercel
 - Docker (Dockerimage + docker-compose.yaml included)
 
-<img src="https://omfm.ru/assets/img/git/1.png" alt="1" width="300"/>
-<img src="https://omfm.ru/assets/img/git/2.png" alt="2" width="300"/>
-<img src="https://omfm.ru/assets/img/git/3.png" alt="3" width="300"/>
-<img src="https://omfm.ru/assets/img/git/4.png" alt="4" width="300"/>
-<img src="https://omfm.ru/assets/img/git/5.png" alt="4" width="300"/>
-<img src="https://omfm.ru/assets/img/git/6.png" alt="4" width="300"/>
-<img width="300" alt="image" src="https://github.com/user-attachments/assets/b457baee-cf39-4901-8cbe-667014926944">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/98e3a737-c7e6-4d57-9281-15c373d0113b" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/48fcb1b6-e933-4893-97d7-6b1dd27d135e" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/a5ab998d-ede5-45c4-9e69-a0934678901d" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/35dc27ec-8312-4234-8705-a79ca35cfe50" />
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/b457baee-cf39-4901-8cbe-667014926944"/>
 
 
 ## Modules
