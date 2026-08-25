@@ -33,29 +33,14 @@ const useInitPlayerStore = initPlayerStore(); // Get the store instance
 import { currentStreamStore } from '@/stores/currentStream';
 const useCurrentStreamStore = currentStreamStore();
 const currentStream = computed(() => useCurrentStreamStore.currentStream);
-import { useAzuracastData } from '@/stores/stationData';
-const np_ac = useAzuracastData();
-import { useOmfmData } from '@/stores/stationData_omfm';
-const np_omfm = useOmfmData();
+import { useNowPlaying } from '~/stores/nowPlaying';
+import { getStation, placeholderCover } from '~/config/stations';
+const np = useNowPlaying();
 const backgroundImage = computed(() => {
-  if (useInitPlayerStore.isPlaying) {
-    if (currentStream.value === 'stream' && np_omfm.coverArtUrls['station:radio']) {
-      return `url(${np_omfm.coverArtUrls['station:radio']})`;
-    } else if (currentStream.value === 'cdp' && np_omfm.coverArtUrls['station:cdp']) {
-      return `url(${np_omfm.coverArtUrls['station:cdp']})`;
-    } else if (currentStream.value === 'rock' && np_ac.coverArtUrls['station:radio']) {
-      return `url(${np_ac.coverArtUrls['station:radio']})`;
-    } else if (currentStream.value === 'coma' && np_ac.stations['station:coma']?.np?.now_playing?.song?.art) {
-      return `url(${np_ac.stations['station:coma'].np.now_playing.song.art})`;
-    } else if (currentStream.value === 'terra' && np_ac.stations['station:terra']?.np?.now_playing?.song?.art) {
-      return `url(${np_ac.stations['station:terra'].np.now_playing.song.art})`;
-    } else if (currentStream.value === 'core' && np_ac.stations['station:core']?.np?.now_playing?.song?.art) {
-      return `url(${np_ac.stations['station:core'].np.now_playing.song.art})`;
-    } else if (currentStream.value === 'chill' && np_ac.stations['station:chill']?.np?.now_playing?.song?.art) {
-      return `url(${np_ac.stations['station:chill'].np.now_playing.song.art})`;
-    }
-  }
-  return 'url(/static/img/defaultCoverart.jpg)';
+  if (!useInitPlayerStore.isPlaying) return `url(${placeholderCover})`;
+  const station = getStation(currentStream.value);
+  const cover = station ? np.byId[station.id]?.coverArt : null;
+  return `url(${cover ?? placeholderCover})`;
 });
 
 </script>

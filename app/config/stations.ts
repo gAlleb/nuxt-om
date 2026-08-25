@@ -54,8 +54,13 @@ export interface VisualizerScheme {
 }
 
 export interface Station {
-  /** Ключ станции: сегмент URL `/streams/<id>`, `stream_mount` плеера, ключ во всех сторах. */
+  /** Ключ станции: `stream_mount` плеера и ключ во всех сторах. */
   id: string
+  /**
+   * Сегмент URL: `/streams/<slug>`. Обычно совпадает с id, но у главной станции
+   * id — `stream` (так её зовёт плеер), а страница исторически живёт на `/streams/omfm`.
+   */
+  slug: string
   provider: ProviderId
   /** Имя канала у провайдера. Внимание: `station:radio` есть у обоих и означает РАЗНЫЕ станции. */
   channel: string
@@ -82,8 +87,12 @@ export interface Station {
     panel: string
     /** Подпись на кружке в свипере плеера: «Rock». */
     thumb: string
+    /** Подпись над треком в мини-плеере. По умолчанию — как в меню. */
+    nowPlayingLabel?: string
     /** Подпись таба на `/streams`: «Rock». */
     tab: string
+    /** Чем заменить пустое имя плейлиста в строке «Show:». Пусто — показывать как есть. */
+    playlistFallback?: string
   }
 
   /** Оформление. Только литеральные классы Tailwind. */
@@ -95,6 +104,8 @@ export interface Station {
     accent: string
     /** Доп. класс заголовка героя (неоновая тень у Chill). */
     heroTitleClass?: string
+    /** Картинка карточки слишком светлая — притушить сильнее (сейчас только Café de Paris). */
+    dimmed?: boolean
   }
 
   images: {
@@ -123,6 +134,7 @@ export interface Station {
 export const stations: Station[] = [
   {
     id: 'stream',
+    slug: 'omfm',
     provider: 'centrifugo',
     channel: 'station:radio',
     hls: 'https://hls.omfm.ru/omfm/stream.m3u8',
@@ -135,7 +147,9 @@ export const stations: Station[] = [
       logo: '',
       panel: 'omFM',
       thumb: 'omFM',
+      nowPlayingLabel: 'omFM',
       tab: 'omFM',
+      playlistFallback: 'Relaying UltraFM',
     },
     look: { font: 'font-tenor', radial: 'radial', accent: 'border border-indigo-500/50' },
     images: {
@@ -153,6 +167,7 @@ export const stations: Station[] = [
   },
   {
     id: 'rock',
+    slug: 'rock',
     provider: 'azuracast',
     channel: 'station:radio',
     hls: 'https://radio.omfm.ru/hls/radio/live.m3u8',
@@ -166,6 +181,7 @@ export const stations: Station[] = [
       panel: 'RockFM',
       thumb: 'Rock',
       tab: 'Rock',
+      playlistFallback: 'Relaying UltraFM',
     },
     look: { font: 'font-metal', radial: 'radial2', accent: 'border border-red-500/50' },
     images: {
@@ -184,6 +200,7 @@ export const stations: Station[] = [
   },
   {
     id: 'coma',
+    slug: 'coma',
     provider: 'azuracast',
     channel: 'station:coma',
     hls: 'https://radio.omfm.ru/hls/coma/live.m3u8',
@@ -214,6 +231,7 @@ export const stations: Station[] = [
   },
   {
     id: 'core',
+    slug: 'core',
     provider: 'azuracast',
     channel: 'station:core',
     hls: 'https://radio.omfm.ru/hls/core/live.m3u8',
@@ -244,6 +262,7 @@ export const stations: Station[] = [
   },
   {
     id: 'terra',
+    slug: 'terra',
     provider: 'azuracast',
     channel: 'station:terra',
     hls: 'https://radio.omfm.ru/hls/terra/live.m3u8',
@@ -276,6 +295,7 @@ export const stations: Station[] = [
   },
   {
     id: 'chill',
+    slug: 'chill',
     provider: 'azuracast',
     channel: 'station:chill',
     hls: 'https://radio.omfm.ru/hls/chill/live.m3u8',
@@ -310,6 +330,7 @@ export const stations: Station[] = [
   },
   {
     id: 'cdp',
+    slug: 'cdp',
     provider: 'centrifugo',
     channel: 'station:cdp',
     hls: 'https://hls.omfm.ru/cdp/cdp.m3u8',
@@ -323,8 +344,9 @@ export const stations: Station[] = [
       panel: 'Café de Paris',
       thumb: 'Cafe',
       tab: 'Cafe',
+      playlistFallback: 'Request',
     },
-    look: { font: 'font-tenor', radial: 'radial-cdp', accent: 'border border-yellow-500/50' },
+    look: { font: 'font-tenor', radial: 'radial-cdp', accent: 'border border-yellow-500/50', dimmed: true },
     images: {
       heroLight: '/cdp_stream.jpg',
       heroDark: '/cdp_stream.jpg',
@@ -346,6 +368,13 @@ export const defaultStationId = 'stream'
 export const stationIds = stations.map((s) => s.id)
 
 const byId = new Map(stations.map((s) => [s.id, s]))
+const bySlug = new Map(stations.map((s) => [s.slug, s]))
+
+export const stationSlugs = stations.map((s) => s.slug)
+
+export function getStationBySlug(slug: string | null | undefined): Station | undefined {
+  return slug ? bySlug.get(slug) : undefined
+}
 
 export function getStation(id: string | null | undefined): Station | undefined {
   return id ? byId.get(id) : undefined

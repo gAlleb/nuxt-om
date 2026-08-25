@@ -3,22 +3,8 @@
 <NuxtLayout>
 <NuxtLoadingIndicator color="#ef4444"/>
 <div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
-  :class="{
-                'font-tenor': currentStream === 'stream' || currentStream === 'terra' || currentStream === 'cdp',
-                'font-metal': currentStream === 'rock',
-                'font-UNSCII': currentStream === 'coma' || currentStream ===  'core' || currentStream === 'chill',
-            }">
-<div id="overlay0" class="overlay  "  :class="{
-                'radial': currentStream === 'stream',
-                'radial2': currentStream === 'rock',
-                'radial3': currentStream === 'coma',
-                'radial4-terra': currentStream === 'terra',
-                'radial-core': currentStream === 'core',
-                'radial-chill': currentStream === 'chill',
-                'radial-cdp': currentStream === 'cdp',
-                 
-            }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
-             ></div>
+  :class="currentStation?.look.font">
+<div id="overlay0" class="overlay" :class="currentStation?.look.radial" :style="{ display: overlay0 ? 'flex' : 'none' }"></div>
 <div id="overlay1" class="overlay flicker" :style="{ display: overlay1 ? 'flex' : 'none' }"></div>
 <div id="overlay2" class="overlay noise" :style="{ display: overlay2 ? 'flex' : 'none' }"></div>
 <div id="overlay3" class="overlay scanlines" :style="{ display: overlay3 ? 'flex' : 'none' }"></div>
@@ -106,11 +92,10 @@
 <script setup defer>
 import { Analytics } from '@vercel/analytics/nuxt'
 import { initPlayerStore } from '@/stores/initPlayer';
-import { useAzuracastData } from '@/stores/stationData';
-import { useOmfmData } from '@/stores/stationData_omfm';
+import { useNowPlaying } from '~/stores/nowPlaying';
+import { getStation } from '~/config/stations';
 const useInitPlayerStore = initPlayerStore();
-const np_ac = useAzuracastData();
-const np_omfm = useOmfmData();
+const np = useNowPlaying();
 import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
 const overlay0 = computed(() => effectsStore.overlay0); 
@@ -123,14 +108,14 @@ onMounted(() => {
 useInitPlayerStore.loadLocalStorageHLS('hls', () => {
     useInitPlayerStore.initPlayer();
   });
-np_ac.connectToSSE(); 
-np_omfm.connectToSSE();
+np.connectAll();
 const playerContainer = document.querySelector('.playerContainer');
 playerContainer.classList.remove('hidden');
 });
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
+const currentStation = computed(() => getStation(currentStream.value));
 
 // import { useChristmasStore } from '@/stores/christmasStore';
 // const changeChristmasState = useChristmasStore();

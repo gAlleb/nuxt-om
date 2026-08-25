@@ -14,17 +14,6 @@ import { stations, providers, placeholderCover } from '~/config/stations'
  * столько и откроется EventSource. Добавление станции соединений не добавляет.
  */
 
-/**
- * Собрать объект со старыми ключами-каналами для фасадов совместимости.
- * `channels` — пары [канал, id станции].
- */
-export function projectByChannel(channels, pick) {
-  const np = useNowPlaying()
-  const out = {}
-  for (const [channel, id] of channels) out[channel] = pick(np.byId[id])
-  return out
-}
-
 /** Пустое состояние одной станции. */
 function emptyStation() {
   return {

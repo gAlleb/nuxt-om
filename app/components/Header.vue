@@ -42,57 +42,17 @@
            @click="isOpen = !isOpen"  
           style="left: 50%; transform: translate(-50%);"
         >
-        <NuxtLink :to="localePath('/streams/omfm')" class="text-zinc-600 dark:text-zinc-100">
-        <button 
+        <template v-for="s in stations" :key="s.id">
+        <NuxtLink :to="localePath(`/streams/${s.slug}`)" class="text-zinc-600 dark:text-zinc-100">
+        <button
         class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
         <span class="text-zinc-600 dark:text-zinc-100">
-          omFM Main
+          {{ s.text.menu }}
         </span>
         </button>
         </NuxtLink>
         <hr/>
-        <NuxtLink :to="localePath('/streams/rock')" class="text-zinc-600 dark:text-zinc-100">
-          <button 
-            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-              <span class="text-zinc-600 dark:text-zinc-100">Rock @ omFM</span>
-          </button>
-        </NuxtLink>
-          <hr/>
-          <NuxtLink :to="localePath('/streams/coma')" class="text-zinc-600 dark:text-zinc-100">
-          <button
-            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
-              <span class="text-zinc-600 dark:text-zinc-100">Coma @ omFM</span>
-          </button>
-        </NuxtLink>
-        <hr/>
-          <NuxtLink :to="localePath('/streams/core')" class="text-zinc-600 dark:text-zinc-100">
-          <button
-            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
-              <span class="text-zinc-600 dark:text-zinc-100">CORE @ omFM</span>
-          </button>
-        </NuxtLink>
-        <hr/>
-        <NuxtLink :to="localePath('/streams/terra')" class="text-zinc-600 dark:text-zinc-100">
-          <button 
-            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-              <span class="text-zinc-600 dark:text-zinc-100">Terra @ omFM</span>
-          </button>
-        </NuxtLink>
-        <hr/>
-        <NuxtLink :to="localePath('/streams/chill')" class="text-zinc-600 dark:text-zinc-100">
-          <button 
-            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-              <span class="text-zinc-600 dark:text-zinc-100">Chill @ omFM</span>
-          </button>
-        </NuxtLink>
-        <hr/>
-        <NuxtLink :to="localePath('/streams/cdp')" class="text-zinc-600 dark:text-zinc-100">
-          <button 
-            class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-              <span class="text-zinc-600 dark:text-zinc-100">Café de Paris</span>
-          </button>
-        </NuxtLink>
-        <hr/>
+        </template>
         <NuxtLink :to="localePath('/streams')" class="text-zinc-600 dark:text-zinc-100">
         <button 
         class="my-3 hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
@@ -173,67 +133,17 @@
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('home') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/about')" class=" block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('about') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams')" class=" block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('streams') }}</NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/omfm')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
+                  <template v-for="(s, i) in stations" :key="s.id">
+                  <NuxtLink @click="mobileMenuToggle()" :to="localePath(`/streams/${s.slug}`)" class="text-zinc-600 dark:text-zinc-100">
+                     <button
                      class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
                      <span class="text-zinc-600 dark:text-zinc-100">
-                     omFM Main
+                     {{ s.text.menu }}
                      </span>
                      </button>
                   </NuxtLink>
-                  <hr/>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/rock')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
-                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2">
-                     <span class=" text-zinc-600 dark:text-zinc-100">
-                     Rock @ omFM
-                     </span>
-                     </button>
-                  </NuxtLink>
-                  <hr/>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/coma')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
-                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-                     <span class=" text-zinc-600 dark:text-zinc-100">
-                     Coma @ omFM
-                     </span>
-                     </button>
-                  </NuxtLink>
-                  <hr/>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/core')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
-                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-                     <span class=" text-zinc-600 dark:text-zinc-100">
-                     CORE @ omFM
-                     </span>
-                     </button>
-                  </NuxtLink>
-                  <hr/>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/terra')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
-                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-                     <span class=" text-zinc-600 dark:text-zinc-100">
-                     Terra @ omFM
-                     </span>
-                     </button>
-                  </NuxtLink>
-                  <hr/>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/chill')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
-                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-                     <span class=" text-zinc-600 dark:text-zinc-100">
-                     Chill @ omFM
-                     </span>
-                     </button>
-                  </NuxtLink>
-                  <NuxtLink @click="mobileMenuToggle()" :to="localePath('/streams/cdp')" class="text-zinc-600 dark:text-zinc-100">
-                     <button 
-                     class="my-3 ps-2 flex hover:bg-gray-200 dark:hover:bg-primary-700 w-full p-2" >
-                     <span class=" text-zinc-600 dark:text-zinc-100">
-                      Café de Paris
-                     </span>
-                     </button>
-                  </NuxtLink>
+                  <hr v-if="i < stations.length - 1"/>
+                  </template>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/EQ')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">EQ</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/blog')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('blog') }}</NuxtLink>
                   <NuxtLink @click="mobileMenuToggle()" :to="localePath('/contact')" class="block rounded-lg py-2 text-base font-semibold leading-7 hover:dark:text-zinc-50 hover:text-zinc-800">{{ $t('contact') }}</NuxtLink>
@@ -304,6 +214,7 @@
 <script setup>
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 import { currentStreamStore } from '../stores/currentStream'; // Import the store
+import { stations, getStation } from '~/config/stations';
 import { useRoute } from '#imports'
 const route = useRoute();
 let isScrolled = ref(false);
@@ -335,26 +246,7 @@ onMounted(() => {
 });
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-const logoText = computed(() => {
-  switch (currentStream.value) {
-    case 'stream':
-      return '';
-    case 'rock':
-      return 'Rock';
-    case 'coma':
-      return 'Coma';
-    case 'core':
-      return 'xCOREx';
-    case 'terra':
-      return 'Terra';
-    case 'chill':
-      return 'ChiLL';
-    case 'cdp':
-      return 'CaféDeParis';
-    default:
-      return ''; // Default text
-  }
-});
+const logoText = computed(() => getStation(currentStream.value)?.text.logo ?? '')
 const localePath = useLocalePath()
 const mobileMenuOpen = ref(false)
 function mobileMenuToggle() {
