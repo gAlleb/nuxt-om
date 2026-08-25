@@ -1,81 +1,30 @@
 <template>
   <div>
     <div ref="streams_header" class="streams_header fixed w-full z-10 flex bg-sxvx-light dark:bg-sxvx-dark">
-    <button @click="showDiv(1)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl" 
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 1,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 1,
-    }"
-    >omFM</button>
-    <button @click="showDiv(2)" class="w-full rounded-t-lg inline-flex justify-center  font-metal text-xl"
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 2,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 2,
-    }"
-    >Rock
-    </button>
-    <button @click="showDiv(3)" class="w-full rounded-t-lg inline-flex justify-center  font-UNSCII text-xl"
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 3,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 3,
-    }"
-    >Coma</button>
-    <button @click="showDiv(4)" class="w-full rounded-t-lg inline-flex justify-center  font-UNSCII text-xl"
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 4,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 4,
-    }"
-    >CORe</button>
-    <button @click="showDiv(5)" class="w-full rounded-t-lg inline-flex justify-center  font-tenor text-xl"
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 5,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 5,
-    }"
-    >Terra</button>
-    <button @click="showDiv(6)" class="w-full rounded-t-lg inline-flex justify-center font-UNSCII text-xl"
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 6,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 6,
-    }"
-    >Chill</button>
-    <button @click="showDiv(7)" class="w-full rounded-t-lg inline-flex justify-center font-tenor text-xl"
-    :class="{
-    'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2  border-gray-700 dark:border-gray-200':activeDiv === 7,
-    'bg-sxvx-light dark:bg-sxvx-dark':!activeDiv !== 7,
-    }"
-    >Cafe</button>
+    <button
+      v-for="s in stations"
+      :key="s.id"
+      @click="activeId = s.id"
+      class="w-full rounded-t-lg inline-flex justify-center text-xl"
+      :class="[
+        s.look.font,
+        activeId === s.id
+          ? 'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2 border-gray-700 dark:border-gray-200'
+          : 'bg-sxvx-light dark:bg-sxvx-dark',
+      ]">{{ s.text.tab }}</button>
     </div>
     <div class="h-14"></div>
-    <div v-if="activeDiv === 1">
-      <StreamsOmfm/>
-    </div>
-    <div v-if="activeDiv === 2">
-      <StreamsRock/>
-    </div>
-    <div v-if="activeDiv === 3">
-      <StreamsComa/>
-    </div>
-    <div v-if="activeDiv === 4">
-      <StreamsCore/>
-    </div>
-    <div v-if="activeDiv === 5">
-      <StreamsTerra/>
-    </div>
-    <div v-if="activeDiv === 6">
-      <StreamsChill/>
-    </div>
-    <div v-if="activeDiv === 7">
-      <StreamsCDP/>
-    </div>
+    <template v-for="s in stations" :key="s.id">
+      <StationNowPlaying v-if="activeId === s.id" :station="s" />
+    </template>
   </div>
 </template>
   
 <script setup>
 import { ref } from 'vue'
-const activeDiv = ref(1) // Default to showing div 1
-const showDiv = (divNumber) => {
-  activeDiv.value = divNumber
-}
+import { stations, defaultStationId } from '~/config/stations'
+
+const activeId = ref(defaultStationId)
 // Initialize refs and variables
 const streams_header = ref(null);
 const lastScrollTop = ref(0);

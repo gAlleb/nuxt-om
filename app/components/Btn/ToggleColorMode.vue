@@ -1,38 +1,42 @@
 <template>
-  <Menu as="div" class="relative ml-1 sm:ml-4">
-    <div>
-      <MenuButton class="flex rounded-xl bg-sxvx-light-bg dark:bg-sxvx-dark-bg text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2">
-        <span class="sr-only">Theme Mode</span>
-        <Icon v-if="$colorMode.value === 'light'" name="heroicons:sun" class="h-6 w-6 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
-        <Icon v-if="$colorMode.value === 'dark'" name="heroicons:moon" class="h-6 w-6 text-zinc-700 dark:text-zinc-300" aria-hidden="true" />
-      </MenuButton>
-    </div>
-    <transition enter-active-class="transition ease-out duration-100" enter-from-class="transform opacity-0 scale-95" enter-to-class="transform opacity-100 scale-100" leave-active-class="transition ease-in duration-75" leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95">
-      <MenuItems class="absolute right-0 z-10 mt-2 w-40 origin-top-right outline rounded-md bg-white dark:bg-zinc-800 py-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline">
-        <MenuItem as="div" class="hover:bg-gray-200 dark:hover:bg-primary-700">
-          <button @click="colorMode.preference = 'light'" type="button" class="flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-            <Icon name="heroicons:sun" class="h-6 w-6" aria-hidden="true" />
-            <span class="text-zinc-700 dark:text-zinc-300">Light Mode</span>
-          </button>
-        </MenuItem>
-        <MenuItem as="div" class="hover:bg-gray-200 dark:hover:bg-primary-700">
-          <button @click="colorMode.preference = 'dark'" type="button" class="flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-            <Icon name="heroicons:moon" class="h-6 w-6" aria-hidden="true" />
-            <span class="text-zinc-700 dark:text-zinc-300">Dark Mode</span>
-          </button>
-        </MenuItem>
-        <MenuItem as="div" class="hover:bg-gray-200 dark:hover:bg-primary-700">
-          <button @click="colorMode.preference = 'system'" type="button" class="flex gap-2 px-4 py-2 text-sm text-zinc-700 dark:text-zinc-300 w-full">
-            <Icon name="heroicons:computer-desktop" class="h-6 w-6" aria-hidden="true" />
-            <span class="text-zinc-700 dark:text-zinc-300">System Mode</span>
-          </button>
-        </MenuItem>
-      </MenuItems>
-    </transition>
-  </Menu>
+  <ClientOnly>
+    <button
+      type="button"
+      :aria-label="`Switch to ${nextTheme} mode`"
+      :title="`Switch to ${nextTheme} mode`"
+      class="ml-1 sm:ml-4 flex rounded-xl bg-sxvx-light-bg dark:bg-sxvx-dark-bg text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2"
+      @click="switchTheme($event)">
+      <span class="sr-only">Theme Mode</span>
+      <Icon
+        :name="nextTheme === 'dark' ? 'heroicons:moon' : 'heroicons:sun'"
+        class="h-6 w-6 text-zinc-600 dark:text-zinc-100"
+        aria-hidden="true" />
+    </button>
+
+    <!-- До гидратации тема неизвестна — держим место, чтобы шапка не дёргалась -->
+    <template #fallback>
+      <div class="ml-1 sm:ml-4 p-2">
+        <div class="h-6 w-6" />
+      </div>
+    </template>
+  </ClientOnly>
 </template>
 
 <script setup>
-import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
-const colorMode = useColorMode()
+const { nextTheme, switchTheme } = useThemeTransition()
 </script>
+
+<style>
+/* Гасим кросс-фейд по умолчанию: анимируем только раскрытие круга. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-new(root) {
+  z-index: 9999;
+}
+::view-transition-old(root) {
+  z-index: 1;
+}
+</style>

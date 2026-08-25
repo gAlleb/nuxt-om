@@ -1,6 +1,6 @@
 ---
 title: 'Contact'
-meta: 'Contact info'
+description: 'Contact info'
 ---
 
 ## Контакты

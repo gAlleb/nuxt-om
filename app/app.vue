@@ -2,28 +2,13 @@
 <!-- <UtilsPreloader /> -->
 <NuxtLayout>
 <NuxtLoadingIndicator color="#ef4444"/>
-<div class="flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg"
-  :class="{
-                'font-tenor': currentStream === 'stream' || currentStream === 'terra' || currentStream === 'cdp',
-                'font-metal': currentStream === 'rock',
-                'font-UNSCII': currentStream === 'coma' || currentStream ===  'core' || currentStream === 'chill',
-            }">
-<div id="overlay0" class="overlay  "  :class="{
-                'radial': currentStream === 'stream',
-                'radial2': currentStream === 'rock',
-                'radial3': currentStream === 'coma',
-                'radial4-terra': currentStream === 'terra',
-                'radial-core': currentStream === 'core',
-                'radial-chill': currentStream === 'chill',
-                'radial-cdp': currentStream === 'cdp',
-                 
-            }"  :style="{ display: overlay0 ? 'flex' : 'none' }"
-             ></div>
-<div id="overlay1" class="overlay flicker" :style="{ display: overlay1 ? 'flex' : 'none' }"></div>
-<div id="overlay2" class="overlay noise" :style="{ display: overlay2 ? 'flex' : 'none' }"></div>
-<div id="overlay3" class="overlay scanlines" :style="{ display: overlay3 ? 'flex' : 'none' }"></div>
-<div id="overlay4" class="overlay scanline" :style="{ display: overlay4 ? 'flex' : 'none' }"></div>
-<div id="overlay5" class="overlay scanline2" :style="{ display: overlay5 ? 'flex' : 'none' }"></div>
+<div class="station-font flex min-h-screen flex-col overflow-hidden bg-sxvx-light-bg text-zinc-700 dark:text-zinc-200 dark:bg-sxvx-dark-bg">
+<div id="overlay0" class="overlay"></div>
+<div id="overlay1" class="overlay flicker"></div>
+<div id="overlay2" class="overlay noise"></div>
+<div id="overlay3" class="overlay scanlines"></div>
+<div id="overlay4" class="overlay scanline"></div>
+<div id="overlay5" class="overlay scanline2"></div>
     <!-- Site header --> 
     <Header />
     <!-- Page content -->
@@ -54,7 +39,8 @@
     ></iframe> -->
 </NuxtLayout>
 
-<!-- <div class="snowflakes-container" :style="{ display: christmas === 'true' ? 'block' : 'none' }"><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div></div>
+<!-- 
+<div class="snowflakes-container" :style="{ display: christmas === 'true' ? 'block' : 'none' }"><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div><div class="snowflake"></div></div>
 <ul class="lightrope" :style="{ display: christmas === 'true' ? 'block' : 'none' }">
   <li></li>
   <li></li>
@@ -98,54 +84,76 @@
   <li></li>
   <li></li>
   <li></li>
-</ul> -->
-<Analytics/>
+</ul>
+-->
+<!-- <Analytics/> -->
 </template>
 <script setup defer>
-import { Analytics } from '@vercel/analytics/nuxt'
+// Аналитика Vercel — сейчас не используется. Чтобы вернуть:
+//   npm i @vercel/analytics
+// и раскомментировать импорт ниже и <Analytics/> в шаблоне.
+// import { Analytics } from '@vercel/analytics/nuxt'
 import { initPlayerStore } from '@/stores/initPlayer';
-import { useAzuracastData } from '@/stores/stationData';
-import { useOmfmData } from '@/stores/stationData_omfm';
+import { useNowPlaying } from '~/stores/nowPlaying';
+import { applyStreamAttribute, applyEffectsAttribute, applyPlayerVisibility } from '~/utils/settings';
 const useInitPlayerStore = initPlayerStore();
-const np_ac = useAzuracastData();
-const np_omfm = useOmfmData();
+const np = useNowPlaying();
 import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
-const overlay0 = computed(() => effectsStore.overlay0); 
-const overlay1 = computed(() => effectsStore.overlay1); 
-const overlay2 = computed(() => effectsStore.overlay2); 
-const overlay3 = computed(() => effectsStore.overlay3); 
-const overlay4 = computed(() => effectsStore.overlay4); 
-const overlay5 = computed(() => effectsStore.overlay5); 
 onMounted(() => {
 useInitPlayerStore.loadLocalStorageHLS('hls', () => {
     useInitPlayerStore.initPlayer();
   });
-np_ac.connectToSSE(); 
-np_omfm.connectToSSE();
+np.connectAll();
 const playerContainer = document.querySelector('.playerContainer');
 playerContainer.classList.remove('hidden');
 });
 import { currentStreamStore } from '@/stores/currentStream'; // Import the store
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
+
 // import { useChristmasStore } from '@/stores/christmasStore';
 // const changeChristmasState = useChristmasStore();
 // const christmas = computed(() => changeChristmasState.christmas); 
 // onMounted(() => {
-// changeChristmasState.loadChristmasState();
+//   changeChristmasState.loadChristmasState();
 // });
-// Uncomment if not using pinia Coockie storage
+// Настройки поднимаются в сторы после гидратации; на вид страницы они уже
+// применены атрибутами <html>, поэтому мигания дефолтом нет.
 onMounted(() => {
-useCurrentStreamStore.loadStreamName();
-effectsStore.loadOverlayLocalStorage('overlay0');
-effectsStore.loadOverlayLocalStorage('overlay1');
-effectsStore.loadOverlayLocalStorage('overlay2');
-effectsStore.loadOverlayLocalStorage('overlay3');
-effectsStore.loadOverlayLocalStorage('overlay4');
-effectsStore.loadOverlayLocalStorage('overlay5');
-effectsStore.loadOverlayLocalStorage('artBackground');
+  useCurrentStreamStore.loadStreamName();
+  effectsStore.loadFromStorage();
 });
+
+// Держим атрибуты <html> в согласии со сторами.
+watch(() => useCurrentStreamStore.currentStream, (id) => applyStreamAttribute(id));
+watch(() => effectsStore.$state, (fx) => applyEffectsAttribute(fx), { deep: true });
+watch(() => useInitPlayerStore.playerVisible, (v) => applyPlayerVisibility(v));
+// Define the details for the card
+const title = 'omFM.ru - The only radio out there, that sucks less'
+const description = 'Discover the best streams and New Year Special on ROCK stream.'
+// IMPORTANT: This must be your actual live domain
+const siteUrl = 'https://omfm.ru' 
+const image = `${siteUrl}/seo.jpg`
+
+useSeoMeta({
+  // Basic SEO
+  title: title,
+  description: description,
+
+  // Open Graph (Facebook, WhatsApp, Discord)
+  ogTitle: title,
+  ogDescription: description,
+  ogImage: image,
+  ogUrl: siteUrl,
+  ogType: 'website',
+
+  // Twitter / X (Twitter Cards)
+  twitterTitle: title,
+  twitterDescription: description,
+  twitterImage: image,
+  twitterCard: 'summary_large_image', // Makes the image large
+})
 </script>
 <style>
 .page-enter-active,

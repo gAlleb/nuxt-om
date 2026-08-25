@@ -1,0 +1,385 @@
+/**
+ * Реестр радиостанций — единственный источник правды.
+ *
+ * Чтобы добавить станцию, добавьте объект в массив `stations` ниже.
+ * Ничего больше править не нужно: страницы, меню, карточки, свипер плеера
+ * и подписки SSE строятся из этого массива.
+ *
+ * ВАЖНО: классы Tailwind (accent, font) должны быть записаны здесь целиком,
+ * а не собираться из кусков — JIT сканирует этот файл как обычный исходник
+ * (см. `content` в tailwind.config.cjs) и видит только литералы.
+ */
+
+/** Откуда станция получает now-playing по SSE. */
+export interface Provider {
+  /** Базовый URL SSE (без `?cf_connect=`). */
+  sseUrl: string
+  /** По какому полю определяем, что трек сменился. */
+  dedupeBy: 'sh_id' | 'songText'
+  /**
+   * С какого элемента начинается «предыдущий» трек в song_history.
+   * У centrifugo первый элемент — текущий трек, поэтому его пропускаем.
+   */
+  historyOffset: number
+  /** Что подставить, если iTunes ничего не нашёл: обложку станции или заглушку. */
+  coverFallback: 'stationArt' | 'placeholder'
+}
+
+export const providers = {
+  azuracast: {
+    sseUrl: 'https://radio.omfm.ru/api/live/nowplaying/sse',
+    dedupeBy: 'sh_id',
+    historyOffset: 0,
+    coverFallback: 'stationArt',
+  },
+  centrifugo: {
+    sseUrl: 'https://centrifugo.omfm.ru/connection/sse',
+    dedupeBy: 'songText',
+    historyOffset: 1,
+    coverFallback: 'placeholder',
+  },
+} as const satisfies Record<string, Provider>
+
+/** Заглушка обложки, когда ничего не нашлось. */
+export const placeholderCover = '/static/img/defaultCoverart.jpg'
+
+export type ProviderId = keyof typeof providers
+
+/** Цвета полосного визуализатора. `undefined` — взять встроенные по текущей теме. */
+export interface VisualizerScheme {
+  color1: string
+  color2: string
+  color3: string
+  capStyle?: string
+}
+
+export interface Station {
+  /** Ключ станции: `stream_mount` плеера и ключ во всех сторах. */
+  id: string
+  /**
+   * Сегмент URL: `/streams/<slug>`. Обычно совпадает с id, но у главной станции
+   * id — `stream` (так её зовёт плеер), а страница исторически живёт на `/streams/omfm`.
+   */
+  slug: string
+  provider: ProviderId
+  /** Имя канала у провайдера. Внимание: `station:radio` есть у обоих и означает РАЗНЫЕ станции. */
+  channel: string
+
+  /** Прямые ссылки на потоки. */
+  hls: string
+  icecast: string
+
+  /** Тексты — исторически в каждом месте свой вариант названия. */
+  text: {
+    /** Кнопка в меню выбора стрима и подпись на карточке: «Rock @ omFM». */
+    menu: string
+    /** Название под карточкой на главной: «Rock». */
+    card: string
+    /** Заголовок на странице стрима: «RockFM». */
+    hero: string
+    /** Вторая строка под заголовком. */
+    tagline: string
+    /** Третья строка героя, если есть (только Terra). */
+    heroExtra?: string
+    /** `<sup>` рядом с логотипом в шапке. */
+    logo: string
+    /** Заголовок выезжающей панели плеера: «RockFM». */
+    panel: string
+    /** Подпись на кружке в свипере плеера: «Rock». */
+    thumb: string
+    /** Подпись над треком в мини-плеере. По умолчанию — как в меню. */
+    nowPlayingLabel?: string
+    /** Подпись таба на `/streams`: «Rock». */
+    tab: string
+    /** Чем заменить пустое имя плейлиста в строке «Show:». Пусто — показывать как есть. */
+    playlistFallback?: string
+  }
+
+  /** Оформление. Только литеральные классы Tailwind. */
+  look: {
+    font: 'font-tenor' | 'font-metal' | 'font-UNSCII'
+    /** Класс радиального оверлея из np.css. */
+    radial: string
+    /** Рамка активной карточки на главной. */
+    accent: string
+    /** Доп. класс заголовка героя (неоновая тень у Chill). */
+    heroTitleClass?: string
+    /** Картинка карточки слишком светлая — притушить сильнее (сейчас только Café de Paris). */
+    dimmed?: boolean
+  }
+
+  images: {
+    /** Фон героя на странице стрима. */
+    heroLight: string
+    heroDark: string
+    /** Картинка карточки на главной и в «Top stations». */
+    card: string
+    /** Кружок в свипере плеера. Лежит в app/assets/img/. */
+    thumb: string
+  }
+
+  visualizer: {
+    colorScheme?: VisualizerScheme
+    customDarkScheme?: VisualizerScheme
+  }
+
+  /** Показывать блок «Next Song». У omFM Main следующего трека нет. */
+  showNext: boolean
+  /** Откуда брать обложку: искать в iTunes или брать `song.art` со станции. */
+  artSource: 'itunes' | 'station'
+  /** Сколько треков показывать в истории. */
+  historyCount: number
+}
+
+export const stations: Station[] = [
+  {
+    id: 'stream',
+    slug: 'omfm',
+    provider: 'centrifugo',
+    channel: 'station:radio',
+    hls: 'https://hls.omfm.ru/omfm/stream.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/stream',
+    text: {
+      menu: 'omFM Main',
+      card: 'omFM',
+      hero: 'omFM',
+      tagline: 'meditative, mantras, instrumental',
+      logo: '',
+      panel: 'omFM',
+      thumb: 'omFM',
+      nowPlayingLabel: 'omFM',
+      tab: 'omFM',
+      playlistFallback: 'Relaying UltraFM',
+    },
+    look: { font: 'font-tenor', radial: 'radial', accent: 'border border-indigo-500/50' },
+    images: {
+      heroLight: '/omfm4-light.jpg',
+      heroDark: '/omfm4.jpg',
+      card: '/omfm.jpg',
+      thumb: 'rock-70-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: '#b017a8', color2: 'cyan', color3: 'green', capStyle: '#b017a8' },
+    },
+    showNext: false,
+    artSource: 'itunes',
+    historyCount: 5,
+  },
+  {
+    id: 'rock',
+    slug: 'rock',
+    provider: 'azuracast',
+    channel: 'station:radio',
+    hls: 'https://radio.omfm.ru/hls/radio/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/rock',
+    text: {
+      menu: 'Rock @ omFM',
+      card: 'Rock',
+      hero: 'RockFM',
+      tagline: 'heavy stuff and more',
+      logo: 'Rock',
+      panel: 'RockFM',
+      thumb: 'Rock',
+      tab: 'Rock',
+      playlistFallback: 'Relaying UltraFM',
+    },
+    look: { font: 'font-metal', radial: 'radial2', accent: 'border border-red-500/50' },
+    images: {
+      heroLight: '/metal.webp',
+      heroDark: '/rock.webp',
+      card: '/rock.webp',
+      thumb: 'rock-90-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: '#000000', color2: '#000000', color3: '#000000', capStyle: 'black' },
+      customDarkScheme: { color1: 'red', color2: 'darkred', color3: 'red', capStyle: 'red' },
+    },
+    showNext: true,
+    artSource: 'itunes',
+    historyCount: 5,
+  },
+  {
+    id: 'coma',
+    slug: 'coma',
+    provider: 'azuracast',
+    channel: 'station:coma',
+    hls: 'https://radio.omfm.ru/hls/coma/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/coma',
+    text: {
+      menu: 'Coma @ omFM',
+      card: 'Coma',
+      hero: 'ComaFM',
+      tagline: 'ambient, drone, field recordings',
+      logo: 'Coma',
+      panel: 'ComaFM',
+      thumb: 'Coma',
+      tab: 'Coma',
+    },
+    look: { font: 'font-UNSCII', radial: 'radial3', accent: 'border border-green-500/50' },
+    images: {
+      heroLight: '/coma.jpg',
+      heroDark: '/coma.jpg',
+      card: '/coma.jpg',
+      thumb: 'rock-80-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: 'green', color2: 'cyan', color3: 'lightgreen', capStyle: 'green' },
+    },
+    showNext: true,
+    artSource: 'station',
+    historyCount: 5,
+  },
+  {
+    id: 'core',
+    slug: 'core',
+    provider: 'azuracast',
+    channel: 'station:core',
+    hls: 'https://radio.omfm.ru/hls/core/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/core',
+    text: {
+      menu: 'CORE @ omFM',
+      card: 'CORE',
+      hero: 'CoreFM',
+      tagline: 'deathcore, metalcore, hardcore',
+      logo: 'xCOREx',
+      panel: 'CORE FM',
+      thumb: 'CORE',
+      tab: 'CORe',
+    },
+    look: { font: 'font-UNSCII', radial: 'radial-core', accent: 'border border-zinc-500/50' },
+    images: {
+      heroLight: '/core_long.png',
+      heroDark: '/core_long.png',
+      card: '/core_sm.png',
+      thumb: 'rock-70-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: '#ffffff', color2: '#ffffff', color3: '#ffffff', capStyle: 'white' },
+    },
+    showNext: true,
+    artSource: 'station',
+    historyCount: 5,
+  },
+  {
+    id: 'terra',
+    slug: 'terra',
+    provider: 'azuracast',
+    channel: 'station:terra',
+    hls: 'https://radio.omfm.ru/hls/terra/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/terra',
+    text: {
+      menu: 'Terra @ omFM',
+      card: 'Terra',
+      hero: 'TerraFM',
+      tagline: 'Nature, music of the Earth',
+      heroExtra:
+        'The amazing world of sound from leading field recording artists around the globe.',
+      logo: 'Terra',
+      panel: 'TerraFM',
+      thumb: 'Terra',
+      tab: 'Terra',
+    },
+    look: { font: 'font-tenor', radial: 'radial4-terra', accent: 'border border-blue-500/50' },
+    images: {
+      heroLight: '/terra.jpg',
+      heroDark: '/terra.jpg',
+      card: '/terra.jpg',
+      thumb: 'rock-00-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: 'wheat', color2: 'orange', color3: 'brown', capStyle: 'black' },
+    },
+    showNext: true,
+    artSource: 'station',
+    historyCount: 5,
+  },
+  {
+    id: 'chill',
+    slug: 'chill',
+    provider: 'azuracast',
+    channel: 'station:chill',
+    hls: 'https://radio.omfm.ru/hls/chill/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/chill',
+    text: {
+      menu: 'Chill @ omFM',
+      card: 'Chill',
+      hero: 'Chill',
+      tagline: 'future garage, chillstep, ambient',
+      logo: 'ChiLL',
+      panel: 'Chill FM',
+      thumb: 'Chill',
+      tab: 'Chill',
+    },
+    look: {
+      font: 'font-UNSCII',
+      radial: 'radial-chill',
+      accent: 'border border-pink-500/50',
+      heroTitleClass: 'neon-pink-text-shadow',
+    },
+    images: {
+      heroLight: '/static/img/station/chill/chill_background.jpg',
+      heroDark: '/static/img/station/chill/chill_background.jpg',
+      card: '/static/img/station/chill/chill.jpg',
+      thumb: 'pink-thumb.jpg',
+    },
+    // Единственная станция без своей схемы — рисуется дефолтной.
+    visualizer: {},
+    showNext: true,
+    artSource: 'station',
+    historyCount: 5,
+  },
+  {
+    id: 'cdp',
+    slug: 'cdp',
+    provider: 'centrifugo',
+    channel: 'station:cdp',
+    hls: 'https://hls.omfm.ru/cdp/cdp.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/cdp',
+    text: {
+      menu: 'Café de Paris',
+      card: 'Café de Paris',
+      hero: 'Café de Paris',
+      tagline: 'jazz, chanson, Parisian spirit',
+      logo: 'CaféDeParis',
+      panel: 'Café de Paris',
+      thumb: 'Cafe',
+      tab: 'Cafe',
+      playlistFallback: 'Request',
+    },
+    look: { font: 'font-tenor', radial: 'radial-cdp', accent: 'border border-yellow-500/50', dimmed: true },
+    images: {
+      heroLight: '/cdp_stream.jpg',
+      heroDark: '/cdp_stream.jpg',
+      card: '/cdp.png',
+      thumb: 'rock-00-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: '#b017a8', color2: 'cyan', color3: 'green', capStyle: '#b017a8' },
+    },
+    showNext: true,
+    artSource: 'itunes',
+    historyCount: 5,
+  },
+]
+
+/** Станция, играющая по умолчанию при первом заходе. */
+export const defaultStationId = 'stream'
+
+export const stationIds = stations.map((s) => s.id)
+
+const byId = new Map(stations.map((s) => [s.id, s]))
+const bySlug = new Map(stations.map((s) => [s.slug, s]))
+
+export const stationSlugs = stations.map((s) => s.slug)
+
+export function getStationBySlug(slug: string | null | undefined): Station | undefined {
+  return slug ? bySlug.get(slug) : undefined
+}
+
+export function getStation(id: string | null | undefined): Station | undefined {
+  return id ? byId.get(id) : undefined
+}
+
+export function isStationId(id: string | null | undefined): boolean {
+  return !!id && byId.has(id)
+}
