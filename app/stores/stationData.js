@@ -63,9 +63,6 @@ export const useAzuracastData = defineStore('stationData', {
     },
     updateStationData(station, npData) {
       this.stations[station] = npData // Update station data directly
-      let ch = station.split(':')[1] || null
-      // sanitize station shortcode for use in a CSS class name
-      ch = toKebabCase(ch)
       //const np = this.stations[station].np || null;
       this.startProgressBar(station, npData.np.now_playing.elapsed, npData.np.now_playing.duration) // Start progress bar on data update
       this.documentTitle[station] = npData.np.now_playing.song.text
@@ -77,18 +74,6 @@ export const useAzuracastData = defineStore('stationData', {
       if (this.lastFetchedShIds[station] !== currentShId) {
         this.lastFetchedShIds[station] = currentShId // Update the last fetched sh_id
 
-        setElement('np-' + ch + '-song-text', npData.np.now_playing.song.text)
-        setElement('np-' + ch + '-song-art', '', {
-          style: {
-            'background-image': 'url(' + npData.np.now_playing.song.art + ')',
-          },
-          addClasses: ['animated', 'bounceInLeft'],
-        })
-        setTimeout(function () {
-          setElement('np-' + ch + '-song-art', '', {
-            removeClasses: ['animated', 'bounceInLeft'],
-          })
-        }, 2000)
         if (station === 'station:radio') {
           this.fetchCoverArt(npData.np.now_playing.song.artist, npData.np.now_playing.song.title, npData.np.now_playing.song.art).then((coverArtData) => {
             this.coverArtUrls[station] = coverArtData.artworkUrl
@@ -318,82 +303,3 @@ export const useAzuracastData = defineStore('stationData', {
     })
   },
 })
-
-function minSec(duration) {
-  const minutes = Math.trunc(duration / 60);
-  const seconds = Math.trunc(duration % 60);
-  return `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-}
-function getTimezoneName(type) {
-  const today = new Date();
-  const short = today.toLocaleDateString(undefined);
-  const full = today.toLocaleDateString(undefined, { timeZoneName: type });
-  // Trying to remove date from the string in a locale-agnostic way
-  const shortIndex = full.indexOf(short);
-  if (shortIndex >= 0) {
-    const trimmed = full.substring(0, shortIndex) + full.substring(shortIndex + short.length);
-    // by this time `trimmed` should be the timezone's name with some punctuation -
-    // trim it from both sides
-    return trimmed.replace(/^[\s,.\-:;]+|[\s,.\-:;]+$/g, '');
-
-  } else {
-    // in some magic case when short representation of date is not present in the long one, just return the long one as a fallback, since it should contain the timezone's name
-    return full;
-  }
-}
-// Sanitize a station shortcode, so it can be used in a CSS class name
-const toKebabCase = (str) =>
-  str &&
-  str
-    .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)
-    .map((x) => x.toLowerCase())
-    .join("-");
-
-function setElement(target, content,
-  {addClasses=null, attrib=null, style=null, removeClasses=null, timeconvert=false} = {}) {
-  // set elements with class="target" to content & modify/set attributes
-  // we use classes instead of ids because elements can occur multiple times
-  // will safely ignore any elements that are not used in the page
-  // (i.e. you don't have to have containers for all ids)
-  // content = "" or undefined means: set to empty
-  // content = null means: don’t touch content, just modify attribs
-  // this is used for user-named indicators ("is..." and "station-player")
-  let targets = Array.from(document.getElementsByClassName(target));
-
-  targets.forEach((targ) => {
-    if (targ && content) {
-      // this target id is used on the page, load it
-      // normal node with content, i.e. <tag>content</tag>
-      if (timeconvert) {
-        targ.textContent = getTimeFromTimestamp(content);
-      } else {
-        targ.textContent = content;
-      }
-    } else if (targ && content !== null) {
-      // null = don’t modify (user can set in page)
-      // empty or undefined = set to empty
-      targ.textContent = "";
-    }
-    // set attributes, if any
-    if (targ && attrib) {
-      Object.entries(attrib).forEach(([k,v]) => {
-        targ.setAttribute(k, v);
-      });
-    }
-    // set styles, if any
-    if (targ && style) {
-      Object.entries(style).forEach(([k,v]) => {
-        targ.style[k] = v;
-      });
-    }    
-    // remove Classes, if any
-    if (targ && removeClasses) {
-      targ.classList.remove(...removeClasses);
-    }
-    // add Classes, if any
-    if (targ && addClasses) {
-      targ.classList.add(...addClasses);
-    }
-  });
-}
-

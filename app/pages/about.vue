@@ -90,6 +90,5 @@
 </template>
 
 <script setup lang="ts">
-const counter = useCounterStore()
 
 </script>

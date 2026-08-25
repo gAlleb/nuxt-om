@@ -34,12 +34,12 @@ const localePath = useLocalePath()
 const { path } = useRoute()
 const { data } = await useAsyncData(`content-${path}`, () => queryContent().where({ _path: path }).only(['title', 'meta', 'img', 'date']).findOne())
 useHead({
-  title: data.title,
+  title: data.value?.title,
   meta: [
-    { name: 'description', content: data.meta },
-    { property: 'og:description', content: data.meta },
-    { property: 'og:title', content: data.title },
-    { property: 'og:image', content: data.img },
+    { name: 'description', content: data.value?.meta },
+    { property: 'og:description', content: data.value?.meta },
+    { property: 'og:title', content: data.value?.title },
+    { property: 'og:image', content: data.value?.img },
   ],
 })
 </script>

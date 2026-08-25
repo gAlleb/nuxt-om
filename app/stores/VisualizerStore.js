@@ -5,12 +5,9 @@ import { useEffectsStore } from '@/stores/effects';
 export const useVisualizerData = defineStore('VisualizerData', {
   state: () => ({
     animationFrameId: null,
-    animationFrameIdWave: null,
     animationFrameId3Waves: null,
     overrideColorScheme: null,
     customDarkScheme: null,
-    overrideColorSchemeWave: null,
-    customDarkSchemeWave: null,
     overrideColorScheme3Waves: null,
     customDarkScheme3Waves: null,
     customBarsNumber: null,
@@ -18,7 +15,6 @@ export const useVisualizerData = defineStore('VisualizerData', {
     analyzer: null,
     frequencyData: null,
     canvas: null,
-    canvasWave: null,
     canvas3Waves: null,
   }),
   getters: {
@@ -58,19 +54,6 @@ export const useVisualizerData = defineStore('VisualizerData', {
           capStyle: 'black',
         };
       }
-    },
-    colorSchemeWave: (state) => {
-      const colorMode = useColorMode()
-      const isDark = (colorMode.value === 'dark')
-      if (state.customDarkSchemeWave && isDark) {
-        return state.customDarkSchemeWave;
-       } else if (state.overrideColorSchemeWave){
-        return state.overrideColorSchemeWave;
-      } else if (isDark) {
-        return 'white'
-      } else {
-        return 'black'
-      };
     },
     colorScheme3Waves: (state) => {
       const colorMode = useColorMode()
@@ -198,83 +181,6 @@ export const useVisualizerData = defineStore('VisualizerData', {
 
          visualizer(container)
     },
-    initVisualizerWave(container, overrideColorSchemeWave = null, customDarkSchemeWave = null) {
-      this.overrideColorSchemeWave = overrideColorSchemeWave;
-      this.customDarkSchemeWave = customDarkSchemeWave;
-      const useInitPlayerStore = initPlayerStore();
-      // Functions
-           // Function to initialize the canvas (canvas)
-        function   initCanvas(container) {
-         const canvasmaker = document.createElement("canvas");
-         canvasmaker.setAttribute("id", "visualizerCanvasWave");
-         canvasmaker.setAttribute("class", "visualizer-item-wave");
-         container.appendChild(canvasmaker);
-         canvasmaker.width = container.clientWidth;
-         canvasmaker.height = "255";
-         return canvasmaker;
-       }
-
-       // Feature to change canvas based on container size
-       function resizeCanvas(canvas, container) {
-         canvas.width = container.clientWidth;
-         canvas.height = container.clientHeight;
-       }
-       // Visualizer
-      const visualizer = (container) => {
-         if (!container) {
-           return;
-         }
-         const options = {
-          fftSize: container.dataset.fftSize || 2048,
-          numBars: container.dataset.bars || 40,
-          maxHeight: container.dataset.maxHeight || 255,
-          waveformThickness: container.dataset.waveformThickness || 2.5, // Customize thickness
-         };
-        this.canvasWave = initCanvas(container);
-         const canvasCtx = this.canvasWave.getContext("2d");
-         // Create bars
-        // let frameCounter = 0;
-        // const framesToSkip = 1;
-      const renderWaveform = () => {
-      if (this.animationFrameIdWave) {
-          cancelAnimationFrame(this.animationFrameIdWave);
-      }
-      this.animationFrameIdWave = null;
-      this.animationFrameIdWave = requestAnimationFrame(renderWaveform);
-      // frameCounter++;
-      // if (frameCounter >= framesToSkip) {
-      //     frameCounter = 0;
-          resizeCanvas(this.canvasWave, container);
-          this.analyzer.getByteTimeDomainData(this.frequencyData);
-          canvasCtx.clearRect(0, 0, this.canvasWave.width, this.canvasWave.height);
-          canvasCtx.lineWidth = options.waveformThickness;
-          canvasCtx.strokeStyle = this.colorSchemeWave;
-          canvasCtx.beginPath();
-          const waveformData = this.frequencyData; // Create array
-          const sliceWidth = this.canvasWave.width / waveformData.length;
-          let x = 0;
-          for (let i = 0; i < waveformData.length; i++) {
-              const v = waveformData[i] / 255.0; // Normalize to 0-1 range
-              const y = this.canvasWave.height / 2 + v * this.canvasWave.height / 2; // Center the waveform
-              if (i === 0) {
-                  canvasCtx.moveTo(x, y);
-              } else {
-                  canvasCtx.lineTo(x, y);
-              }
-              x += sliceWidth;
-          }
-          canvasCtx.stroke();
-                  // }
-    };
-        renderWaveform();
-         // Window space change listener
-         window.addEventListener("resize", () => {
-           resizeCanvas(this.canvasWave, container);
-         });
-       };
-
-       visualizer(container)
-  },
   initVisualizer3Waves(container, overrideColorScheme3Waves = null, customDarkScheme3Waves = null) {
     this.overrideColorScheme3Waves = overrideColorScheme3Waves;
     this.customDarkScheme3Waves = customDarkScheme3Waves;
