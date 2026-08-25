@@ -45,7 +45,7 @@ export const placeholderCover = '/static/img/defaultCoverart.jpg'
 
 export type ProviderId = keyof typeof providers
 
-/** Цвета полосного визуализатора. `undefined` = дефолт из VisualizerStore. */
+/** Цвета полосного визуализатора. `undefined` — взять встроенные по текущей теме. */
 export interface VisualizerScheme {
   color1: string
   color2: string

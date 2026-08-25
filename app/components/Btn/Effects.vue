@@ -2,8 +2,8 @@
   <div class="relative ml-1 sm:ml-4" ref="dropdownContainer">
     <UTooltip text="UI Settings" :popper="{ offsetDistance: 5 }" class="">
       <div :class="[
-        (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) ? 'bg-red-400 dark:bg-red-400' :
-        (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground && effectsStore.visualizer)) ? 'bg-red-200 dark:bg-pink-400' :
+        effectsStore.allDisabled ? 'bg-red-400 dark:bg-red-400' :
+        !effectsStore.allEnabled ? 'bg-red-200 dark:bg-pink-400' :
         'bg-sxvx-light-bg dark:bg-sxvx-dark-bg'
         ]"
         class="hover:cursor-pointer flex rounded-xl  text-sm  active:ring-2 active:ring-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset focus:ring-offset-gray-800 p-2"
@@ -34,7 +34,7 @@
 
         <hr class="mb-2"/>
         <div class=" grid grid-cols-2 gap-3  ">
-        <button type="button" @click="toggleEffect('overlay0')"
+        <button type="button" @click="effectsStore.toggle('overlay0')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay0,
                     'bg-white': effectsStore.overlay0
           }"
@@ -46,7 +46,7 @@
 
         </button>
 
-        <button type="button" @click="toggleEffect('overlay1')"
+        <button type="button" @click="effectsStore.toggle('overlay1')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay1,
                     'bg-white': effectsStore.overlay1
           }"
@@ -57,7 +57,7 @@
           <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay1" /></center>
 
         </button>
-        <button type="button" @click="toggleEffect('overlay2')"
+        <button type="button" @click="effectsStore.toggle('overlay2')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay2,
                     'bg-white': effectsStore.overlay2
           }"
@@ -68,17 +68,16 @@
          <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay2" /></center>
 
         </button>
-        <button type="button" @click="toggleScanlineEffect()"
-          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5,
-                    'bg-white': effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5
-          }"
+        <button type="button" @click="effectsStore.toggleScanlines()"
+          :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.scanlinesOn,
+                    'bg-white': effectsStore.scanlinesOn }"
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Scanlines</span>
           <center><UToggle class="pointer-events-none" v-model="effectsStore.overlay3" /></center>
         </button>
-        <button type="button" @click="toggleEffect('artBackground')"
+        <button type="button" @click="effectsStore.toggle('artBackground')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.artBackground,
                     'bg-white': effectsStore.artBackground
           }"
@@ -89,7 +88,7 @@
          <center><UToggle class="pointer-events-none" v-model="effectsStore.artBackground" /></center>
         </button>
         <div class="flex flex-col gap-2 ">
-        <button type="button" @click="toggleEffect('visualizer')"
+        <button type="button" @click="effectsStore.toggle('visualizer')"
           :class="{ 'bg-red-400 dark:bg-red-400': !effectsStore.visualizer,
                     'bg-white': effectsStore.visualizer
           }"
@@ -98,7 +97,7 @@
           <span class="grid w-full text-zinc-900 text-xs">Visualizer</span>
           <center><UToggle class="pointer-events-none" v-model="effectsStore.visualizer" /></center>
         </button>
-        <button type="button" @click="toggleEffect('visualizerCaps')"
+        <button type="button" @click="effectsStore.toggle('visualizerCaps')"
           :class="{ 'bg-red-400 dark:bg-red-400': (!effectsStore.visualizerCaps || !effectsStore.visualizer),
                     'bg-white': (effectsStore.visualizerCaps && effectsStore.visualizer)
           }"
@@ -109,17 +108,17 @@
         </div>
         <hr />
         <hr />
-        <button type="button" @click="toggleAllEffects"
+        <button type="button" @click="effectsStore.toggleAll()"
           :class="[
-          (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) ? 'bg-red-400 dark:bg-red-400' :
-            (!(effectsStore.overlay0 && effectsStore.overlay1 && effectsStore.overlay2 && effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5 && effectsStore.artBackground && effectsStore.visualizer)) ? 'bg-red-200 dark:bg-pink-400' :
-              'bg-white']"
+          effectsStore.allDisabled ? 'bg-red-400 dark:bg-red-400' :
+          !effectsStore.allEnabled ? 'bg-red-200 dark:bg-pink-400' :
+          'bg-white']"
           class="flex flex-col  gap-2 
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sparkles" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Toggle</span>
         </button>
-        <button type="button" id="clearCacheBtn" @click="clearCache"
+        <button type="button" id="clearCacheBtn" @click="effectsStore.reset()"
           class="flex flex-col  gap-2 bg-white
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:trash" class="h-6 w-6 w-full" aria-hidden="true" />
@@ -156,66 +155,5 @@ const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => { if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; } };
 onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
-  document.addEventListener('click', closeEffectsBlockOutside);
 });
-onBeforeUnmount(() => {
-  document.removeEventListener('click', closeEffectsBlockOutside);
-});
-const showEffectsBlock = ref(false);
-const closeEffectsBlockOutside = (event) => {
-  if (showEffectsBlock.value && !document.getElementById('Effects_block').contains(event.target)) {
-    showEffectsBlock.value = false;
-  }
-};
-function toggleEffect(overlayId) {
-  effectsStore[overlayId] = !effectsStore[overlayId];
-  if (effectsStore[overlayId]) {
-    effectsStore.setOverlayLocalStorage(overlayId, true);
-  } else {
-    effectsStore.setOverlayLocalStorage(overlayId, false);
-  }
-}
-function toggleScanlineEffect() {
-  effectsStore.overlay3 = !effectsStore.overlay3;
-  effectsStore.overlay4 = !effectsStore.overlay4;
-  effectsStore.overlay5 = !effectsStore.overlay5;
-  if (effectsStore.overlay3 && effectsStore.overlay4 && effectsStore.overlay5) {
-    for (let i = 3; i <= 5; i++) {
-    effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
-    }
-  } else {
-    for (let i = 3; i <= 5; i++) {
-    effectsStore.setOverlayLocalStorage(`overlay${i}`, false);
-    }
-  }
-}
-function toggleAllEffects() {
-  if (!effectsStore.overlay0 && !effectsStore.overlay1 && !effectsStore.overlay2 && !effectsStore.overlay3 && !effectsStore.overlay4 && !effectsStore.overlay5 && !effectsStore.artBackground && !effectsStore.visualizer) {
-    effectsStore.setToTrue();
-    for (let i = 0; i <= 5; i++) {
-    effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
-    }
-    effectsStore.setOverlayLocalStorage('artBackground', true);
-    effectsStore.setOverlayLocalStorage('visualizer', true);
-    effectsStore.setOverlayLocalStorage('visualizerCaps', true);
-  } else {
-    effectsStore.setToFalse();
-    for (let i = 0; i <= 5; i++) {
-    effectsStore.setOverlayLocalStorage(`overlay${i}`, false);
-    }
-    effectsStore.setOverlayLocalStorage('artBackground', false);
-    effectsStore.setOverlayLocalStorage('visualizer', false);
-    effectsStore.setOverlayLocalStorage('visualizerCaps', false);
-  }
-}
-// Not clear but set to true
-function clearCache() {
-  for (let i = 0; i <= 5; i++) {
-    effectsStore.setOverlayLocalStorage(`overlay${i}`, true);
-  }
-  effectsStore.setOverlayLocalStorage('artBackground', true);
-  effectsStore.setOverlayLocalStorage('visualizer', true);
-  effectsStore.setOverlayLocalStorage('visualizerCaps', true);
-  effectsStore.setToTrue();
-}
 </script>

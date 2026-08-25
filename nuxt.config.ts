@@ -11,7 +11,7 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css', '~/assets/css/christmas.css'],
+  css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css', '~/assets/css/christmas.css', '~/assets/css/settings.css'],
   
   // mdc: { 
   //   highlight: {
@@ -39,6 +39,20 @@ export default defineNuxtConfig({
         lang: 'en',
         class: 'scroll-smooth',
       },
+      script: [
+        {
+          // Ставит настройки на <html> ДО первой отрисовки, чтобы шрифт,
+          // радиальная подсветка и плёночные эффекты не мигали дефолтом.
+          // Разметку Vue это не трогает — поэтому SSR и SSG совпадают.
+          innerHTML: `(function(){try{var d=document.documentElement,l=localStorage;
+d.dataset.stream=l.getItem('stream_name')||'stream';
+var def={overlay0:1,overlay1:0,overlay2:1,overlay3:0,overlay4:0,overlay5:0,artBackground:1,visualizer:1,visualizerCaps:1},on=[];
+for(var k in def){var v=l.getItem(k);if(v===null?def[k]:v==='true'||v==='1')on.push(k)}
+d.setAttribute('data-fx',on.join(' '));
+if(l.getItem('playerVisible')==='false')d.setAttribute('data-player-hidden','')}catch(e){}})()`,
+          tagPosition: 'head',
+        },
+      ],
     },
     pageTransition: { name: 'page', mode: 'out-in' },
   },

@@ -1,0 +1,74 @@
+/*
+ * Пользовательские настройки, применяемые до гидратации.
+ *
+ * Значения приходят из атрибутов на <html>, которые ставит инлайн-скрипт в
+ * <head> (см. nuxt.config.ts) и поддерживает app.vue. Vue эти вещи не
+ * рендерит вовсе — поэтому серверный HTML и клиентский рендер совпадают
+ * всегда, и `build` с `generate` ведут себя одинаково.
+ */
+
+/* --- шрифт интерфейса зависит от выбранной станции --- */
+
+html {
+  --station-font: 'Tenor Sans', sans-serif;
+  --station-radial: radial-gradient(rgba(229, 23, 187, 0.25), rgba(52, 220, 173, 0.15) 100%);
+}
+html[data-stream='rock'] {
+  --station-font: 'Metal Mania', sans-serif;
+  --station-radial: radial-gradient(rgba(229, 23, 30, 0.25), rgba(220, 52, 189, 0.1) 100%);
+}
+html[data-stream='coma'] {
+  --station-font: UNSCII, sans-serif;
+  --station-radial: radial-gradient(rgba(23, 229, 50, 0.25), rgba(13, 164, 122, 0.1) 100%);
+}
+html[data-stream='core'] {
+  --station-font: UNSCII, sans-serif;
+  --station-radial: radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%);
+}
+html[data-stream='chill'] {
+  --station-font: UNSCII, sans-serif;
+  --station-radial: radial-gradient(#0056fb29, #ff00fb26);
+}
+html[data-stream='terra'] {
+  --station-font: 'Tenor Sans', sans-serif;
+  --station-radial: radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%);
+}
+html[data-stream='cdp'] {
+  --station-font: 'Tenor Sans', sans-serif;
+  --station-radial: radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%);
+}
+
+.station-font {
+  font-family: var(--station-font);
+}
+
+/* --- плёночные эффекты: включены только те, что перечислены в data-fx --- */
+
+#overlay0,
+#overlay1,
+#overlay2,
+#overlay3,
+#overlay4,
+#overlay5 {
+  display: none;
+}
+html[data-fx~='overlay0'] #overlay0,
+html[data-fx~='overlay1'] #overlay1,
+html[data-fx~='overlay2'] #overlay2,
+html[data-fx~='overlay3'] #overlay3,
+html[data-fx~='overlay4'] #overlay4,
+html[data-fx~='overlay5'] #overlay5 {
+  display: flex;
+}
+
+/* радиальная подсветка берёт цвет выбранной станции */
+#overlay0 {
+  z-index: 1000;
+  background-image: var(--station-radial);
+}
+
+/* --- свёрнутый плеер --- */
+
+html[data-player-hidden] #ice-player {
+  transform: translateY(165%);
+}

@@ -46,14 +46,14 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/vue'
 import { ref } from 'vue';
 import { initPlayerStore } from '@/stores/initPlayer'; // Import the store
+import { SETTINGS_KEYS, readSetting } from '~/utils/settings';
 const useInitPlayerStore = initPlayerStore(); // Get the store instance
 const isOpen = ref(false)
 const dropdownContainer = ref(null);
 const handleOutsideClick = (event) => {if (dropdownContainer.value && !dropdownContainer.value.contains(event.target)) { isOpen.value = false; }};
 onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
-  const playerVisibilityState = JSON.parse(localStorage.getItem('playerVisible'));
-  useInitPlayerStore.playerVisible = playerVisibilityState === true || playerVisibilityState === null;
+  useInitPlayerStore.playerVisible = readSetting(SETTINGS_KEYS.playerVisible) !== 'false';
 });
 
 // Раскрытие ползунка громкости в шапке. Задержки те же, что были в IcePlayer:

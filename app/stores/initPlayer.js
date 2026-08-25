@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
 import { createAudioEngine } from '../composables/audioEngine.js';
 import { currentStreamStore } from './currentStream';
-import { useVisualizerData } from './VisualizerStore.js';
 import { isStationId } from '~/config/stations';
+import { SETTINGS_KEYS, readSetting, writeSetting, applyPlayerVisibility } from '~/utils/settings';
 
 export const initPlayerStore = defineStore('player', {
   state: () => ({
@@ -68,8 +68,6 @@ export const initPlayerStore = defineStore('player', {
       this.analyzer = this.ctx.createAnalyser();
       this.analyzer.smoothingTimeConstant = 0.85;
 
-      const visualizerData = useVisualizerData();
-      visualizerData.initStore();
       this.eqFilters = this.createEQFilters(this.ctx);
       this.connectEQFilters();
       this.getEQBandsFromStorage();
@@ -86,7 +84,7 @@ export const initPlayerStore = defineStore('player', {
         this.engine?.setMuted(false);
       }
       this.engine?.setVolume(v);
-      if (import.meta.client) localStorage.setItem('vol', String(v));
+      writeSetting(SETTINGS_KEYS.volume, v);
     },
 
     toggleMute() {
@@ -95,8 +93,7 @@ export const initPlayerStore = defineStore('player', {
     },
 
     loadVolumeFromStorage() {
-      if (!import.meta.client) return;
-      const stored = localStorage.getItem('vol');
+      const stored = readSetting(SETTINGS_KEYS.volume);
       if (stored !== null) this.volume = parseFloat(stored);
       this.engine?.setVolume(this.volume);
       this.engine?.setMuted(this.muted);
@@ -104,25 +101,20 @@ export const initPlayerStore = defineStore('player', {
 
     togglePlayerVisibility() {
       this.playerVisible = !this.playerVisible;
-      if (import.meta.client) {
-      localStorage.setItem('playerVisible', JSON.stringify(this.playerVisible));
-      }
+      writeSetting(SETTINGS_KEYS.playerVisible, this.playerVisible);
+      applyPlayerVisibility(this.playerVisible);
     },
     toggleHLS() {
       this.isUsingHLS = !this.isUsingHLS;
-      if (import.meta.client) localStorage.setItem('hls', JSON.stringify(this.isUsingHLS));
+      writeSetting(SETTINGS_KEYS.hls, this.isUsingHLS);
       this.engine.stop();
       if (this.isPlaying) {
         this.engine.play(this.selectedId(), this.isUsingHLS);
       }
     },
     loadLocalStorageHLS(key, callback) {
-      if (import.meta.client) {
-        const storedData = localStorage.getItem(key);
-        if (storedData) {
-          this.isUsingHLS = JSON.parse(storedData);
-        }
-      }
+      const stored = readSetting(SETTINGS_KEYS.hls);
+      if (stored !== null) this.isUsingHLS = stored === 'true';
       callback();
     },
     unlockAudioContext(audioCtx) {
@@ -194,16 +186,12 @@ export const initPlayerStore = defineStore('player', {
       });
     },
     saveEQBandsToStorage(values) {
-      if (import.meta.client) {
-      localStorage.setItem('eqBands', JSON.stringify(values.map(String)));
-      }
+      writeSetting(SETTINGS_KEYS.eqBands, JSON.stringify(values.map(String)));
     },
     getEQBandsFromStorage() {
-      if (import.meta.client) {
-      const storedValues = localStorage.getItem('eqBands');
-      this.eqBands = storedValues ? JSON.parse(storedValues).map(Number) : Array(10).fill(0);
+      const stored = readSetting(SETTINGS_KEYS.eqBands);
+      this.eqBands = stored ? JSON.parse(stored).map(Number) : Array(10).fill(0);
       this.setEQBands(this.eqBands);
-      }
     },
     /** Play/stop текущей станции. Кнопка в плеере и в шапке. */
     togglePlayAll() {
