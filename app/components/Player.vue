@@ -1,6 +1,6 @@
 <template>
 <section>
-    <div class="icecast_player ice-player fixed transition duration-300 ease-in-linear" id="ice-player" style="z-index:30;">
+    <div class="icecast_player ice-player fixed" id="ice-player" style="z-index:30;">
     <div class="icecast_player ice-player fixed backdrop-blur-[1rem] transition-all duration-[1500ms]" style="z-index:30;"
     :style="bg">
         <div class="ice-player-el mb-5">
@@ -65,7 +65,10 @@
                 <swiper-slide
                   v-for="(s, i) in stations"
                   :key="s.id"
-                  :class="i === 0 ? 'ms-1' : (i === stations.length - 1 ? 'me-0' : 'me-2')"
+                  :class="[
+                    i === 0 ? 'ms-1' : '',
+                    i === stations.length - 1 ? 'me-0' : 'me-2',
+                  ]"
                   style="height: 40px; width: 40px!important;">
                   <StationThumb :station="s" />
                 </swiper-slide>

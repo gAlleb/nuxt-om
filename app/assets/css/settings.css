@@ -67,8 +67,27 @@ html[data-fx~='overlay5'] #overlay5 {
   background-image: var(--station-radial);
 }
 
-/* --- свёрнутый плеер --- */
+/* --- сворачивание плеера --- */
 
+/*
+ * Внутренний блок плеера тоже был position:fixed. Из-за этого в момент, когда
+ * на внешнем появлялся transform, внешний становился для него containing block
+ * и содержимое прыгало. Прижимаем внутренний к внешнему обычным потоком.
+ */
+#ice-player > .ice-player.fixed {
+  position: static;
+  left: auto;
+  bottom: auto;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+#ice-player {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+/* Уезжает ровно на свою высоту плюс нижний отступ — независимо от размера экрана. */
 html[data-player-hidden] #ice-player {
-  transform: translateY(165%);
+  transform: translateY(calc(100% + 1rem));
 }
