@@ -7,10 +7,6 @@ export default defineNuxtConfig({
   //     ignore: ["/dynamic"],
   //   },
   // },
-  future: {
-    compatibilityVersion: 4,
-  },
-
   css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css', '~/assets/css/christmas.css', '~/assets/css/settings.css'],
   
   // mdc: { 
@@ -120,12 +116,13 @@ if(l.getItem('playerVisible')==='false')d.setAttribute('data-player-hidden','')}
   },
 
   content: {
-    experimental: {
-      search: true
-    },
-    highlight: {
-      // Code Theme used in all color schemes.
-      theme: 'one-dark-pro',
+    build: {
+      markdown: {
+        highlight: {
+          // Тема подсветки кода, одна на светлую и тёмную схемы.
+          theme: 'one-dark-pro',
+        },
+      },
     },
   },
 

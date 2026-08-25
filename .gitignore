@@ -5,6 +5,9 @@
 .cache
 dist
 
+# Локальная база @nuxt/content v3
+.data
+
 # Node dependencies
 node_modules
 

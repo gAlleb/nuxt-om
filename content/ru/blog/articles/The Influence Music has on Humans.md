@@ -1,6 +1,6 @@
 ---
 title: 'The Influence Music has on Humans'
-meta: 'Music is the movement of sound to reach the soul for the education of its virtue. Music is a gift, Plato has explained in...'
+description: 'Music is the movement of sound to reach the soul for the education of its virtue. Music is a gift, Plato has explained in...'
 date: 17 Jan 2025
 img: /images/blog/the_influence_music_has_on_humans/the_influence_music_has_on_humans_title.webp
 tags: ['Research', 'Music']

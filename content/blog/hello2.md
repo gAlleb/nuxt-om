@@ -1,6 +1,6 @@
 ---
 title: 'My awsome post title'
-meta: 'This is the meta description'
+description: 'This is the meta description'
 date: 17 Jan 2023
 img: /images/blog/test/test.jpg
 tags: ['Nuxt', 'Tailwind']

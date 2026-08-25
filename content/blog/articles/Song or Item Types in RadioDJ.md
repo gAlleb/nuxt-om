@@ -1,6 +1,6 @@
 ---
 title: 'Song or Item Types in RadioDJ'
-meta: 'Station IDs are short duration audio recordings (i.e. less than 15 seconds) which identify the station name, frequency...'
+description: 'Station IDs are short duration audio recordings (i.e. less than 15 seconds) which identify the station name, frequency...'
 date: 17 Jan 2023
 img: https://sxvx.ru/wordpress/wp-content/uploads/2023/06/vu2yq28ovof8ijcmm7tj8cj5pu54e393-300x225.jpg
 tags: ['RadioDJ', 'Song Types']

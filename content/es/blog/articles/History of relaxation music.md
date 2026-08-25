@@ -1,6 +1,6 @@
 ---
 title: 'The history of relaxation music and its origins'
-meta: 'Throughout history, music has been a powerful tool for relaxation, healing, and overall well-being.'
+description: 'Throughout history, music has been a powerful tool for relaxation, healing, and overall well-being.'
 date: 17 Jan 2025
 img: /images/blog/history_of_relaxation_music/blog_relax_music_title.jpg
 tags: ['Meditation', 'Music']

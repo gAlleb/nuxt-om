@@ -10,11 +10,10 @@
         </h3>
         <!-- <p class="text-p mx-auto mt-3 max-w-2xl text-xl font-semibold sm:mt-4">Latest guides and how to do's for Developers.</p> -->
       </div>
-      <ContentList :path="localePath('/blog')" v-slot="{ list }">
-        <div data-aos="flip-right"  data-aos-easing="ease-out-cubic" data-aos-duration="1000" 
+      <div data-aos="flip-right"  data-aos-easing="ease-out-cubic" data-aos-duration="1000" 
         class="mx-auto lg:mx-20 md:mx-20 sm:mx-20 mt-12 grid max-w-none gap-10 lg:max-w-none md:grid-cols-2 lg:grid-cols-3">
-          <div v-for="blog in list" :key="blog.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
-            <NuxtLink :to="blog._path">
+          <div v-for="blog in posts" :key="blog.title" class="flex flex-col overflow-hidden rounded-3xl shadow-lg hover:shadow-2xl dark:hover:shadow-[2px_5px_20px_0.5px_rgba(255,255,255,0.1)]">
+            <NuxtLink :to="blog.path">
             <div class="flex-shrink-0 overflow-hidden">
               <div class="relative">
                 <!-- transition-all duration-1000 brightness-75 hover:brightness-100  hover:scale-110 -->
@@ -29,12 +28,12 @@
             </NuxtLink>
             <div class="bg-accent dark:bg-gradient-to-r from-gray-800 flex flex-1 flex-col justify-between p-6">
               <div class="flex-1">
-                <NuxtLink :to="blog._path" class="block">
+                <NuxtLink :to="blog.path" class="block">
                   <p class="text-h text-lg font-semibold">
                     {{ blog.title }}
                   </p>
                   <p class="text-p mt-3 text-sm">
-                    {{ blog.meta }}
+                    {{ blog.description }}
                   </p>
                 </NuxtLink>
               </div>
@@ -60,13 +59,19 @@
             </div>
           </div>
         </div>
-      </ContentList>
+      
     </div>
   </section>
 </template>
 
 <script setup>
 const localePath = useLocalePath()
+
+// Content v3: списка-компонента больше нет, документы запрашиваются явно.
+const base = localePath('/blog')
+const { data: posts } = await useAsyncData(`list-${base}`, () =>
+  queryCollection('content').where('path', 'LIKE', `${base}/%`).all(),
+)
 useServerSeoMeta({
   title: '',
   ogTitle: '',
