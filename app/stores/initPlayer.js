@@ -2,6 +2,7 @@ import { defineStore } from 'pinia';
 import IcePlayer from '../composables/IcePlayer.js';
 import { currentStreamStore } from './currentStream';
 import { useVisualizerData } from './VisualizerStore.js';
+import { isStationId } from '~/config/stations';
 
 export const initPlayerStore = defineStore('player', {
   state: () => ({
@@ -9,13 +10,12 @@ export const initPlayerStore = defineStore('player', {
     playerVisible: true,
     isUsingHLS: true,
     isPlaying: false,
-    isPlayingStream: false,
-    isPlayingRock: false,
-    isPlayingComa: false,
-    isPlayingCore: false,
-    isPlayingTerra: false,
-    isPlayingChill: false,
-    isPlayingCDP: false,
+    /**
+     * Id станции, которая играет прямо сейчас, или null.
+     * Заменил семь булевых isPlayingX — они остались геттерами ниже,
+     * чтобы шаблоны продолжали работать без правок.
+     */
+    activeId: null,
     ctx: null,
     audioSource: null,
     analyzer: null,
@@ -23,7 +23,34 @@ export const initPlayerStore = defineStore('player', {
     eqFilters: [], // Array to hold BiquadFilterNodes
     eqBands: Array(10).fill(0),
   }),
+  getters: {
+    isPlayingStream: (s) => s.isPlaying && s.activeId === 'stream',
+    isPlayingRock:   (s) => s.isPlaying && s.activeId === 'rock',
+    isPlayingComa:   (s) => s.isPlaying && s.activeId === 'coma',
+    isPlayingCore:   (s) => s.isPlaying && s.activeId === 'core',
+    isPlayingTerra:  (s) => s.isPlaying && s.activeId === 'terra',
+    isPlayingChill:  (s) => s.isPlaying && s.activeId === 'chill',
+    isPlayingCDP:    (s) => s.isPlaying && s.activeId === 'cdp',
+    /** Играет ли конкретная станция — то, чем со временем заменятся геттеры выше. */
+    isPlayingId: (s) => (id) => s.isPlaying && s.activeId === id,
+  },
   actions: {
+    /** Единственное место, где отмечается «сейчас играет вот это». */
+    markPlaying() {
+      this.isPlaying = true;
+      this.activeId = this.player.stream_mount;
+    },
+    /** Единственное место, где отмечается «ничего не играет». */
+    markStopped() {
+      this.isPlaying = false;
+      this.activeId = null;
+    },
+    /** Переключить поток и синхронизировать currentStreamStore. */
+    switchStream(name) {
+      this.player.stop();
+      this.player.change_stream(name);
+      currentStreamStore().setStream(name);
+    },
     initPlayer() {
       if (!this.player) {
         this.player = new IcePlayer('#ice-player', this.isUsingHLS);
@@ -166,231 +193,66 @@ export const initPlayerStore = defineStore('player', {
       this.setEQBands(this.eqBands);
       }
     },
+    /** Play/stop текущей станции. Кнопка в плеере и в шапке. */
     togglePlayAll() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();
-        this.isPlayingStream = false;
-        this.isPlayingRock = false;
-        this.isPlayingComa = false;
-        this.isPlayingTerra = false;
-        this.isPlayingCore = false,
-        this.isPlayingChill = false;
-        this.isPlayingCDP = false;
-        this.isPlaying = false;
+        this.markStopped();
       } else {
         this.player.play();
-        this.isPlaying = true;
-        if (this.player.stream_mount === 'stream') {
-          this.isPlayingStream = true;
-        }
-        if (this.player.stream_mount === 'rock') {
-          this.isPlayingRock = true;
-        }
-        if (this.player.stream_mount === 'coma') {
-          this.isPlayingComa = true;
-        }
-        if (this.player.stream_mount === 'terra') {
-          this.isPlayingTerra = true;
-        }
-        if (this.player.stream_mount === 'core') {
-          this.isPlayingCore = true;
-        }
-        if (this.player.stream_mount === 'chill') {
-          this.isPlayingChill = true;
-        }
-        if (this.player.stream_mount === 'cdp') {
-          this.isPlayingCDP = true;
-        }
+        this.markPlaying();
       }
     },
+    /**
+     * Клик по станции в списке/на карточке.
+     * По той же станции — переключает play/stop, по другой — переходит на неё и играет.
+     */
     togglePlay(name) {
+      if (!isStationId(name)) {
+        console.warn(`togglePlay: неизвестная станция "${name}"`);
+        return;
+      }
       if (name === this.player.stream_mount) {
-
         if (this.player.current_state === this.player.PLAYING) {
           this.player.stop();
-          this.isPlaying = false;
-          this.isPlayingStream = false;
-          this.isPlayingRock = false;
-          this.isPlayingComa = false;
-          this.isPlayingTerra = false;
-          this.isPlayingCore = false;
-          this.isPlayingChill = false;
-          this.isPlayingCDP = false;
+          this.markStopped();
         } else {
-
           this.player.play();
-          this.isPlaying = true;
-
-          if (this.player.stream_mount === 'stream') {
-            this.isPlayingStream = true;
-          }
-          if (this.player.stream_mount === 'rock') {
-            this.isPlayingRock = true;
-          }
-          if (this.player.stream_mount === 'coma') {
-            this.isPlayingComa = true;
-          }
-          if (this.player.stream_mount === 'core') {
-            this.isPlayingCore = true;
-          }
-          if (this.player.stream_mount === 'terra') {
-            this.isPlayingTerra = true;
-          }
-          if (this.player.stream_mount === 'chill') {
-            this.isPlayingChill = true;
-          }
-          if (this.player.stream_mount === 'cdp') {
-            this.isPlayingCDP = true;
-          }
+          this.markPlaying();
         }
-
-      } else if (name !== this.player.stream_mount) {
-
-          this.player.stop();
-          this.player.change_stream(name);
-          const useCurrentStreamStore = currentStreamStore(); // Get the store instance
-          useCurrentStreamStore.setStream(name); // Update the store
-          this.isPlayingStream = false;
-          this.isPlayingRock = false;
-          this.isPlayingComa = false;
-          this.isPlayingTerra = false;
-          this.isPlayingCore = false;
-          this.isPlayingChill = false;
-          this.isPlayingCDP = false;
-          this.isPlaying = false;
-          if (this.player.current_state === this.player.PLAYING) {
-            this.player.stop();
-            this.isPlaying = false;
-            this.isPlayingStream = false;
-            this.isPlayingRock = false;
-            this.isPlayingComa = false;
-            this.isPlayingTerra = false;
-            this.isPlayingCore = false;
-            this.isPlayingChill = false;
-            this.isPlayingCDP = false;
-          } else {
-            this.player.play();
-            this.isPlaying = true;
-
-            if (this.player.stream_mount === 'stream') {
-              this.isPlayingStream = true;
-            }
-            if (this.player.stream_mount === 'rock') {
-              this.isPlayingRock = true;
-            }
-            if (this.player.stream_mount === 'coma') {
-              this.isPlayingComa = true;
-            }
-            if (this.player.stream_mount === 'core') {
-              this.isPlayingCore = true;
-            }
-            if (this.player.stream_mount === 'terra') {
-              this.isPlayingTerra = true;
-            }
-            if (this.player.stream_mount === 'chill') {
-              this.isPlayingChill = true;
-            }
-            if (this.player.stream_mount === 'cdp') {
-              this.isPlayingCDP = true;
-            }
-          }
+        return;
       }
-
+      // player.stop() внутри switchStream гарантированно переводит в STOPPED,
+      // поэтому здесь всегда играем заново.
+      this.switchStream(name);
+      this.player.play();
+      this.markPlaying();
     },
+    /**
+     * То же, но по уже играющей станции НЕ останавливает — «просто включи это».
+     * Используется в свипере плеера и в меню выбора стрима.
+     */
     toggleInstantPlay(name) {
-      if (name === this.player.stream_mount) {
-
-        if (this.player.current_state === this.player.PLAYING) {
-
-          this.isPlaying = true;
-
-        } else {
-
-          this.player.play();
-          this.isPlaying = true;
-
-          if (this.player.stream_mount === 'stream') {
-            this.isPlayingStream = true;
-          }
-          if (this.player.stream_mount === 'rock') {
-            this.isPlayingRock = true;
-          }
-          if (this.player.stream_mount === 'coma') {
-            this.isPlayingComa = true;
-          }
-          if (this.player.stream_mount === 'core') {
-            this.isPlayingCore = true;
-          }
-          if (this.player.stream_mount === 'terra') {
-            this.isPlayingTerra = true;
-          }
-          if (this.player.stream_mount === 'chill') {
-            this.isPlayingChill = true;
-          }
-          if (this.player.stream_mount === 'cdp') {
-            this.isPlayingCDP = true;
-          }
-        }
-
-      } else if (name !== this.player.stream_mount) {
-
-          this.player.stop();
-          this.player.change_stream(name);
-          const useCurrentStreamStore = currentStreamStore(); // Get the store instance
-          useCurrentStreamStore.setStream(name); // Update the store
-          this.isPlayingStream = false;
-          this.isPlayingRock = false;
-          this.isPlayingComa = false;
-          this.isPlayingTerra = false;
-          this.isPlayingCore = false;
-          this.isPlayingChill = false;
-          this.isPlayingCDP = false;
-          this.isPlaying = false;
-          if (this.player.current_state === this.player.PLAYING) {
-
-            this.isPlaying = true;
-
-          } else {
-            this.player.play();
-            this.isPlaying = true;
-
-            if (this.player.stream_mount === 'stream') {
-              this.isPlayingStream = true;
-            }
-            if (this.player.stream_mount === 'rock') {
-              this.isPlayingRock = true;
-            }
-            if (this.player.stream_mount === 'coma') {
-              this.isPlayingComa = true;
-            }
-            if (this.player.stream_mount === 'core') {
-              this.isPlayingCore = true;
-            }
-            if (this.player.stream_mount === 'terra') {
-              this.isPlayingTerra = true;
-            }
-            if (this.player.stream_mount === 'chill') {
-              this.isPlayingChill = true;
-            }
-            if (this.player.stream_mount === 'cdp') {
-              this.isPlayingCDP = true;
-            }
-          }
+      if (!isStationId(name)) {
+        console.warn(`toggleInstantPlay: неизвестная станция "${name}"`);
+        return;
       }
-
+      if (name === this.player.stream_mount) {
+        if (this.player.current_state !== this.player.PLAYING) {
+          this.player.play();
+        }
+        this.markPlaying();
+        return;
+      }
+      this.switchStream(name);
+      this.player.play();
+      this.markPlaying();
     },
     stopPlayer() {
       if (this.player.current_state === this.player.PLAYING) {
         this.player.stop();
       }
-      this.isPlaying = false;
-      this.isPlayingStream = false;
-      this.isPlayingRock = false;
-      this.isPlayingComa = false;
-      this.isPlayingTerra = false;
-      this.isPlayingCore = false;
-      this.isPlayingChill = false;
-      this.isPlayingCDP = false;
+      this.markStopped();
     },
     changeVol3() {
     this.player.change_volume3();
@@ -401,40 +263,23 @@ export const initPlayerStore = defineStore('player', {
     muteVol() {
     this.player.mute();
     },
+    /**
+     * Сменить станцию, не трогая play/stop: если играло — продолжит играть новую.
+     * Сейчас ниоткуда не вызывается, оставлено как публичное API стора.
+     */
     setStream(name) {
-      this.isPlayingRock = false;
-      this.isPlayingComa = false;
-      this.isPlayingStream = false;
-      this.isPlayingTerra = false;
-      this.isPlayingCore = false;
-      this.isPlayingChill = false;
-      this.isPlayingCDP = false;
-    if (this.player.current_state === this.player.PLAYING) {
-        if (name === 'stream') {
-          this.isPlayingStream = true;
-        }
-        if (name === 'rock') {
-          this.isPlayingRock = true;
-        }
-        if (name === 'coma') {
-          this.isPlayingComa = true;
-        }
-        if (name === 'core') {
-          this.isPlayingCore = true;
-        }
-        if (name === 'terra') {
-          this.isPlayingTerra = true;
-        }   
-        if (name === 'chill') {
-          this.isPlayingChill = true;
-        }
-        if (name === 'cdp') {
-          this.isPlayingCDP = true;
-        }
-    }
-    this.player.change_stream(name);
-    const useCurrentStreamStore = currentStreamStore(); // Get the store instance
-    useCurrentStreamStore.setStream(name); // Update the store
+      if (!isStationId(name)) {
+        console.warn(`setStream: неизвестная станция "${name}"`);
+        return;
+      }
+      const wasPlaying = this.player.current_state === this.player.PLAYING;
+      this.player.change_stream(name);
+      currentStreamStore().setStream(name);
+      if (wasPlaying) {
+        this.markPlaying();
+      } else {
+        this.markStopped();
+      }
     },
   },
 

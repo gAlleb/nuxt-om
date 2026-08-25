@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   // mode: 'jit',
-  content: ['./app/components/**/*.{js,vue,ts}', './app/layouts/**/*.vue', './app/pages/**/*.vue', './app/plugins/**/*.{js,ts}', './content/**/*.{md,js,ts}', './nuxt.config.{js,ts}', './app/app.vue'],
+  content: ['./app/components/**/*.{js,vue,ts}', './app/config/**/*.ts', './app/stores/**/*.{js,ts}', './app/layouts/**/*.vue', './app/pages/**/*.vue', './app/plugins/**/*.{js,ts}', './content/**/*.{md,js,ts}', './nuxt.config.{js,ts}', './app/app.vue'],
   theme: {
     extend: {
       colors: {
