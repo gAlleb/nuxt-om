@@ -126,13 +126,13 @@
         </button>
         <hr />
         <hr />
-        <button @click="colorMode.preference = 'light'" type="button"
+        <button @click="switchTheme($event, 'light')" type="button"
           class="flex flex-col  gap-2 bg-white
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
           <Icon name="heroicons:sun" class="h-6 w-6 w-full" aria-hidden="true" />
           <span class="grid w-full text-zinc-900 text-xs">Light</span>
         </button>
-        <button @click="colorMode.preference = 'dark'" type="button"
+        <button @click="switchTheme($event, 'dark')" type="button"
           class="flex flex-col  gap-2 bg-zinc-900
           px-4 py-2 text-sm text-zinc-100 w-full rounded-2xl">
           <Icon name="heroicons:moon" class="h-6 w-6 w-full" aria-hidden="true" />
@@ -146,7 +146,7 @@
 <script setup>
 import { initPlayerStore } from '@/stores/initPlayer';
 const useInitPlayerStore = initPlayerStore();
-const colorMode = useColorMode()
+const { switchTheme } = useThemeTransition()
 import { ref, onMounted } from 'vue';
 import { useEffectsStore } from '@/stores/effects';
 const effectsStore = useEffectsStore();
