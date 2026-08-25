@@ -82,7 +82,13 @@ html[data-fx~='overlay5'] #overlay5 {
   margin-bottom: 0;
 }
 
+/*
+ * Внешний контейнер существует только ради transform при сворачивании.
+ * Отступы и фон рисует внутренний блок, поэтому свои padding'и от .ice-player
+ * внешний не должен добавлять — иначе плеер отходит от краёв экрана.
+ */
 #ice-player {
+  padding: 0;
   transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   will-change: transform;
 }
