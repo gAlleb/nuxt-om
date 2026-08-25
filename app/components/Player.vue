@@ -6,26 +6,33 @@
     :style="bg">
         <div class="ice-player-el mb-5">
             <div>
-                <!-- Скрытые элементы, на которые вешается обработчики IcePlayer -->
-                <i class="ice-play hidden"style="font-size:1.6rem !important" ></i>
-                <i class="ice-pause hidden"></i>
-                <i class="ice-stop hidden"></i>
-
                 <button style="padding: 8px;" class="flex rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800 " @click="useInitPlayerStore.togglePlayAll()"  >
                     <Icon id="playBtnPlayer" name="heroicons-solid:play" class="h-6 w-6 bg-green-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? 'hidden' : '']" />
                     <Icon id="stopBtnPlayer" name="heroicons-solid:stop" class="h-6 w-6 bg-red-500" aria-hidden="true" :class="[useInitPlayerStore.isPlaying ? '' : 'hidden']" />
                 </button>
             </div>
             <div class="relative">
-            <button id="mainVolumeBtn" style="padding: 5px;top: -20px;" class="absolute z-10 ml-2 inline-flex  items-center  rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"  >
-                    <a id="show_volume_xs" class=" mute  speaker  " title="mute/unmute"  ><span></span></a>
+            <button id="mainVolumeBtn" style="padding: 5px;top: -20px;" class="absolute z-10 ml-2 inline-flex  items-center  rounded-xl transitio-all duration-500 ease-in-out text-sm focus:outline-none bg-sxvx-dark dark:bg-sxvx-dark-bg focus:ring-white focus:ring-2  focus:ring-offset focus:ring-offset-gray-800"
+              @mouseenter="openMainVolume"
+              @mouseleave="scheduleCloseMainVolume">
+                    <a id="show_volume_xs" class="mute speaker" title="mute/unmute"
+                       :class="{ muted: useInitPlayerStore.muted, open_volume: verticalVolumeOpen }"
+                       @click="onSpeakerClick"
+                       @mouseenter="verticalVolumeOpen = true"><span></span></a>
                      </button>
             </div>
-            <input class="ice-volume hidden sm:inline-flex -rotate-90" type="range" min="0" max="100" value="100" step="1">
-            <div id="vol_value" class="vol_value hidden  ms-2" style="font-family: monospace;position: fixed;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">70%</div>
+            <PlayerVolumeSlider
+              klass="ice-volume hidden sm:inline-flex -rotate-90"
+              :class="{ open_volume: mainVolumeOpen }"
+              @mouseenter="openMainVolume"
+              @mouseleave="scheduleCloseMainVolume" />
+            <div id="vol_value" class="vol_value hidden  ms-2" :class="{ open_volume: mainVolumeOpen }" style="font-family: monospace;position: fixed;pointer-events: none;color:grey;font-decoration:bold; text-shadow:none">{{ volumeLabel }}</div>
 
-            <div class="vol_value2 hidden ">70%</div>
-            <input id="ice_volume_vertical" class="volume-vertical inline-flex  hidden" type="range" min="0" max="100" value="100" step="1">
+            <div class="vol_value2 hidden ">{{ volumeLabel }}</div>
+            <PlayerVolumeSlider
+              input-id="ice_volume_vertical"
+              klass="volume-vertical inline-flex hidden"
+              :class="{ open_volume: verticalVolumeOpen }" />
 
             <!-- Выпадающий список станций на узких экранах -->
             <div class="relative me-2 ms-14 sm:hidden transition-all duration-500" ref="dropUpContainer">
@@ -171,10 +178,40 @@ const swiper1 = useSwiper(playerSwiper, {
   navigation: false,
 })
 
+// Всплывающие панели громкости. Тайминги те же, что были в IcePlayer:
+// 1200 мс после ухода курсора.
+const CLOSE_DELAY = 1200;
+const mainVolumeOpen = ref(false);
+const verticalVolumeOpen = ref(false);
+let closeTimer = null;
+
+function openMainVolume() {
+  clearTimeout(closeTimer);
+  mainVolumeOpen.value = true;
+}
+function scheduleCloseMainVolume() {
+  clearTimeout(closeTimer);
+  closeTimer = setTimeout(() => { mainVolumeOpen.value = false; }, CLOSE_DELAY);
+}
+/** Иконка динамика одновременно мьютит и раскрывает вертикальный ползунок — так было и раньше. */
+function onSpeakerClick() {
+  useInitPlayerStore.toggleMute();
+  verticalVolumeOpen.value = !verticalVolumeOpen.value;
+}
+
+const volumeLabel = computed(() =>
+  useInitPlayerStore.muted ? '' : `${useInitPlayerStore.displayVolume}%`,
+);
+
 const streamsSmallMenu = ref(false);
 const dropUpContainer = ref(null);
 const handleOutsideClick = (event) => {
   if (dropUpContainer.value && !dropUpContainer.value.contains(event.target)) streamsSmallMenu.value = false;
+  const speaker = document.querySelector('#show_volume_xs');
+  const vertical = document.querySelector('#ice_volume_vertical');
+  if (speaker && vertical && !speaker.contains(event.target) && !vertical.contains(event.target)) {
+    verticalVolumeOpen.value = false;
+  }
 };
 onMounted(() => window.addEventListener('click', handleOutsideClick));
 

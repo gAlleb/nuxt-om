@@ -1,21 +1,21 @@
 import { defineStore } from 'pinia';
-import IcePlayer from '../composables/IcePlayer.js';
+import { createAudioEngine } from '../composables/audioEngine.js';
 import { currentStreamStore } from './currentStream';
 import { useVisualizerData } from './VisualizerStore.js';
 import { isStationId } from '~/config/stations';
 
 export const initPlayerStore = defineStore('player', {
   state: () => ({
-    player: null,
+    /** Движок воспроизведения. Создаётся один раз в initPlayer(). */
+    engine: null,
     playerVisible: true,
     isUsingHLS: true,
     isPlaying: false,
-    /**
-     * Id станции, которая играет прямо сейчас, или null.
-     * Заменил семь булевых isPlayingX — они остались геттерами ниже,
-     * чтобы шаблоны продолжали работать без правок.
-     */
+    /** Id станции, которая играет прямо сейчас, или null. */
     activeId: null,
+    /** Громкость 0..1. Реактивная — слайдеры рисуются от неё, а не наоборот. */
+    volume: 1,
+    muted: false,
     ctx: null,
     audioSource: null,
     analyzer: null,
@@ -31,55 +31,77 @@ export const initPlayerStore = defineStore('player', {
     isPlayingTerra:  (s) => s.isPlaying && s.activeId === 'terra',
     isPlayingChill:  (s) => s.isPlaying && s.activeId === 'chill',
     isPlayingCDP:    (s) => s.isPlaying && s.activeId === 'cdp',
-    /** Играет ли конкретная станция — то, чем со временем заменятся геттеры выше. */
+    /** Играет ли конкретная станция. */
     isPlayingId: (s) => (id) => s.isPlaying && s.activeId === id,
+    /** Что показывать на слайдерах: при mute — ноль, само значение при этом не теряется. */
+    displayVolume: (s) => (s.muted ? 0 : Math.round(s.volume * 100)),
   },
   actions: {
+    /** Станция, выбранная сейчас (не обязательно играющая). */
+    selectedId() {
+      return currentStreamStore().currentStream;
+    },
     /** Единственное место, где отмечается «сейчас играет вот это». */
     markPlaying() {
       this.isPlaying = true;
-      this.activeId = this.player.stream_mount;
+      this.activeId = this.selectedId();
     },
     /** Единственное место, где отмечается «ничего не играет». */
     markStopped() {
       this.isPlaying = false;
       this.activeId = null;
     },
-    /** Переключить поток и синхронизировать currentStreamStore. */
-    switchStream(name) {
-      this.player.stop();
-      this.player.change_stream(name);
-      currentStreamStore().setStream(name);
+    /** Начать воспроизведение выбранной станции. */
+    startPlayback() {
+      this.engine.play(this.selectedId(), this.isUsingHLS);
+      this.markPlaying();
     },
     initPlayer() {
-      if (!this.player) {
-        this.player = new IcePlayer('#ice-player', this.isUsingHLS);
-        this.player.audio_object.crossOrigin = "anonymous";
-        this.ctx = new AudioContext();
-        this.unlockAudioContext(this.ctx);
-        this.audioSource = this.ctx.createMediaElementSource(this.player.audio_object);
-        this.analyzer = this.ctx.createAnalyser();
-        // this.analyzer.minDecibels = -90;
-        // this.analyzer.maxDecibels = -16;
-        this.analyzer.smoothingTimeConstant = 0.85;
-        // this.audioSource.connect(this.analyzer);
-        // this.audioSource.connect(this.ctx.destination);
-        //this.frequencyData = new Uint8Array(this.analyzer.frequencyBinCount);
-        const visualizerData = useVisualizerData();
-        visualizerData.initStore();
-        this.eqFilters = this.createEQFilters(this.ctx);
-        this.connectEQFilters();
-        this.getEQBandsFromStorage();
-        // this.player.hide_stop_and_mute_button();
+      if (this.engine) return;
 
-        //  this.player.audio_object.addEventListener('play', () => {
-        //    this.isPlaying = true;
-        //  });
-        //  this.player.audio_object.addEventListener('stop', () => {
-        //    this.isPlaying = false;
-        //  });
-      }
+      this.engine = createAudioEngine();
+      this.loadVolumeFromStorage();
+
+      this.ctx = new AudioContext();
+      this.unlockAudioContext(this.ctx);
+      this.audioSource = this.ctx.createMediaElementSource(this.engine.audio);
+      this.analyzer = this.ctx.createAnalyser();
+      this.analyzer.smoothingTimeConstant = 0.85;
+
+      const visualizerData = useVisualizerData();
+      visualizerData.initStore();
+      this.eqFilters = this.createEQFilters(this.ctx);
+      this.connectEQFilters();
+      this.getEQBandsFromStorage();
     },
+
+    // --- громкость ---
+
+    /** Выставить громкость (0..1). Снимает mute, если он был. */
+    setVolume(value) {
+      const v = Math.min(1, Math.max(0, Number(value)));
+      this.volume = v;
+      if (this.muted) {
+        this.muted = false;
+        this.engine?.setMuted(false);
+      }
+      this.engine?.setVolume(v);
+      if (import.meta.client) localStorage.setItem('vol', String(v));
+    },
+
+    toggleMute() {
+      this.muted = !this.muted;
+      this.engine?.setMuted(this.muted);
+    },
+
+    loadVolumeFromStorage() {
+      if (!import.meta.client) return;
+      const stored = localStorage.getItem('vol');
+      if (stored !== null) this.volume = parseFloat(stored);
+      this.engine?.setVolume(this.volume);
+      this.engine?.setMuted(this.muted);
+    },
+
     togglePlayerVisibility() {
       this.playerVisible = !this.playerVisible;
       if (import.meta.client) {
@@ -87,21 +109,11 @@ export const initPlayerStore = defineStore('player', {
       }
     },
     toggleHLS() {
-      this.player.isHLS = !this.player.isHLS;
-      if (this.player.isHLS) {
-      this.isUsingHLS = true;
-        if (import.meta.client) {
-          localStorage.setItem("hls", JSON.stringify(this.isUsingHLS));
-        }
-      } else {
-        this.isUsingHLS = false;
-          if (import.meta.client) {
-            localStorage.setItem("hls", JSON.stringify(this.isUsingHLS));
-          }
-      }
-      this.player.stop();
+      this.isUsingHLS = !this.isUsingHLS;
+      if (import.meta.client) localStorage.setItem('hls', JSON.stringify(this.isUsingHLS));
+      this.engine.stop();
       if (this.isPlaying) {
-        this.player.play();
+        this.engine.play(this.selectedId(), this.isUsingHLS);
       }
     },
     loadLocalStorageHLS(key, callback) {
@@ -154,7 +166,7 @@ export const initPlayerStore = defineStore('player', {
       return filters;
     },
     connectEQFilters() {
-      if (!this.player || !this.eqFilters) return;
+      if (!this.engine || !this.eqFilters) return;
       this.audioSource.disconnect(); // Disconnect previous connection
       this.audioSource.connect(this.eqFilters[0]); // Connect to the first filter
       for (let i = 0; i < this.eqFilters.length - 1; i++) {
@@ -195,12 +207,11 @@ export const initPlayerStore = defineStore('player', {
     },
     /** Play/stop текущей станции. Кнопка в плеере и в шапке. */
     togglePlayAll() {
-      if (this.player.current_state === this.player.PLAYING) {
-        this.player.stop();
+      if (this.isPlaying) {
+        this.engine.stop();
         this.markStopped();
       } else {
-        this.player.play();
-        this.markPlaying();
+        this.startPlayback();
       }
     },
     /**
@@ -212,21 +223,17 @@ export const initPlayerStore = defineStore('player', {
         console.warn(`togglePlay: неизвестная станция "${name}"`);
         return;
       }
-      if (name === this.player.stream_mount) {
-        if (this.player.current_state === this.player.PLAYING) {
-          this.player.stop();
+      if (name === this.selectedId()) {
+        if (this.isPlaying) {
+          this.engine.stop();
           this.markStopped();
         } else {
-          this.player.play();
-          this.markPlaying();
+          this.startPlayback();
         }
         return;
       }
-      // player.stop() внутри switchStream гарантированно переводит в STOPPED,
-      // поэтому здесь всегда играем заново.
       this.switchStream(name);
-      this.player.play();
-      this.markPlaying();
+      this.startPlayback();
     },
     /**
      * То же, но по уже играющей станции НЕ останавливает — «просто включи это».
@@ -237,31 +244,22 @@ export const initPlayerStore = defineStore('player', {
         console.warn(`toggleInstantPlay: неизвестная станция "${name}"`);
         return;
       }
-      if (name === this.player.stream_mount) {
-        if (this.player.current_state !== this.player.PLAYING) {
-          this.player.play();
-        }
-        this.markPlaying();
+      if (name === this.selectedId()) {
+        if (!this.isPlaying) this.startPlayback();
+        else this.markPlaying();
         return;
       }
       this.switchStream(name);
-      this.player.play();
-      this.markPlaying();
+      this.startPlayback();
+    },
+    /** Переключить выбранную станцию, остановив текущее воспроизведение. */
+    switchStream(name) {
+      this.engine.stop();
+      currentStreamStore().setStream(name);
     },
     stopPlayer() {
-      if (this.player.current_state === this.player.PLAYING) {
-        this.player.stop();
-      }
+      this.engine.stop();
       this.markStopped();
-    },
-    changeVol3() {
-    this.player.change_volume3();
-    },
-    showVol3() {
-      this.player.vol_btn_main_3();
-    },
-    muteVol() {
-    this.player.mute();
     },
     /**
      * Сменить станцию, не трогая play/stop: если играло — продолжит играть новую.
@@ -272,15 +270,10 @@ export const initPlayerStore = defineStore('player', {
         console.warn(`setStream: неизвестная станция "${name}"`);
         return;
       }
-      const wasPlaying = this.player.current_state === this.player.PLAYING;
-      this.player.change_stream(name);
-      currentStreamStore().setStream(name);
-      if (wasPlaying) {
-        this.markPlaying();
-      } else {
-        this.markStopped();
-      }
+      const wasPlaying = this.isPlaying;
+      this.switchStream(name);
+      if (wasPlaying) this.startPlayback();
+      else this.markStopped();
     },
   },
-
 });

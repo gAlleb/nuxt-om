@@ -18,8 +18,8 @@
       <div id="Effects_block" @click.stop.prevent
         class="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-xl py-3 px-3  backdrop-blur-[1rem] bg-muddy-waters-100/90 dark:bg-zinc-800/90 shadow-xl  ">
         <button type="button" @click="useInitPlayerStore.toggleHLS"
-          :class="{ 'bg-red-400 dark:bg-red-400': !useInitPlayerStore.player.isHLS,
-                    'bg-green-400': useInitPlayerStore.player.isHLS
+          :class="{ 'bg-red-400 dark:bg-red-400': !useInitPlayerStore.isUsingHLS,
+                    'bg-green-400': useInitPlayerStore.isUsingHLS
           }"
           class="flex mb-2 gap-2 justify-center
           px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
@@ -29,7 +29,7 @@
 
         </button>
         <div class="flex justify-center mb-2">
-        <UToggle class=" " @click="useInitPlayerStore.toggleHLS" v-model="useInitPlayerStore.player.isHLS" />
+        <UToggle class=" " @click="useInitPlayerStore.toggleHLS" v-model="useInitPlayerStore.isUsingHLS" />
         </div>
 
         <hr class="mb-2"/>
