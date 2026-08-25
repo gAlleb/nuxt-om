@@ -86,10 +86,13 @@
   <li></li>
 </ul>
 -->
-<Analytics/>
+<!-- <Analytics/> -->
 </template>
 <script setup defer>
-import { Analytics } from '@vercel/analytics/nuxt'
+// Аналитика Vercel — сейчас не используется. Чтобы вернуть:
+//   npm i @vercel/analytics
+// и раскомментировать импорт ниже и <Analytics/> в шаблоне.
+// import { Analytics } from '@vercel/analytics/nuxt'
 import { initPlayerStore } from '@/stores/initPlayer';
 import { useNowPlaying } from '~/stores/nowPlaying';
 import { applyStreamAttribute, applyEffectsAttribute, applyPlayerVisibility } from '~/utils/settings';
