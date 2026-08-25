@@ -21,6 +21,8 @@ export interface Provider {
    * У centrifugo первый элемент — текущий трек, поэтому его пропускаем.
    */
   historyOffset: number
+  /** Что подставить, если iTunes ничего не нашёл: обложку станции или заглушку. */
+  coverFallback: 'stationArt' | 'placeholder'
 }
 
 export const providers = {
@@ -28,13 +30,18 @@ export const providers = {
     sseUrl: 'https://radio.omfm.ru/api/live/nowplaying/sse',
     dedupeBy: 'sh_id',
     historyOffset: 0,
+    coverFallback: 'stationArt',
   },
   centrifugo: {
     sseUrl: 'https://centrifugo.omfm.ru/connection/sse',
     dedupeBy: 'songText',
     historyOffset: 1,
+    coverFallback: 'placeholder',
   },
 } as const satisfies Record<string, Provider>
+
+/** Заглушка обложки, когда ничего не нашлось. */
+export const placeholderCover = '/static/img/defaultCoverart.jpg'
 
 export type ProviderId = keyof typeof providers
 
