@@ -41,55 +41,52 @@
   
   </div>
     </div>
-  <div class="mx-5 lg:mx-20 md:mx-10 sm:mx-3 xs:mx-3 mt-5">
-  <p class="mb-5">
-  omFM:<br/>
-  –
-  <a href="https://stream.omfm.ru:8443/stream" target="blank">omFM Stream Icecast</a><br/>
-  – <a href="https://hls.omfm.ru/omfm/stream.m3u8" target="blank">omFM Stream HLS</a><br/>
-  </p>
-  <hr/>
-  <p class="mb-5 mt-5">
-  Rock @ omFM:<br/>
-  – <a href="https://stream.omfm.ru:8443/rock" target="blank">Rock @ omFM Stream Icecast</a><br/>
-  – <a href="https://radio.omfm.ru/hls/radio/live.m3u8" target="blank">Rock @ omFM Stream HLS</a><br/>
-  </p>
-  <hr/>
-  <p class="mb-5 mt-5">
-  Coma @ omFM:<br/>
-  – <a href="https://stream.omfm.ru:8443/coma" target="blank">Coma @ omFM Stream Icecast</a><br/>
-  – <a href="https://radio.omfm.ru/hls/coma/live.m3u8" target="blank">Coma @ omFM Stream HLS</a><br/>
-  </p>
-  <hr/>
-  <p class="mb-5 mt-5">
-  CORE @ omFM:<br/>
-  – <a href="https://stream.omfm.ru:8443/core" target="blank">CORE @ omFM Stream Icecast</a><br/>
-  – <a href="https://radio.omfm.ru/hls/core/live.m3u8" target="blank">CORE @ omFM Stream HLS</a><br/>
-  </p>
-  <hr/>
-  <p class="mb-5 mt-5">
-  Terra @ omFM:<br/>
-  – <a href="https://stream.omfm.ru:8443/terra" target="blank">Terra @ omFM Stream Icecast</a><br/>
-  – <a href="https://radio.omfm.ru/hls/terra/live.m3u8" target="blank">Terra @ omFM Stream HLS</a><br/>
-  </p>
-  <hr/>
-  <p class="mb-5 mt-5">
-  Chill @ omFM:<br/>
-  – <a href="https://stream.omfm.ru:8443/chill" target="blank">Chill @ omFM Stream Icecast</a><br/>
-  – <a href="https://radio.omfm.ru/hls/chill/live.m3u8" target="blank">Chill @ omFM Stream HLS</a><br/>
-  </p>
-  <hr/>
-  <p class="mb-5 mt-5">
-  Café de Paris @ omFM:<br/>
-  – <a href="https://stream.omfm.ru:8443/cdp" target="blank">Café de Paris @ omFM Stream Icecast</a><br/>
-  – <a href="https://hls.omfm.ru/cdp/cdp.m3u8" target="blank">Café de Paris @ omFM Stream HLS</a><br/>
-  </p>
-</div>
+  <div class="mx-5 lg:mx-20 md:mx-10 sm:mx-3 xs:mx-3 mt-8 space-y-4">
+    <div
+      v-for="s in stations"
+      :key="s.id"
+      :class="s.look.accent"
+      class="border-l-4 rounded-xl p-4">
+
+      <!-- Название своим шрифтом станции + что звучит прямо сейчас -->
+      <div class="flex items-baseline justify-between gap-3 flex-wrap">
+        <div>
+          <NuxtLink :to="localePath(`/streams/${s.slug}`)" class="hover:underline">
+            <span :class="s.look.font" class="text-2xl sm:text-3xl">{{ s.text.hero }}</span>
+          </NuxtLink>
+          <span class="ms-2 text-sm opacity-60">{{ s.text.tagline }}</span>
+        </div>
+        <span class="text-sm opacity-70 ellipsify">{{ onAir(s) }}</span>
+      </div>
+
+      <div class="mt-3 space-y-1">
+        <StationAddress label="Icecast" :url="s.icecast" :playlist="playlistPath(s, 'icecast')" />
+        <StationAddress label="HLS" :url="s.hls" :playlist="playlistPath(s, 'hls')" />
+      </div>
+    </div>
+
+    <p class="pt-2 text-sm opacity-70">
+      Все станции одним файлом:
+      <a href="/playlists/omfm-all.m3u" download class="underline">Icecast</a> ·
+      <a href="/playlists/omfm-all-hls.m3u" download class="underline">HLS</a>
+    </p>
+  </div>
 
   </section>
  
 </template>
 
 <script setup lang="ts">
+import { stations, type Station } from '~/config/stations'
+import { playlistPath } from '~/config/playlists'
+import { useNowPlaying } from '~/stores/nowPlaying'
 
+const localePath = useLocalePath()
+const np = useNowPlaying()
+
+/** Что звучит на станции прямо сейчас — данные уже приходят по SSE. */
+function onAir(station: Station) {
+  const song = np.byId[station.id]?.data?.np?.now_playing?.song
+  return song ? `${song.artist} — ${song.title}` : ''
+}
 </script>

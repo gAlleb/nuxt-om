@@ -1,12 +1,16 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import { buildPlaylists } from './app/config/playlists'
+
 export default defineNuxtConfig({
   ssr: true,
-  // nitro: { 
-  //   prerender: {
-  //     routes: ["/blog", "/blog/articles","/","/es/blog"],
-  //     ignore: ["/dynamic"],
-  //   },
-  // },
+
+  nitro: {
+    prerender: {
+      // Плейлисты — обычные маршруты; перечисляем их, чтобы `nuxt generate`
+      // запёк каждый в файл.
+      routes: buildPlaylists().map((p) => p.path),
+    },
+  },
   css: ['~/assets/css/main.css', '~/assets/css/np_animate.css', '~/assets/css/np.css', '~/assets/css/christmas.css', '~/assets/css/settings.css'],
   
   // mdc: { 
