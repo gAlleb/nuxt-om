@@ -5,6 +5,10 @@ import { stationThemeCss } from './app/config/stations'
 export default defineNuxtConfig({
   ssr: true,
 
+  // Реестр станций читается в этом файле (плейлисты и CSS оформления),
+  // поэтому при его правке dev-сервер должен перечитать конфигурацию.
+  watch: ['app/config/stations.ts', 'app/config/playlists.ts'],
+
   nitro: {
     prerender: {
       // Плейлисты — обычные маршруты; перечисляем их, чтобы `nuxt generate`

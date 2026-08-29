@@ -228,7 +228,7 @@ export const stations: Station[] = [
       thumb: 'Ashes',
       tab: 'Ashes',
     },
-    look: { font: "'Westhorn', sans-serif", radial: 'radial-gradient(rgba(231, 180, 90, 0.18), rgba(120, 80, 40, 0.12) 100%)', accent: 'border border-yellow-500/50',       heroTitleClass: 'ashes-color' },
+    look: { font: "'Westhorn', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50',       heroTitleClass: 'ashes-color' },
     images: {
       heroLight: '/ashes_hero4.png',
       heroDark: '/ashes_hero4.png',
