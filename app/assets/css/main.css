@@ -24,6 +24,11 @@
   src: local(''), 
   url('../font/WesthornRegular.ttf');
 }
+@font-face {
+  font-family: "Raznochin";
+  src: local(''), 
+  url('../font/Raznochin.otf');
+}
 
 .glowing-text {
   /* animation: textShadow 1.033s infinite; */

@@ -220,7 +220,7 @@ export const stations: Station[] = [
       menu: 'Ashes @ omFM',
       card: 'Ashes',
       hero: 'ASHES',
-      tagline: 'southern gothic, dark folk, southern western',
+      tagline: 'southern gothic, dark folk, western',
       heroExtra:
         'From forgotten churches to endless highways. Where the sun goes down and the ghosts come out.',
       logo: 'Ashes',
@@ -228,7 +228,7 @@ export const stations: Station[] = [
       thumb: 'Ashes',
       tab: 'Ashes',
     },
-    look: { font: "'Westhorn', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50',       heroTitleClass: 'ashes-color' },
+    look: { font: "'Raznochin', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50',       heroTitleClass: 'ashes-color' },
     images: {
       heroLight: '/ashes_hero4.png',
       heroDark: '/ashes_hero4.png',
