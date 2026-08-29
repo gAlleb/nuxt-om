@@ -19,11 +19,17 @@
   src: local(''), 
   url('../font/MetalMania-Regular.ttf');
 }
+@font-face {
+  font-family: "Westhorn";
+  src: local(''), 
+  url('../font/WesthornRegular.ttf');
+}
 
 .glowing-text {
   /* animation: textShadow 1.033s infinite; */
   text-shadow: 0px 0px 10px #fff;
 }
+.ashes-color {color: #e7b45a; }
 .text-shadow-animation {
   animation: textShadow 1.033s infinite;
 }

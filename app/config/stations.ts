@@ -5,8 +5,8 @@
  * Ничего больше править не нужно: страницы, меню, карточки, свипер плеера
  * и подписки SSE строятся из этого массива.
  *
- * ВАЖНО: классы Tailwind (accent, font) должны быть записаны здесь целиком,
- * а не собираться из кусков — JIT сканирует этот файл как обычный исходник
+ * ВАЖНО: классы Tailwind (accent) должны быть записаны здесь целиком, а не
+ * собираться из кусков — JIT сканирует этот файл как обычный исходник
  * (см. `content` в tailwind.config.cjs) и видит только литералы.
  */
 
@@ -95,10 +95,21 @@ export interface Station {
     playlistFallback?: string
   }
 
-  /** Оформление. Только литеральные классы Tailwind. */
+  /**
+   * Оформление станции.
+   *
+   * `font` и `radial` — готовые CSS-значения (не имена классов): из них
+   * генерируются переменные `--station-font` и `--station-radial`, см.
+   * stationThemeCss(). Поэтому свой шрифт станции достаточно объявить
+   * через @font-face и указать здесь — правки в CSS не нужны.
+   *
+   * `accent` остаётся классом Tailwind и должен быть литералом: JIT сканирует
+   * этот файл и видит только целые строки.
+   */
   look: {
-    font: 'font-tenor' | 'font-metal' | 'font-UNSCII'
-    /** Класс радиального оверлея из np.css. */
+    /** CSS font-family, например `'Metal Mania', sans-serif`. */
+    font: string
+    /** CSS-градиент радиальной подсветки интерфейса. */
     radial: string
     /** Рамка активной карточки на главной. */
     accent: string
@@ -151,7 +162,7 @@ export const stations: Station[] = [
       tab: 'omFM',
       playlistFallback: 'Relaying UltraFM',
     },
-    look: { font: 'font-tenor', radial: 'radial', accent: 'border border-indigo-500/50' },
+    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(229, 23, 187, 0.25), rgba(52, 220, 173, 0.15) 100%)', accent: 'border border-indigo-500/50' },
     images: {
       heroLight: '/omfm4-light.jpg',
       heroDark: '/omfm4.jpg',
@@ -183,7 +194,7 @@ export const stations: Station[] = [
       tab: 'Rock',
       playlistFallback: 'Relaying UltraFM',
     },
-    look: { font: 'font-metal', radial: 'radial2', accent: 'border border-red-500/50' },
+    look: { font: "'Metal Mania', sans-serif", radial: 'radial-gradient(rgba(229, 23, 30, 0.25), rgba(220, 52, 189, 0.1) 100%)', accent: 'border border-red-500/50' },
     images: {
       heroLight: '/metal.webp',
       heroDark: '/rock.webp',
@@ -196,6 +207,39 @@ export const stations: Station[] = [
     },
     showNext: true,
     artSource: 'itunes',
+    historyCount: 5,
+  },
+  {
+    id: 'ashes',
+    slug: 'ashes',
+    provider: 'azuracast',
+    channel: 'station:ashes',
+    hls: 'https://radio.omfm.ru/hls/ashes/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/ashes',
+    text: {
+      menu: 'Ashes @ omFM',
+      card: 'Ashes',
+      hero: 'ASHES',
+      tagline: 'southern gothic, dark folk, southern western',
+      heroExtra:
+        'From forgotten churches to endless highways. Where the sun goes down and the ghosts come out.',
+      logo: 'Ashes',
+      panel: 'AshesFM',
+      thumb: 'Ashes',
+      tab: 'Ashes',
+    },
+    look: { font: "'Westhorn', sans-serif", radial: 'radial-gradient(rgba(231, 180, 90, 0.18), rgba(120, 80, 40, 0.12) 100%)', accent: 'border border-yellow-500/50',       heroTitleClass: 'ashes-color' },
+    images: {
+      heroLight: '/ashes_hero4.png',
+      heroDark: '/ashes_hero4.png',
+      card: '/ashes_card4.png',
+      thumb: 'rock-00-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: 'wheat', color2: 'orange', color3: '#e7b45a', capStyle: 'black' },
+    },
+    showNext: true,
+    artSource: 'station',
     historyCount: 5,
   },
   {
@@ -215,7 +259,7 @@ export const stations: Station[] = [
       thumb: 'Coma',
       tab: 'Coma',
     },
-    look: { font: 'font-UNSCII', radial: 'radial3', accent: 'border border-green-500/50' },
+    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(23, 229, 50, 0.25), rgba(13, 164, 122, 0.1) 100%)', accent: 'border border-green-500/50' },
     images: {
       heroLight: '/coma.jpg',
       heroDark: '/coma.jpg',
@@ -246,7 +290,7 @@ export const stations: Station[] = [
       thumb: 'CORE',
       tab: 'CORe',
     },
-    look: { font: 'font-UNSCII', radial: 'radial-core', accent: 'border border-zinc-500/50' },
+    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50' },
     images: {
       heroLight: '/core_long.png',
       heroDark: '/core_long.png',
@@ -279,7 +323,7 @@ export const stations: Station[] = [
       thumb: 'Terra',
       tab: 'Terra',
     },
-    look: { font: 'font-tenor', radial: 'radial4-terra', accent: 'border border-blue-500/50' },
+    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-blue-500/50' },
     images: {
       heroLight: '/terra.jpg',
       heroDark: '/terra.jpg',
@@ -311,8 +355,8 @@ export const stations: Station[] = [
       tab: 'Chill',
     },
     look: {
-      font: 'font-UNSCII',
-      radial: 'radial-chill',
+      font: "UNSCII, sans-serif",
+      radial: 'radial-gradient(#0056fb29, #ff00fb26)',
       accent: 'border border-pink-500/50',
       heroTitleClass: 'neon-pink-text-shadow',
     },
@@ -346,7 +390,7 @@ export const stations: Station[] = [
       tab: 'Cafe',
       playlistFallback: 'Request',
     },
-    look: { font: 'font-tenor', radial: 'radial-cdp', accent: 'border border-yellow-500/50', dimmed: true },
+    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50', dimmed: true },
     images: {
       heroLight: '/cdp_stream.jpg',
       heroDark: '/cdp_stream.jpg',
@@ -382,4 +426,22 @@ export function getStation(id: string | null | undefined): Station | undefined {
 
 export function isStationId(id: string | null | undefined): boolean {
   return !!id && byId.has(id)
+}
+
+/**
+ * CSS с оформлением станций: шрифт интерфейса и радиальная подсветка.
+ *
+ * Вставляется в <head> (см. nuxt.config.ts) и применяется по атрибуту
+ * data-stream, который ставится ещё до первой отрисовки. Благодаря этому
+ * добавление станции не требует правок в CSS — достаточно объекта в реестре.
+ */
+export function stationThemeCss() {
+  const first = stations.find((s) => s.id === defaultStationId) ?? stations[0]
+  const rules = [`html{--station-font:${first.look.font};--station-radial:${first.look.radial}}`]
+  for (const s of stations) {
+    rules.push(
+      `html[data-stream="${s.id}"]{--station-font:${s.look.font};--station-radial:${s.look.radial}}`,
+    )
+  }
+  return rules.join('')
 }

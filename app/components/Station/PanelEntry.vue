@@ -1,5 +1,5 @@
 <template>
-  <div class="justify-center flex mx-auto mb-2" :class="station.look.font">
+  <div class="justify-center flex mx-auto mb-2" :style="{ fontFamily: station.look.font }">
     <div v-if="data" class="container">
       <h2 class="text-lg mb-3 text-white">Show: {{ playlistName }}</h2>
 

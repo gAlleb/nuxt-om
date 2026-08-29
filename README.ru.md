@@ -56,8 +56,8 @@
   },
 
   look: {
-    font: 'font-tenor',
-    radial: 'radial3',                          // радиальная подсветка из np.css
+    font: "'Tenor Sans', sans-serif",           // любой CSS font-family
+    radial: 'radial-gradient(#0056fb29, #ff00fb26)',   // подсветка интерфейса
     accent: 'border border-amber-500/50',       // рамка активной карточки
   },
 
@@ -76,6 +76,9 @@
 ```
 
 Дальше `npm run generate`. Это вся процедура.
+
+Свой шрифт? Объявите его через `@font-face` и укажите семейство в `look.font` —
+правок в CSS не нужно, переменные оформления генерируются из реестра.
 
 ### Если станция на AzuraCast — совсем просто
 

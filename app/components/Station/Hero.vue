@@ -9,8 +9,9 @@
       v-for="variant in ['light', 'dark']"
       :key="variant"
       class="relative overflow-hidden"
-      :class="[station.look.font, variant === 'light' ? 'flex dark:hidden' : 'hidden dark:flex']"
+      :class="variant === 'light' ? 'flex dark:hidden' : 'hidden dark:flex'"
       :style="{
+        fontFamily: station.look.font,
         background: `url('${variant === 'light' ? station.images.heroLight : station.images.heroDark}') center 40% no-repeat`,
         backgroundSize: 'cover',
         height: '45vh',

@@ -9,35 +9,6 @@
 
 /* --- шрифт интерфейса зависит от выбранной станции --- */
 
-html {
-  --station-font: 'Tenor Sans', sans-serif;
-  --station-radial: radial-gradient(rgba(229, 23, 187, 0.25), rgba(52, 220, 173, 0.15) 100%);
-}
-html[data-stream='rock'] {
-  --station-font: 'Metal Mania', sans-serif;
-  --station-radial: radial-gradient(rgba(229, 23, 30, 0.25), rgba(220, 52, 189, 0.1) 100%);
-}
-html[data-stream='coma'] {
-  --station-font: UNSCII, sans-serif;
-  --station-radial: radial-gradient(rgba(23, 229, 50, 0.25), rgba(13, 164, 122, 0.1) 100%);
-}
-html[data-stream='core'] {
-  --station-font: UNSCII, sans-serif;
-  --station-radial: radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%);
-}
-html[data-stream='chill'] {
-  --station-font: UNSCII, sans-serif;
-  --station-radial: radial-gradient(#0056fb29, #ff00fb26);
-}
-html[data-stream='terra'] {
-  --station-font: 'Tenor Sans', sans-serif;
-  --station-radial: radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%);
-}
-html[data-stream='cdp'] {
-  --station-font: 'Tenor Sans', sans-serif;
-  --station-radial: radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%);
-}
-
 .station-font {
   font-family: var(--station-font);
 }

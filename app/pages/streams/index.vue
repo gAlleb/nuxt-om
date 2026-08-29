@@ -6,8 +6,8 @@
       :key="s.id"
       @click="activeId = s.id"
       class="w-full rounded-t-lg inline-flex justify-center text-xl"
+      :style="{ fontFamily: s.look.font }"
       :class="[
-        s.look.font,
         activeId === s.id
           ? 'bg-sxvx-light-bg dark:bg-sxvx-dark-bg border-t-2 border-l-2 border-r-2 border-gray-700 dark:border-gray-200'
           : 'bg-sxvx-light dark:bg-sxvx-dark',

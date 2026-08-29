@@ -52,7 +52,7 @@
       <div class="flex items-baseline justify-between gap-3 flex-wrap">
         <div>
           <NuxtLink :to="localePath(`/streams/${s.slug}`)" class="hover:underline">
-            <span :class="s.look.font" class="text-2xl sm:text-3xl">{{ s.text.hero }}</span>
+            <span :style="{ fontFamily: s.look.font }" class="text-2xl sm:text-3xl">{{ s.text.hero }}</span>
           </NuxtLink>
           <span class="ms-2 text-sm opacity-60">{{ s.text.tagline }}</span>
         </div>

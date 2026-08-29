@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { buildPlaylists } from './app/config/playlists'
+import { stationThemeCss } from './app/config/stations'
 
 export default defineNuxtConfig({
   ssr: true,
@@ -39,6 +40,13 @@ export default defineNuxtConfig({
         lang: 'en',
         class: 'scroll-smooth',
       },
+      style: [
+        {
+          // Шрифт и радиальная подсветка станций — генерируются из реестра,
+          // поэтому новая станция не требует правок в CSS.
+          innerHTML: stationThemeCss(),
+        },
+      ],
       script: [
         {
           // Ставит настройки на <html> ДО первой отрисовки, чтобы шрифт,

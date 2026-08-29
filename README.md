@@ -56,8 +56,8 @@ Everything lives in [`app/config/stations.ts`](./app/config/stations.ts). Append
   },
 
   look: {
-    font: 'font-tenor',
-    radial: 'radial3',                          // overlay tint from np.css
+    font: "'Tenor Sans', sans-serif",           // any CSS font-family
+    radial: 'radial-gradient(#0056fb29, #ff00fb26)',   // interface tint
     accent: 'border border-amber-500/50',       // active card border
   },
 
@@ -76,6 +76,9 @@ Everything lives in [`app/config/stations.ts`](./app/config/stations.ts). Append
 ```
 
 Run `npm run generate`. That's the whole procedure.
+
+Using a font of your own? Declare it with `@font-face` and put the family in `look.font` —
+no CSS edits needed, the theme variables are generated from the registry.
 
 ### If your station is on AzuraCast, it's even easier
 

@@ -1,5 +1,5 @@
 <template>
-  <section class="mx-3 sm:mx-5 lg:mx-20" :class="station.look.font">
+  <section class="mx-3 sm:mx-5 lg:mx-20" :style="{ fontFamily: station.look.font }">
     <div class="justify-center flex mx-auto lg:mx-20">
       <div v-if="data" class="container">
         <h2 class="my-5 text-2xl">Now playing:</h2>
