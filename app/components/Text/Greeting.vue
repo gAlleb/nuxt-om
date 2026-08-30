@@ -5,7 +5,7 @@
     <span class="text-red-500">omFM</span> Radio
     </h4>
     <h4 class="mt-0 bold text-md">
-    Not-trivial collection of streams 
+     A non-trivial collection of curated streams
     </h4>
     <p class="italic text-md text-muddy-waters-700 dark:text-muddy-waters-500">
     The musical art often speaks in sounds more penetrating than the words of poetry, and takes hold of the most hidden crevices of the heart… Song elevates our being and leads us to the good and the true...<br/>
