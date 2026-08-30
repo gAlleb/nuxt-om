@@ -29,6 +29,11 @@
   src: local(''), 
   url('../font/Raznochin.otf');
 }
+@font-face {
+  font-family: "Omega";
+  src: local(''), 
+  url('../font/Omega.ttf');
+}
 
 .glowing-text {
   /* animation: textShadow 1.033s infinite; */

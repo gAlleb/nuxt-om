@@ -404,6 +404,37 @@ export const stations: Station[] = [
     artSource: 'itunes',
     historyCount: 5,
   },
+  {
+    id: 'noir',
+    slug: 'noir',
+    provider: 'azuracast',
+    channel: 'station:noir',
+    hls: 'https://radio.omfm.ru/hls/noir/live.m3u8',
+    icecast: 'https://stream.omfm.ru:8443/noir',
+    text: {
+      menu: 'Noir @ omFM',
+      card: 'Noir',
+      hero: 'NoirFM',
+      tagline: 'Dark Jazz, Noir Jazz, Funeral',
+      logo: 'noir',
+      panel: 'Noir',
+      thumb: 'Noir',
+      tab: 'Noir',
+    },
+    look: { font: "Omega, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50' },
+    images: {
+      heroLight: '/noir_hero.webp',
+      heroDark: '/noir_hero.webp',
+      card: '/noir_card.webp',
+      thumb: 'rock-70-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: '#ffffff', color2: '#ffffff', color3: '#ffffff', capStyle: 'white' },
+    },
+    showNext: true,
+    artSource: 'station',
+    historyCount: 5,
+  },
 ]
 
 /** Станция, играющая по умолчанию при первом заходе. */
