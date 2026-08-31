@@ -1,40 +1,29 @@
 <template>
-  <div v-if="currentPage" class="flex mx-auto">
-    <NuxtLink 
+  <div v-if="showButton" class="flex mx-auto">
+    <NuxtLink
       :to="localePath('/')"
-      class="flex bg-gradient-to-r 
-            hover:from-primary-600 hover:via-primary-500 hover:to-primary-400 
-            py-2 px-6 rounded-full"            :class="{
-                'from-orange-800 via-orange-600 to-orange-500': currentStream === 'stream',
-                'from-red-800 via-red-600 to-red-500': currentStream === 'rock',
-                'from-blue-800 via-blue-600 to-blue-500': currentStream === 'coma',
-                'from-green-800 via-green-600 to-green-500': currentStream === 'terra',
-                'from-yellow-800 via-red-600 to-yellow-500': currentStream === 'cdp',
-                'from-zinc-800 via-zinc-600 to-zinc-500': currentStream === 'core',
-                'from-pink-800 via-pink-600 to-pink-500': currentStream === 'chill',
-            }">
+      class="flex bg-gradient-to-r hover:from-primary-600 hover:via-primary-500 hover:to-primary-400 py-2 px-6 rounded-full"
+      :class="gradient">
       <span class="text-zinc-200">Home</span>
     </NuxtLink>
   </div>
 </template>
 
 <script setup>
-import { currentStreamStore } from '../../stores/currentStream'; // Import the store
+import { currentStreamStore } from '~/stores/currentStream'
+import { getStation } from '~/config/stations'
+
 const localePath = useLocalePath()
-const useCurrentStreamStore = currentStreamStore(); // Get the store instance
-const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
-const route = useRoute();
-const currentPage = computed(() => {
-  let baseClasses;
-  if (route.path === '/') {
-    baseClasses = false;
-  } else if  (route.path === '/es') {
-    baseClasses = false;
-  } else if  (route.path === '/ru') {
-    baseClasses = false;
-  } else {
-    baseClasses = true;
-  }
-  return baseClasses;
-});
+const streamStore = currentStreamStore()
+const route = useRoute()
+
+/** Градиент берётся у выбранной станции; без него — фирменный primary. */
+const gradient = computed(
+  () =>
+    getStation(streamStore.currentStream)?.look.homeButton ??
+    'from-primary-800 via-primary-600 to-primary-500',
+)
+
+/** На самой главной кнопка не нужна — с учётом языковых версий. */
+const showButton = computed(() => !['/', '/es', '/ru'].includes(route.path))
 </script>

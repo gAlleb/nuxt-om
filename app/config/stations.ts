@@ -113,6 +113,11 @@ export interface Station {
     radial: string
     /** Рамка активной карточки на главной. */
     accent: string
+    /**
+     * Градиент кнопки «Home» на странице станции — классы Tailwind
+     * (from-/via-/to-). Не задан — возьмётся фирменный primary.
+     */
+    homeButton?: string
     /** Доп. класс заголовка героя (неоновая тень у Chill). */
     heroTitleClass?: string
     /** Картинка карточки слишком светлая — притушить сильнее (сейчас только Café de Paris). */
@@ -162,7 +167,7 @@ export const stations: Station[] = [
       tab: 'omFM',
       playlistFallback: 'Relaying UltraFM',
     },
-    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(229, 23, 187, 0.25), rgba(52, 220, 173, 0.15) 100%)', accent: 'border border-indigo-500/50' },
+    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(229, 23, 187, 0.25), rgba(52, 220, 173, 0.15) 100%)', accent: 'border border-indigo-500/50', homeButton: 'from-orange-800 via-orange-600 to-orange-500' },
     images: {
       heroLight: '/omfm4-light.jpg',
       heroDark: '/omfm4.jpg',
@@ -194,7 +199,7 @@ export const stations: Station[] = [
       tab: 'Rock',
       playlistFallback: 'Relaying UltraFM',
     },
-    look: { font: "'Metal Mania', sans-serif", radial: 'radial-gradient(rgba(229, 23, 30, 0.25), rgba(220, 52, 189, 0.1) 100%)', accent: 'border border-red-500/50' },
+    look: { font: "'Metal Mania', sans-serif", radial: 'radial-gradient(rgba(229, 23, 30, 0.25), rgba(220, 52, 189, 0.1) 100%)', accent: 'border border-red-500/50', homeButton: 'from-red-800 via-red-600 to-red-500' },
     images: {
       heroLight: '/metal.webp',
       heroDark: '/rock.webp',
@@ -228,7 +233,7 @@ export const stations: Station[] = [
       thumb: 'Ashes',
       tab: 'Ashes',
     },
-    look: { font: "'Raznochin', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50',       heroTitleClass: 'ashes-color' },
+    look: { font: "'Raznochin', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50', homeButton: 'from-amber-800 via-amber-600 to-amber-500',       heroTitleClass: 'ashes-color' },
     images: {
       heroLight: '/ashes_hero4.png',
       heroDark: '/ashes_hero4.png',
@@ -259,7 +264,7 @@ export const stations: Station[] = [
       thumb: 'Coma',
       tab: 'Coma',
     },
-    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(23, 229, 50, 0.25), rgba(13, 164, 122, 0.1) 100%)', accent: 'border border-green-500/50' },
+    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(23, 229, 50, 0.25), rgba(13, 164, 122, 0.1) 100%)', accent: 'border border-green-500/50', homeButton: 'from-blue-800 via-blue-600 to-blue-500' },
     images: {
       heroLight: '/coma.jpg',
       heroDark: '/coma.jpg',
@@ -290,7 +295,7 @@ export const stations: Station[] = [
       thumb: 'CORE',
       tab: 'CORe',
     },
-    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50' },
+    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-zinc-800 via-zinc-600 to-zinc-500' },
     images: {
       heroLight: '/core_long.png',
       heroDark: '/core_long.png',
@@ -323,7 +328,7 @@ export const stations: Station[] = [
       thumb: 'Terra',
       tab: 'Terra',
     },
-    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-blue-500/50' },
+    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-blue-500/50', homeButton: 'from-green-800 via-green-600 to-green-500' },
     images: {
       heroLight: '/terra.jpg',
       heroDark: '/terra.jpg',
@@ -357,7 +362,7 @@ export const stations: Station[] = [
     look: {
       font: "UNSCII, sans-serif",
       radial: 'radial-gradient(#0056fb29, #ff00fb26)',
-      accent: 'border border-pink-500/50',
+      accent: 'border border-pink-500/50', homeButton: 'from-pink-800 via-pink-600 to-pink-500',
       heroTitleClass: 'neon-pink-text-shadow',
     },
     images: {
@@ -390,7 +395,7 @@ export const stations: Station[] = [
       tab: 'Cafe',
       playlistFallback: 'Request',
     },
-    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50', dimmed: true },
+    look: { font: "'Tenor Sans', sans-serif", radial: 'radial-gradient(rgba(255, 108, 0, 0.16), rgba(244, 228, 47, 0.13) 100%)', accent: 'border border-yellow-500/50', homeButton: 'from-yellow-800 via-red-600 to-yellow-500', dimmed: true },
     images: {
       heroLight: '/cdp_stream.jpg',
       heroDark: '/cdp_stream.jpg',
@@ -421,7 +426,7 @@ export const stations: Station[] = [
       thumb: 'Noir',
       tab: 'Noir',
     },
-    look: { font: "Omega, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50' },
+    look: { font: "Omega, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
     images: {
       heroLight: '/noir_hero.webp',
       heroDark: '/noir_hero.webp',
