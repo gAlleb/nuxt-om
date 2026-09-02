@@ -420,11 +420,12 @@ export const stations: Station[] = [
       menu: 'Noir @ omFM',
       card: 'Noir',
       hero: 'NoirFM',
-      tagline: 'Dark Jazz, Noir Jazz, Funeral',
+      tagline: 'Jazz: Dark, Noir, Standard',
       logo: 'noir',
       panel: 'Noir',
       thumb: 'Noir',
       tab: 'Noir',
+      heroExtra: 'The soundtrack to your endless night, blending heavy-hearted jazz ballads and slow-tempo classics with the abyssal depths of dark jazz, funeral jazz, and modern doom',
     },
     look: { font: "Omega, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
     images: {
