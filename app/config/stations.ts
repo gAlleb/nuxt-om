@@ -457,13 +457,13 @@ export const stations: Station[] = [
     text: {
       menu: '386 @ omFM',
       card: '386 by xff',
-      hero: '386 by xff',
+      hero: '386 Dark Radio by xff',
       tagline: 'EBM, Synthpop, Dark Ambient',
       logo: '386',
       panel: '386',
       thumb: '386',
       tab: '386',
-      heroExtra: '386 — Pulse by day. Depth by night. EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.',
+      heroExtra: 'Pulse by day. Depth by night. EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.',
     },
     look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
     images: {
