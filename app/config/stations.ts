@@ -59,6 +59,37 @@ export interface VisualizerScheme {
   capStyle?: string
 }
 
+/**
+ * Слот расписания. Часы заданы в зоне станции (`StationSchedule.timezone`),
+ * а не в зоне посетителя: эфир живёт по времени радио.
+ */
+export interface ScheduleSlot {
+  /** Начало, `HH:MM`. */
+  from: string
+  /** Конец, `HH:MM`. Меньше начала — слот переходит через полночь. */
+  to: string
+  /** Название блока: «Night», «Organ». */
+  title: string
+  /** Что в нём играет, одной строкой. */
+  description?: string
+  /** Дни недели по ISO: 1 — понедельник, 7 — воскресенье. Не задано — каждый день. */
+  days?: number[]
+  /**
+   * Цвет блока на полосе суток — любое CSS-значение. Не задан: блоки получают
+   * ступени прозрачности по порядку появления, одинаковые для одного названия.
+   */
+  color?: string
+}
+
+/** Необязательное расписание станции. Нет его в реестре — нет и кнопки на странице. */
+export interface StationSchedule {
+  /** IANA-зона, в которой заданы часы, например `Europe/Moscow`. */
+  timezone: string
+  /** Приписка под заголовком. */
+  note?: string
+  slots: ScheduleSlot[]
+}
+
 export interface Station {
   /** Ключ станции: `stream_mount` плеера и ключ во всех сторах. */
   id: string
@@ -85,8 +116,11 @@ export interface Station {
     hero: string
     /** Вторая строка под заголовком. */
     tagline: string
-    /** Третья строка героя, если есть (только Terra). */
-    heroExtra?: string
+    /**
+     * Строки под заголовком и слоганом. Одна строка — просто строка,
+     * несколько — массив: каждая отрисуется отдельной строкой.
+     */
+    heroExtra?: string | string[]
     /** `<sup>` рядом с логотипом в шапке. */
     logo: string
     /** Заголовок выезжающей панели плеера: «RockFM». */
@@ -151,6 +185,8 @@ export interface Station {
   artSource: 'itunes' | 'station'
   /** Сколько треков показывать в истории. */
   historyCount: number
+  /** Сетка эфира. Задана — на странице станции появляется кнопка «Schedule». */
+  schedule?: StationSchedule
 }
 
 export const stations: Station[] = [
@@ -463,13 +499,13 @@ export const stations: Station[] = [
       panel: '386',
       thumb: '386',
       tab: '386',
-      heroExtra: 'Pulse by day. Depth by night. EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.',
+      heroExtra: ['Pulse by day. Depth by night. EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.','Curated by @xff.'],
     },
     look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
     images: {
-      heroLight: '/386_hero.webp',
-      heroDark: '/386_hero.webp',
-      card: '/386_card.webp',
+      heroLight: '/386_hero2.webp',
+      heroDark: '/386_hero2.webp',
+      card: '/386_card2.webp',
       thumb: 'rock-70-thumb.jpg',
     },
     visualizer: {
@@ -478,6 +514,26 @@ export const stations: Station[] = [
     showNext: true,
     artSource: 'itunes',
     historyCount: 5,
+    schedule: {
+      timezone: 'Europe/Moscow',
+      note: 'Themed hours break the rotation. Station ident at 06:00.',
+      slots: [
+        { from: '00:00', to: '02:00', title: 'Night', description: 'Dark ambient and drone' },
+        { from: '02:00', to: '03:00', title: 'Classical', description: 'An hour of classical' },
+        { from: '03:00', to: '04:00', title: 'Night', description: 'Dark ambient and drone' },
+        { from: '04:00', to: '05:00', title: 'Organ', description: 'The grandeur of the organ' },
+        { from: '05:00', to: '07:00', title: 'Night', description: 'Dark ambient and drone' },
+        { from: '07:00', to: '11:00', title: 'Day', description: 'EBM and synthpop' },
+        { from: '11:00', to: '12:00', title: 'Classical', description: 'An hour of classical' },
+        { from: '12:00', to: '17:00', title: 'Day', description: 'EBM and synthpop' },
+        { from: '17:00', to: '18:00', title: 'Classical', description: 'An hour of classical' },
+        { from: '18:00', to: '21:00', title: 'Day', description: 'EBM and synthpop' },
+        // 21:00 расходится по дням недели: Romantic по средам, пятницам и субботам.
+        { from: '21:00', to: '22:00', title: 'Romantic', description: 'Quiet romance', days: [3, 5, 6] },
+        { from: '21:00', to: '22:00', title: 'Organ', description: 'The grandeur of the organ', days: [1, 2, 4, 7] },
+        { from: '22:00', to: '00:00', title: 'Night', description: 'Dark ambient and drone' },
+      ],
+    },
   },
 ]
 

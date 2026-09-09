@@ -48,11 +48,12 @@
           {{ station.text.tagline }}
         </h1>
         <h1
-          v-if="station.text.heroExtra"
+          v-for="(line, lineIndex) in heroExtraLines"
+          :key="lineIndex"
           class="text-lg md:text-xl text-center"
           :class="variant === 'light' ? 'text-muddy-waters-800' : 'text-sxvx-light'"
           :style="titleShadow">
-          {{ station.text.heroExtra }}
+          {{ line }}
         </h1>
       </div>
     </div>
@@ -63,8 +64,15 @@
 import { initPlayerStore } from '@/stores/initPlayer'
 import { currentStreamStore } from '@/stores/currentStream'
 
-defineProps({
+const props = defineProps({
   station: { type: Object, required: true },
+})
+
+// heroExtra принимает и строку, и массив строк — приводим к одному виду.
+const heroExtraLines = computed(() => {
+  const value = props.station.text.heroExtra
+  if (!value) return []
+  return Array.isArray(value) ? value : [value]
 })
 
 const player = initPlayerStore()

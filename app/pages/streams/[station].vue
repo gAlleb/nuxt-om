@@ -1,6 +1,7 @@
 <template>
   <div>
     <StationHero :station="station" />
+    <StationSchedule :station="station" />
     <StationNowPlaying :station="station" />
   </div>
 </template>
