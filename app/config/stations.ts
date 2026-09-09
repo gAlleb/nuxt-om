@@ -38,6 +38,12 @@ export const providers = {
     historyOffset: 1,
     coverFallback: 'placeholder',
   },
+  centrifugo386: {
+    sseUrl: 'https://r.386.su/connection/sse',
+    dedupeBy: 'songText',
+    historyOffset: 1,
+    coverFallback: 'placeholder',
+  },
 } as const satisfies Record<string, Provider>
 
 /** Заглушка обложки, когда ничего не нашлось. */
@@ -439,6 +445,38 @@ export const stations: Station[] = [
     },
     showNext: true,
     artSource: 'station',
+    historyCount: 5,
+  },
+  {
+    id: '386',
+    slug: '386',
+    provider: 'centrifugo386',
+    channel: 'station:386',
+    hls: 'https://hls.386.su/386/386.m3u8',
+    icecast: 'https://r.386.su/386.aac',
+    text: {
+      menu: '386 @ omFM',
+      card: '386 by xff',
+      hero: '386 by xff',
+      tagline: 'EBM, Synthpop, Dark Ambient',
+      logo: '386',
+      panel: '386',
+      thumb: '386',
+      tab: '386',
+      heroExtra: '386 — Pulse by day. Depth by night. EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.',
+    },
+    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
+    images: {
+      heroLight: '/386_hero.webp',
+      heroDark: '/386_hero.webp',
+      card: '/386_card.webp',
+      thumb: 'rock-70-thumb.jpg',
+    },
+    visualizer: {
+      colorScheme: { color1: '#ffffff', color2: '#ffffff', color3: '#ffffff', capStyle: 'white' },
+    },
+    showNext: true,
+    artSource: 'itunes',
     historyCount: 5,
   },
 ]
