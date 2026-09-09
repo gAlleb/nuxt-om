@@ -5,7 +5,8 @@
         <!-- Полоса суток: беглый взгляд. Кликается целиком и открывает шторку. -->
         <button
           type="button"
-          class="w-full my-5 p-3 sm:p-4 text-left rounded-xl bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 shadow-np dark:shadow-np-dark transition-all duration-300 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+          class="w-full my-5 p-3 sm:p-4 text-left rounded-xl shadow-np dark:shadow-np-dark transition-all duration-500 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-white/50"
+          :style="{ ...dominantBackground, color: dominantText.color }"
           aria-haspopup="dialog"
           :aria-expanded="open"
           @click="openDrawer">
@@ -128,13 +129,20 @@
 </template>
 
 <script setup>
+import chroma from 'chroma-js'
 import { useEventListener, useIntervalFn } from '@vueuse/core'
+import { useDominantTheme } from '~/composables/useDominantTheme'
 
 const props = defineProps({
   station: { type: Object, required: true },
 })
 
 const schedule = computed(() => props.station.schedule)
+
+// Тот же источник цвета, что красит карточку now-playing.
+const { background: dominantBackground, text: dominantText } = useDominantTheme(
+  computed(() => props.station.id),
+)
 
 const days = [
   { iso: 1, label: 'Mon' },
@@ -203,29 +211,51 @@ const slotsForDay = computed(() => {
     .sort((a, b) => toMinutes(a.from) - toMinutes(b.from))
 })
 
-/**
- * Ступени прозрачности по названию блока: считаются по всему расписанию,
- * а не по выбранному дню, иначе цвета скакали бы при переключении дней.
- */
-const shadeByTitle = computed(() => {
-  const ramp = [0.15, 0.3, 0.45, 0.6, 0.75, 0.9]
-  const shades = {}
-  let index = 0
+/** Названия блоков в порядке появления — по всему расписанию, а не по дню:
+ *  иначе цвет блока прыгал бы при переключении дней недели. */
+const titlesInOrder = computed(() => {
+  const titles = []
   for (const slot of schedule.value?.slots ?? []) {
-    if (slot.title in shades) continue
-    shades[slot.title] = ramp[index % ramp.length]
-    index += 1
+    if (!titles.includes(slot.title)) titles.push(slot.title)
   }
-  return shades
+  return titles
 })
 
 /**
- * Свой цвет из реестра, иначе ступень текущего цвета текста: currentColor
- * с прозрачностью читается в обеих темах и не требует color-mix.
+ * Палитра блоков раскладывается от доминирующего цвета текущей обложки:
+ * берём её тон и насыщенность, а различаем блоки светлотой. Из-за этого
+ * ступени остаются различимыми даже на тёмной или блёклой обложке, а
+ * полоса перекрашивается вместе с треком, как и карточка now-playing.
  */
+const LIGHTNESS_FROM = 28
+const LIGHTNESS_TO = 82
+
+const paletteByTitle = computed(() => {
+  let base
+  try {
+    base = chroma(dominantBackground.value.background)
+  } catch {
+    base = chroma('#808080')
+  }
+  const [hue, saturation] = base.hcl()
+  const safeHue = Number.isNaN(hue) ? 0 : hue
+  const safeSaturation = Number.isNaN(saturation) ? 0 : saturation
+
+  const titles = titlesInOrder.value
+  const palette = {}
+  titles.forEach((title, index) => {
+    const lightness = titles.length < 2
+      ? (LIGHTNESS_FROM + LIGHTNESS_TO) / 2
+      : LIGHTNESS_FROM + ((LIGHTNESS_TO - LIGHTNESS_FROM) * index) / (titles.length - 1)
+    palette[title] = chroma.hcl(safeHue, safeSaturation, lightness).hex()
+  })
+  return palette
+})
+
+/** Свой цвет из реестра перебивает раскладку от обложки. */
 function segmentStyle(slot) {
   if (slot.color) return { background: slot.color }
-  return { background: 'currentColor', opacity: shadeByTitle.value[slot.title] }
+  return { background: paletteByTitle.value[slot.title] }
 }
 
 function widthOf(slot) {
