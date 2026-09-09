@@ -6,7 +6,8 @@
         <button
           type="button"
           class="w-full my-5 p-3 sm:p-4 text-left rounded-xl shadow-np dark:shadow-np-dark transition-all duration-500 hover:brightness-110 focus:outline-none focus:ring-2 focus:ring-white/50"
-          :style="{ ...dominantBackground, color: dominantText.color }"
+          :class="hasCover ? '' : 'bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200'"
+          :style="hasCover ? { ...dominantBackground, color: dominantText.color } : undefined"
           aria-haspopup="dialog"
           :aria-expanded="open"
           @click="openDrawer">
@@ -132,6 +133,7 @@
 import chroma from 'chroma-js'
 import { useEventListener, useIntervalFn } from '@vueuse/core'
 import { useDominantTheme } from '~/composables/useDominantTheme'
+import { useNowPlaying } from '~/stores/nowPlaying'
 
 const props = defineProps({
   station: { type: Object, required: true },
@@ -143,6 +145,11 @@ const schedule = computed(() => props.station.schedule)
 const { background: dominantBackground, text: dominantText } = useDominantTheme(
   computed(() => props.station.id),
 )
+
+// Обложка ещё не разобрана: на сервере и в первый кадр. Инлайн-цвета в этот
+// момент ставить нельзя — они запеклись бы вместе с темой, в которой шла сборка.
+const nowPlayingStore = useNowPlaying()
+const hasCover = computed(() => Array.isArray(nowPlayingStore.byId[props.station.id]?.dominantColor))
 
 const days = [
   { iso: 1, label: 'Mon' },
@@ -229,8 +236,11 @@ const titlesInOrder = computed(() => {
  */
 const LIGHTNESS_FROM = 28
 const LIGHTNESS_TO = 82
+const OPACITY_RAMP = [0.15, 0.3, 0.45, 0.6, 0.75, 0.9]
 
 const paletteByTitle = computed(() => {
+  if (!hasCover.value) return null
+
   let base
   try {
     base = chroma(dominantBackground.value.background)
@@ -252,10 +262,17 @@ const paletteByTitle = computed(() => {
   return palette
 })
 
-/** Свой цвет из реестра перебивает раскладку от обложки. */
+/**
+ * Свой цвет из реестра перебивает всё. Дальше — раскладка от обложки, а пока
+ * обложки нет, ступени прозрачности поверх currentColor: они наследуют цвет
+ * текста и поэтому верны в обеих темах, не попадая при этом в разметку.
+ * Запекать сюда конкретный цвет нельзя — статика одна на обе темы.
+ */
 function segmentStyle(slot) {
   if (slot.color) return { background: slot.color }
-  return { background: paletteByTitle.value[slot.title] }
+  if (paletteByTitle.value) return { background: paletteByTitle.value[slot.title] }
+  const index = titlesInOrder.value.indexOf(slot.title)
+  return { background: 'currentColor', opacity: OPACITY_RAMP[index % OPACITY_RAMP.length] }
 }
 
 function widthOf(slot) {
