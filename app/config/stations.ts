@@ -448,7 +448,7 @@ export const stations: Station[] = [
       colorScheme: { color1: '#b017a8', color2: 'cyan', color3: 'green', capStyle: '#b017a8' },
     },
     showNext: true,
-    artSource: 'itunes',
+    artSource: 'station',
     historyCount: 5,
   },
   {
