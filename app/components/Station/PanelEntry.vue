@@ -126,7 +126,9 @@ const playlistName = computed(() => {
 
 const cover = computed(() => entry.value?.coverArt ?? placeholderCover)
 const nextCover = computed(() =>
-  isItunes.value ? entry.value?.nextCoverArt : playingNext.value?.song?.art,
+  isItunes.value
+    ? entry.value?.nextCoverArt
+    : playingNext.value?.song?.art || placeholderCover,
 )
 
 const history = computed(() => {
@@ -135,6 +137,6 @@ const history = computed(() => {
 })
 
 function historyCover(index, item) {
-  return isItunes.value ? entry.value?.historyCoverArt?.[index] : item.song.art
+  return isItunes.value ? entry.value?.historyCoverArt?.[index] : item.song.art || placeholderCover
 }
 </script>

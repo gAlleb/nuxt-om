@@ -146,10 +146,13 @@ export const useNowPlaying = defineStore('nowPlaying', {
       const song = np.now_playing.song
 
       if (station.artSource === 'station') {
-        // Станция отдаёт свою обложку — в iTunes не ходим.
-        entry.coverArt = song.art
+        // Станция отдаёт свою обложку — в iTunes не ходим. Пустая строка
+        // означает, что у трека нет встроенной картинки: ?? её пропускает,
+        // поэтому подставляем заглушку явно.
+        const art = song.art || placeholderCover
+        entry.coverArt = art
         entry.collectionUrl = '#'
-        this.resolveDominantColor(station.id, song.art)
+        this.resolveDominantColor(station.id, art)
         return
       }
 

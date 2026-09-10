@@ -179,7 +179,9 @@ const playlistName = computed(() => {
 const cover = computed(() => entry.value?.coverArt ?? placeholderCover)
 const collectionUrl = computed(() => entry.value?.collectionUrl ?? '#')
 const nextCover = computed(() =>
-  isItunes.value ? entry.value?.nextCoverArt : playingNext.value?.song?.art,
+  isItunes.value
+    ? entry.value?.nextCoverArt
+    : playingNext.value?.song?.art || placeholderCover,
 )
 const nextCollectionUrl = computed(() => entry.value?.nextCollectionUrl ?? '#')
 
@@ -190,7 +192,7 @@ const history = computed(() => {
 
 /** У iTunes-станций обложки истории лежат в сторе, у остальных берутся прямо из данных станции. */
 function historyCover(index, item) {
-  return isItunes.value ? entry.value?.historyCoverArt?.[index] : item.song.art
+  return isItunes.value ? entry.value?.historyCoverArt?.[index] : item.song.art || placeholderCover
 }
 function historyCollectionUrl(index) {
   return entry.value?.historyCollectionUrl?.[index] ?? '#'
