@@ -512,7 +512,7 @@ export const stations: Station[] = [
       colorScheme: { color1: '#ffffff', color2: '#ffffff', color3: '#ffffff', capStyle: 'white' },
     },
     showNext: true,
-    artSource: 'itunes',
+    artSource: 'station',
     historyCount: 5,
     schedule: {
       timezone: 'Europe/Moscow',
