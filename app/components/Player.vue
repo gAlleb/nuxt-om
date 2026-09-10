@@ -93,7 +93,7 @@
             </div>
 
             <div v-if="current" class="ms-3 cursor-pointer rounded-lg shadow-lg border-solid border-1 border-zinc-500">
-              <img class="rounded-lg" height="60" width="60" :src="currentCover" alt="Album Cover" @click="openLightbox(currentCover, 0)" >
+              <img class="rounded-lg object-cover" height="60" width="60" :src="currentCover" alt="Album Cover" @click="openLightbox(currentCover, 0)" >
             </div>
 
             <div class="flex">

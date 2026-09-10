@@ -7,7 +7,7 @@
         <div class="ice-player-el">
           <div class="relative">
             <img
-              class="rounded-xl h-auto w-32 shadow-2xl cursor-pointer sm:w-52 shadow-np dark:shadow-np-dark"
+              class="rounded-xl w-32 h-32 sm:w-52 sm:h-52 object-cover shadow-2xl cursor-pointer shadow-np dark:shadow-np-dark"
               :src="cover"
               alt="Album Cover"
               @click="openLightbox(cover, 0)" />
@@ -53,7 +53,7 @@
                 v-if="nextCover"
                 :src="nextCover"
                 alt="History Cover"
-                class="history-cover cursor-pointer rounded-l-xl h-auto w-24 sm:w-28"
+                class="history-cover cursor-pointer rounded-l-xl w-24 h-24 sm:w-28 sm:h-28 object-cover"
                 @click="openLightbox(nextCover, 0)" />
               <div
                 class="absolute text-muddy-waters-100 text-3xl sm:text-4xl pointer-events-none"
@@ -83,7 +83,7 @@
                   v-if="historyCover(index, item)"
                   :src="historyCover(index, item)"
                   alt="History Cover"
-                  class="history-cover cursor-pointer rounded-l-xl h-auto w-16 sm:w-20"
+                  class="history-cover cursor-pointer rounded-l-xl w-16 h-16 sm:w-20 sm:h-20 object-cover"
                   @click="openLightbox(historyCover(index, item), index)" />
                 <div
                   class="absolute text-muddy-waters-100 text-2xl sm:text-3xl pointer-events-none"
@@ -110,7 +110,7 @@
         <h2 class="my-5 text-2xl">Now playing:</h2>
         <div class="ice-player-el">
           <div class="relative">
-            <img class="rounded-xl h-auto w-32 sm:w-52" :src="placeholderCover" alt="Album Cover" />
+            <img class="rounded-xl w-32 h-32 sm:w-52 sm:h-52 object-cover" :src="placeholderCover" alt="Album Cover" />
           </div>
           <div class="ms-2 np-main">
             <div class="px-3 py-2 mb-0 sm:py-6 sm:mb-5 rounded-xl w-full bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200 ellipsify">
@@ -128,7 +128,7 @@
           <li v-for="i in station.historyCount" :key="i">
             <div class="mt-3 sm:mt-5 rounded-xl ice-player-el bg-sxvx-light dark:bg-sxvx-dark text-muddy-waters-800 dark:text-muddy-waters-200">
               <div class="relative">
-                <img :src="placeholderCover" alt="History Cover" class="history-cover rounded-l-xl h-auto w-16 sm:w-20" />
+                <img :src="placeholderCover" alt="History Cover" class="history-cover rounded-l-xl w-16 h-16 sm:w-20 sm:h-20 object-cover" />
               </div>
               <div class="ms-2" style="flex-grow:1;flex-shrink:1;flex-basis:0%;min-width:0;">
                 <div class="px-3 py-0 sm:py-2 rounded-xl w-full ellipsify">

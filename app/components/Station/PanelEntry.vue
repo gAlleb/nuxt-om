@@ -7,7 +7,7 @@
         <div class="mx-3">
           <div class="relative w-full">
             <img
-              class="rounded-xl h-auto w-full shadow-2xl cursor-pointer"
+              class="rounded-xl w-full aspect-square object-cover shadow-2xl cursor-pointer"
               :src="cover"
               alt="Album Cover"
               @click="emit('lightbox', cover, 0)" />
@@ -49,7 +49,7 @@
               v-if="nextCover"
               :src="nextCover"
               alt="History Cover"
-              class="history-cover cursor-pointer rounded-xl h-auto w-24"
+              class="history-cover cursor-pointer rounded-xl w-24 h-24 object-cover"
               @click="emit('lightbox', nextCover, 0)" />
             <div
               class="absolute text-muddy-waters-100 text-4xl pointer-events-none"
@@ -77,7 +77,7 @@
                 v-if="historyCover(index, item)"
                 :src="historyCover(index, item)"
                 alt="History Cover"
-                class="history-cover cursor-pointer rounded-xl h-auto w-24"
+                class="history-cover cursor-pointer rounded-xl w-24 h-24 object-cover"
                 @click="emit('lightbox', historyCover(index, item), index)" />
               <div
                 class="absolute text-muddy-waters-100 text-4xl pointer-events-none"
