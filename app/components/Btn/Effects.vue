@@ -29,7 +29,12 @@
 
         </button>
         <div class="flex justify-center mb-2">
-        <UToggle class=" " @click="useInitPlayerStore.toggleHLS" v-model="useInitPlayerStore.isUsingHLS" />
+        <!-- Только :model-value, без v-model: иначе на один клик приходится две
+             записи — одна от самого тумблера, вторая из toggleHLS, — и итог
+             зависит от того, какая успела первой. -->
+        <UToggle
+          :model-value="useInitPlayerStore.isUsingHLS"
+          @update:model-value="useInitPlayerStore.toggleHLS" />
         </div>
 
         <hr class="mb-2"/>

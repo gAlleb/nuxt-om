@@ -16,6 +16,8 @@ export function createAudioEngine() {
 
   let hls = null
 
+  // destroy() внутри сам отцепляется от медиаэлемента, поэтому отдельный
+  // detachMedia перед ним не нужен — он только добавляет второй media.load().
   function destroyHls() {
     if (hls) {
       hls.destroy()
@@ -43,10 +45,17 @@ export function createAudioEngine() {
   }
 
   function playIcecast(url) {
+    // Сначала отпускаем hls.js и только потом трогаем src. Порядок важен:
+    // detachMedia внутри себя зовёт media.load(), а тот отменяет незавершённые
+    // операции — включая наш play(), если он уже был запущен. Именно поэтому
+    // первое переключение с HLS на Icecast раньше «не срабатывало», а после
+    // stop/play начинало работать.
+    destroyHls()
+
     // Метка времени, чтобы не подхватить закэшированный ответ.
     audio.src = `${url}?cache-ignore=${Date.now()}`
-    audio.play()
-    destroyHls()
+    audio.load()
+    audio.play().catch((error) => console.log('icecast:', error))
   }
 
   return {
@@ -65,9 +74,9 @@ export function createAudioEngine() {
 
     stop() {
       audio.pause()
-      if (hls) hls.detachMedia()
-      audio.removeAttribute('src')
       destroyHls()
+      audio.removeAttribute('src')
+      audio.load()
     },
 
     setVolume(value) {
