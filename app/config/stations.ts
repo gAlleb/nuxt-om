@@ -523,7 +523,7 @@ export const stations: Station[] = [
       tab: '386',
       heroExtra: ['EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.','Curated by @xff.'],
     },
-    look: { font: "Workbench, sans-serif", radial: 'radial-gradient(rgb(22 72 49 / 59%), rgb(23 86 17 / 32%) 100%) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
+    look: { font: "Workbench, sans-serif", radial: 'radial-gradient(rgba(22, 72, 49, 0.59), rgba(23, 86, 17, 0.32) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
     images: {
       heroLight: '/386_hero2.webp',
       heroDark: '/386_hero2.webp',
