@@ -34,6 +34,11 @@
   src: local(''), 
   url('../font/Omega.ttf');
 }
+@font-face {
+  font-family: "Workbench";
+  src: local(''), 
+  url('../font/Workbench-Regular-VariableFont_BLED,SCAN.ttf');
+}
 
 .glowing-text {
   /* animation: textShadow 1.033s infinite; */

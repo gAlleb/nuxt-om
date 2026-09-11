@@ -521,9 +521,9 @@ export const stations: Station[] = [
       panel: '386',
       thumb: '386',
       tab: '386',
-      heroExtra: ['Pulse by day. Depth by night. EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.','Curated by @xff.'],
+      heroExtra: ['EBM and synthpop by day. Dark ambient and drone by night. Special hours for the grandeur of the organ and quiet romance.','Curated by @xff.'],
     },
-    look: { font: "UNSCII, sans-serif", radial: 'radial-gradient(rgba(14, 14, 14, 0.2), rgba(38, 37, 37, 0.31) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
+    look: { font: "Workbench, sans-serif", radial: 'radial-gradient(rgb(22 72 49 / 59%), rgb(23 86 17 / 32%) 100%) 100%)', accent: 'border border-zinc-500/50', homeButton: 'from-neutral-900 via-neutral-700 to-neutral-500' },
     images: {
       heroLight: '/386_hero2.webp',
       heroDark: '/386_hero2.webp',
