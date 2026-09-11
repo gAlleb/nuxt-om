@@ -178,11 +178,9 @@ const playlistName = computed(() => {
 
 const cover = computed(() => entry.value?.coverArt ?? placeholderCover)
 const collectionUrl = computed(() => entry.value?.collectionUrl ?? '#')
-const nextCover = computed(() =>
-  isItunes.value
-    ? entry.value?.nextCoverArt
-    : playingNext.value?.song?.art || placeholderCover,
-)
+// Обложки берём только из стора: он решает, чья картинка победит —
+// станции, iTunes или заглушки. Компоненту это знать незачем.
+const nextCover = computed(() => entry.value?.nextCoverArt || placeholderCover)
 const nextCollectionUrl = computed(() => entry.value?.nextCollectionUrl ?? '#')
 
 const history = computed(() => {
@@ -192,7 +190,7 @@ const history = computed(() => {
 
 /** У iTunes-станций обложки истории лежат в сторе, у остальных берутся прямо из данных станции. */
 function historyCover(index, item) {
-  return isItunes.value ? entry.value?.historyCoverArt?.[index] : item.song.art || placeholderCover
+  return entry.value?.historyCoverArt?.[index] || placeholderCover
 }
 function historyCollectionUrl(index) {
   return entry.value?.historyCollectionUrl?.[index] ?? '#'

@@ -131,7 +131,7 @@ export const useNowPlaying = defineStore('nowPlaying', {
       }
 
       // Следующий трек живёт своим циклом — у него отдельный ключ.
-      if (station.showNext && station.artSource === 'itunes' && np.playing_next?.song) {
+      if (station.showNext && np.playing_next?.song) {
         const nextKey = np.playing_next.song.title
         if (entry.lastNextKey !== nextKey) {
           entry.lastNextKey = nextKey
@@ -140,43 +140,54 @@ export const useNowPlaying = defineStore('nowPlaying', {
       }
     },
 
+    /**
+     * Обложка одного трека. Единственное место, где решается, откуда её взять.
+     *
+     * Порядок для artSource='station': своя картинка, потом — если станция
+     * разрешила itunesFallback — поиск в iTunes, и только потом заглушка.
+     * Пустая строка со станции означает «в файле картинки не оказалось»,
+     * и это нормальный случай, а не ошибка.
+     */
+    async coverFor(station, song) {
+      const art = song?.art || ''
+
+      if (station.artSource === 'station') {
+        if (art) return { url: art, collectionUrl: '#' }
+        if (!station.itunesFallback) return { url: placeholderCover, collectionUrl: '#' }
+      }
+
+      const found = await this.lookupCover(station, song?.artist, song?.title, art)
+      return {
+        url: found.artworkUrl || placeholderCover,
+        collectionUrl: found.collectionViewUrl || '#',
+      }
+    },
+
     /** Обложка текущего трека, доминирующий цвет и обложки истории. */
     async refreshCovers(station, np) {
       const entry = this.byId[station.id]
       const song = np.now_playing.song
 
-      if (station.artSource === 'station') {
-        // Станция отдаёт свою обложку — в iTunes не ходим. Пустая строка
-        // означает, что у трека нет встроенной картинки: ?? её пропускает,
-        // поэтому подставляем заглушку явно.
-        const art = song.art || placeholderCover
-        entry.coverArt = art
-        entry.collectionUrl = '#'
-        this.resolveDominantColor(station.id, art)
-        return
-      }
-
-      const found = await this.lookupCover(station, song.artist, song.title, song.art)
-      entry.coverArt = found.artworkUrl
-      entry.collectionUrl = found.collectionViewUrl
-      this.resolveDominantColor(station.id, found.artworkUrl)
+      const current = await this.coverFor(station, song)
+      entry.coverArt = current.url
+      entry.collectionUrl = current.collectionUrl
+      this.resolveDominantColor(station.id, current.url)
 
       const from = providers[station.provider].historyOffset
       const history = (np.song_history || []).slice(from, from + station.historyCount)
       history.forEach((item, index) => {
-        this.lookupCover(station, item.song.artist, item.song.title, item.song.art).then((cover) => {
-          entry.historyCoverArt[index] = cover.artworkUrl
-          entry.historyCollectionUrl[index] = cover.collectionViewUrl
+        this.coverFor(station, item.song).then((cover) => {
+          entry.historyCoverArt[index] = cover.url
+          entry.historyCollectionUrl[index] = cover.collectionUrl
         })
       })
     },
 
     async refreshNextCover(station, np) {
       const entry = this.byId[station.id]
-      const song = np.playing_next.song
-      const found = await this.lookupCover(station, song.artist, song.title, song.art)
-      entry.nextCoverArt = found.artworkUrl
-      entry.nextCollectionUrl = found.collectionViewUrl
+      const found = await this.coverFor(station, np.playing_next.song)
+      entry.nextCoverArt = found.url
+      entry.nextCollectionUrl = found.collectionUrl
     },
 
     /**

@@ -183,6 +183,12 @@ export interface Station {
   showNext: boolean
   /** Откуда брать обложку: искать в iTunes или брать `song.art` со станции. */
   artSource: 'itunes' | 'station'
+  /**
+   * Только для `artSource: 'station'`. Если у трека не оказалось встроенной
+   * картинки, попробовать найти её в iTunes и лишь потом показать заглушку.
+   * Без этого пустая обложка сразу становится заглушкой.
+   */
+  itunesFallback?: boolean
   /** Сколько треков показывать в истории. */
   historyCount: number
   /** Сетка эфира. Задана — на странице станции появляется кнопка «Schedule». */
@@ -221,6 +227,7 @@ export const stations: Station[] = [
     },
     showNext: true,
     artSource: 'station',
+    itunesFallback: true,
     historyCount: 5,
     // Сетка снята с switch в omfm/index.liq. Сутры, аудиокниги и лекции
     // включаются там «раз в окно» (predicate.once), то есть в непредсказуемый
@@ -528,6 +535,7 @@ export const stations: Station[] = [
     },
     showNext: true,
     artSource: 'station',
+    itunesFallback: true,
     historyCount: 5,
     schedule: {
       timezone: 'Europe/Moscow',
