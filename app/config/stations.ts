@@ -219,8 +219,8 @@ export const stations: Station[] = [
     visualizer: {
       colorScheme: { color1: '#b017a8', color2: 'cyan', color3: 'green', capStyle: '#b017a8' },
     },
-    showNext: false,
-    artSource: 'itunes',
+    showNext: true,
+    artSource: 'station',
     historyCount: 5,
     // Сетка снята с switch в omfm/index.liq. Сутры, аудиокниги и лекции
     // включаются там «раз в окно» (predicate.once), то есть в непредсказуемый
