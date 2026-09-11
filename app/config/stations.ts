@@ -222,6 +222,21 @@ export const stations: Station[] = [
     showNext: false,
     artSource: 'itunes',
     historyCount: 5,
+    // Сетка снята с switch в omfm/index.liq. Сутры, аудиокниги и лекции
+    // включаются там «раз в окно» (predicate.once), то есть в непредсказуемый
+    // момент — в сетке их нет намеренно, иначе она врала бы.
+    schedule: {
+      timezone: 'Europe/Moscow',
+      note: 'Сутры, аудиокниги и лекции включаются раз в окно и в сетке не показаны.',
+      slots: [
+        { from: '00:00', to: '04:00', title: 'Night Lofi', description: 'ночной лоу-фай' },
+        { from: '04:00', to: '06:00', title: 'Morning mantra', description: 'мантра 528 Гц' },
+        { from: '06:00', to: '10:00', title: 'omFM Main', description: 'основной эфир' },
+        { from: '10:00', to: '11:00', title: 'Classical Time', description: 'час классики' },
+        { from: '11:00', to: '23:00', title: 'omFM Main', description: 'основной эфир' },
+        { from: '23:00', to: '00:00', title: 'Night Lofi', description: 'ночной лоу-фай' },
+      ],
+    },
   },
   {
     id: 'rock',
