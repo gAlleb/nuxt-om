@@ -476,10 +476,10 @@ export const stations: Station[] = [
   {
     id: 'noir',
     slug: 'noir',
-    provider: 'azuracast',
+    provider: 'centrifugo386',
     channel: 'station:noir',
-    hls: 'https://radio.omfm.ru/hls/noir/live.m3u8',
-    icecast: 'https://stream.omfm.ru:8443/noir',
+    hls: 'https://hls.386.su/noir/noir.m3u8',
+    icecast: 'https://r.386.su/noir.aac',
     text: {
       menu: 'Noir @ omFM',
       card: 'Noir',
