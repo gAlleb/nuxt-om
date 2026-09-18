@@ -91,9 +91,9 @@
       <BtnMilkdrop />
       <BtnShowHidePlayer />
       <BtnEq class="hidden sm:inline-flex"/>
-      <BtnSetStream /> 
+      <BtnSetStream class="hidden sm:block" /> 
       <BtnEffects />
-      <BtnGit />
+      <BtnGit class="hidden sm:flex" />
       <!-- <BtnChristmas /> -->
       <ClientOnly> 
         <!-- <BtnLocaleSwitch />

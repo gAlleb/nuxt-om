@@ -7,7 +7,11 @@
       :class="[useInitPlayerStore.playerVisible ? 'scale-100' : 'scale-75'], [useInitPlayerStore.isPlaying ? 'bg-green-600 dark:bg-green-bg' : 'bg-sxvx-light-bg dark:bg-sxvx-dark-bg']" 
       >
         <span class="sr-only">Show/Hide Player</span>
-        <Icon name="heroicons:radio" class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" /> 
+        <!-- Значок говорит о состоянии: залитая панель снизу — плеер показан,
+             контурная — спрятан. Прежнее «радио» путали с выбором стрима:
+             у той кнопки значок из того же набора волн. -->
+        <Icon :name="useInitPlayerStore.playerVisible ? 'bx:bxs-dock-bottom' : 'bx:dock-bottom'"
+              class="h-6 w-6 text-zinc-600 dark:text-zinc-100" aria-hidden="true" />
       </MenuButton>
       </UTooltip>
       <!-- <div class="transition  duration-300 ease-in-out ml-1 sm:ml-4 inline-flex" :class="[isPlayerVisible ? 'scale-100 relative' : 'scale-0 absolute']">  -->

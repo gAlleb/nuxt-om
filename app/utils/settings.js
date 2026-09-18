@@ -21,6 +21,7 @@ export const SETTINGS_KEYS = {
   hls: 'hls',
   playerVisible: 'playerVisible',
   eqBands: 'eqBands',
+  milkdropHintSeen: 'milkdropHintSeen',
 }
 
 /** Эффекты и их значения по умолчанию. Порядок важен только для читаемости. */
