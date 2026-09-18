@@ -12,7 +12,9 @@
         <span class="ml-1 text-xl hidden sm:block">omFM<sup>{{ logoText }}</sup></span>
       </NuxtLink>
       <!-- Desktop nav -->
-      <nav class="hidden md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 lg:flex flex-wrap items-center text-base justify-center">
+      <nav
+        :class="{ 'lg:hidden': milkdrop.enabled }"
+        class="hidden md:mr-auto md:ml-4 md:py-1 md:pl-4 md:border-l md:border-gray-400 lg:flex flex-wrap items-center text-base justify-center">
         <NuxtLink :to="localePath('/')" class="mr-5 group transition-all duration-300 ease-in-out">
         <span class="bg-left-bottom bg-gradient-to-r from-red-500 to-red-500 bg-[length:0%_5px] bg-no-repeat group-hover:bg-[length:100%_5px] transition-all duration-500 ease-out">
           {{ $t('home') }}
@@ -86,6 +88,7 @@
     <!-- Mobile nav -->
     <div class="flex">
      <div class="flex">
+      <BtnMilkdrop />
       <BtnShowHidePlayer />
       <BtnEq class="hidden sm:inline-flex"/>
       <BtnSetStream /> 
@@ -224,6 +227,9 @@ const isSubPathOfHome = computed(() => {
 });
 const headerClass = computed(() => {
   let baseClasses;
+  // Во время MilkDrop шапка не должна закрывать картинку: подложка убирается,
+  // остаются только кнопки управления.
+  if (milkdrop.enabled) return 'bg-transparent';
   if (route.path === '/' && isScrolled.value !== true) {
     baseClasses = 'bg-transparent';
   } else if  (route.path === '/es' && isScrolled.value !== true) {
@@ -244,6 +250,8 @@ onMounted(() => {
   window.addEventListener('click', handleOutsideClick);
   
 });
+import { useMilkdropStore } from '@/stores/milkdrop';
+const milkdrop = useMilkdropStore();
 const useCurrentStreamStore = currentStreamStore(); // Get the store instance
 const currentStream = computed(() => useCurrentStreamStore.currentStream); // Reactive stream
 const logoText = computed(() => getStation(currentStream.value)?.text.logo ?? '')

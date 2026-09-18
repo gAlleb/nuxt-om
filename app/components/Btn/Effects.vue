@@ -17,6 +17,18 @@
       leave-from-class="transform opacity-100 scale-100" leave-to-class="transform opacity-0 scale-95" v-if="isOpen">
       <div id="Effects_block" @click.stop.prevent
         class="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-xl py-3 px-3  backdrop-blur-[1rem] bg-muddy-waters-100/90 dark:bg-zinc-800/90 shadow-xl  ">
+        <!-- Полноэкранная визуализация. Первой в панели: это не тонкая
+             настройка, а режим просмотра, за которым сюда чаще всего и лезут. -->
+        <button type="button" @click="milkdrop.toggle()"
+          :class="{ 'bg-red-400 dark:bg-red-400': !milkdrop.enabled,
+                    'bg-green-400': milkdrop.enabled
+          }"
+          class="flex mb-2 gap-2 justify-center
+          px-4 py-2 text-sm text-zinc-900 w-full rounded-2xl">
+          <Icon name="bx:atom" class="h-10 w-10" aria-hidden="true" />
+          <span class="flex text-zinc-900 text-xl mt-2">MilkDrop</span>
+        </button>
+
         <button type="button" @click="useInitPlayerStore.toggleHLS"
           :class="{ 'bg-red-400 dark:bg-red-400': !useInitPlayerStore.isUsingHLS,
                     'bg-green-400': useInitPlayerStore.isUsingHLS
@@ -154,6 +166,8 @@ const useInitPlayerStore = initPlayerStore();
 const { switchTheme } = useThemeTransition()
 import { ref, onMounted } from 'vue';
 import { useEffectsStore } from '@/stores/effects';
+import { useMilkdropStore } from '@/stores/milkdrop';
+const milkdrop = useMilkdropStore();
 const effectsStore = useEffectsStore();
 const isOpen = ref(false)
 const dropdownContainer = ref(null);

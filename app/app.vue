@@ -28,6 +28,11 @@
     <ClientOnly>
       <Art />
     </ClientOnly>
+    <!-- Полноэкранный MilkDrop. Ниже плеера и шапки по z-index, поэтому
+         управление остаётся видимым поверх картинки. -->
+    <ClientOnly>
+      <Milkdrop />
+    </ClientOnly>
   </div>
   <!-- <iframe
       src="https://coma.omfm.ru"

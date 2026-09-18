@@ -37,6 +37,8 @@
   "dependencies": {
     "@vueuse/core": "^12.3.0",
     "better-sqlite3": "^12.5.0",
+    "butterchurn": "^2.6.7",
+    "butterchurn-presets": "^2.4.7",
     "chroma-js": "^3.1.2",
     "colorthief": "^2.6.0",
     "hls.js": "^1.5.20"
