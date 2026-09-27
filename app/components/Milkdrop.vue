@@ -94,7 +94,7 @@ async function start() {
   frame = requestAnimationFrame(draw)
 
   // Одна картинка надоедает — меняем пресет, как это делает сам MilkDrop.
-  cycle = setInterval(() => loadRandomPreset(), 20000)
+  cycle = setInterval(() => loadRandomPreset(), 30000)
 }
 
 function stop() {
