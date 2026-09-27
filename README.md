@@ -12,10 +12,10 @@ Live at **[omfm.ru](https://omfm.ru)** · [Русская версия](./README
 
 ## What this is
 
-A multi-station internet radio front end built with Nuxt 4. Seven stations, two independent
-now-playing backends, HLS and Icecast playback, a real-time spectrum analyzer, a 10-band
-equalizer, cover art lookup, and a UI that repaints itself to match the artwork of whatever
-is playing right now.
+A multi-station internet radio front end built with Nuxt 4. Ten stations, three now-playing
+providers, HLS and Icecast playback, a real-time spectrum analyzer, a full-screen MilkDrop
+visualizer, a 10-band equalizer, cover art lookup, on-air schedules, and a UI that repaints
+itself to match the artwork of whatever is playing right now.
 
 The interesting part is not the feature list — it's that **adding a station takes one object
 in one file.** No new pages, no new components, no wiring. Add it to the registry and the
@@ -77,8 +77,44 @@ Everything lives in [`app/config/stations.ts`](./app/config/stations.ts). Append
 
 Run `npm run generate`. That's the whole procedure.
 
+Optional fields, for when a station needs more than the basics:
+
+| field | what it does |
+|---|---|
+| `text.heroExtra` | extra lines under the tagline; a string or an array of strings, one line each |
+| `text.nowPlayingLabel` | caption above the track in the mini player (defaults to `text.menu`) |
+| `text.playlistFallback` | what to show in the "Show:" line when the playlist name is empty |
+| `look.homeButton` | Tailwind gradient (`from-… via-… to-…`) for the "Home" button on the station page |
+| `look.heroTitleClass` | extra class for the hero title, e.g. a neon text shadow |
+| `look.dimmed` | dim the card image more — for artwork that is too bright |
+| `itunesFallback` | with `artSource: 'station'`: if the track has no embedded cover, try iTunes before the placeholder |
+| `schedule` | the station's on-air grid — see below |
+
 Using a font of your own? Declare it with `@font-face` and put the family in `look.font` —
 no CSS edits needed, the theme variables are generated from the registry.
+
+### Schedule
+
+Give a station a `schedule` and its page grows a day strip with the current block marked;
+clicking it opens a drawer with the full grid. Hours are written in the station's time zone,
+not the visitor's — the broadcast runs on radio time:
+
+```ts
+schedule: {
+  timezone: 'Europe/Moscow',
+  note: 'Themed hours break the rotation.',       // caption under the heading
+  slots: [
+    { from: '00:00', to: '07:00', title: 'Night', description: 'Dark ambient and drone' },
+    { from: '07:00', to: '21:00', title: 'Day', description: 'EBM and synthpop' },
+    { from: '21:00', to: '22:00', title: 'Organ', days: [1, 2, 4, 7] },   // ISO weekdays
+    { from: '21:00', to: '22:00', title: 'Romantic', days: [3, 5, 6] },
+    { from: '22:00', to: '00:00', title: 'Night' },  // end before start = past midnight
+  ],
+},
+```
+
+A slot may also carry its own `color`; without one, blocks get opacity steps in order of
+appearance, the same step for the same title. No `schedule` — no strip.
 
 ### If your station is on AzuraCast, it's even easier
 
@@ -107,9 +143,10 @@ Every station on that server now shares one SSE connection. Ten stations, one so
 
 ### Another backend?
 
-Add a provider next to `azuracast`. This project ships with two: AzuraCast and a plain
-[Centrifugo](https://centrifugo.dev/) bridge. A provider describes the four things that
-actually differ between backends:
+Add a provider next to `azuracast`. This project ships with three: AzuraCast and two
+[Centrifugo](https://centrifugo.dev/) bridges (`centrifugo` for omFM's own server and
+`centrifugo386` for the one at 386.su). A provider describes the four things that actually
+differ between backends:
 
 | field | what it answers |
 |---|---|
@@ -118,9 +155,9 @@ actually differ between backends:
 | `historyOffset` | does the history list start with the current track or the previous one |
 | `coverFallback` | when a cover lookup fails — use the station's art or a placeholder |
 
-Stations then simply say which provider they belong to. Mixed setups work: right now five
-stations come from AzuraCast and two from Centrifugo, each with its own quirks, and no
-component knows the difference.
+Stations then simply say which provider they belong to. Mixed setups work: right now six
+stations come from AzuraCast, two from omFM's Centrifugo and two from the 386.su one, each
+with its own quirks, and no component knows the difference.
 
 ---
 
@@ -132,6 +169,10 @@ component knows the difference.
 - **Entries** in the header menu, the mobile menu, the stream picker and the `/streams` tabs.
 - **A bubble** in the player's swiper and in the mobile drop-up.
 - **An SSE subscription**, grouped with the other stations of the same provider.
+- **Playlists** for external players: `/playlists/<slug>.m3u` (Icecast) and
+  `/playlists/<slug>-hls.m3u` (HLS), listed with the stream URLs on `/about`, plus the combined
+  `omfm-all.m3u` and `omfm-all-hls.m3u`.
+- **A schedule strip**, if the station has a `schedule`.
 - **Themed UI**: the interface font, the radial glow and the accent colour follow the selected
   station.
 
@@ -146,12 +187,34 @@ the OS now-playing widget are wired through the Media Session API.
 **Live data** — one SSE connection per backend, automatic reconnect, per-track progress bars that
 keep ticking between updates.
 
-**Cover art** — looked up on iTunes with caching and a graceful fallback to the station's own
-artwork. The dominant colour of the current cover is extracted and used to tint the player and
-the now-playing cards, with the text colour picked for contrast.
+**Cover art** — per station: either the artwork the backend sends with the track
+(`artSource: 'station'`, optionally backed by iTunes via `itunesFallback`) or an iTunes lookup
+with caching (`artSource: 'itunes'`); when nothing is found, the provider decides between the
+station's own art and a placeholder. The dominant colour of the current cover is extracted
+and used to tint the player and the now-playing cards, with the text colour picked for contrast.
 
 **Visuals** — canvas spectrum bars and a three-band waveform, plus optional film-grain effects
 (radial tint, noise, scanlines, flicker), all toggleable and remembered.
+
+**MilkDrop** — a full-screen WebGL visualizer on [butterchurn](https://github.com/jberg/butterchurn),
+the web port of Winamp's MilkDrop:
+
+- **Turning it on and off** — the atom button in the header (it turns green while MilkDrop is
+  on) or the MilkDrop button at the top of the Effects panel. Both toggle the same switch.
+- **Presets** — the stock `butterchurn-presets` pack. A random one loads on start, and every
+  30 seconds the visualizer blends into a random preset over about 2.7 s. There is no
+  manual preset picker.
+- **Sound** — taken from the player's analyser after the equalizer, so the picture follows what
+  you hear; the stream itself is untouched. Turning MilkDrop on creates the audio context if the
+  player hasn't yet; without sound the picture stands still.
+- **While it runs** — the canvas covers the page under the header and the player, which stay on
+  top and usable; the header drops its background, the desktop nav links hide, and page scroll
+  is locked.
+- **Performance** — the pixel ratio is capped at 1 on screens under 768 px and at 2 otherwise.
+  Turning it off stops rendering; the WebGL context is kept for the next time.
+- **Not remembered** — every visit starts with MilkDrop off, on purpose: it is heavy on the GPU.
+  A one-time "Now with MilkDrop!" hint points at the button until it is closed or the button
+  is pressed.
 
 **Theme** — dark and light, switched with a circular View Transition that expands from the click,
 and respecting `prefers-reduced-motion`.
@@ -166,7 +229,7 @@ server-rendered one behave identically — no flash of default state.
 ## Stack
 
 Nuxt 4 · Vue 3 · Pinia · Tailwind CSS · Nuxt UI · Nuxt Content v3 · Nuxt i18n · hls.js ·
-chroma-js · colorthief · Swiper
+butterchurn · chroma-js · colorthief · Swiper
 
 ---
 
@@ -181,6 +244,9 @@ Development server on `http://localhost:3000`:
 ```bash
 npm run dev
 ```
+
+The dev server watches `app/config/stations.ts` and `app/config/playlists.ts` and reloads
+the configuration when they change — theme CSS and playlists are built from the registry.
 
 > Requires Node 22.19+ (Nuxt 4). Nuxt Content v3 uses `better-sqlite3`, which is a native
 > module — on a slim Linux image you'll need `python3`, `make` and `g++` to build it.
